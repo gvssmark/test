@@ -1,73 +1,30 @@
 <!DOCTYPE html>
 <html>
 <head>
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<style>
-body {
-  //font-family: Arial, Helvetica, sans-serif;
+<style> 
+div {
+  width: 100px;
+  height: 100px;
+  background: red;
+  transition-property: width, height;
+  transition-duration: 2s;
 }
 
-.flip-card {
-  background-color: transparent;
+div:hover {
   width: 300px;
   height: 300px;
-  perspective: 1000px;
 }
-
-.flip-card-inner {
-  position: relative;
-  width: 100%;
-  height: 100%;
-  text-align: center;
-  transition: transform 0.6s;
-  transform-style: preserve-3d;
-  box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
-}
-
-.flip-card:hover .flip-card-inner {
-  transform: rotateY(180deg);
-}
-
-.flip-card-front, .flip-card-back {
-  position: absolute;
-  width: 100%;
-  height: 100%;
-  -webkit-backface-visibility: hidden;
-  backface-visibility: hidden;
-}
-
-.flip-card-front {
-  background-color: #bbb;
-  color: black;
-}
-
-.flip-card-back {
-  background-color: #2980b9;
-  color: white;
-  transform: rotateY(180deg);
-}
-p{font-size:small; margin-left:5px; }
 </style>
 </head>
 <body>
 
-<h1>Card Flip with Text</h1>
-<h3>Hover over the image below:</h3>
+<h1>The transition-property Property</h1>
 
-<div class="flip-card">
-  <div class="flip-card-inner">
-    <div class="flip-card-front">
-      <img src="https://drive.google.com/uc?export=view&id=1Sx25j5Y84ocFntSiJCwgOFGd1GouE153" alt="Avatar" style="width:300px;height:300px;">
-    </div>
-    <div class="flip-card-back" style="text-align: left;">
-    
-      <p stlye="text-align:left; "><b>Address: </b>E904, <br>Vertex Sadguru Krupa<br>Nizampet Road<br>Hyderabad-500085</p> 
-      <p><b>Branches Worked:</b><br>Sion, Raipur, Governorpet, Grameena Bank, ,Agartala, Guwahati,ZO. Hyderabad, Mogalrajapuram,Zo Vijayawada,STC, Vijayawada, Jubilee Hills, ,ZO Hyderabad</p>
-      <p>Birrthday: Nov24 <br>Wedding: May 7</p>
-      <p><b>Contacts: </b><br>Mobiles: 9989036183, 1234567890<br>Email: gvssmark@gmail.com</p>
-    </div>
-  </div>
-</div>
+<p><b>Note:</b> This example does not work in Internet Explorer 9 and earlier versions.</p>
+
+<div></div>
+
+<p>Hover over the div element above, to see the transition effect.</p>
 
 </body>
 </html>
