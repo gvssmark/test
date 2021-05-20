@@ -1,30 +1,56 @@
 <!DOCTYPE html>
 <html>
 <head>
-<style> 
-div {
-  width: 100px;
-  height: 100px;
-  background: red;
-  transition-property: width, height;
-  transition-duration: 2s;
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Page Title</title>
+<style>
+*{
+margin:0;
+padding:0;
+background:silver;
 }
+main{
+width:360px;
+height:100vh;
+margin:10px auto;
+//border:1px solid black;
+color:red;
+background:powderblue;
 
-div:hover {
-  width: 300px;
-  height: 300px;
 }
+.div1{background:yellow; position:fixed; top:0; width:360px; text-align:center; }
+.div2{background:green; margin-top:15px;}
+.div3{background:yellow;}
+.div4{background:green;}
+.div5{background:yellow;}
+.div6{background:green;}
+.div7{background:yellow; position:fixed; bottom:0; width:360px; text-align:center; }
+
+
 </style>
 </head>
 <body>
 
-<h1>The transition-property Property</h1>
 
-<p><b>Note:</b> This example does not work in Internet Explorer 9 and earlier versions.</p>
 
-<div></div>
+<main>
+<div class="div1">Header</div>
+<div class="div2">Login<br>
+<input type="text"><br><br>
+<button value='submit' onclick="javascript:alert('hellow')"style="width:200px; height:40px;">
 
-<p>Hover over the div element above, to see the transition effect.</p>
+
+</div>
+<div class="div3">Search</div>
+<div class="div4">Events</div>
+<div class="div5">Cities</div>
+<div class="div6">Places<br>
+<div class="div7">Foooter<br>
+
+
+</div>
+
+</main>
 
 </body>
 </html>
