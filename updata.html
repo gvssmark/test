@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Page Title</title>
+<style>
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+input {font-weight:bold; width:350px; background:white; border:1px solid black; height:30px; outline:0;  transition: 0.2s ease-in;}
+textarea {appearance:none; outline:0;  background:lightyellow; font-weight:bold;}
+label{color:blue; }
+button{background:red; width:150px; height:30px; border:1px solid black; ;}
+body{background:silver; }
+</style>
+<script>
+url='https://script.google.com/macros/s/AKfycbwU43y7aw-hY8rjx77YgViB5Vs2H5yv7i5GMuUUfB6YMLbEQn3D/exec'
+
+async function getMyData (){
+response= await fetch(url)
+data= await response.json()
+tempData=data["user"]
+}
+
+getMyData ()
+</script>
+
+</head>
+<body>
+<h4> Data Correction</h4>
+<label for="fname">Input SR No</label><br>
+<input type="number"  id='srnoInput'  Placeholder="Enter SR No" ><br><br>
+<button onclick = "getRecord()" id='btn1' value="submit" id="submitButton">Get Data </button><br>
+<hr>
+<label for="fname">Name</label><br>
+<input type="text" id='name' placeholder=" Name"><br>
+
+<label for="fname">Address 1- Flat No and Apartment Name / Plot No & Building Name</label><br>
+<input type="text" id='add1'  placeholder=" Address 1- "><br>
+
+<label for="fname">Address 2-Area / Locality / Colony</label><br>
+<input type="text" id='add2'   Placeholder="Address 2" ><br>
+
+<label for="fname">Address 3-City / Town / Village</label><br>
+<input type="text" id='add3'  Placeholder="Address 3" ><br>
+
+<label for="fname">Address 4- State</label><br>
+<input type="text" id='add4'  Placeholder="Address 4" ><br>
+
+<label for="fname">PIN Code</label><br>
+<input type="text" id='pin'  Placeholder="PIN Code" ><br>
+
+<label for="fname">Email ID</label><br>
+<input type="text" id='email'  Placeholder="Email ID" ><br>
+
+<label for="fname">Mobile No 1</label><br>
+<input type="text" id='mob1'  Placeholder="Mobile No 1" ><br>
+
+<label for="fname">Mobile No.2</label><br>
+<input type="text" id='mob2'  Placeholder="Mobile No 2" ><br>
+
+<label for="fname">Fixed / Land Line with STD Code(Eg 040-40063528)</label>
+<br><input type="text" id='fix'  Placeholder="Fixed Line" ><br>
+
+<label for="fname">Date of Retirement</label><br>
+<input type="date" id='retdate'  Placeholder="dd-nn-yyyy" ><br>
+
+<label for="fname">Prviously Worked branches / Offices (Optional)</label><br>
+<textarea  rows="4" cols="50" id='brlist'  Placeholder="Branches worked"  /></textarea><br>
+
+<label for="fname">Last worked Branch / Office</label>
+<br><input type="text" id='lastbr'  Placeholder="Last Branch" ><br>
+
+<label for="fname">Pension Drawing Branch</label><br>
+<input type="text" id='penbr'  Placeholder="Pension Branch" ><br>
+
+<label for="fname">Birthday (DD/MM)</label>
+<br><input type="text" id='bdt'  Placeholder="Birthday" ><br>
+
+<label for="fname">Marriage Day(DD/MM)</label><br>
+<input type="text" id='mdt'  Placeholder="Marriage Anniversary" ><br><br>
+
+<button value="submit" id="submitButton">Submit</button><br>
+
+<script>
+
+
+
+
+
+function getRecord(){
+getsrno =  document.getElementById("srnoInput").value
+myRecord = tempData.filter(a => a.srno===parseInt(getsrno))
+
+document.getElementById("name").value = myRecord[0].name
+document.getElementById("add1").value = myRecord[0].add1
+document.getElementById("add2").value = myRecord[0].add2
+document.getElementById("add3").value = myRecord[0].add3
+document.getElementById("add4").value = myRecord[0].add4
+document.getElementById("pin").value = myRecord[0].pin
+document.getElementById("email").value = myRecord[0].email
+document.getElementById("mob1").value = myRecord[0].mob1
+document.getElementById("mob2").value = myRecord[0].mob2
+document.getElementById("fix").value = myRecord[0].fix
+
+document.getElementById("retdate").value =new Date(myRecord[0].retdate).toLocaleDateString(); //myRecord[0].retdate.toLocaleString("en-IN");
+//myRecord[0].retdate
+//new Date(myRecord[0].retdate).toDateString()
+document.getElementById("brlist").value = myRecord[0].brlist
+document.getElementById("lastbr").value = myRecord[0].lastbr
+document.getElementById("penbr").value = myRecord[0].penbr
+document.getElementById("bdt").value = myRecord[0].bd +"/"+ myRecord[0].bm
+document.getElementById("mdt").value = myRecord[0].md +"/"+myRecord[0].mm
+
+
+
+}
+
+</script>
+
+
+</body>
+</html>
