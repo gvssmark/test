@@ -3,12 +3,12 @@
     "name": "UpdateData",
     "icons": [
       {
-        "src": "images/update192.png",
+        "src": "image/update192.png",
         "type": "image/png",
         "sizes": "192x192"
       },
               {
-        "src": "images/update512.png",
+        "src": "image/update512.png",
         "type": "image/png",
         "sizes": "512x512"
       }
