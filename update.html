@@ -1,20 +1,18 @@
 <!DOCTYPE html>
 <html>
 <head>
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>IBAP RETIREES GOOGLE GROUP</title>
-
+<title>Page Title</title>
 <style>
 input::-webkit-outer-spin-button,
 input::-webkit-inner-spin-button {
   -webkit-appearance: none;
   margin: 0;
 }
-input {font-weight:bold; width:350px; background:white; border:1px solid black; height:30px; outline:0;  transition: 0.2s ease-in;}
-textarea {appearance:none; outline:0;  background:lightyellow; font-weight:bold;}
+input {font-weight:bold; width:350px; background:lightyellow; border:1px solid black; height:30px; outline:0;  transition: 0.2s ease-in;}
+textarea {appearance:none; outline:0;  }
 label{color:blue; }
 button{background:red; width:150px; height:30px; border:1px solid black; ;}
-body{background:silver; }
+body{background:powderblue; }
 </style>
 <script>
 url='https://script.google.com/macros/s/AKfycbwU43y7aw-hY8rjx77YgViB5Vs2H5yv7i5GMuUUfB6YMLbEQn3D/exec'
@@ -36,52 +34,52 @@ getMyData ()
 <button onclick = "getRecord()" id='btn1' value="submit" id="submitButton">Get Data </button><br>
 <hr>
 <label for="fname">Name</label><br>
-<input type="text" id='name' placeholder=" Name" autocomplete="off" ><br>
+<input type="text" id='name' placeholder=" Name"><br>
 
 <label for="fname">Address 1- Flat No and Apartment Name / Plot No & Building Name</label><br>
-<input type="text" id='add1'  placeholder=" Address 1- " autocomplete="off" ><br>
+<input type="text" id='add1'  placeholder=" Address 1- "><br>
 
 <label for="fname">Address 2-Area / Locality / Colony</label><br>
-<input type="text" id='add2'   Placeholder="Address 2" autocomplete="off"  ><br>
+<input type="text" id='add2'   Placeholder="Address 2" ><br>
 
 <label for="fname">Address 3-City / Town / Village</label><br>
-<input type="text" id='add3'  Placeholder="Address 3" autocomplete="off"  ><br>
+<input type="text" id='add3'  Placeholder="Address 3" ><br>
 
 <label for="fname">Address 4- State</label><br>
-<input type="text" id='add4'  Placeholder="Address 4" autocomplete="off"  ><br>
+<input type="text" id='add4'  Placeholder="Address 4" ><br>
 
 <label for="fname">PIN Code</label><br>
-<input type="text" id='pin'  Placeholder="PIN Code"  autocomplete="off" ><br>
+<input type="text" id='pin'  Placeholder="PIN Code" ><br>
 
 <label for="fname">Email ID</label><br>
-<input type="text" id='email'  Placeholder="Email ID"  autocomplete="off" ><br>
+<input type="text" id='email'  Placeholder="Email ID" ><br>
 
 <label for="fname">Mobile No 1</label><br>
-<input type="text" id='mob1'  Placeholder="Mobile No 1"  autocomplete="off" ><br>
+<input type="text" id='mob1'  Placeholder="Mobile No 1" ><br>
 
 <label for="fname">Mobile No.2</label><br>
-<input type="text" id='mob2'  Placeholder="Mobile No 2" autocomplete="off" ><br>
+<input type="text" id='mob2'  Placeholder="Mobile No 2" ><br>
 
 <label for="fname">Fixed / Land Line with STD Code(Eg 040-40063528)</label>
-<br><input type="text" id='fix'  Placeholder="Fixed Line"  autocomplete="off" ><br>
+<br><input type="text" id='fix'  Placeholder="Fixed Line" ><br>
 
 <label for="fname">Date of Retirement</label><br>
-<input type="date" id='retdate'  Placeholder="dd-nn-yyyy"  autocomplete="off" ><br>
+<input type="date" id='retdate'  Placeholder="dd-nn-yyyy" ><br>
 
 <label for="fname">Prviously Worked branches / Offices (Optional)</label><br>
-<textarea  rows="4" cols="50" id='brlist'  Placeholder="Branches worked"  autocomplete="off"  /></textarea><br>
+<textarea  rows="4" cols="50" id='brlist'  Placeholder="Branches worked"  /></textarea><br>
 
 <label for="fname">Last worked Branch / Office</label>
-<br><input type="text" id='lastbr'  Placeholder="Last Branch"  autocomplete="off" ><br>
+<br><input type="text" id='lastbr'  Placeholder="Last Branch" ><br>
 
 <label for="fname">Pension Drawing Branch</label><br>
-<input type="text" id='penbr'  Placeholder="Pension Branch"  autocomplete="off" ><br>
+<input type="text" id='penbr'  Placeholder="Pension Branch" ><br>
 
 <label for="fname">Birthday (DD/MM)</label>
-<br><input type="text" id='bdt'  Placeholder="Birthday" autocomplete="off"  ><br>
+<br><input type="text" id='bdt'  Placeholder="Birthday" ><br>
 
 <label for="fname">Marriage Day(DD/MM)</label><br>
-<input type="text" id='mdt'  Placeholder="Marriage Anniversary" autocomplete="off"  ><br><br>
+<input type="text" id='mdt'  Placeholder="Marriage Anniversary" ><br><br>
 
 <button value="submit" id="submitButton">Submit</button><br>
 
@@ -106,9 +104,13 @@ document.getElementById("mob1").value = myRecord[0].mob1
 document.getElementById("mob2").value = myRecord[0].mob2
 document.getElementById("fix").value = myRecord[0].fix
 
-document.getElementById("retdate").value =new Date(myRecord[0].retdate).toLocaleDateString(); //myRecord[0].retdate.toLocaleString("en-IN");
-//myRecord[0].retdate
-//new Date(myRecord[0].retdate).toDateString()
+dd= String(new Date(myRecord[0].retdate).getDate()).padStart(2,"0")
+mm= String(new Date(myRecord[0].retdate).getMonth() + 1).padStart(2,"0");
+yyyy= new Date(myRecord[0].retdate).getFullYear();
+
+ddmmyyyy = dd+"/"+mm+"/"+yyyy
+yyyymmdd = yyyy+"-"+mm+"-"+dd
+document.getElementById("retdate").value =yyyymmdd
 document.getElementById("brlist").value = myRecord[0].brlist
 document.getElementById("lastbr").value = myRecord[0].lastbr
 document.getElementById("penbr").value = myRecord[0].penbr
