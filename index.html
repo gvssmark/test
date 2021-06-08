@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html>
 <head>
@@ -11,7 +12,9 @@ input::-webkit-inner-spin-button {
   -webkit-appearance: none;
   margin: 0;
 }
-input {font-weight:bold; width:350px; background:lightyellow; border:1px solid black; height:30px; outline:0;  transition: 0.2s ease-in;}
+input {font-weight:bold; width:350px; background:lightyellow; border:1px solid black; height:30px; outline:0;  transition: 0.2s 
+
+ease-in;}
 textarea {appearance:none; outline:0;  }
 label{color:blue; }
 button{background:red; width:150px; height:30px; border:1px solid black; ;}
@@ -84,11 +87,11 @@ getMyData ()
 <label for="fname">Marriage Day(DD/MM)</label><br>
 <input type="text" id='mdt'  Placeholder="Marriage Anniversary" ><br><br>
 
-<button value="submit" id="submitButton">Submit</button><br>
+<button onclick="sendEmail()" value="submit" id="submitButton">Submit</button><br>
 
 <script>
 
-
+body1=""
 
 
 
@@ -120,9 +123,33 @@ document.getElementById("penbr").value = myRecord[0].penbr
 document.getElementById("bdt").value = myRecord[0].bd +"/"+ myRecord[0].bm
 document.getElementById("mdt").value = myRecord[0].md +"/"+myRecord[0].mm
 
+body1 =
+`SRNO: ${getsrno}%0D%0AName:${myRecord[0].name}%0D%0A
+Add1: ${myRecord[0].add1}%0D%0A
+Add2: ${myRecord[0].add2}%0D%0A
+Add3: ${myRecord[0].add3}%0D%0A
+Add4: ${myRecord[0].add4}%0D%0A
+PIN: ${myRecord[0].pin}%0D%0A
+Email: ${myRecord[0].email}%0D%0A
+Mobile 1: ${myRecord[0].mob1}%0D%0A
+Mobile 2: ${myRecord[0].mob2}%0D%0A
+Fixed Line:: ${myRecord[0].fix}%0D%0A
+Retirement Date (DD/MM/YYYY): ${ddmmyyyy}%0D%0A
+Previously Worked Branches: ${myRecord[0].brlist}%0D%0A
+Last worked branch: ${myRecord[0].lastbr}%0D%0A
+Pension Branch: ${myRecord[0].penbr}%0D%0A
+Birthday (DD/MM): ${myRecord[0].bd}/${myRecord[0].bm}%0D%0A
+Marriage Anniversary (DD/MM): ${myRecord[0].md}/${myRecord[0].mm}%0D%0A
+`
+body1=body1.replaceAll("\n","")
+}
 
+function sendEmail(){
+window.open('mailto:gvssmark@gmail.com?subject=Data Update&body='+body1)
 
 }
+//<input type="button" onclick="window.open('mailto:your@email.address?subject=Comments about the color blue');" value="Contact us" />
+
 
 </script>
 
