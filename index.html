@@ -1,4 +1,5 @@
 
+
 <!DOCTYPE html>
 <html>
 <head>
@@ -11,7 +12,9 @@ input::-webkit-outer-spin-button,
 input::-webkit-inner-spin-button {
   -webkit-appearance: none;
   margin: 0;
+  
 }
+.chkbox{width:20px;}
 input {font-weight:bold; width:350px; background:lightyellow; border:1px solid black; height:30px; outline:0;  transition: 0.2s 
 
 ease-in;}
@@ -39,56 +42,16 @@ getMyData ()
 <input type="number"  id='srnoInput'  Placeholder="Enter SR No" ><br><br>
 <button onclick = "getRecord()" id='btn1' value="submit" id="submitButton">Get Data </button><br>
 <hr>
-<label for="fname">Name</label><br>
-<input type="text" id='name' placeholder=" Name"><br>
 
-<label for="fname">Address 1- Flat No and Apartment Name / Plot No & Building Name</label><br>
-<input type="text" id='add1'  placeholder=" Address 1- "><br>
 
-<label for="fname">Address 2-Area / Locality / Colony</label><br>
-<input type="text" id='add2'   Placeholder="Address 2" ><br>
+<table border=1 id='dataTable' style="border-collapse:collapse; ">
 
-<label for="fname">Address 3-City / Town / Village</label><br>
-<input type="text" id='add3'  Placeholder="Address 3" ><br>
 
-<label for="fname">Address 4- State</label><br>
-<input type="text" id='add4'  Placeholder="Address 4" ><br>
 
-<label for="fname">PIN Code</label><br>
-<input type="text" id='pin'  Placeholder="PIN Code" ><br>
 
-<label for="fname">Email ID</label><br>
-<input type="text" id='email'  Placeholder="Email ID" ><br>
-
-<label for="fname">Mobile No 1</label><br>
-<input type="text" id='mob1'  Placeholder="Mobile No 1" ><br>
-
-<label for="fname">Mobile No.2</label><br>
-<input type="text" id='mob2'  Placeholder="Mobile No 2" ><br>
-
-<label for="fname">Fixed / Land Line with STD Code(Eg 040-40063528)</label>
-<br><input type="text" id='fix'  Placeholder="Fixed Line" ><br>
-
-<label for="fname">Date of Retirement</label><br>
-<input type="date" id='retdate'  Placeholder="dd-nn-yyyy" ><br>
-
-<label for="fname">Prviously Worked branches / Offices (Optional)</label><br>
-<textarea  rows="4" cols="50" id='brlist'  Placeholder="Branches worked"  /></textarea><br>
-
-<label for="fname">Last worked Branch / Office</label>
-<br><input type="text" id='lastbr'  Placeholder="Last Branch" ><br>
-
-<label for="fname">Pension Drawing Branch</label><br>
-<input type="text" id='penbr'  Placeholder="Pension Branch" ><br>
-
-<label for="fname">Birthday (DD/MM)</label>
-<br><input type="text" id='bdt'  Placeholder="Birthday" ><br>
-
-<label for="fname">Marriage Day(DD/MM)</label><br>
-<input type="text" id='mdt'  Placeholder="Marriage Anniversary" ><br><br>
+</table>
 
 <button onclick="sendEmail()" value="submit" id="submitButton">Submit</button><br>
-
 <script>
 
 body1=""
@@ -98,33 +61,41 @@ body1=""
 function getRecord(){
 getsrno =  document.getElementById("srnoInput").value
 myRecord = tempData.filter(a => a.srno===parseInt(getsrno))
-
-document.getElementById("name").value = myRecord[0].name
-document.getElementById("add1").value = myRecord[0].add1
-document.getElementById("add2").value = myRecord[0].add2
-document.getElementById("add3").value = myRecord[0].add3
-document.getElementById("add4").value = myRecord[0].add4
-document.getElementById("pin").value = myRecord[0].pin
-document.getElementById("email").value = myRecord[0].email
-document.getElementById("mob1").value = myRecord[0].mob1
-document.getElementById("mob2").value = myRecord[0].mob2
-document.getElementById("fix").value = myRecord[0].fix
-
 dd= String(new Date(myRecord[0].retdate).getDate()).padStart(2,"0")
 mm= String(new Date(myRecord[0].retdate).getMonth() + 1).padStart(2,"0");
 yyyy= new Date(myRecord[0].retdate).getFullYear();
 
 ddmmyyyy = dd+"/"+mm+"/"+yyyy
 yyyymmdd = yyyy+"-"+mm+"-"+dd
-document.getElementById("retdate").value =yyyymmdd
-document.getElementById("brlist").value = myRecord[0].brlist
-document.getElementById("lastbr").value = myRecord[0].lastbr
-document.getElementById("penbr").value = myRecord[0].penbr
-document.getElementById("bdt").value = myRecord[0].bd +"/"+ myRecord[0].bm
-document.getElementById("mdt").value = myRecord[0].md +"/"+myRecord[0].mm
+
+dataForTable =
+`
+<tr><td><input type="checkbox" class="chkbox" id="1" ><td>SRNO: ${getsrno}</td></tr>
+<tr><td><input type="checkbox" class="chkbox" id="1" ><td>Name:${myRecord[0].name}</td></tr>
+<tr><td><input type="checkbox" class="chkbox" id="1" ><td>Add1: ${myRecord[0].add1}</td></tr>
+<tr><td><input type="checkbox" class="chkbox" id="1" ><td>Add2: ${myRecord[0].add2}</td></tr>
+<tr><td><input type="checkbox" class="chkbox" id="1" ><td>Add3: ${myRecord[0].add3}</td></tr>
+<tr><td><input type="checkbox" class="chkbox" id="1" ><td>Add4: ${myRecord[0].add4}</td></tr>
+<tr><td><input type="checkbox" class="chkbox" id="1" ><td>PIN: ${myRecord[0].pin}</td></tr>
+<tr><td><input type="checkbox" class="chkbox" id="1" ><td>Email: ${myRecord[0].email}</td></tr>
+<tr><td><input type="checkbox" class="chkbox" id="1" ><td>Mobile 1: ${myRecord[0].mob1}</td></tr>
+<tr><td><input type="checkbox" class="chkbox" id="1" ><td>Mobile 2: ${myRecord[0].mob2}</td></tr>
+<tr><td><input type="checkbox" class="chkbox" id="1" ><td>Fixed Line:: ${myRecord[0].fix}</td></tr>
+<tr><td><input type="checkbox" class="chkbox" id="1" ><td>Retirement Date (DD/MM/YYYY): ${ddmmyyyy}</td></tr>
+<tr><td><input type="checkbox" class="chkbox" id="1" ><td>Previously Worked Branches: ${myRecord[0].brlist}</td></tr>
+<tr><td><input type="checkbox" class="chkbox" id="1" ><td>Last worked branch: ${myRecord[0].lastbr}</td></tr>
+<tr><td><input type="checkbox" class="chkbox" id="1" ><td>Pension Branch: ${myRecord[0].penbr}</td></tr>
+<tr><td><input type="checkbox" class="chkbox" id="1" ><td>Birthday (DD/MM): ${myRecord[0].bd}/${myRecord[0].bm}</td></tr>
+<tr><td><input type="checkbox" class="chkbox" id="1" ><td>Marriage Anniversary (DD/MM): ${myRecord[0].md}/${myRecord[0].mm}</td></tr>
+
+`
+document.getElementById('dataTable').innerHTML=dataForTable
+dataForTable=dataForTable.replaceAll("\n","")
+
 
 body1 =
-`SRNO: ${getsrno}%0D%0AName:${myRecord[0].name}%0D%0A
+`SRNO: ${getsrno}%0D%0A
+Name:${myRecord[0].name}%0D%0A
 Add1: ${myRecord[0].add1}%0D%0A
 Add2: ${myRecord[0].add2}%0D%0A
 Add3: ${myRecord[0].add3}%0D%0A
