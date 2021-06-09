@@ -1,5 +1,6 @@
 
 
+
 <!DOCTYPE html>
 <html>
 <head>
@@ -44,18 +45,69 @@ getMyData ()
 <hr>
 
 
-<table width=90% border=1 id='dataTable' style="border-collapse:collapse; ">
+<table width=90% border=1 id='dataTable' style="border-collapse:collapse; margin:auto;">
 
 
 
 
 </table>
 
-<button onclick="sendEmail()" value="submit" id="submitButton">Submit</button><br>
+<button onclick="getSelectedCheckboxValues()" value="submit" id="btn">Submit</button><br>
 <script>
 
 body1=""
+selectedValues=[]
+msgbody=""
+textForSelectedValues=
+{
+srno: 'SRNO: ', 
+name: 'NAME: ', 
+add1: 'ADD1: ', 
+add2: 'ADD2: ', 
+add3: 'ADD3: ', 
+add4: 'ADD4: ', 
+pin: 'PIN: ', 
+email: 'EMAIL: ', 
+mob1: 'MOBILE1: ', 
+mob2: 'MOBILE2: ', 
+fix: 'FIXED LINE: ', 
+retdate: 'RETIREMENT DATE: ', 
+brlist: 'PREVIOUSLY WORKED BRANCHES: ',  
+lastbr: 'LAST WORKED BRANCH: ', 
+penbr: 'PENSION BRANCH: ', 
+bday: 'BIRTHDAY: ', 
+mday: 'MARRIAGE ANNIVERSARY: '
+}
 
+
+function getSelectedCheckboxValues(name) {
+myRecord[0].retdate=ddmmyyyy
+myRecord[0].bday=myRecord[0].bd+"/"+myRecord[0].bm
+myRecord[0].mday=myRecord[0].md+"/"+myRecord[0].mm
+    const checkboxes = document.querySelectorAll(`input[name="${name}"]:checked`);
+    selectedValues=[]
+    //let selectedValues = [];
+    checkboxes.forEach((checkbox) => {
+        selectedValues.push(checkbox.value);
+    });
+    return selectedValues;
+}
+
+const btn = document.querySelector('#btn');
+btn.addEventListener('click', (event) => {
+    alert(getSelectedCheckboxValues('chkbox'));
+ //   alert(getSelectedCheckboxValues('chkbox.value'));
+msgbody=""    
+ //select values from data
+ for(i=0; i<selectedValues.length; i++)
+{
+whatIsSelected = myRecord[0][selectedValues[i]]
+msgbody +=(textForSelectedValues[selectedValues[i]]+ whatIsSelected +'%0D%0A' )
+}
+window.open('mailto:gvssmark@gmail.com?subject=Data Update&body=Please update the following Data%0D%0A%0D%0A'+msgbody)
+    
+    
+});
 
 
 function getRecord(){
@@ -67,59 +119,39 @@ yyyy= new Date(myRecord[0].retdate).getFullYear();
 
 ddmmyyyy = dd+"/"+mm+"/"+yyyy
 yyyymmdd = yyyy+"-"+mm+"-"+dd
+bday= myRecord[0].bd+"/"+myRecord[0].bm
+mday= myRecord[0].md+"/"+myRecord[0].mm
+
 
 dataForTable =
 `
-<tr><td><input type="checkbox" class="chkbox" id="1" ><td>SRNO: ${getsrno}</td></tr>
-<tr><td><input type="checkbox" class="chkbox" id="1" ><td>Name:${myRecord[0].name}</td></tr>
-<tr><td><input type="checkbox" class="chkbox" id="1" ><td>Add1: ${myRecord[0].add1}</td></tr>
-<tr><td><input type="checkbox" class="chkbox" id="1" ><td>Add2: ${myRecord[0].add2}</td></tr>
-<tr><td><input type="checkbox" class="chkbox" id="1" ><td>Add3: ${myRecord[0].add3}</td></tr>
-<tr><td><input type="checkbox" class="chkbox" id="1" ><td>Add4: ${myRecord[0].add4}</td></tr>
-<tr><td><input type="checkbox" class="chkbox" id="1" ><td>PIN: ${myRecord[0].pin}</td></tr>
-<tr><td><input type="checkbox" class="chkbox" id="1" ><td>Email: ${myRecord[0].email}</td></tr>
-<tr><td><input type="checkbox" class="chkbox" id="1" ><td>Mobile 1: ${myRecord[0].mob1}</td></tr>
-<tr><td><input type="checkbox" class="chkbox" id="1" ><td>Mobile 2: ${myRecord[0].mob2}</td></tr>
-<tr><td><input type="checkbox" class="chkbox" id="1" ><td>Fixed Line:: ${myRecord[0].fix}</td></tr>
-<tr><td><input type="checkbox" class="chkbox" id="1" ><td>Retirement Date (DD/MM/YYYY): ${ddmmyyyy}</td></tr>
-<tr><td><input type="checkbox" class="chkbox" id="1" ><td>Previously Worked Branches: ${myRecord[0].brlist}</td></tr>
-<tr><td><input type="checkbox" class="chkbox" id="1" ><td>Last worked branch: ${myRecord[0].lastbr}</td></tr>
-<tr><td><input type="checkbox" class="chkbox" id="1" ><td>Pension Branch: ${myRecord[0].penbr}</td></tr>
-<tr><td><input type="checkbox" class="chkbox" id="1" ><td>Birthday (DD/MM): ${myRecord[0].bd}/${myRecord[0].bm}</td></tr>
-<tr><td><input type="checkbox" class="chkbox" id="1" ><td>Marriage Anniversary (DD/MM): ${myRecord[0].md}/${myRecord[0].mm}</td></tr>
+<tr><td><input class='chkbox' type="checkbox" name="chkbox" value="srno" ><td>SRNO: ${myRecord[0].srno}</td></tr>
+<tr><td><input class='chkbox' type="checkbox" name="chkbox" value="name" ><td>Name:${myRecord[0].name}</td></tr>
+<tr><td><input class='chkbox' type="checkbox" name="chkbox" value="add1" ><td>Add1: ${myRecord[0].add1}</td></tr>
+<tr><td><input class='chkbox' type="checkbox" name="chkbox" value="add2" ><td>Add2: ${myRecord[0].add2}</td></tr>
+<tr><td><input class='chkbox' type="checkbox" name="chkbox" value="add3" ><td>Add3: ${myRecord[0].add3}</td></tr>
+<tr><td><input class='chkbox' type="checkbox" name="chkbox" value="add4" ><td>Add4: ${myRecord[0].add4}</td></tr>
+<tr><td><input class='chkbox' type="checkbox" name="chkbox" value="pin" ><td>PIN: ${myRecord[0].pin}</td></tr>
+<tr><td><input class='chkbox' type="checkbox" name="chkbox" value="email" ><td>Email: ${myRecord[0].email}</td></tr>
+<tr><td><input class='chkbox' type="checkbox" name="chkbox" value="mob1" ><td>Mobile 1: ${myRecord[0].mob1}</td></tr>
+<tr><td><input class='chkbox' type="checkbox" name="chkbox" value="mob2" ><td>Mobile 2: ${myRecord[0].mob2}</td></tr>
+<tr><td><input class='chkbox' type="checkbox" name="chkbox" value="fix" ><td>Fixed Line:: ${myRecord[0].fix}</td></tr>
+<tr><td><input class='chkbox' type="checkbox" name="chkbox" value="retdate" ><td>Retirement Date (DD/MM/YYYY): ${ddmmyyyy}</td></tr>
+<tr><td><input class='chkbox' type="checkbox" name="chkbox" value="brlist" ><td>Previously Worked Branches: ${myRecord[0].brlist}</td></tr>
+<tr><td><input class='chkbox' type="checkbox" name="chkbox" value="lastbr" ><td>Last worked branch: ${myRecord[0].lastbr}</td></tr>
+<tr><td><input class='chkbox' type="checkbox" name="chkbox" value="penbr" ><td>Pension Branch: ${myRecord[0].penbr}</td></tr>
+<tr><td><input class='chkbox' type="checkbox" name="chkbox" value="bday" ><td>Birthday (DD/MM): ${bday}</td></tr>
+<tr><td><input class='chkbox' type="checkbox" name="chkbox" value="mday" ><td>Marriage Anniversary (DD/MM): ${mday}</td></tr>
 
 `
 document.getElementById('dataTable').innerHTML=dataForTable
 dataForTable=dataForTable.replaceAll("\n","")
-
-
-body1 =
-`SRNO: ${getsrno}%0D%0A
-Name:${myRecord[0].name}%0D%0A
-Add1: ${myRecord[0].add1}%0D%0A
-Add2: ${myRecord[0].add2}%0D%0A
-Add3: ${myRecord[0].add3}%0D%0A
-Add4: ${myRecord[0].add4}%0D%0A
-PIN: ${myRecord[0].pin}%0D%0A
-Email: ${myRecord[0].email}%0D%0A
-Mobile 1: ${myRecord[0].mob1}%0D%0A
-Mobile 2: ${myRecord[0].mob2}%0D%0A
-Fixed Line:: ${myRecord[0].fix}%0D%0A
-Retirement Date (DD/MM/YYYY): ${ddmmyyyy}%0D%0A
-Previously Worked Branches: ${myRecord[0].brlist}%0D%0A
-Last worked branch: ${myRecord[0].lastbr}%0D%0A
-Pension Branch: ${myRecord[0].penbr}%0D%0A
-Birthday (DD/MM): ${myRecord[0].bd}/${myRecord[0].bm}%0D%0A
-Marriage Anniversary (DD/MM): ${myRecord[0].md}/${myRecord[0].mm}%0D%0A
-`
-body1=body1.replaceAll("\n","")
 }
 
-function sendEmail(){
-window.open('mailto:gvssmark@gmail.com?subject=Data Update&body='+body1)
 
-}
-//<input type="button" onclick="window.open('mailto:your@email.address?subject=Comments about the color blue');" value="Contact us" />
+
+
+
 
 
 </script>
