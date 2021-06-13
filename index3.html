@@ -1,0 +1,673 @@
+
+
+<!DOCTYPE html>
+<html>
+<head>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>IBAP RETIREES GOOGLE GROUP</title>
+
+<script src="index.js" defer></script>
+<link rel="manifest" href="manifest.json">
+<meta name="theme-color" content="#317EFB"/>
+  
+  
+<style>
+  body{overscroll-behavior: contain;}
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+#footerdiv td {
+  width: 20% ;
+}
+table {
+  /* Not required only for visualizing */
+  border-collapse: collapse; margin:auto;  
+  width: 95%;
+}
+tr:hover {
+  background-color: #f1f1f1;
+}
+table thead tr th {
+  /* Important */
+  background-color: red;
+  position: sticky;
+  z-index: 100;
+// margin-top:55px; 
+ top: 0;
+  color:white;
+}
+
+td {
+  /* Not required only for visualizing */
+  padding: .15em;
+}
+
+.button {
+  background-color: #4CAF50; /* Green */
+  border: none;
+  color: white;
+  padding: 15px 32px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 16px;
+  margin: 4px 2px;
+  cursor: pointer;
+  width:300px;
+  margin-left:30px;
+  border-radius:20px;
+ box-shadow: 0 8px 8px 0  rgba(0,0,0,0.5);
+}
+a:link {
+  text-decoration: none;
+  color: white;
+}
+.button2 {background-color: #008CBA;} /* Blue */
+.button3 {background-color: #f44336;} /* Red */ 
+.button4 {background-color: #e7e7e7; color: black;} /* Gray */ 
+.button5 {background-color: #555555;} /* Black */
+.button6 {background-color: lightpink;} /* Black */
+
+.b1 {background-color: #008CBA;} /* Blue */
+.b2 {background-color: #f44336;} /* Red */ 
+.b3 {background-color: #e7e7e7; color: black;} /* Gray */ 
+.b4 {background-color: #555555;} /* Black */
+.b5 {background-color: lightpink;} /* Black */
+.b6 {background-color:  #4CAF50; /* Green */
+
+b{color:red; }
+</style>
+
+</head>
+<body style="background-color:powderblue; width:360px; margin-left: 0px; font-size:small;">
+
+<div id="homeDiv"  onclick="showHome()" style="width:50px;; height:50px; border-radius:50px; margin-left:300px;  padding:0px;  margin-top:-6px; z-index:9;  background:red; position: fixed; color:white; text-align:center; display:none "><br>Home</div>
+
+<div id='footerdiv' align= center style=" width:360px;   height:25px;  bottom:0; position:fixed; display:none; color:white">
+<table style="text-align:center; td:width:20%">
+
+<tr>
+<td class='b1' onclick="searchByName()"  >Search
+<td class='b2' onclick="eventsThisWeek()">Events
+<td  class='b3' onclick="showcities()">Lives in
+<td  class='b1' onclick="brworked_table()">BrWorked
+<td class='b4' onclick="rawDataTable()">Mobile
+<!--<td class='b6' onclick="aboutDiv()">About -->
+</table>
+
+</div>
+
+<!--   Branches Worked                -->
+<div id="div_brworked" style="display:none">
+<div style="background:powderblue; width:360px;   height:40px; margin-top:50px; top:0; position:fixed; ">
+<input type="text"  id='input_brworked' onkeyup="searchBranch()" style="margin-top:5px; width:180px; margin-left:25%; height:30px; border-radius:15px;  background-color: white;  border:0px;  outline:0;  "  placeholder="Search for a Branch here...">
+</div>
+<p id='getnames_brworked' style="margin-left :5px; margin-top:100px;"></p>
+
+</div>
+
+<div id="div_brworked_list" style="display:none">
+<p id='para_brworked_list' style="margin-left :5px; "></p>
+</div>
+
+
+
+<!--   Branches Worked   End             -->
+
+
+
+<div style='margin-top:65px' id='logindiv'>
+
+<input id='loginSrNo' placeholder= "Enter SR No to view address book" style="margin-top:55px; margin-left:30px; width:300px;  height:30px; border-radius:15px;  background-color: cyan;  border:0px;  outline:0;  " type="number" oninput="this.value = this.value.replace(/[^0-9]/g, '').replace(/(\..*)\./g, '$1');" 
+onfocus="javascript:document.getElementById('notAmember').style.display = 'none' "
+><br><br><br>
+
+<input  class="button button2" type="button" value='Submit'  onclick="verifyLogin()"  >
+<br><br>
+<p align=center id='notAmember' style="display:none; font-size:x-large; margin:auto; "><b>You are not a Member<br><a href='https://docs.google.com/forms/d/e/1FAIpQLSeBrp4C8dL5uSj3HmE8r9bBpgwTGcuzzPAyce7Y1BDotK2jVw/viewform?usp=sf_link'>Submit Your Data</a></b></p>
+</div>
+
+
+<div style="width:360px; margin:auto">
+<div id='city_div' style="display:none; margin:auto; ">
+<br><br>
+<h3 align=center>Place of Stay</h3>
+<p id='getnCityNmes' ></p>
+<br><br><br>
+
+</div>
+<div id='inThisCity' style="display:none">
+<br><br><br>
+<h3 align=center>Retirees living in </h3>
+
+<p id='inThisCityPara' style="margin-left:20px; "></p>
+<br><br>
+
+</div>
+
+<div style="text-align:center; width:360px; height:50px; position:fixed; background-color: yellow; top:0px;    ">
+
+
+
+<h3 id='header'>IB AP Retirees' Google Group</h3>
+
+</div>
+<div id='buttons_div' style='display:none; '>
+<br><br><br><br>
+<button onclick="searchByName()"  class="button">Search by Name</button><br><br>
+<button onclick="eventsThisWeek()" class="button button2">Events This Week</button><br><br>
+<button onclick="showcities()" class="button button3">Lives in</button><br><br>
+<button onclick="brworked_table()" class="button button4">Who Worked in This Branch</button><br><br>
+<button onclick="rawDataTable()" class="button button6">Mobile Search</button><br><br>
+<button   onclick="clickDataCorrection()" class="button button3" style="text-decoration: none;">Data Correction </button><br><br>
+<button onclick="aboutDiv()"class="button button5">About</button><br>
+</div>
+
+<div id="div1" style="display:none">
+<input type="text"  id='myInput' onkeyup="dispdata()" style="margin-top:55px; width:180px; margin-left:25%; height:30px; border-radius:15px;  background-color: cyan;  border:0px;  outline:0;  "  placeholder="Search for a Name here...">
+
+<p id='getnames' style="margin-left :50px; "></p>
+
+</div>
+<div  id="div2" style="width:360px; margin: auto; position:center; ; display:none">
+<br><br><br>
+<div id='photo' style="float:center; top:0; margin-left:0px; width:100px; margin:auto; "></div>
+<p id="details" style="margin-left:5px; "> </p>
+
+
+</div>
+
+<div id="rawDataDiv" style="width:360px; margin: auto; position:center; ; display:none;    ">
+<input type="number"  id='searchMobile' onkeyup="searchMobi()" style=" margin-bottom:0px; margin-top:55px; width:180px; margin-left:25%; height:30px; border-radius:15px;  background-color: cyan;  border:0px;  outline:0;  "  placeholder="Search for a Mobile Number...">
+
+<p id='radDataText' style=""></p>
+
+</div>
+<div  id='dataCorrection'  style=" width:340px; margin: auto; position:center; margin-top:60px;    display:none">
+<p style="font-size:large; text-align:center">
+For Data updation please send a WhatsApp Message/ Email to the following persons<br><br>
+<b>VM Seshasayan:</b> <br>Mobile9849750184 <br>Email: seshasayan.vm@gmail.com<br><br>
+<b>GVSS Markandeyulu: </b><br>Mobile 9989036183<br> Email: gvssmark@gmail.com
+<br><br>
+
+<b>  Please Allow 1 or 2 days for updating the data..</b>
+<p >
+ <br><br>
+</p>
+</p>
+</div>
+
+
+<div  id='about'  style=" width:340px; margin: auto; position:center; margin-top:60px;    display:none">
+<p style="font-size:15px; margin:5px ; text-align:justify; ">
+<b>IBAP-Retirees Google Group</b> was started  with an intention, to have a common platform, to discuss about Retirees Issues and for exchanges of thoughts of common interest, among the retirees of Indian Bank of AP & Telangana States. This group is not affiliated to any Association. No membership fees to join this group. Presently, we have <span id='a1'></span> members in this group.<br><br>
+
+<b>Address Book</b>    Later we thought, it will be convenient to have an address book of  Indian Bank Retirees of Telangana and Andhra Pradesh, with Photos. So we have designed a format to have the details of the retirees and upto now <span id='a2'></span> retired staff members irrespective of their designation in the Bank and irrespective of their affiliation to the associations gave their details.<br><br>
+
+<b>IB Friends WhatsApp group</b>      Subsequently, we have started IB Friends WhatsApp group for the convenience of Smart Phone mobile users. Presently there are 201 participants in this group.<br><br>
+
+
+All the three groups are separate. Retired staff members can choose any one , or two or all the three groups. This is purely optional. <br><br> Once again, we wish to inform you that <mark>these three groups are not a part of  any association nor against any association</mark>. These are purely for inter communication among the Retired Staff members of Indian Bank.<br><br>
+
+
+</p>
+
+</div>
+
+
+
+</div>
+
+
+
+<script>
+
+
+function showHome(){
+hide()
+document.getElementById("buttons_div").style.display = "block";
+}
+
+
+
+function clickDataCorrection(){
+
+document.getElementById("dataCorrection").style.display = "block";
+document.getElementById("buttons_div").style.display = "none";
+document.getElementById("footerdiv").style.display = "block";
+
+}
+
+
+function verifyLogin(){
+logsrno = document.getElementById("loginSrNo").value
+logindata= tempData.filter(a => a.srno ===logsrno*1)
+if(logindata.length === 1){
+document.getElementById("buttons_div").style.display = "block";
+document.getElementById("logindiv").style.display = "none";
+}
+else{ document.getElementById("notAmember").style.display = "block";
+document.getElementById("loginSrNo").value=""
+}
+}
+
+
+function aboutDiv(){
+hide()
+document.getElementById("about").style.display = "block";
+a1.innerHTML=tempData.length
+a2.innerHTML=tempData.length
+document.getElementById("header").innerHTML="IB AP Retirees' Google Group"
+}
+brselected=""
+tempData=""
+newcities = []
+mycities=[]
+livesin=[]
+cityTable=""
+selectedCity=""
+inThisCity=""
+cd= new Date()
+fd = new Date();
+monthsArray=["", "Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"]
+fd.setDate(fd.getDate() + 7);
+//cd.setDate(cd.getDate() + 21);
+currMonth =cd.getMonth()+1
+currDate  =cd.getDate()
+futureMonth =fd.getMonth()+1
+futureDate =fd.getDate()
+//JSON Data from the following url
+url='https://script.google.com/macros/s/AKfycbwU43y7aw-hY8rjx77YgViB5Vs2H5yv7i5GMuUUfB6YMLbEQn3D/exec'
+
+async function getMyData (){
+response= await fetch(url)
+data= await response.json()
+tempData=data["user"].sort((a, b) => a.srno - b.srno);
+
+alphasorted = tempData.sort((a, b) => {
+    let fa = a.name.toLowerCase(), fb = b.name.toLowerCase();
+    if (fa < fb) {return -1;}
+    if (fa > fb) {return  1;}
+    return 0;
+})
+allmarriagedays = alphasorted.filter(a => a.mm != 0)
+allbirthdays = alphasorted.filter(a => a.bm != 0)
+mycities = Array.from(new Set(tempData.map(s => s.add3))).sort()
+brworked = tempData.filter(a => a.newbrlist.toLowerCase().includes("governor".toLowerCase())) // yet to be coded
+whoworked = tempData.filter(a => a.newbrlist.toLowerCase().includes("governor".toLowerCase())).map(a => ({srno: a.srno, name: a.name})).sort((a, b ) => a.name.localeCompare(b.name))
+whoworkedhere=""
+whoworked.forEach(function(a){whoworkedhere+= "<span onClick='nameclick(this.id)' id="+ a.srno + ">" +a.name + "</span><br>"})
+
+branchesList()
+eventsThisWeek_create()
+createCityTable()
+brworked_table_create()
+rawDataTable_create()
+}
+
+getMyData()
+
+function createCityTable(){
+cityTable ="<table id='citiesTable' width=340px border=1 align=center style='border-collapse:collapse; margin-left=0;'>"
+for (i=0; i<mycities.length; i++)
+{cityTable += "<tr><td>"+mycities[i] +"<td>" +mycities[i+1]
+i=i+1 }
+cityTable =  cityTable + '</table>'
+document.getElementById("getnCityNmes").innerHTML=cityTable
+}
+
+function brworked_table(){
+hide()
+document.getElementById("homeDiv").style.display = "block";
+document.getElementById("homeDiv").style.marginTop = "-99";
+document.getElementById("div_brworked").style.display = "block";
+}
+
+
+function showcities(){  // onclick of Lives in button
+hide()
+document.getElementById("homeDiv").style.display = "block";
+document.documentElement.scrollTop = 0;
+document.getElementById("city_div").style.display = "block";
+
+var table = document.getElementById("citiesTable");
+if (table != null) {
+    for (var i = 0; i < table.rows.length; i++) {
+        for (var j = 0; j < table.rows[i].cells.length; j++)
+        table.rows[i].cells[j].onclick = function () {
+            tableText(this);
+        };
+    }
+}
+}
+
+
+
+function searchByName(){ // onclik button search by name
+hide()
+document.getElementById("homeDiv").style.display = "block";
+document.documentElement.scrollTop = 0;
+document.getElementById("div1").style.display = "block";
+document.getElementById("getnames").innerHTML="" 
+}
+
+
+function brworked_table_create(){
+uniqueArray= uniqueArray.sort()
+brworked_table_text="<table border=1 id='id_brWorked'>"
+ttext=""
+for(i=1; i<uniqueArray.length; i++){
+ttext += "<tr><td>" + uniqueArray[i]
+}
+brworked_table_text += ttext + "</table><br><br><br>"
+getnames_brworked.innerHTML=brworked_table_text
+
+var table = document.getElementById("id_brWorked");
+if (table != null) {
+    for (var i = 0; i < table.rows.length; i++) {
+        for (var j = 0; j < table.rows[i].cells.length; j++)
+        table.rows[i].cells[j].onclick = function () {
+            brworkedtableText(this);
+        };
+    }
+}
+
+}
+
+
+
+
+
+function dispdata(){ // take input from input box and display names containing the text
+
+let  filter = document.getElementById("myInput").value.toLowerCase()
+if (filter.length<=4){document.getElementById("getnames").innerHTML="" }
+if (filter.length>=3){
+toTable = tempData.filter(a => a.name.toLowerCase().includes(filter.toLowerCase()))
+.sort((a, b) => {
+    let fa = a.name.toLowerCase(), fb = b.name.toLowerCase();
+    if (fa < fb) {return -1;}
+    if (fa > fb) {return  1;}
+    return 0;
+}).map (a => [a.srno, a.name]);
+tablebody=""
+toTable.forEach(function(a){tablebody+= "<span onClick='nameclick(this.id)' id="+ a[0] + ">" +a[1].toUpperCase() + "</span><br>"})
+document.getElementById("getnames").innerHTML=tablebody+"<br><br><br>"
+}
+}
+
+
+
+function nameclick(membershipNo){  // on click of a name will show biodata . this data is to formatted
+document.documentElement.scrollTop = 0;
+hide()
+document.getElementById("div2").style.display = "block";
+document.getElementById("myInput").value=""
+//membno= membershipNo*1-1 ; 
+membData= tempData.filter(a => a.srno ===membershipNo*1)
+picture = "<img  src='https://drive.google.com/uc?export=view&id=" + membData[0].photoid + "' border=0 align='center' alt='Smiley face' width='100' height='100' style='border-radius:10px;'> "
+monthsArray=["", "Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"]
+//toDisplay = "Name:  " + membData[0].name + "<br>"
+//toDisplay += "SR No:" + membData[0].srno + "<br>"
+toDisplay = "<table border=1 width=340px;><tr><td  ><b>Address :</b><br>" + membData[0].add1 + "<br>"
+toDisplay +=  membData[0].add2 + "<br>"
+toDisplay +=  membData[0].add3 + "-"+ membData[0].pin +  "<br>"
+toDisplay += membData[0].add4 + "<br><td style='width:100px;'>" + picture+" <tr><td colspan=2><b>Contacts:</b><br>" 
+toDisplay += "Email: " + membData[0].email + "<br>"
+toDisplay += "<b>Phones </b><br>" + membData[0].mob1 + "/ " +membData[0].mob2+ "/ " + membData[0].fix 
+toDisplay += "<tr><td colspan=2>"
+toDisplay += "Retired on: " + new Date(membData[0].retdate).toDateString() + "<br>"
+toDisplay += "Last Br: " + membData[0].lastbr+ "<br>"
+toDisplay += "Pension Br: " + membData[0].penbr + "<br>"
+toDisplay += "Birthdat: " + monthsArray[membData[0].bm] + "," +  membData[0].bd+ "<br>"
+toDisplay += "Marriage Anniversary : " + monthsArray[membData[0].mm] + ", " +  membData[0].md + "<tr><td colspan=2>"
+toDisplay += "Branches Worked: " + membData[0].brlist + "</table><br>"
+
+//document.getElementById("photo").innerHTML=picture
+document.getElementById("details").innerHTML=toDisplay
+document.getElementById("header").innerHTML=membData[0].name 
+}
+
+
+function rawDataTable_create(){
+rawTable="<table id='mobileTable' border=1 align=center style=' margin-top:5px;   font-size: x-small; border-collapse: collapse; border: 1px solid black; '><thead><th style='height:50px; '>SR No<th>Name<th>Place<th>Mobile</thead>"
+xx=""
+  rawtempData=tempData.sort((a, b) => a.srno - b.srno);
+rawtempData.forEach(function(a){xx += "<tr><td>" + a.srno +"<td> <span onClick='nameclick(this.id)' id="+a.srno+ ">"+ a.name +" </span><td>" + a.add3 +"<td>"+a.mob1})
+rawTable += xx + "</table><br><br>"
+}
+
+function rawDataTable(){
+hide()
+document.getElementById("rawDataDiv").style.display = "block"; 
+document.getElementById("searchMobile").value="" 
+document.getElementById("radDataText").innerHTML=rawTable
+document.getElementById("footerdiv").style.display = "block";
+}
+
+
+function hide(){ // to hide the div elements
+document.documentElement.scrollTop = 0;
+document.getElementById("div_brworked").style.display = "none";
+document.getElementById("div2").style.display = "none";
+document.getElementById("div1").style.display = "none";
+document.getElementById("buttons_div").style.display = "none";
+document.getElementById("city_div").style.display = "none";
+document.getElementById("inThisCity").style.display = "none";
+document.getElementById("rawDataDiv").style.display = "none";
+document.getElementById("about").style.display = "none";
+document.getElementById("footerdiv").style.display = "block";
+document.getElementById("header").innerHTML="IB AP Retirees' Google Group"
+document.getElementById("div_brworked_list").style.display = "none";
+document.getElementById("div_brworked").style.display = "none";
+document.getElementById("dataCorrection").style.display = "none";
+  
+}
+
+
+
+
+function eventsThisWeek_create(){
+if(currMonth!=futureMonth){
+bdThisWeek = tempData.filter(a => ((a.bm === currMonth && a.bd >= currDate) || (a.bm === futureMonth && a.bd <=futureDate)))
+.sort(function(a, b){return (a.bm - b.bm || a.bd - b.bd   ) })
+.map(a => [a.srno, a.name, a.bm, a.bd])
+}
+
+else{
+bdThisWeek = tempData.filter(a => ((a.bm === currMonth && a.bd >= currDate && a.bd<= futureDate)))
+.sort(function(a, b){return (a.bm - b.bm || a.bd - b.bd   ) })
+.map(a => [a.srno, a.name, a.bm, a.bd])
+}
+
+if(currMonth!=futureMonth){
+mdThisWeek = tempData.filter(a => ((a.mm === currMonth && a.md >= currDate) || (a.mm === futureMonth && a.md <=futureDate))).sort(function(a, b){return (a.mm - b.mm || a.md - b.md ) }).map(a => [a.srno, a.name, a.mm, a.md])
+}
+else{
+mdThisWeek = tempData.filter(a => ((a.mm === currMonth && a.md >= currDate && a.md <= futureDate)))
+.sort(function(a, b){return (a.mm - b.mm || a.md - b.md ) })
+.map(a => [a.srno, a.name, a.mm, a.md])
+}
+bdtable="<table  border=1 align=center style='  border-collapse: collapse; border: 1px solid black; '><tr><td colspan=2 align=center style='background:pink;'> Birthdays"
+bdThisWeek.forEach(function(a){bdtable += "<tr><td><span onClick='nameclick(this.id)' id="+ a[0] + ">" + a[1]+ "</span><td>" + monthsArray[a[2]]+", "+ a[3]})
+
+bdtable += "<tr><td  colspan=2 align=center style='background:pink;'>Marriage Anniversaries"
+mdThisWeek.forEach(function(a){bdtable += "<tr><td><span onClick='nameclick(this.id)' id="+ a[0] + ">" + a[1]+ "</span><td>" + monthsArray[a[2]]+", "+ a[3]})
+
+bdtable += "</table><br><br>"
+}
+
+
+function eventsThisWeek(){  // onclick of Events this week button. this will show the birthday and marriage anniversaries. Will add 
+hide()
+document.getElementById("div2").style.display = "block";
+document.getElementById("details").innerHTML=bdtable
+}
+
+
+function branchesList(){  
+allbr = tempData.map(a => a.newbrlist)
+var myNewArray = allbr.reduce(function(prev, curr) {
+  return prev.concat(curr);
+});
+myNewArray.split(",")
+trimm = myNewArray.split(",")
+trimmed = trimm.map(a => a.trim())
+
+uniqueArray = trimmed.filter(function(item, pos) {
+    return trimmed.indexOf(item) == pos;
+})
+}
+
+function unq(a){
+return Array.from(new Set(a));
+}
+
+function weWorkedHere(){
+alphasorted = tempData.sort((a, b) => {
+    let fa = a.name.toLowerCase(), fb = b.name.toLowerCase();
+    if (fa < fb) {return -1;}
+    if (fa > fb) {return  1;}
+    return 0;
+})
+
+workedlist=""
+ggg = alphasorted.map(a => ({srno: a.srno, name: a.name, brlist: a.newbrlist}))
+for (i=0; i<ggg.length; i++){
+name=ggg[i].name
+brarray= ggg[i].brlist.split(",")
+brarray = unq(brarray)
+for (j=0; j<brarray.length; j++)
+if(brarray[j] === brselected){
+//alert(ggg[i].name)
+workedlist +=  "<tr><td><span onClick='nameclick(this.id)' id="+ ggg[i].srno + ">" + ggg[i].name + "</span>"
+}
+}
+
+}
+
+function brworkedtableText(tableCell) { //  for Lives in table
+brselected=tableCell.innerHTML
+//alert(brselected);
+
+weWorkedHere()
+//alert(workedlist)
+//workedlist +="<h4 >Members Worked in " + brselected+ "</h4><br><table border=1>" + workedlist + "</table><br><br><br>"
+
+document.getElementById("para_brworked_list").innerHTML="<br><br><h4 style='text-align: center;; color:red; '>Members Worked in " + brselected+ "</h4><br><table border=1>" + workedlist + "</table><br><br><br>"
+
+document.getElementById("div_brworked_list").style.display = "block";
+document.getElementById("input_brworked").value=""
+document.getElementById("div_brworked").style.display = "none";
+
+
+//whoworked = tempData.filter(a => a.newbrlist.toLowerCase()===(brselected.toLowerCase())).map(a => ({srno: a.srno, name: a.name})).sort((a, b ) => a.name.localeCompare(b.name))
+//whoworkedhere=""
+//whoworked.forEach(function(a){whoworkedhere+= "<span onClick='nameclick(this.id)' id="+ a.srno + ">" +a.name + "</span><br>"})
+
+}
+
+function tableText(tableCell) { //  for Lives in table
+selectedCity=tableCell.innerHTML
+livesin = tempData.filter(a => a.add3.toLowerCase().includes(selectedCity.trim().toLowerCase())).map(a => [a.srno, a.name, a.add3,  a.pin])
+
+livesin.sort(function(a,b) {
+    return a[3]-b[3]
+});
+   selectedCityPersons()
+}
+
+function selectedCityPersons(){
+hide()
+
+cityPinsArray = Array.from(new Set(livesin.map(s => s[3]))).sort()
+citytable=""
+for (i=0; i<cityPinsArray.length; i++)
+{
+thisPin = cityPinsArray[i]
+citytable += "<b  style='color:red'>" + selectedCity +"-" +thisPin +"</b><br>"
+tempcity = livesin.filter(a => a[3] === thisPin)
+tempcity.sort(function(a, b){
+    if(a[1] < b[1]) { return -1; }
+    if(a[1] > b[1]) { return 1; }
+    return 0;
+})
+tempcity.forEach(function(a){citytable+= "<span onClick='nameclick(this.id)' id="+ a[0] + ">" +a[1] + "</span><br>"})
+citytable+= "<hr>"
+}
+document.getElementById("inThisCityPara").innerHTML=citytable
+document.getElementById("inThisCity").style.display = "block";
+document.getElementById("city_div").style.display = "none"
+}
+
+function searchBranch() {
+  var input, filter, table, tr, td, i, txtValue;
+  input = document.getElementById("input_brworked");
+  filter = input.value.toUpperCase();
+  table = document.getElementById("id_brWorked");
+  tr = table.getElementsByTagName("tr");
+  for (i = 0; i < tr.length; i++) {
+    td = tr[i].getElementsByTagName("td")[0];
+    if (td) {
+      txtValue = td.textContent || td.innerText;
+      if (txtValue.toUpperCase().indexOf(filter) > -1) {
+        tr[i].style.display = "";
+      } else {
+        tr[i].style.display = "none";
+      }
+    }       
+  }
+}
+
+
+function searchMobi() {
+  var input, filter, table, tr, td, i, txtValue;
+  input = document.getElementById("searchMobile");
+  filter = input.value.toUpperCase();
+  table = document.getElementById("mobileTable");
+  tr = table.getElementsByTagName("tr");
+  for (i = 0; i < tr.length; i++) {
+    td = tr[i].getElementsByTagName("td")[3];
+    if (td) {
+      txtValue = td.textContent || td.innerText;
+      if (txtValue.toUpperCase().indexOf(filter) > -1) {
+        tr[i].style.display = "";
+      } else {
+        tr[i].style.display = "none";
+      }
+    }       
+  }
+}
+
+
+function allevents(){
+table=""
+for (i=0; i<tempData.length; i++){
+m_month = tempData[i].mm
+b_month = tempData[i].bm
+m_month = m_month ? m_month : 0
+b_month = b_month ? b_month : 0
+
+
+mymcolor = m_month ? "'cyan'" : "'red'"
+mybcolor = b_month ? "'cyan'" : "'red'"
+
+
+
+table +="<tr><td>" + tempData[i].srno
+table +="<td>" + tempData[i].name
+table +="<td class="+ mymcolor +">" + monthsArray[m_month] + tempData[i].md  
+table +="<td class="+ mybcolor +">" + monthsArray[b_month] + tempData[i].bd  
+}
+return "<table border=1>" + table + "</table>"
+}
+
+</script>
+
+
+</body>
+</html>
