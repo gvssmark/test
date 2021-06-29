@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<style>
+		body {
+			text-align: center;
+		}
+		
+		iframe {
+			width: 786px;
+			height: 600px;
+			border: 0;
+			overflow: hidden;
+		}
+	</style>
+</head>
+
+<body>
+	<h2 style="color:green">GeeksforGeeks</h2>
+	<h4 style="color:purple">Reload / Refresh an iframe</h4>
+	<iframe id="iframeid"
+   
+			src="https://gvssmark.github.io/gvss/otherfeatures.html"
+			width="600"
+			height="450"
+			frameborder="0"
+			style="border:0"
+			allowfullscreen>
+</iframe>
+	<input type="button"
+		id="btn"
+		value="Refresh" />
+
+	<script>
+		function reload() {
+			document.getElementById('iframeid').src += '';
+		}
+		btn.onclick = reload;
+	</script>
+
+</body>
+
+</html>
