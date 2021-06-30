@@ -25,7 +25,10 @@
 
 		<script>
 			function reload() {
+					document.getElementById('iframeid').style.display="none"
 				document.getElementById('iframeid').src += '';
+					document.getElementById('iframeid').style.display="block"
+
 			}
 			btn.onclick = reload;
 		</script>
