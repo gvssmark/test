@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html>
+<style>
+label {
+  margin:12px 0;
+  position:relative;
+  display:inline-block;
+
+}
+  
+span {
+  padding:5px;
+  pointer-events: none;
+  position:absolute;
+  left:15px;
+  top:0;
+  transition: 0.2s;
+  transition-timing-function: ease;
+   opacity:0.5;
+}
+
+input {
+  padding:5px;
+    border: none;
+  border-bottom: 1px solid red;
+ outline: none; 
+}
+
+input:focus + span, input:not(:placeholder-shown) + span {
+  opacity:1;
+  transform: scale(0.75) translateY(-100%) translateX(-30px);
+  background:cyan
+}
+
+/* For IE Browsers*/
+input:focus + span, input:not(:-ms-input-placeholder) + span {
+  opacity:1;
+  transform: scale(0.75) translateY(-100%) translateX(-30px);
+}
+</style>
+<body>
+<label>
+  <input placeholder=" ">
+  <span>Name</span>
+</label>
+<label>
+  <input type='number' placeholder=" ">
+  <span> SR No</span>
+</label>
+<label>
+  <input type='month'  placeholder=" ">
+  <span>dob</span>
+</label>
+
+
+</body>
+
+</html>
