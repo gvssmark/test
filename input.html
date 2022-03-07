@@ -1,58 +1,56 @@
 <!DOCTYPE html>
 <html>
+<head>
+ <meta name="viewport" content="width=device-width, initial-scale=1">
+
+</head>
 <style>
-label {
-  margin:12px 0;
-  position:relative;
-  display:inline-block;
 
-}
-  
-span {
-  padding:5px;
-  pointer-events: none;
-  position:absolute;
-  left:15px;
-  top:0;
-  transition: 0.2s;
-  transition-timing-function: ease;
-   opacity:0.5;
-}
 
-input {
-  padding:5px;
-    border: none;
-  border-bottom: 1px solid red;
- outline: none; 
-}
-
-input:focus + span, input:not(:placeholder-shown) + span {
-  opacity:1;
-  transform: scale(0.75) translateY(-100%) translateX(-30px);
-  background:cyan
-}
-
-/* For IE Browsers*/
-input:focus + span, input:not(:-ms-input-placeholder) + span {
-  opacity:1;
-  transform: scale(0.75) translateY(-100%) translateX(-30px);
+input{
+outline: none; 
+width:95%; 
+//height:35px; 
+//padding:5px;  
+  border: none;
+  border-bottom: 1px solid blue;
+color:red;
 }
 </style>
 <body>
-<label>
-  <input placeholder=" ">
-  <span>Name</span>
-</label>
-<label>
-  <input type='number' placeholder=" ">
-  <span> SR No</span>
-</label>
-<label>
-  <input type='month'  placeholder=" ">
-  <span>dob</span>
-</label>
+
+<h2>HTML Forms</h2>
+
+<form action="/action_page.php">
+<table><tr><td>
+<label for="fname">Year & Month </label><br>
+  <input type="month"  onchange='yymmChange()' id="yymm" name="fname" >
+  <td><label for="lname">Day</label><br>
+  <input onClick="onclick= this.value='' " 		type="number" id="dt" min="1" name="lname" value='30'>
+ </table><br><br>
+ <button type="submit" value="Submit">
+</form> 
+
+<p id='msg'>If you click the "Submit" button, the form-data will be sent to a page called "/action_page.php".</p>
+
+<script>
+
+function yymmChange(){
+document.getElementById('dt').value=""
+
+YYMM= document.getElementById('yymm').value
+yy=YYMM.substr(0,4)
+mm=YYMM.substr(5,2)
+document.getElementById('dt').max= (yy%4===0 & mm*1===2 ?29:maxdays[mm*1])
+
+document.getElementById('msg').innerHTML = yy +"--" +mm + "Maximun days=  " + (yy%4===0 & mm*1===2 ?29:maxdays[mm*1])
+
+}
+maxdays=[0,31,28,31,30,31,30,31,31,30,31,30,31]
+
+</script>
 
 
 </body>
-
 </html>
+
