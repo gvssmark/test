@@ -106,7 +106,7 @@ div{width:100%}
         <label for="srno">SR No</label>
       </div>
      
-      <button style="width:50vw; margin-left:25vw" onclick="checkMembership()"  class="btn btn-primary">Check Membership</button>
+      <button style="width:50vw; margin-left:25vw; " onclick="checkMembership()"  class="btn btn-primary">Check Membership</button>
       <!-if sr no is not already existing continue to show next div- all other questions in this div. hide the button>
       
         <div name='data' id='data' >
@@ -196,9 +196,9 @@ div{width:100%}
           </div>
           <div style="display:flex">
             <div class="form-floating mb-1 mt-1">
-              <input type="month" class="form-control" onchange="setMaxDate()"  name="mmyy" id='mmyy' placeholder="a"
+              <input type="month" class="form-control" onchange="setMaxDate()"  min='1922-01' max='1982-12' name="mmyy" id='mmyy' placeholder="a"
                 required>
-              <label for="mmyy">Birth Year and Month</label>
+              <label for="mmyy">Birth Month & Year</label>
             </div>
             <div class="form-floating mb-1 mt-1">
               <input type="number" class="form-control"  name="dt" id='dt' placeholder="a"
@@ -232,8 +232,8 @@ div{width:100%}
           </div>
           <div style="display:flex">
             <div class="form-floating mb-1 mt-1">
-              <input type="month" class="form-control" onchange="setMaxDate()" name="spmmyy" id='spmmyy' placeholder="a" required>
-              <label for="spmmyy">Spouse Birth Year and Month</label>
+              <input type="month" class="form-control" onchange="setMaxDate()"  min='1922-01' max='2002-12' name="spmmyy" id='spmmyy' placeholder="a" required>
+              <label for="spmmyy">Birth Month & Year</label>
             </div>
             <div class="form-floating mb-1 mt-1">
               <input type="number" class="form-control"  name="spdt" id='spdt' placeholder="a"
@@ -257,9 +257,9 @@ div{width:100%}
             </div>
             <div style="display:flex">
               <div class="form-floating mb-1 mt-1">
-                <input type="month" class="form-control" onchange="setMaxDate()" name="nommmyy" id='nommmyy'
+                <input type="month" class="form-control" onchange="setMaxDate()"  min='1922-01' max='2022-10' name="nommmyy" id='nommmyy'
                   placeholder="a" required>
-                <label for="nommmyy">Nominee Birth Year and Month</label>
+                <label for="nommmyy">Birth Month & Year</label>
               </div>
               <div class="form-floating mb-1 mt-1">
                 <input type="number" class="form-control"  name="nomdt" id='nomdt'
@@ -268,7 +268,7 @@ div{width:100%}
               </div>
             </div>
           </div>
-
+<br><br>
 
           <button style="width:50vw; margin-left:25vw" class="btn btn-primary" type="submit" value="Submit">Submit
             data</button>
