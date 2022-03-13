@@ -1,0 +1,379 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <title>IBRA Insurance Form</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
+  <style>
+    body {
+      font-size: SMALL;
+      BACKGROUND: #e7e9eb
+    }
+
+    p {
+      text-align: center;
+    }
+
+    h6 {
+      color: red;
+      text-align: center;
+    }
+
+    input::-webkit-outer-spin-button,
+    input::-webkit-inner-spin-button {
+      -webkit-appearance: none;
+      margin: 0;
+    }
+
+
+    /* Firefox */
+    input[type=number] {
+      -moz-appearance: textfield;
+    }
+
+    .modal {
+      display: none;
+      /* Hidden by default */
+      position: fixed;
+      /* Stay in place */
+      z-index: 1;
+      /* Sit on top */
+      padding-top: 1px;
+      /* Location of the box */
+      left: 0;
+      top: 0;
+      width: 100%;
+      /* Full width */
+      height: 100%;
+      /* Full height */
+      overflow: auto;
+      /* Enable scroll if needed */
+      background-color: rgb(0, 0, 0);
+      /* Fallback color */
+      background-color: rgba(0, 0, 0, 0.4);
+      /* Black w/ opacity */
+    }
+
+    /* Modal Content */
+    .modal-content {
+      background-color: red;
+      color: white;
+      font-size: large;
+      text-align: center;
+      margin: auto;
+      padding: 2px;
+      padding-bottom: 2px;
+      border: 1px solid #888;
+      width: 95%;
+      border-radius: 15px;
+      margin-top: 53px;
+    }
+
+    table {
+      /* Not required only for visualizing */
+      border-collapse: collapse;
+      ;
+      width: 100%;
+      margin-left: 1px;
+      margin-right: 1px;
+      border: 1px soild black;
+      font-size: small
+    }
+
+    h1 {
+      color: white;
+      text-shadow: 1px 1px 2px black, 0 0 25px blue, 0 0 5px darkblue;
+      padding: 20px;
+      box-shadow: 20px 20px 50px grey
+    }
+  </style>
+</head>
+
+<body>
+ 
+  <form action="/action_page.php">
+    <div class="container mt-3">
+      <div class="form-floating mb-1 mt-1">
+        <input type="number" class="form-control" name="pensionacno" min="1" max="9999999"
+          id='srno' placeholder="a" required>
+        <label for="srno">SR No</label>
+      </div>
+     
+      <button style="width:50vw; margin-left:25vw" onclick="checkMembership()"  class="btn btn-primary">Check Membership</button>
+      <!-if sr no is not already existing continue to show next div- all other questions in this div. hide the button>
+      
+        <div name='data' id='data' >
+          <h4>Remittance Details</h4>
+                    <div class="form-floating mb-1 mt-1">
+            <input type="text" class="form-control" name="refno" placeholder="a" required>
+            <label for="refno">Reference No</label>
+          </div>
+
+          <div class="form-floating mb-1 mt-1">
+            <select onchange="premiumSelected()" class="form-select" name="premiumpaid" placeholder="a" required>
+              <option value="">Select</option>
+              <option value="10661">10661</option>
+              <option value="14482">14482</option>
+              <option value="13039">13039</option>
+              <option value="17989">17989</option>
+              <option value="18979">18979</option>
+              <option value="16107">16107</option>
+              <option value="24358">24358</option>
+              <option value="16402">16402</option>
+              <option value="22281">22281</option>
+              <option value="20060">20060</option>
+              <option value="27676">27676</option>
+              <option value="29199">29199</option>
+              <option value="24780">24780</option>
+              <option value="37473">37473</option>
+            </select>
+            </select>
+            <label for="premiumpaid" class="form-label">Premium Paid</label>
+          </div>
+          <p id='dispPremiumDetails'> You have selected Policy type for Self with a base of rs and top up of Rs</p>
+                    <h4>Personal Details</h4>
+      <div class="form-floating mb-1 mt-1">
+        <input type="text" class="form-control" name="name" id='name' placeholder="a"
+          required>
+        <label for="name">Name</label>
+      </div>
+     <div class="form-floating mb-1 mt-1">
+            <input type="text" class="form-control" name="add1" placeholder="a" required>
+            <label for="add1">House No / Flat No / Plot No:</label>
+          </div>
+          <div class="form-floating mb-1 mt-1">
+            <input type="text" class="form-control" name="add2" placeholder="a" required>
+            <label for="add2">Area / Apartment / Building Name:</label>
+          </div>
+          <div class="form-floating mb-1 mt-1">
+            <input type="text" class="form-control" name="add3" placeholder="a" required>
+            <label for="add3">Locality:</label>
+          </div>
+          <div class="form-floating mb-1 mt-1">
+            <input type="text" class="form-control" name="add4" placeholder="a" required>
+            <label for="add4">Vill / Town / City:</label>
+          </div>
+          <div class="form-floating mb-1 mt-1">
+            <input type="text" class="form-control" name="district" placeholder="a" required>
+            <label for="district">District:</label>
+          </div>
+          <div style="display:flex">
+            <div class="form-floating mb-1 mt-1">
+              <input type="text" class="form-control" name="state" placeholder="a" required>
+              <label for="state">State:</label>
+            </div>
+            <div class="form-floating mb-1 mt-1">
+              <input type="number" class="form-control" name="pin" pattern="[1-8]{1}[0-9]{5}" placeholder="a" required>
+              <label for="pin">PIN Code:</label>
+            </div>
+          </div>
+          <div class="form-floating mb-1 mt-1">
+            <input type="tel" class="form-control" name="mobileno" pattern="[6-9]{1}[0-9]{9}" placeholder="a" required>
+            <label for="mobileno">Mobile Number:</label>
+          </div>
+          <div class="form-floating mb-1 mt-1">
+            <input type="email" class="form-control" name="email" placeholder="a" required>
+            <label for="email">Email:</label>
+          </div>
+          <div style="display:flex">
+            <div class="form-floating mb-1 mt-1">
+              <input type="text" class="form-control" name="adhar" id='adharInput' onfocusout="verifyAdhar()" pattern="[2-9]{1}[0-9]{11}" placeholder="a"
+                required>
+              <label for="adhar">Adhar Number</label>
+            </div>
+            <div class="form-floating mb-1 mt-1">
+              <input type="text" class="form-control" name="pan" id='pan'
+                pattern="[A-Za-z]{3}[Pp]{1}[A-Za-z]{1}[0-9]{4}[A-Za-z]{1}" placeholder="a" required>
+              <label for="pan">P A N</label>
+            </div>
+          </div>
+          <div style="display:flex">
+            <div class="form-floating mb-1 mt-1">
+              <input type="month" class="form-control" onchange="setMaxDate()"  name="mmyy" id='mmyy' placeholder="a"
+                required>
+              <label for="mmyy">Birth Year and Month</label>
+            </div>
+            <div class="form-floating mb-1 mt-1">
+              <input type="number" class="form-control"  name="dt" id='dt' placeholder="a"
+                required>
+              <label for="dt">Birth Date</label>
+            </div>
+          </div>
+          <div class="form-floating mb-1 mt-1">
+            <input type="text" class="form-control" name="gend" placeholder="a" pattern="[MF]{1}" required>
+            <label for="gend">Gender (Enter M or F only)</label>
+          </div>
+            <div class="form-floating mb-1 mt-1">
+                <input type="number" class="form-control" onfocusout="validateacno()" name="pensionacno"  min="100000001" max="99999999999"  id='pensionacno'  placeholder="a" required>
+               
+              <label for="dt">Pension Account Number</label>
+            </div>
+          
+          <div class="form-floating mb-1 mt-1">
+            <select class="form-select" name="retiredfrom" placeholder="a" required>
+              <option>Indian Bank</option>
+              <option>Allahabad Bank</option>
+            </select>
+            <label for="retiredfrom" class="form-label">Retired from:</label>
+          </div>
+        </div>
+        <div name='spousediv' id='spousediv' style='display:block;'>
+          <h4>Spouse Details</h4>
+          <div class="form-floating mb-1 mt-1">
+            <input type="text" class="form-control"  name="spname" id='spname' placeholder="a"   required>
+            <label for="spname">Spouse Name</label>
+          </div>
+          <div style="display:flex">
+            <div class="form-floating mb-1 mt-1">
+              <input type="month" class="form-control" onchange="setMaxDate()" name="spmmyy" id='spmmyy' placeholder="a" required>
+              <label for="spmmyy">Spouse Birth Year and Month</label>
+            </div>
+            <div class="form-floating mb-1 mt-1">
+              <input type="number" class="form-control"  name="spdt" id='spdt' placeholder="a"
+                required>
+              <label for="spdt">Birth Date</label>
+            </div>
+          </div>
+          </div>
+        
+        <div name='nomdiv' id='nomdiv' style='display:block;'>
+            <h4>Nominee Details</h4>
+            <div class="form-floating mb-1 mt-1">
+              <input type="text" class="form-control"  name="nomname" id='nomname'
+                placeholder="a" required>
+              <label for="nomname">Nominee Name</label>
+            </div>
+            <div class="form-floating mb-1 mt-1">
+              <input type="text" class="form-control"  name="nomrel" id='nomrel'
+                placeholder="a" required>
+              <label for="nomrel">Nominee Relationship</label>
+            </div>
+            <div style="display:flex">
+              <div class="form-floating mb-1 mt-1">
+                <input type="month" class="form-control" onchange="setMaxDate()" name="nommmyy" id='nommmyy'
+                  placeholder="a" required>
+                <label for="nommmyy">Nominee Birth Year and Month</label>
+              </div>
+              <div class="form-floating mb-1 mt-1">
+                <input type="number" class="form-control"  name="nomdt" id='nomdt'
+                  placeholder="a" required>
+                <label for="nomdt">Birth Date</label>
+              </div>
+            </div>
+          </div>
+
+
+          <button style="width:50vw; margin-left:25vw" class="btn btn-primary" type="submit" value="Submit">Submit
+            data</button>
+		</form>
+		<br><br><br>
+  </div>
+
+
+	<script type="text/javascript">
+	// multiplication table
+
+	function validate(aadharNumber) {
+	const d = [
+	    [0, 1, 2, 3, 4, 5, 6, 7, 8, 9],
+	    [1, 2, 3, 4, 0, 6, 7, 8, 9, 5],
+	    [2, 3, 4, 0, 1, 7, 8, 9, 5, 6],
+	    [3, 4, 0, 1, 2, 8, 9, 5, 6, 7],
+	    [4, 0, 1, 2, 3, 9, 5, 6, 7, 8],
+	    [5, 9, 8, 7, 6, 0, 4, 3, 2, 1],
+	    [6, 5, 9, 8, 7, 1, 0, 4, 3, 2],
+	    [7, 6, 5, 9, 8, 2, 1, 0, 4, 3],
+	    [8, 7, 6, 5, 9, 3, 2, 1, 0, 4],
+	    [9, 8, 7, 6, 5, 4, 3, 2, 1, 0]
+	]
+
+	// permutation table
+	const p = [
+	    [0, 1, 2, 3, 4, 5, 6, 7, 8, 9],
+	    [1, 5, 7, 6, 2, 8, 3, 0, 9, 4],
+	    [5, 8, 0, 3, 7, 9, 6, 1, 4, 2],
+	    [8, 9, 1, 6, 0, 4, 3, 5, 2, 7],
+	    [9, 4, 5, 3, 1, 2, 6, 8, 7, 0],
+	    [4, 2, 8, 6, 5, 7, 3, 9, 0, 1],
+	    [2, 7, 9, 3, 8, 0, 6, 4, 1, 5],
+	    [7, 0, 4, 6, 9, 1, 3, 2, 5, 8]
+	]
+
+let c = 0
+	    let invertedArray = aadharNumber.split('').map(Number).reverse()
+	    invertedArray.forEach((val, i) => {
+          c = d[c][p[(i % 8)][val]]
+            	    })
+	    return (c === 0)
+	}
+
+	function verifyAdhar() {
+		var aadharNo = document.getElementById("adharInput").value;
+		if(validate(aadharNo)) {
+             document.getElementById("adharInput").style.color="white"
+document.getElementById("adharInput").style.backgroundColor="Green"
+     	} else {
+   document.getElementById("adharInput").style.color="white"
+document.getElementById("adharInput").style.backgroundColor="red"
+        document.getElementById("adharInput").focus()
+		}
+	}
+    
+    
+    //------------- cbs acno validation
+    function validateacno(){
+acno=document.getElementById('pensionacno').value
+if (isvalidAcno(acno) == false){
+document.getElementById('pensionacno').style.color='white'
+document.getElementById('pensionacno').style.backgroundColor='red'
+
+document.getElementById('pensionacno').focus()
+}
+
+else{
+document.getElementById('pensionacno').style.color='white'
+document.getElementById('pensionacno').style.backgroundColor='green'
+}
+
+}
+
+function cbsc(acno){
+  myval=0;
+  acno =acno.toString()
+  l=acno.toString().length
+  for (j=1; j<=l; j++)   {
+  dval     =acno.substr(l-j,1)*1;    // digit value
+  dpos    =j;                               // digit position                  
+  digival  = DvDp(dval,dpos);    // pass the above values to DvDp function to get value for the above
+  myval=myval+digival ;           // cumulate the values and arrive check digit 
+    }
+  return ( myval %10 ); 
+}
+
+
+function DvDp(dv, dp) // Pass Digit Value and Digit positon to this function.
+{
+for (i=1; i<dp; i++) {
+  dv = dv*2
+  if (dv>11) {     dv= dv-11  }
+}  
+return dv;
+} 
+
+
+function isvalidAcno(a){
+compCD = cbsc(a.toString().slice(0,a.toString().length-1))
+givencd = a.toString().substr(-1)
+return compCD == givencd
+}
+    // --------------- acno validation end
+    
+	</script>
+
+
+</body>
+
+</html>
