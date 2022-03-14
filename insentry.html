@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -196,12 +197,12 @@ div{width:100%}
           </div>
           <div style="display:flex">
             <div class="form-floating mb-1 mt-1">
-              <input type="month" class="form-control" onchange="setMaxDate()"  min='1922-01' max='1982-12' name="mmyy" id='mmyy' placeholder="a"
+              <input type="month" class="form-control" onclick="clDate(dt)" onfocusout="setMaxDt(mmyy,dt)"  min='1922-01' max='1982-12' name="mmyy" id='mmyy' placeholder="a"
                 required>
               <label for="mmyy">Birth Month & Year</label>
             </div>
             <div class="form-floating mb-1 mt-1">
-              <input type="number" class="form-control"  name="dt" id='dt' placeholder="a"
+              <input type="number" class="form-control"  name="dt" id='dt' placeholder="a"  min="1" max="31"
                 required>
               <label for="dt">Birth Date</label>
             </div>
@@ -232,11 +233,11 @@ div{width:100%}
           </div>
           <div style="display:flex">
             <div class="form-floating mb-1 mt-1">
-              <input type="month" class="form-control" onchange="setMaxDate()"  min='1922-01' max='2002-12' name="spmmyy" id='spmmyy' placeholder="a" required>
+              <input type="month" class="form-control" onclick="clDate(spdt)" onfocusout="setMaxDt(spmmyy,spdt)"  min='1922-01' max='2002-12' name="spmmyy" id='spmmyy' placeholder="a" required>
               <label for="spmmyy">Birth Month & Year</label>
             </div>
             <div class="form-floating mb-1 mt-1">
-              <input type="number" class="form-control"  name="spdt" id='spdt' placeholder="a"
+              <input type="number" class="form-control"  name="spdt" id='spdt' placeholder="a"  min="1" max="31"
                 required>
               <label for="spdt">Birth Date</label>
             </div>
@@ -257,12 +258,12 @@ div{width:100%}
             </div>
             <div style="display:flex">
               <div class="form-floating mb-1 mt-1">
-                <input type="month" class="form-control" onchange="setMaxDate()"  min='1922-01' max='2022-10' name="nommmyy" id='nommmyy'
+                <input type="month" class="form-control" onclick="clDate(nomdt)" onfocusout="setMaxDt(nommmyy,nomdt)"  min='1922-01' max='2022-10' name="nommmyy" id='nommmyy'
                   placeholder="a" required>
                 <label for="nommmyy">Birth Month & Year</label>
               </div>
               <div class="form-floating mb-1 mt-1">
-                <input type="number" class="form-control"  name="nomdt" id='nomdt'
+                <input type="number" class="form-control"  name="nomdt" id='nomdt' min="1" max="31"
                   placeholder="a" required>
                 <label for="nomdt">Birth Date</label>
               </div>
@@ -374,7 +375,20 @@ givencd = a.toString().substr(-1)
 return compCD == givencd
 }
     // --------------- acno validation end
-    
+
+//------------- set max days in in date
+function clDate(dtInput){
+dtInput.value=""
+}
+
+function setMaxDt(monthYearInput,dtInput){
+mm = monthYearInput.value.substr(5,2)
+yy = monthYearInput.value.substr(0,4)
+dtInput.max = new Date(yy, mm, 0).getDate();
+}
+
+//---------- set max days in date end
+
 	</script>
 
 
