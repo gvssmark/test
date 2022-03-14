@@ -235,17 +235,17 @@ div{width:100%}
         <div name='spousediv' id='spousediv' style='display:block;'>
           <h4>Spouse Details</h4>
           <div class="form-floating mb-1 mt-1">
-            <input type="text" class="form-control"  name="spname" id='spname' placeholder="a"   required>
+            <input type="text" class="form-control"  name="spname" id='spname' placeholder="a"   >
             <label for="spname">Spouse Name</label>
           </div>
           <div style="display:flex">
             <div class="form-floating mb-1 mt-1">
-              <input type="month" class="form-control" onclick="clDate(spdt)" onfocusout="setMaxDt(spmmyy,spdt)"  min='1922-01' max='2002-12' name="spmmyy" id='spmmyy' placeholder="a" required>
+              <input type="month" class="form-control" onclick="clDate(spdt)" onfocusout="setMaxDt(spmmyy,spdt)"  min='1922-01' max='2002-12' name="spmmyy" id='spmmyy' placeholder="a" >
               <label for="spmmyy">Birth Month & Year</label>
             </div>
             <div class="form-floating mb-1 mt-1">
               <input type="number" class="form-control"  name="spdt" id='spdt' placeholder="a"  min="1" max="31"
-                required>
+                >
               <label for="spdt">Birth Date</label>
             </div>
           </div>
@@ -426,11 +426,20 @@ dispPremiumDetails.innerHTML=`You have selected <b>${pArray.selfFam}</b> as poli
 
 if(pArray.selfFam==="Family"){
 document.getElementById('spousediv').style.display="block"
+document.getElementById('spname').required = true
+document.getElementById('spmmyy').required = true
+document.getElementById('spdt').required = true
+
 }
 
 }
-else{
-alert("You have not selected")
+if(pArray.selfFam==="Self"){
+//alert("You have not selected")
+
+document.getElementById('spname').required = false
+document.getElementById('spmmyy').required = false
+document.getElementById('spdt').required = false
+
 }
 }
 // function to dispaly message based on selected premium end
