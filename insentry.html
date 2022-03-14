@@ -14,6 +14,7 @@
       BACKGROUND: powderblue;
     }
 
+b{color:red;}
     p {
       text-align: center;
     }
@@ -118,7 +119,7 @@ div{width:100%}
           </div>
 
           <div class="form-floating mb-1 mt-1">
-            <select onchange="premiumSelected()" class="form-select" name="premiumpaid" placeholder="a" required>
+            <select onchange="selectedPremium()" class="form-select" name="premiumpaid" id="premiumpaid" placeholder="a" required>
               <option value="">Select</option>
               <option value="10661">10661</option>
               <option value="14482">14482</option>
@@ -394,6 +395,50 @@ dtInput.max = new Date(yy, mm, 0).getDate();
 }
 
 //---------- set max days in date end
+
+//-----------premium array
+premium=[{amount:10661	,selfFam: 'Self'	,Base:200000	,Topup:0},
+{amount:14482	,selfFam: 'Self'	,Base:200000	,Topup:200000},
+{amount:13039	,selfFam: 'Self'	,Base:300000	,Topup:0},
+{amount:17989	,selfFam: 'Self'	,Base:300000	,Topup:300000},
+{amount:18979	,selfFam: 'Self'	,Base:300000	,Topup:400000},
+{amount:16107	,selfFam: 'Self'	,Base:400000	,Topup:0},
+{amount:24358	,selfFam: 'Self'	,Base:400000	,Topup:500000},
+{amount:16402	,selfFam: 'Family'	,Base:200000	,Topup:0},
+{amount:22281	,selfFam: 'Family'	,Base:200000	,Topup:200000},
+{amount:20060	,selfFam: 'Family'	,Base:300000	,Topup:0},
+{amount:27676	,selfFam: 'Family'	,Base:300000	,Topup:300000},
+{amount:29199	,selfFam: 'Family'	,Base:300000	,Topup:400000},
+{amount:24780	,selfFam: 'Family'	,Base:400000	,Topup:0},
+{amount:37473	,selfFam: 'Family'	,Base:400000	,Topup:500000},]
+//---------------- premium array end
+
+// function to dispaly message based on selected premium
+function selectedPremium(){
+document.getElementById('spousediv').style.display="none"
+pAmount = document.getElementById('premiumpaid').value
+pArray = premium.filter(a => a.amount === pAmount*1)
+pArray = pArray[0]
+if (pAmount*1 >0){
+
+//alert("you are here")
+dispPremiumDetails.innerHTML=`You have selected <b>${pArray.selfFam}</b> as policy type with as Base of Rs.<b>${pArray.Base}</b> and Topup of Rs.<b>${pArray.Topup}</b> `
+
+if(pArray.selfFam==="Family"){
+document.getElementById('spousediv').style.display="block"
+}
+
+}
+else{
+alert("You have not selected")
+}
+}
+// function to dispaly message based on selected premium end
+
+
+
+
+
 
 	</script>
 
