@@ -208,9 +208,13 @@ div{width:100%}
             </div>
           </div>
           <div class="form-floating mb-1 mt-1">
-            <input type="text" class="form-control" name="gend" placeholder="a" pattern="[MF]{1}" required>
-            <label for="gend">Gender (Enter M or F only)</label>
-          </div>
+            <select class="form-select" name="gender" placeholder="a" required>
+              <option value="">Select</option>
+              <option value="Male">Male</option>
+              <option value="Female">Female</option>
+            </select>
+            <label for="gender" class="form-label">Gender</label>
+                    </div>
             <div class="form-floating mb-1 mt-1">
                 <input type="number" class="form-control" onfocusout="validateacno()" name="pensionacno"  min="100000001" max="99999999999"  id='pensionacno'  placeholder="a" required>
                
@@ -219,8 +223,10 @@ div{width:100%}
           
           <div class="form-floating mb-1 mt-1">
             <select class="form-select" name="retiredfrom" placeholder="a" required>
-              <option>Indian Bank</option>
-              <option>Allahabad Bank</option>
+              <option value="">Select</option>
+              <option value="Indian Bank">Indian Bank</option>
+              <option value="Allhabad Bank">Allahabad Bank</option>
+
             </select>
             <label for="retiredfrom" class="form-label">Retired from:</label>
           </div>
