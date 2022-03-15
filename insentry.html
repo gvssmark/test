@@ -1,6 +1,3 @@
-
-
-
 <!DOCTYPE html>
 <html lang="en">
 
@@ -11,6 +8,10 @@
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
   <style>
+  
+
+
+
     body {
       font-size: SMALL;
       BACKGROUND: powderblue;
@@ -121,7 +122,7 @@ div{width:100%}
       </div>
      
       <button style="width:50%; margin-left:25%; " onclick="checkMemb()"  class="btn btn-primary">Check Membership</button>
-<p id='msg'>
+<p id='msg'>xxx
 </p>
    </div>
 <form  id='dataform'  style = "display:none" name='submit-to-google-sheet'>
@@ -312,7 +313,8 @@ div{width:100%}
   const form = document.forms['submit-to-google-sheet']
 
   form.addEventListener('submit', e => {
-    e.preventDefault()
+  document.getElementById("srno").disabled=false;
+  e.preventDefault()
     fetch(scriptURL, { method: 'POST', body: new FormData(form)})
  //alert("Successfully Submitted")
  
@@ -508,7 +510,7 @@ inputsrno = srno1.value*1
 member = (activeMembers.filter(a => a.srno === inputsrno))
 insmemb = insdata.filter( a => a.srno === inputsrno)
 
-if (member ===0){
+if (member.length ===0){
 msg.innerHTML= "You are not a member"
 document.getElementById('dataform').style.display="none"
 
@@ -536,23 +538,17 @@ p=premiumdata[0]
 
 
 modalData.innerHTML= "You have already submitted Data <br>"
-modalData.innerHTML  += `<table  class='table table-bordered border-primary' ><tr><td>Name:<td>${d.name}<br> 
+modalData.innerHTML  += `<table  class='table table-bordered border-primary' >
+<tr><td>Name:/ SR No<td>${d.name} / ${d.srno}
 <tr><td>Ref No:<td>${d.refno}
 <tr><td>Premium Paid:<td>${d.premiumpaid}
 <tr><td>Self or Family:<td>${p.selfFam}
 <tr><td>Base Amount:<td>${p.Base}
 <tr><td>Topup Amount:<td>${p.Topup}
-<tr><td>House No:<td>${d.add1}
-<tr><td>Area:<td>${d.add2}
-<tr><td>Locality:<td>${d.add3}
-<tr><td>Place:<td>${d.add4}
-<tr><td>District:<td>${d.district}
-<tr><td>State:<td>${d.state}
-<tr><td>PIN:<td>${d.pin}
+<tr><td>Address:<td>${d.add1},${d.add2},${d.add3},${d.add4},${d.district},${d.state},${d.pin}
 <tr><td>Mobile No:<td>${d.mobileno}
 <tr><td>Email:<td>${d.email}
-<tr><td>Adhar:<td>${d.adhar}
-<tr><td>PAN:<td>${d.pan}
+<tr><td>Adhar/ PAN:<td>${d.adhar}/${d.pan}
 <tr><td>DOB(YYYY-MM-DD):<td>${d.mmyy}-${d.dt.toString().padStart(2,"0")}
 <tr><td>Gender:<td>${d.gender}
 <tr><td>Pension Ac No:<td>${d.pensionacno}
@@ -572,6 +568,8 @@ myModal.style.display="block"
 }
 
 function modalwindowclose(){
+document.title = "Insurance Data"
+window.print()
 myModal.style.display="none"
 
 }
