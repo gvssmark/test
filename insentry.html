@@ -1,5 +1,6 @@
 
 
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -460,6 +461,27 @@ document.getElementById('spdt').required = false
 }
 // function to dispaly message based on selected premium end
 
+//Insurance Google sheet data
+insurl ='https://script.google.com/macros/s/AKfycbz0Ln2V4O9GMW1nIJxU28kxJmxKYzz1bOG1gPHmlw/exec'
+
+        async function getMyInsuranceData() {
+            response = await fetch(insurl)
+            InsuranceData = await response.json()
+            insdata = InsuranceData["user"]
+            //activeMembers = tempData1.filter(a => a.name !== "")
+            }
+getMyInsuranceData()
+
+//Membership data
+ //url = 'https://script.google.com/macros/s/AKfycbzI9SDFOzYLYKRKJTlse0XpsEiF8XfbyxwUUH22evlGkEPDIt2V/exec'
+   url = 'https://script.google.com/macros/s/AKfycbzI9SDFOzYLYKRKJTlse0XpsEiF8XfbyxwUUH22evlGkEPDIt2V/exec'
+        async function getMyData() {
+            response = await fetch(url)
+            MembershipData = await response.json()
+            tempData1 = MembershipData["user"]
+            activeMembers = tempData1.filter(a => a.name !== "")
+            }
+   getMyData()          
 
 
 
