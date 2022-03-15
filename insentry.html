@@ -1,4 +1,5 @@
 
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -100,7 +101,7 @@ div{width:100%}
 </div>
 <br><br><br>
 
-<form action="/action_page.php">
+<form  name='submit-to-google-sheet'>
     <div class="container mt-3">
       <div class="form-floating mb-1 mt-1">
         <input type="number" class="form-control" name="srno" min="1" max="9999999"
@@ -108,7 +109,7 @@ div{width:100%}
         <label for="srno">SR No</label>
       </div>
      
-      <button style="width:50vw; margin-left:25vw; " onclick="checkMembership()"  class="btn btn-primary">Check Membership</button>
+      <button style="width:50%; margin-left:25%; " onclick="checkMembership()"  class="btn btn-primary">Check Membership</button>
       <!-if sr no is not already existing continue to show next div- all other questions in this div. hide the button>
       
         <div name='data' id='data' >
@@ -286,7 +287,22 @@ div{width:100%}
  
 
 	<script type="text/javascript">
-	// multiplication table
+	 const scriptURL = 'https://script.google.com/macros/s/AKfycbz27uCks24-pOMfuP6Q5fnNjhtzzq2aHr_WGwhR5iwxuEX60h4/exec'
+  const form = document.forms['submit-to-google-sheet']
+
+  form.addEventListener('submit', e => {
+    e.preventDefault()
+    fetch(scriptURL, { method: 'POST', body: new FormData(form)})
+ //alert("Successfully Submitted")
+ 
+//form.reset();
+  })
+
+    
+    
+    
+    
+    // multiplication table
 
 	function validate(aadharNumber) {
 	const d = [
