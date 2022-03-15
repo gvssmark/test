@@ -63,8 +63,8 @@ b{color:red;}
 div{width:100%}
     /* Modal Content */
     .modal-content {
-      background-color: red;
-      color: white;
+      background-color: yellow;
+      color: black;
       font-size: large;
       text-align: center;
       margin: auto;
@@ -80,7 +80,7 @@ div{width:100%}
       /* Not required only for visualizing */
       border-collapse: collapse;
       ;
-      width: 100%;
+      width: 90%;
       margin-left: 1px;
       margin-right: 1px;
       border: 1px soild black;
@@ -97,21 +97,41 @@ div{width:100%}
 </head>
 
 <body>
+
+  <div id="myModal" class="modal">
+        <div class="modal-content">
+            <p id="modalData"> </p>
+        </div>
+    </div>
+
 <div style="top:0; position:fixed; background:red; text-align:center; color:white;   z-index: 1;">
  <h4 style="">Indian Bank Retirees' Association<br> (AP&TS)</h1>
 </div>
 <br><br><br>
-
-<form  name='submit-to-google-sheet'>
+     <div id='generaldiv' class="form-floating mb-1 mt-1">
+<ol>
+<li>Insurance scheme is available only to Indian Bank / Allahabad Bank Retirees
+<li>A retiree who wishes to join the insurance must be a member of Indian Bank Retirees' Association (AP&TS)
+<li>Each member will be identified by his SR No.
+<li>Input SR No and Check for the Mebership Number
+</ol>
+        <input style="width:50%; margin-left:25%;" type="number" class="form-control"  min="1" max="9999999"
+          id='srno1' name='srno1' placeholder="a" required><br>
+  
+      </div>
+     
+      <button style="width:50%; margin-left:25%; " onclick="checkMemb()"  class="btn btn-primary">Check Membership</button>
+<p id='msg'>
+</p>
+   </div>
+<form  id='dataform'  style = "display:none" name='submit-to-google-sheet'>
     <div class="container mt-3">
       <div class="form-floating mb-1 mt-1">
         <input type="number" class="form-control" name="srno" min="1" max="9999999"
-          id='srno' placeholder="a" required>
+          id='srno' placeholder="a" required disabled>
         <label for="srno">SR No</label>
       </div>
      
-      <button style="width:50%; margin-left:25%; " onclick="checkMembership()"  class="btn btn-primary">Check Membership</button>
-      <!-if sr no is not already existing continue to show next div- all other questions in this div. hide the button>
       
         <div name='data' id='data' >
           <h4>Remittance Details</h4>
@@ -483,8 +503,78 @@ getMyInsuranceData()
             }
    getMyData()          
 
+function checkMemb(){
+inputsrno = srno1.value*1
+member = (activeMembers.filter(a => a.srno === inputsrno))
+insmemb = insdata.filter( a => a.srno === inputsrno)
+
+if (member ===0){
+msg.innerHTML= "You are not a member"
+document.getElementById('dataform').style.display="none"
+
+}
 
 
+if (member.length >0){
+document.getElementById('dataform').style.display="block"
+srno.value=inputsrno
+document.getElementById('name').value= member[0].name
+
+}
+
+
+
+if (insmemb.length >0){
+document.getElementById('dataform').style.display="none"
+d =insmemb[0]
+
+premiumdata = premium.filter(a => a.amount ===d.premiumpaid)
+p=premiumdata[0]
+
+
+
+
+
+modalData.innerHTML= "You have already submitted Data <br>"
+modalData.innerHTML  += `<table  class='table table-bordered border-primary' ><tr><td>Name:<td>${d.name}<br> 
+<tr><td>Ref No:<td>${d.refno}
+<tr><td>Premium Paid:<td>${d.premiumpaid}
+<tr><td>Self or Family:<td>${p.selfFam}
+<tr><td>Base Amount:<td>${p.Base}
+<tr><td>Topup Amount:<td>${p.Topup}
+<tr><td>House No:<td>${d.add1}
+<tr><td>Area:<td>${d.add2}
+<tr><td>Locality:<td>${d.add3}
+<tr><td>Place:<td>${d.add4}
+<tr><td>District:<td>${d.district}
+<tr><td>State:<td>${d.state}
+<tr><td>PIN:<td>${d.pin}
+<tr><td>Mobile No:<td>${d.mobileno}
+<tr><td>Email:<td>${d.email}
+<tr><td>Adhar:<td>${d.adhar}
+<tr><td>PAN:<td>${d.pan}
+<tr><td>DOB(YYYY-MM-DD):<td>${d.mmyy}-${d.dt.toString().padStart(2,"0")}
+<tr><td>Gender:<td>${d.gender}
+<tr><td>Pension Ac No:<td>${d.pensionacno}
+<tr><td>Retired From:<td>${d.retiredfrom}
+<tr><td>Spouse Name:<td>${d.spname}
+<tr><td>DOB(YYYY-MM-DD):<td> ${d.spmmyy}-${d.spdt.toString().padStart(2,"0")}
+<tr><td>Nominee:<td>${d.nomname}
+<tr><td>Relationship:<td>${d.nomrel}
+<tr><td>DOB(YYYY-MM-DD):<td>${d.nommmyy}-${d.nomdt.toString().padStart(2,"0")}</table>
+<button onclick='modalwindowclose()'>Close</button>
+`
+myModal.style.display="block"
+}
+
+
+
+}
+
+function modalwindowclose(){
+myModal.style.display="none"
+
+}
 
 
 	</script>
