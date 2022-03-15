@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -122,8 +123,7 @@ div{width:100%}
       </div>
      
       <button style="width:50%; margin-left:25%; " onclick="checkMemb()"  class="btn btn-primary">Check Membership</button>
-<p id='msg'>xxx
-</p>
+<p id='msg'></p>
    </div>
 <form  id='dataform'  style = "display:none" name='submit-to-google-sheet'>
     <div class="container mt-3">
@@ -545,10 +545,10 @@ modalData.innerHTML  += `<table  class='table table-bordered border-primary' >
 <tr><td>Self or Family:<td>${p.selfFam}
 <tr><td>Base Amount:<td>${p.Base}
 <tr><td>Topup Amount:<td>${p.Topup}
-<tr><td>Address:<td>${d.add1},${d.add2},${d.add3},${d.add4},${d.district},${d.state},${d.pin}
+<tr><td>Address:<td>${d.add1}, ${d.add2}, ${d.add3}, ${d.add4}, ${d.district}, ${d.state}, ${d.pin}
 <tr><td>Mobile No:<td>${d.mobileno}
 <tr><td>Email:<td>${d.email}
-<tr><td>Adhar/ PAN:<td>${d.adhar}/${d.pan}
+<tr><td>Adhar / PAN:<td>${d.adhar} / ${d.pan}
 <tr><td>DOB(YYYY-MM-DD):<td>${d.mmyy}-${d.dt.toString().padStart(2,"0")}
 <tr><td>Gender:<td>${d.gender}
 <tr><td>Pension Ac No:<td>${d.pensionacno}
@@ -561,6 +561,7 @@ modalData.innerHTML  += `<table  class='table table-bordered border-primary' >
 <button onclick='modalwindowclose()'>Close</button>
 `
 myModal.style.display="block"
+srno1.value=""
 }
 
 
@@ -568,7 +569,7 @@ myModal.style.display="block"
 }
 
 function modalwindowclose(){
-document.title = "Insurance Data"
+document.title = "Insurance Data " + srno1.value
 window.print()
 myModal.style.display="none"
 
