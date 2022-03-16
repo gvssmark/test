@@ -1,0 +1,600 @@
+
+
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <title>IBRA Insurance Form</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
+  <style>
+  
+.mytable tr td {
+border:1px solid black ;
+font-size:small;
+text-align:left; 
+}
+
+
+    body {
+      font-size: SMALL;
+      BACKGROUND: powderblue;
+    }
+
+b{color:red;}
+    p {
+      text-align: center;
+    }
+
+    h6 {
+      color: red;
+      text-align: center;
+    }
+
+    input::-webkit-outer-spin-button,
+    input::-webkit-inner-spin-button {
+      -webkit-appearance: none;
+      margin: 0;
+    }
+
+
+    /* Firefox */
+    input[type=number] {
+      -moz-appearance: textfield;
+    }
+
+    .modal {
+      display: none;
+      /* Hidden by default */
+      position: fixed;
+      /* Stay in place */
+      z-index: 1;
+      /* Sit on top */
+      padding-top: 1px;
+      /* Location of the box */
+      left: 0;
+      top: 0;
+      width: 100%;
+      /* Full width */
+      height: 100%;
+      /* Full height */
+      overflow: auto;
+      /* Enable scroll if needed */
+      background-color: rgb(0, 0, 0);
+      /* Fallback color */
+      background-color: rgba(0, 0, 0, 0.4);
+      /* Black w/ opacity */
+    }
+div{width:100%}
+    /* Modal Content */
+    .modal-content {
+      background-color: yellow;
+      color: black;
+      font-size: large;
+      text-align: center;
+      margin-top:40px;
+      padding: 2px;
+      padding-bottom: 2px;
+      border: 1px solid #888;
+      width: 95%;
+      border-radius: 15px;
+      margin-top: 53px;
+    }
+    #modalData{
+    margin-top: 98px;
+ }
+    h1 {
+      color: white;
+      text-shadow: 1px 1px 2px black, 0 0 25px blue, 0 0 5px darkblue;
+      padding: 20px;
+      box-shadow: 20px 20px 50px grey
+    }
+  </style>
+</head>
+
+<body>
+
+  <div id="myModal" style="display:none;l">
+            <p id="modalData"> </p>
+    </div>
+
+<div style="top:0; position:fixed; background:red; text-align:center; color:white;   z-index: 1;">
+ <h4 style="">Indian Bank Retirees' Association<br> (AP&TS)</h1>
+</div>
+<br><br><br>
+     <div id='generaldiv' class="form-floating mb-1 mt-1">
+<br>
+<ol>
+<li>Insurance scheme is available only to Indian Bank / Allahabad Bank Retirees
+<li>A retiree who wishes to join the insurance must be a member of Indian Bank Retirees' Association (AP&TS)
+.
+<li>Input SR No and Check for the Mebership Number
+<li>Ensure you are a member of IBRA before remitting the premium
+<li>You can submit data only once. Hence do not experiment with test data
+<li>While remitting the premium through <b>Google Pay / BHIM / Phone Pe </b>like applications furnish your SR No and Name in Remrks / Add Note / Details
+<li>Funish correct reference number in the data.
+ <li> <input type="checkbox" id="cb1" name="cb1"  onclick="cbchecked()"> I have read the above instructions<br>
+</ol>
+        <input style="width:50%; margin-left:25%;" type="number" class="form-control"  min="1" max="9999999"
+          id='srno1' name='srno1' placeholder="a" required disabled><br>
+      <button style="width:50%; margin-left:25%; " onclick="checkMemb()"  class="btn btn-primary" id='btnmemb' disabled >Check Membership</button>
+<p id='msg'></p>
+
+      </div>
+     
+
+</div>
+<form  id='dataform'  style = "display:none" name='submit-to-google-sheet'>
+    <div class="container mt-3">
+        <div name='data' id='data' >
+          <h4>Remittance Details</h4>
+                    <div class="form-floating mb-1 mt-1">
+            <input type="text" class="form-control" name="refno" placeholder="a" required>
+            <label for="refno">Reference No</label>
+          </div>
+
+          <div class="form-floating mb-1 mt-1">
+            <select onchange="selectedPremium()" class="form-select" name="premiumpaid" id="premiumpaid" placeholder="a" required>
+              <option value="">Select</option>
+              <option value="10661">10661</option>
+              <option value="14482">14482</option>
+              <option value="13039">13039</option>
+              <option value="17989">17989</option>
+              <option value="18979">18979</option>
+              <option value="16107">16107</option>
+              <option value="24358">24358</option>
+              <option value="16402">16402</option>
+              <option value="22281">22281</option>
+              <option value="20060">20060</option>
+              <option value="27676">27676</option>
+              <option value="29199">29199</option>
+              <option value="24780">24780</option>
+              <option value="37473">37473</option>
+            </select>
+            </select>
+            <label for="premiumpaid" class="form-label">Premium Paid</label>
+          </div>
+          <p id='dispPremiumDetails'> </p>
+                    <h4>Personal Details</h4>
+      <div class="form-floating mb-1 mt-1">
+        <input type="number" class="form-control" name="srno" min="1" max="9999999"
+          id='srno' placeholder="a" required disabled>
+        <label for="srno">SR No</label>
+      </div>
+      <div class="form-floating mb-1 mt-1">
+        <input type="text" class="form-control" name="name" id='name' placeholder="a"
+          required>
+        <label for="name">Name</label>
+      </div>
+     <div class="form-floating mb-1 mt-1">
+            <input type="text" class="form-control" name="add1" placeholder="a" required>
+            <label for="add1">House No / Flat No / Plot No:</label>
+          </div>
+          <div class="form-floating mb-1 mt-1">
+            <input type="text" class="form-control" name="add2" placeholder="a" required>
+            <label for="add2">Area / Apartment / Building Name:</label>
+          </div>
+          <div class="form-floating mb-1 mt-1">
+            <input type="text" class="form-control" name="add3" placeholder="a" required>
+            <label for="add3">Locality:</label>
+          </div>
+          <div class="form-floating mb-1 mt-1">
+            <input type="text" class="form-control" name="add4" placeholder="a" required>
+            <label for="add4">Vill / Town / City:</label>
+          </div>
+          <div class="form-floating mb-1 mt-1">
+            <input type="text" class="form-control" name="district" placeholder="a" required>
+            <label for="district">District:</label>
+          </div>
+          <div style="display:flex">
+            <div class="form-floating mb-1 mt-1">
+              <input type="text" class="form-control" name="state" placeholder="a" required>
+              <label for="state">State:</label>
+            </div>
+            <div class="form-floating mb-1 mt-1">
+              <input type="number" class="form-control" name="pin" pattern="[1-8]{1}[0-9]{5}" placeholder="a" required>
+              <label for="pin">PIN Code:</label>
+            </div>
+          </div>
+          <div class="form-floating mb-1 mt-1">
+            <input type="tel" class="form-control" name="mobileno" pattern="[6-9]{1}[0-9]{9}" placeholder="a" required>
+            <label for="mobileno">Mobile Number:</label>
+          </div>
+          <div class="form-floating mb-1 mt-1">
+            <input type="email" class="form-control" name="email" placeholder="a" required>
+            <label for="email">Email:</label>
+          </div>
+          <div style="display:flex">
+            <div class="form-floating mb-1 mt-1">
+              <input type="text" class="form-control" name="adhar" id='adharInput' onfocusout="verifyAdhar()" pattern="[2-9]{1}[0-9]{11}" placeholder="a"
+                required>
+              <label for="adhar">Adhar Number</label>
+            </div>
+            <div class="form-floating mb-1 mt-1">
+              <input type="text" class="form-control" name="pan" id='pan'
+                pattern="[A-Za-z]{3}[Pp]{1}[A-Za-z]{1}[0-9]{4}[A-Za-z]{1}" placeholder="a" required>
+              <label for="pan">P A N</label>
+            </div>
+          </div>
+          <div style="display:flex">
+            <div class="form-floating mb-1 mt-1">
+              <input type="month" class="form-control" onclick="clDate(dt)" onfocusout="setMaxDt(mmyy,dt)"  min='1922-01' max='1982-12' name="mmyy" id='mmyy' placeholder="a"
+                required>
+              <label for="mmyy">Birth Month & Year</label>
+            </div>
+            <div class="form-floating mb-1 mt-1">
+              <input type="number" class="form-control"  name="dt" id='dt' placeholder="a"  min="1" max="31"
+                required>
+              <label for="dt">Birth Date</label>
+            </div>
+          </div>
+          <div class="form-floating mb-1 mt-1">
+            <select class="form-select" name="gender" placeholder="a" required>
+              <option value="">Select</option>
+              <option value="Male">Male</option>
+              <option value="Female">Female</option>
+            </select>
+            <label for="gender" class="form-label">Gender</label>
+                    </div>
+            <div class="form-floating mb-1 mt-1">
+                <input type="number" class="form-control" onfocusout="validateacno()" name="pensionacno"  min="100000001" max="99999999999"  id='pensionacno'  placeholder="a" required>
+               
+              <label for="dt">Pension Account Number</label>
+            </div>
+          
+          <div class="form-floating mb-1 mt-1">
+            <select class="form-select" name="retiredfrom" placeholder="a" required>
+              <option value="">Select</option>
+              <option value="Indian Bank">Indian Bank</option>
+              <option value="Allhabad Bank">Allahabad Bank</option>
+
+            </select>
+            <label for="retiredfrom" class="form-label">Retired from:</label>
+          </div>
+        </div>
+        <div name='spousediv' id='spousediv' style='display:block;'>
+          <h4>Spouse Details</h4>
+          <div class="form-floating mb-1 mt-1">
+            <input type="text" class="form-control"  name="spname" id='spname' placeholder="a"   >
+            <label for="spname">Spouse Name</label>
+          </div>
+          <div style="display:flex">
+            <div class="form-floating mb-1 mt-1">
+              <input type="month" class="form-control" onclick="clDate(spdt)" onfocusout="setMaxDt(spmmyy,spdt)"  min='1922-01' max='2002-12' name="spmmyy" id='spmmyy' placeholder="a" >
+              <label for="spmmyy">Birth Month & Year</label>
+            </div>
+            <div class="form-floating mb-1 mt-1">
+              <input type="number" class="form-control"  name="spdt" id='spdt' placeholder="a"  min="1" max="31"
+                >
+              <label for="spdt">Birth Date</label>
+            </div>
+          </div>
+          </div>
+        
+        <div name='nomdiv' id='nomdiv' style='display:block;'>
+            <h4>Nominee Details</h4>
+            <div class="form-floating mb-1 mt-1">
+              <input type="text" class="form-control"  name="nomname" id='nomname'
+                placeholder="a" required>
+              <label for="nomname">Nominee Name</label>
+            </div>
+            <div class="form-floating mb-1 mt-1">
+              <input type="text" class="form-control"  name="nomrel" id='nomrel'
+                placeholder="a" required>
+              <label for="nomrel">Nominee Relationship</label>
+            </div>
+            <div style="display:flex">
+              <div class="form-floating mb-1 mt-1">
+                <input type="month" class="form-control" onclick="clDate(nomdt)" onfocusout="setMaxDt(nommmyy,nomdt)"  min='1922-01' max='2022-10' name="nommmyy" id='nommmyy'
+                  placeholder="a" required>
+                <label for="nommmyy">Birth Month & Year</label>
+              </div>
+              <div class="form-floating mb-1 mt-1">
+                <input type="number" class="form-control"  name="nomdt" id='nomdt' min="1" max="31"
+                  placeholder="a" required>
+                <label for="nomdt">Birth Date</label>
+              </div>
+            </div>
+          </div>
+<br><br>
+
+          <button style="width:50%; margin-left:25%" class="btn btn-primary" type="submit" value="Submit">Submit
+            data</button>
+		</form>
+		<br><br><br>
+  </div>
+ 
+
+	<script type="text/javascript">
+	 const scriptURL = 'https://script.google.com/macros/s/AKfycbz27uCks24-pOMfuP6Q5fnNjhtzzq2aHr_WGwhR5iwxuEX60h4/exec'
+  const form = document.forms['submit-to-google-sheet']
+
+  form.addEventListener('submit', e => {
+  document.getElementById("srno").disabled=false;
+  e.preventDefault()
+    fetch(scriptURL, { method: 'POST', body: new FormData(form)})
+ //alert("Successfully Submitted")
+ 
+//form.reset();
+  })
+
+    
+    
+    
+    
+    // multiplication table
+
+	function validate(aadharNumber) {
+	const d = [
+	    [0, 1, 2, 3, 4, 5, 6, 7, 8, 9],
+	    [1, 2, 3, 4, 0, 6, 7, 8, 9, 5],
+	    [2, 3, 4, 0, 1, 7, 8, 9, 5, 6],
+	    [3, 4, 0, 1, 2, 8, 9, 5, 6, 7],
+	    [4, 0, 1, 2, 3, 9, 5, 6, 7, 8],
+	    [5, 9, 8, 7, 6, 0, 4, 3, 2, 1],
+	    [6, 5, 9, 8, 7, 1, 0, 4, 3, 2],
+	    [7, 6, 5, 9, 8, 2, 1, 0, 4, 3],
+	    [8, 7, 6, 5, 9, 3, 2, 1, 0, 4],
+	    [9, 8, 7, 6, 5, 4, 3, 2, 1, 0]
+	]
+
+	// permutation table
+	const p = [
+	    [0, 1, 2, 3, 4, 5, 6, 7, 8, 9],
+	    [1, 5, 7, 6, 2, 8, 3, 0, 9, 4],
+	    [5, 8, 0, 3, 7, 9, 6, 1, 4, 2],
+	    [8, 9, 1, 6, 0, 4, 3, 5, 2, 7],
+	    [9, 4, 5, 3, 1, 2, 6, 8, 7, 0],
+	    [4, 2, 8, 6, 5, 7, 3, 9, 0, 1],
+	    [2, 7, 9, 3, 8, 0, 6, 4, 1, 5],
+	    [7, 0, 4, 6, 9, 1, 3, 2, 5, 8]
+	]
+
+let c = 0
+	    let invertedArray = aadharNumber.split('').map(Number).reverse()
+	    invertedArray.forEach((val, i) => {
+          c = d[c][p[(i % 8)][val]]
+            	    })
+	    return (c === 0)
+	}
+
+	function verifyAdhar() {
+		var aadharNo = document.getElementById("adharInput").value;
+		if(validate(aadharNo)) {
+             document.getElementById("adharInput").style.color="white"
+document.getElementById("adharInput").style.backgroundColor="Green"
+     	} else {
+   document.getElementById("adharInput").style.color="white"
+document.getElementById("adharInput").style.backgroundColor="red"
+        document.getElementById("adharInput").focus()
+		}
+	}
+    
+    
+    //------------- cbs acno validation
+    function validateacno(){
+acno=document.getElementById('pensionacno').value
+if (isvalidAcno(acno) == false){
+document.getElementById('pensionacno').style.color='white'
+document.getElementById('pensionacno').style.backgroundColor='red'
+
+document.getElementById('pensionacno').focus()
+}
+
+else{
+document.getElementById('pensionacno').style.color='white'
+document.getElementById('pensionacno').style.backgroundColor='green'
+}
+
+}
+
+function cbsc(acno){
+  myval=0;
+  acno =acno.toString()
+  l=acno.toString().length
+  for (j=1; j<=l; j++)   {
+  dval     =acno.substr(l-j,1)*1;    // digit value
+  dpos    =j;                               // digit position                  
+  digival  = DvDp(dval,dpos);    // pass the above values to DvDp function to get value for the above
+  myval=myval+digival ;           // cumulate the values and arrive check digit 
+    }
+  return ( myval %10 ); 
+}
+
+
+function DvDp(dv, dp) // Pass Digit Value and Digit positon to this function.
+{
+for (i=1; i<dp; i++) {
+  dv = dv*2
+  if (dv>11) {     dv= dv-11  }
+}  
+return dv;
+} 
+
+
+function isvalidAcno(a){
+compCD = cbsc(a.toString().slice(0,a.toString().length-1))
+givencd = a.toString().substr(-1)
+return compCD == givencd
+}
+    // --------------- acno validation end
+
+//------------- set max days in in date
+function clDate(dtInput){
+dtInput.value=""
+}
+
+function setMaxDt(monthYearInput,dtInput){
+mm = monthYearInput.value.substr(5,2)
+yy = monthYearInput.value.substr(0,4)
+dtInput.max = new Date(yy, mm, 0).getDate();
+}
+
+//---------- set max days in date end
+
+//-----------premium array
+premium=[{amount:10661	,selfFam: 'Self'	,Base:200000	,Topup:0},
+{amount:14482	,selfFam: 'Self'	,Base:200000	,Topup:200000},
+{amount:13039	,selfFam: 'Self'	,Base:300000	,Topup:0},
+{amount:17989	,selfFam: 'Self'	,Base:300000	,Topup:300000},
+{amount:18979	,selfFam: 'Self'	,Base:300000	,Topup:400000},
+{amount:16107	,selfFam: 'Self'	,Base:400000	,Topup:0},
+{amount:24358	,selfFam: 'Self'	,Base:400000	,Topup:500000},
+{amount:16402	,selfFam: 'Family'	,Base:200000	,Topup:0},
+{amount:22281	,selfFam: 'Family'	,Base:200000	,Topup:200000},
+{amount:20060	,selfFam: 'Family'	,Base:300000	,Topup:0},
+{amount:27676	,selfFam: 'Family'	,Base:300000	,Topup:300000},
+{amount:29199	,selfFam: 'Family'	,Base:300000	,Topup:400000},
+{amount:24780	,selfFam: 'Family'	,Base:400000	,Topup:0},
+{amount:37473	,selfFam: 'Family'	,Base:400000	,Topup:500000},]
+//---------------- premium array end
+
+// function to dispaly message based on selected premium
+function selectedPremium(){
+document.getElementById('spousediv').style.display="none"
+pAmount = document.getElementById('premiumpaid').value
+pArray = premium.filter(a => a.amount === pAmount*1)
+pArray = pArray[0]
+if (pAmount*1 >0){
+
+//alert("you are here")
+dispPremiumDetails.innerHTML=`Policy Type: <b>${pArray.selfFam}</b>  Base  Rs.<b>${pArray.Base}</b>  Topup  Rs.<b>${pArray.Topup}</b> `
+
+if(pArray.selfFam==="Family"){
+document.getElementById('spousediv').style.display="block"
+document.getElementById('spname').required = true
+document.getElementById('spmmyy').required = true
+document.getElementById('spdt').required = true
+
+}
+
+}
+if(pArray.selfFam==="Self"){
+//alert("You have not selected")
+
+document.getElementById('spname').required = false
+document.getElementById('spmmyy').required = false
+document.getElementById('spdt').required = false
+
+}
+}
+// function to dispaly message based on selected premium end
+
+//Insurance Google sheet data
+insurl ='https://script.google.com/macros/s/AKfycbz0Ln2V4O9GMW1nIJxU28kxJmxKYzz1bOG1gPHmlw/exec'
+
+        async function getMyInsuranceData() {
+            response = await fetch(insurl)
+            InsuranceData = await response.json()
+            insdata = InsuranceData["user"]
+            //activeMembers = tempData1.filter(a => a.name !== "")
+            }
+getMyInsuranceData()
+
+//Membership data
+ //url = 'https://script.google.com/macros/s/AKfycbzI9SDFOzYLYKRKJTlse0XpsEiF8XfbyxwUUH22evlGkEPDIt2V/exec'
+   url = 'https://script.google.com/macros/s/AKfycbzI9SDFOzYLYKRKJTlse0XpsEiF8XfbyxwUUH22evlGkEPDIt2V/exec'
+        async function getMyData() {
+            response = await fetch(url)
+            MembershipData = await response.json()
+            tempData1 = MembershipData["user"]
+            activeMembers = tempData1.filter(a => a.name !== "")
+            }
+   getMyData()          
+
+function checkMemb(){
+inputsrno = srno1.value*1
+member = (activeMembers.filter(a => a.srno === inputsrno))
+insmemb = insdata.filter( a => a.srno === inputsrno)
+
+if (member.length ===0){
+msg.innerHTML= "You are not a member"
+document.getElementById('dataform').style.display="none"
+
+}
+
+
+if (member.length >0){
+document.getElementById('dataform').style.display="block"
+srno.value=inputsrno
+document.getElementById('name').value= member[0].name
+generaldiv.style.display="none"
+}
+
+
+
+if (insmemb.length >0){
+document.getElementById('dataform').style.display="none"
+d =insmemb[0]
+
+premiumdata = premium.filter(a => a.amount ===d.premiumpaid)
+p=premiumdata[0]
+
+
+
+
+
+modalData.innerHTML= "You have already submitted Data <br>"
+modalData.innerHTML  += `<table  class='mytable' >
+<tr><td>Name:/ SR No<td>${d.name} / ${d.srno}
+<tr><td>Ref No:<td>${d.refno}
+<tr><td>Premium Paid:<td>${d.premiumpaid}
+<tr><td>Self or Family:<td>${p.selfFam}
+<tr><td>Base Amount:<td>${p.Base}
+<tr><td>Topup Amount:<td>${p.Topup}
+<tr><td>Address:<td>${d.add1}, ${d.add2}, ${d.add3}, ${d.add4}, ${d.district}, ${d.state}, ${d.pin}
+<tr><td>Mobile No:<td>${d.mobileno}
+<tr><td>Email:<td>${d.email}
+<tr><td>Adhar / PAN:<td>${d.adhar} / ${d.pan}
+<tr><td>DOB(YYYY-MM-DD):<td>${d.mmyy}-${d.dt.toString().padStart(2,"0")}
+<tr><td>Gender:<td>${d.gender}
+<tr><td>Pension Ac No:<td>${d.pensionacno}
+<tr><td>Retired From:<td>${d.retiredfrom}
+<tr><td>Spouse Name:<td>${d.spname}
+<tr><td>DOB(YYYY-MM-DD):<td> ${d.spmmyy}-${d.spdt.toString().padStart(2,"0")}
+<tr><td>Nominee:<td>${d.nomname}
+<tr><td>Relationship:<td>${d.nomrel}
+<tr><td>DOB(YYYY-MM-DD):<td>${d.nommmyy}-${d.nomdt.toString().padStart(2,"0")}</table>
+<button onclick='modalwindowclose()'>Close</button>
+`
+myModal.style.display="block"
+srno1.value=""
+}
+
+
+
+}
+
+function modalwindowclose(){
+ccc= modalData.innerHTML
+ggg = document.body.innerHTML
+document.body.innerHTML = ccc
+window.print()
+document.body.innerHTML = ggg
+
+ 
+cb1.disabled=false;
+   srno1.disabled=true;
+   btnmemb.disabled=true;
+}
+
+function cbchecked() {
+   var checkBox = document.getElementById("cb1");
+   if (checkBox.checked == true){
+   srno1.disabled=false;
+   btnmemb.disabled=false;
+   checkBox.disabled=true;
+  }
+ 
+}
+
+	</script>
+
+
+</body>
+
+</html>
+
