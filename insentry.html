@@ -118,7 +118,7 @@ div{width:100%}
 <li>You can submit data only once. Hence do not experiment with test data
 <li>While remitting the premium through <b>Google Pay / BHIM / Phone Pe </b>like applications furnish your SR No and Name in Remrks / Add Note / Details
 <li>Funish correct reference number in the data.
- <li> <input type="checkbox" id="cb1" name="cb1"  onclick="cbchecked()"> I have read the above instructions<br>22:03
+ <li> <input type="checkbox" id="cb1" name="cb1"  onclick="cbchecked()"> I have read the above instructions<br>
 </ol>
         <input style="width:50%; margin-left:25%;" type="number" class="form-control"  min="1" max="9999999"
           id='srno1' name='srno1' placeholder="a" required disabled><br>
@@ -319,8 +319,9 @@ div{width:100%}
   e.preventDefault()
     fetch(scriptURL, { method: 'POST', body: new FormData(form)})
  //alert("Successfully Submitted")
+form.reset();	  
  location.reload()
-//form.reset();
+
   })
 
     
