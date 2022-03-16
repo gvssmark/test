@@ -1,4 +1,5 @@
 
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -10,7 +11,11 @@
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
   <style>
   
-
+.mytable tr td {
+border:1px solid black ;
+font-size:small;
+text-align:left; 
+}
 
 
     body {
@@ -78,17 +83,7 @@ div{width:100%}
       margin-top: 53px;
     }
 
-    table {
-      /* Not required only for visualizing */
-      border-collapse: collapse;
-      ;
-      width: 90%;
-      margin-left: 1px;
-      margin-right: 1px;
-      border: 1px soild black;
-      font-size: small
-    }
-
+ 
     h1 {
       color: white;
       text-shadow: 1px 1px 2px black, 0 0 25px blue, 0 0 5px darkblue;
@@ -111,20 +106,27 @@ div{width:100%}
 </div>
 <br><br><br>
      <div id='generaldiv' class="form-floating mb-1 mt-1">
+<br>
 <ol>
 <li>Insurance scheme is available only to Indian Bank / Allahabad Bank Retirees
 <li>A retiree who wishes to join the insurance must be a member of Indian Bank Retirees' Association (AP&TS)
-<li>Each member will be identified by his SR No.
+.
 <li>Input SR No and Check for the Mebership Number
+<li>Ensure you are a member of IBRA before remitting the premium
+<li>You can submit data only once. Hence do not experiment with test data
+<li>While remitting the premium through <b>Google Pay / BHIM / Phone Pe </b>like applications furnish your SR No and Name in Remrks / Add Note / Details
+<li>Funish correct reference number in the data.
+ <li> <input type="checkbox" id="cb1" name="cb1"  onclick="cbchecked()"> I have read the above instructions<br>
 </ol>
         <input style="width:50%; margin-left:25%;" type="number" class="form-control"  min="1" max="9999999"
-          id='srno1' name='srno1' placeholder="a" required><br>
-  
+          id='srno1' name='srno1' placeholder="a" required disabled><br>
+
       </div>
      
-      <button style="width:50%; margin-left:25%; " onclick="checkMemb()"  class="btn btn-primary">Check Membership</button>
+      <button style="width:50%; margin-left:25%; " onclick="checkMemb()"  class="btn btn-primary" >Check Membership</button>
 <p id='msg'></p>
-   </div>
+
+</div>
 <form  id='dataform'  style = "display:none" name='submit-to-google-sheet'>
     <div class="container mt-3">
       <div class="form-floating mb-1 mt-1">
@@ -538,7 +540,7 @@ p=premiumdata[0]
 
 
 modalData.innerHTML= "You have already submitted Data <br>"
-modalData.innerHTML  += `<table  class='table table-bordered border-primary' >
+modalData.innerHTML  += `<table  class='mytable' >
 <tr><td>Name:/ SR No<td>${d.name} / ${d.srno}
 <tr><td>Ref No:<td>${d.refno}
 <tr><td>Premium Paid:<td>${d.premiumpaid}
@@ -575,6 +577,14 @@ myModal.style.display="none"
 
 }
 
+function cbchecked() {
+   var checkBox = document.getElementById("cb1");
+   if (checkBox.checked == true){
+   srno1.disabled=false;
+   checkBox.disabled=true;
+  }
+ 
+}
 
 	</script>
 
@@ -582,3 +592,4 @@ myModal.style.display="none"
 </body>
 
 </html>
+
