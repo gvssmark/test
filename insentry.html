@@ -97,7 +97,7 @@ div{width:100%}
 
 <body>
 
-  <div id="myModal" class="xmodal">
+  <div id="myModal" style="display:none;l">
             <p id="modalData"> </p>
     </div>
 
@@ -569,10 +569,13 @@ srno1.value=""
 }
 
 function modalwindowclose(){
-document.title = "Insurance Data " + srno1.value
 window.print()
 myModal.style.display="none"
-
+generaldiv.style.display="block"
+ 
+cb1.disabled=false;
+   srno1.disabled=true;
+   btnmemb.disabled=true;
 }
 
 function cbchecked() {
