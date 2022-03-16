@@ -1,6 +1,7 @@
 
 
 
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -93,7 +94,9 @@ div{width:100%}
       text-shadow: 1px 1px 2px black, 0 0 25px blue, 0 0 5px darkblue;
       padding: 20px;
       box-shadow: 20px 20px 50px grey
-    }
+      text-align: center;
+
+	  }
   </style>
 </head>
 
@@ -118,7 +121,7 @@ div{width:100%}
 <li>You can submit data only once. Hence do not experiment with test data
 <li>While remitting the premium through <b>Google Pay / BHIM / Phone Pe </b>like applications furnish your SR No and Name in Remrks / Add Note / Details
 <li>Funish correct reference number in the data.
- <li> <input type="checkbox" id="cb1" name="cb1"  onclick="cbchecked()"> I have read the above instructions<br>2216
+ <li> <input type="checkbox" id="cb1" name="cb1"  onclick="cbchecked()"> I have read the above instructions<br>
 </ol>
         <input style="width:50%; margin-left:25%;" type="number" class="form-control"  min="1" max="9999999"
           id='srno1' name='srno1' placeholder="a" required disabled><br>
@@ -320,9 +323,10 @@ div{width:100%}
     fetch(scriptURL, { method: 'POST', body: new FormData(form)})
  //alert("Successfully Submitted")
 form.reset();	  
- getMyInsuranceData()
-	  location.reload()
-
+ generaldiv.innerHTML="<h1>You have successfully sumbitted the Data</h1>"
+ dataform.style.display="none"
+ generaldiv.style.display="block"
+ 
   })
 
     
