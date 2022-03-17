@@ -3,6 +3,7 @@
 
 
 
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -126,7 +127,7 @@ div{width:100%}
 </ol>
         <input style="width:50%; margin-left:25%;" type="number" class="form-control"  min="1" max="9999999"
           id='srno1' name='srno1' placeholder="a" required ><br>
-      <button style="width:50%; margin-left:25%; " onclick="checkMemb()"  class="btn btn-primary" id='btnmemb' disabled >Check Membership</button>
+      <button style="width:50%; margin-left:25%; display:none " onclick="checkMemb()"  class="btn btn-primary" id='btnmemb'  >Check Membership</button>
 <p id='msg'></p>
 
       </div>
@@ -506,8 +507,7 @@ getMyInsuranceData()
             MembershipData = await response.json()
             tempData1 = MembershipData["user"]
             activeMembers = tempData1.filter(a => a.name !== "")
- if (activeMembers.length>0){document.getElementById('btnmemb').disabled=false;
- document.getElementById('srno1').disabled=false;
+ if (activeMembers.length>0){document.getElementById('btnmemb').style.display="block";
  }
 }
    getMyData()          
@@ -542,6 +542,7 @@ p=premiumdata[0]
 
 
 
+spdt = d.spdt>0 ? d.spmmyy+"-"+d.spdt.toString().padStart(2,0):""
 
 modalData.innerHTML= "You have already submitted Data <br>"
 modalData.innerHTML  += `<table  class='mytable' >
@@ -560,7 +561,7 @@ modalData.innerHTML  += `<table  class='mytable' >
 <tr><td>Pension Ac No:<td>${d.pensionacno}
 <tr><td>Retired From:<td>${d.retiredfrom}
 <tr><td>Spouse Name:<td>${d.spname}
-<tr><td>DOB(YYYY-MM-DD):<td> ${d.spmmyy}-${d.spdt.toString().padStart(2,"0")}
+<tr><td>DOB(YYYY-MM-DD):<td> ${spdt}
 <tr><td>Nominee:<td>${d.nomname}
 <tr><td>Relationship:<td>${d.nomrel}
 <tr><td>DOB(YYYY-MM-DD):<td>${d.nommmyy}-${d.nomdt.toString().padStart(2,"0")}</table>
