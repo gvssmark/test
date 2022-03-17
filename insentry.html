@@ -2,6 +2,7 @@
 
 
 
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -121,10 +122,10 @@ div{width:100%}
 <li>You can submit data only once. Hence do not experiment with test data
 <li>While remitting the premium through <b>Google Pay / BHIM / Phone Pe </b>like applications furnish your SR No and Name in Remrks / Add Note / Details
 <li>Funish correct reference number in the data.
- <li> <input type="checkbox" id="cb1" name="cb1"  onclick="cbchecked()"> I have read the above instructions<br>
+ 
 </ol>
         <input style="width:50%; margin-left:25%;" type="number" class="form-control"  min="1" max="9999999"
-          id='srno1' name='srno1' placeholder="a" required disabled><br>
+          id='srno1' name='srno1' placeholder="a" required ><br>
       <button style="width:50%; margin-left:25%; " onclick="checkMemb()"  class="btn btn-primary" id='btnmemb' disabled >Check Membership</button>
 <p id='msg'></p>
 
@@ -468,7 +469,6 @@ pArray = premium.filter(a => a.amount === pAmount*1)
 pArray = pArray[0]
 if (pAmount*1 >0){
 
-//alert("you are here")
 dispPremiumDetails.innerHTML=`Policy Type: <b>${pArray.selfFam}</b>  Base  Rs.<b>${pArray.Base}</b>  Topup  Rs.<b>${pArray.Topup}</b> `
 
 if(pArray.selfFam==="Family"){
@@ -491,26 +491,25 @@ document.getElementById('spdt').required = false
 }
 // function to dispaly message based on selected premium end
 
-//Insurance Google sheet data
 insurl ='https://script.google.com/macros/s/AKfycbz0Ln2V4O9GMW1nIJxU28kxJmxKYzz1bOG1gPHmlw/exec'
 
         async function getMyInsuranceData() {
             response = await fetch(insurl)
             InsuranceData = await response.json()
             insdata = InsuranceData["user"]
-            //activeMembers = tempData1.filter(a => a.name !== "")
             }
 getMyInsuranceData()
 
-//Membership data
- //url = 'https://script.google.com/macros/s/AKfycbzI9SDFOzYLYKRKJTlse0XpsEiF8XfbyxwUUH22evlGkEPDIt2V/exec'
    url = 'https://script.google.com/macros/s/AKfycbzI9SDFOzYLYKRKJTlse0XpsEiF8XfbyxwUUH22evlGkEPDIt2V/exec'
         async function getMyData() {
             response = await fetch(url)
             MembershipData = await response.json()
             tempData1 = MembershipData["user"]
             activeMembers = tempData1.filter(a => a.name !== "")
-            }
+ if (activeMembers.length>0){document.getElementById('btnmemb').disabled=false;
+ document.getElementById('srno1').disabled=false;
+ }
+}
    getMyData()          
 
 function checkMemb(){
@@ -540,7 +539,6 @@ d =insmemb[0]
 
 premiumdata = premium.filter(a => a.amount ===d.premiumpaid)
 p=premiumdata[0]
-
 
 
 
@@ -579,21 +577,9 @@ srno1.value=""
 function modalwindowclose(){
 myModal.style.display="none"
 generaldiv.style.display="block"
- 
-cb1.disabled=false;
-   srno1.disabled=true;
-   btnmemb.disabled=true;
 }
 
-function cbchecked() {
-   var checkBox = document.getElementById("cb1");
-   if (checkBox.checked == true){
-   srno1.disabled=false;
-   btnmemb.disabled=false;
-   checkBox.disabled=true;
-  }
- 
-}
+
 
 	</script>
 
