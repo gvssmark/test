@@ -1,13 +1,5 @@
-
-
-
-
-
-
-
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
   <title>IBRA Insurance Form</title>
   <meta charset="utf-8">
@@ -50,43 +42,9 @@ b{color:red;}
       -moz-appearance: textfield;
     }
 
-    .modal {
-      display: none;
-      /* Hidden by default */
-      position: fixed;
-      /* Stay in place */
-      z-index: 1;
-      /* Sit on top */
-      padding-top: 1px;
-      /* Location of the box */
-      left: 0;
-      top: 0;
-      width: 100%;
-      /* Full width */
-      height: 100%;
-      /* Full height */
-      overflow: auto;
-      /* Enable scroll if needed */
-      background-color: rgb(0, 0, 0);
-      /* Fallback color */
-      background-color: rgba(0, 0, 0, 0.4);
-      /* Black w/ opacity */
-    }
+
 div{width:100%}
     /* Modal Content */
-    .modal-content {
-      background-color: yellow;
-      color: black;
-      font-size: large;
-      text-align: center;
-      margin-top:40px;
-      padding: 2px;
-      padding-bottom: 2px;
-      border: 1px solid #888;
-      width: 95%;
-      border-radius: 15px;
-      margin-top: 53px;
-    }
     #modalData{
     margin-top: 98px;
     margin-left:8px;
@@ -320,25 +278,18 @@ div{width:100%}
 	<script type="text/javascript">
 	 const scriptURL = 'https://script.google.com/macros/s/AKfycbz27uCks24-pOMfuP6Q5fnNjhtzzq2aHr_WGwhR5iwxuEX60h4/exec'
   const form = document.forms['submit-to-google-sheet']
-
+// spouse data to set to blank if polity type is self
   form.addEventListener('submit', e => {
   document.getElementById("srno").disabled=false;
   e.preventDefault()
     fetch(scriptURL, { method: 'POST', body: new FormData(form)})
- //alert("Successfully Submitted")
 form.reset();	  
  generaldiv.innerHTML="<h1>You have successfully sumbitted the Data</h1>"
  dataform.style.display="none"
  generaldiv.style.display="block"
  
   })
-
-    
-    
-    
-    
-    // multiplication table
-
+    //Adhar Validation
 	function validate(aadharNumber) {
 	const d = [
 	    [0, 1, 2, 3, 4, 5, 6, 7, 8, 9],
@@ -352,8 +303,6 @@ form.reset();
 	    [8, 7, 6, 5, 9, 3, 2, 1, 0, 4],
 	    [9, 8, 7, 6, 5, 4, 3, 2, 1, 0]
 	]
-
-	// permutation table
 	const p = [
 	    [0, 1, 2, 3, 4, 5, 6, 7, 8, 9],
 	    [1, 5, 7, 6, 2, 8, 3, 0, 9, 4],
@@ -426,14 +375,12 @@ for (i=1; i<dp; i++) {
 return dv;
 } 
 
-
 function isvalidAcno(a){
 compCD = cbsc(a.toString().slice(0,a.toString().length-1))
 givencd = a.toString().substr(-1)
 return compCD == givencd
 }
     // --------------- acno validation end
-
 //------------- set max days in in date
 function clDate(dtInput){
 dtInput.value=""
@@ -444,7 +391,6 @@ mm = monthYearInput.value.substr(5,2)
 yy = monthYearInput.value.substr(0,4)
 dtInput.max = new Date(yy, mm, 0).getDate();
 }
-
 //---------- set max days in date end
 
 //-----------premium array
@@ -495,21 +441,14 @@ document.getElementById('spdt').required = false
 // function to dispaly message based on selected premium end
 
 ins2122url ='https://script.google.com/macros/s/AKfycbwJ1VlGrnkV1Gv4Jei1OBHPjCLPjjJ6-Kc_BnEUcvhaUtGRYFg/exec'
-
         async function ins2122Data() {
             response = await fetch(ins2122url)
             Insurance2122Data = await response.json()
             insdata2122 = Insurance2122Data["user"]
             }
-
 ins2122Data()
 
-
-
-
-
 insurl ='https://script.google.com/macros/s/AKfycbz0Ln2V4O9GMW1nIJxU28kxJmxKYzz1bOG1gPHmlw/exec'
-
         async function getMyInsuranceData() {
             response = await fetch(insurl)
             InsuranceData = await response.json()
@@ -535,9 +474,8 @@ insmemb = insdata.filter( a => a.srno === inputsrno)
 ins2122 = insdata2122.filter( a => a.srno === inputsrno)
 ins2122=ins2122[0]
 if (member.length ===0){
-msg.innerHTML= "You are not a member"
+msg.innerHTML= "<br><b>You are not a member</b>"
 document.getElementById('dataform').style.display="none"
-
 }
 
 
@@ -545,7 +483,7 @@ if (member.length >0){
 document.getElementById('dataform').style.display="block"
 srno.value=inputsrno
 document.getElementById('name').value= member[0].name
-// get data from old insurance
+// get data from old insurance and set
 adharInput.value = ins2122.adhar
 pan.value = ins2122.pan
 email.value = ins2122.email
@@ -563,19 +501,12 @@ pensionacno.value = member[0].sbac
 generaldiv.style.display="none"
 }
 
-
-
 if (insmemb.length >0){
 document.getElementById('dataform').style.display="none"
 d =insmemb[0]
-
 premiumdata = premium.filter(a => a.amount ===d.premiumpaid)
 p=premiumdata[0]
-
-
-
 spdt = d.spdt>0 ? d.spmmyy+"-"+d.spdt.toString().padStart(2,0):""
-
 modalData.innerHTML= "You have already submitted Data <br>"
 modalData.innerHTML  += `<table  class='mytable' >
 <tr><td>Name:/ SR No<td>${d.name} / ${d.srno}
@@ -602,24 +533,12 @@ modalData.innerHTML  += `<table  class='mytable' >
 myModal.style.display="block"
 srno1.value=""
 }
-
-
-
 }
 
 function modalwindowclose(){
 myModal.style.display="none"
 generaldiv.style.display="block"
 }
-
-
-
 	</script>
-
-
 </body>
-
 </html>
-
-
-
