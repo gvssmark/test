@@ -280,11 +280,7 @@ div{width:100%}
 	 const scriptURL = 'https://script.google.com/macros/s/AKfycbz27uCks24-pOMfuP6Q5fnNjhtzzq2aHr_WGwhR5iwxuEX60h4/exec'
   const form = document.forms['submit-to-google-sheet']
 // spouse data to set to blank if polity type is self
-  if(pArray.selfFam==="Self"){
-    spname.value="";
-    spmmyy.value="";
-    spdt.value="";
-}
+ 
 		
   form.addEventListener('submit', e => {
   document.getElementById("srno").disabled=false;
