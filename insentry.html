@@ -283,7 +283,13 @@ div{width:100%}
  
 		
   form.addEventListener('submit', e => {
-  document.getElementById("srno").disabled=false;
+   if(pArray.selfFam==="Self"){
+    spname.value="";
+    spmmyy.value="";
+    spdt.value="";
+}
+
+	  document.getElementById("srno").disabled=false;
   e.preventDefault()
     fetch(scriptURL, { method: 'POST', body: new FormData(form)})
 form.reset();	  
