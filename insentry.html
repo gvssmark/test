@@ -4,6 +4,7 @@
 
 
 
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -123,7 +124,8 @@ div{width:100%}
 <li>You can submit data only once. Hence do not experiment with test data
 <li>While remitting the premium through <b>Google Pay / BHIM / Phone Pe </b>like applications furnish your SR No and Name in Remrks / Add Note / Details
 <li>Funish correct reference number in the data.
- 
+<li>Some old data from Insurance 21-22 is also captured. Verify correctness of pre populated data
+<li>Pension Account Number and Adhar Number are validated for the correctness.
 </ol>
         <input style="width:50%; margin-left:25%;" type="number" class="form-control"  min="1" max="9999999"
           id='srno1' name='srno1' placeholder="a" required ><br>
@@ -202,16 +204,16 @@ div{width:100%}
               <label for="state">State:</label>
             </div>
             <div class="form-floating mb-1 mt-1">
-              <input type="number" class="form-control" name="pin" pattern="[1-8]{1}[0-9]{5}" placeholder="a" required>
+              <input type="number" class="form-control" name="pin" id="pin" pattern="[1-8]{1}[0-9]{5}" placeholder="a" required>
               <label for="pin">PIN Code:</label>
             </div>
           </div>
           <div class="form-floating mb-1 mt-1">
-            <input type="tel" class="form-control" name="mobileno" pattern="[6-9]{1}[0-9]{9}" placeholder="a" required>
+            <input type="tel" class="form-control" name="mobileno" id="mobileno" pattern="[6-9]{1}[0-9]{9}" placeholder="a" required>
             <label for="mobileno">Mobile Number:</label>
           </div>
           <div class="form-floating mb-1 mt-1">
-            <input type="email" class="form-control" name="email" placeholder="a" required>
+            <input type="email" class="form-control" name="email" id="email"  placeholder="a" required>
             <label for="email">Email:</label>
           </div>
           <div style="display:flex">
@@ -253,7 +255,7 @@ div{width:100%}
             </div>
           
           <div class="form-floating mb-1 mt-1">
-            <select class="form-select" name="retiredfrom" placeholder="a" required>
+            <select class="form-select" name="retiredfrom" id="retiredfrom" placeholder="a" required>
               <option value="">Select</option>
               <option value="Indian Bank">Indian Bank</option>
               <option value="Allhabad Bank">Allahabad Bank</option>
@@ -492,6 +494,20 @@ document.getElementById('spdt').required = false
 }
 // function to dispaly message based on selected premium end
 
+ins2122url ='https://script.google.com/macros/s/AKfycbwJ1VlGrnkV1Gv4Jei1OBHPjCLPjjJ6-Kc_BnEUcvhaUtGRYFg/exec'
+
+        async function ins2122Data() {
+            response = await fetch(ins2122url)
+            Insurance2122Data = await response.json()
+            insdata2122 = Insurance2122Data["user"]
+            }
+
+ins2122Data()
+
+
+
+
+
 insurl ='https://script.google.com/macros/s/AKfycbz0Ln2V4O9GMW1nIJxU28kxJmxKYzz1bOG1gPHmlw/exec'
 
         async function getMyInsuranceData() {
@@ -516,7 +532,8 @@ function checkMemb(){
 inputsrno = srno1.value*1
 member = (activeMembers.filter(a => a.srno === inputsrno))
 insmemb = insdata.filter( a => a.srno === inputsrno)
-
+ins2122 = insdata2122.filter( a => a.srno === inputsrno)
+ins2122=ins2122[0]
 if (member.length ===0){
 msg.innerHTML= "You are not a member"
 document.getElementById('dataform').style.display="none"
@@ -528,6 +545,21 @@ if (member.length >0){
 document.getElementById('dataform').style.display="block"
 srno.value=inputsrno
 document.getElementById('name').value= member[0].name
+// get data from old insurance
+adharInput.value = ins2122.adhar
+pan.value = ins2122.pan
+email.value = ins2122.email
+mobileno.value = ins2122.mobile
+retiredfrom.value = ins2122.bankname
+pin.value = ins2122.pincode
+mmyy.value = ins2122.dob.substr(0,7)
+dt.value = ins2122.dob.substr(8,2)*1+1
+spname.value=ins2122.spname
+spmmyy.value = ins2122.spdob.substr(0,7)
+spdt.value = ins2122.spdob.substr(8,2)*1+1
+pensionacno.value = member[0].sbac
+// old values capture end
+
 generaldiv.style.display="none"
 }
 
@@ -588,5 +620,6 @@ generaldiv.style.display="block"
 </body>
 
 </html>
+
 
 
