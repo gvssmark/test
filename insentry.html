@@ -1,4 +1,5 @@
 
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -84,7 +85,7 @@ div{width:100%}
 <li>While remitting the premium through <b>Google Pay / BHIM / Phone Pe </b>like applications furnish your SR No and Name in Remrks / Add Note / Details
 <li>Funish correct reference number in the data.
 <li>Some old data from Insurance 21-22 is also captured. Verify correctness of pre populated data
-<li>Pension Account Number and Adhar Number are validated for the correctness. 
+<li>Pension Account Number and Adhar Number are validated for the correctness. Time 20:20
 </ol>
         <input style="width:50%; margin-left:25%;" type="number" class="form-control"  min="1" max="9999999"
           id='srno1' name='srno1' placeholder="a" required ><br>
@@ -481,8 +482,8 @@ function checkMemb(){
 inputsrno = srno1.value*1
 member = (activeMembers.filter(a => a.srno === inputsrno))
 insmemb = insdata.filter( a => a.srno === inputsrno)
-ins2122 = insdata2122.filter( a => a.srno === inputsrno)
-ins2122=ins2122[0]
+ins2122data = insdata2122.filter( a => a.srno === inputsrno)
+ins2122=ins2122data[0]
 if (member.length ===0){
 msg.innerHTML= "<br><b>You are not a member</b>"
 document.getElementById('dataform').style.display="none"
@@ -490,10 +491,12 @@ document.getElementById('dataform').style.display="none"
 
 
 if (member.length >0){
+generaldiv.style.display="none"
 document.getElementById('dataform').style.display="block"
 srno.value=inputsrno
 document.getElementById('name').value= member[0].name
 // get data from old insurance and set
+if(ins2122data.length>0){
 adharInput.value = ins2122.adhar
 pan.value = ins2122.pan
 email.value = ins2122.email
@@ -511,7 +514,7 @@ nomname.value=ins2122.nomname
 nomrel.value=ins2122.nomrelation
 nommmyy.value=ins2122.nomdob.substr(0,7)
 nomdt.value=ins2122.nomdob.substr(8,2)*1+1
-
+}
 
 // old values capture end
 
@@ -522,10 +525,11 @@ add3.value = member[0].add3
 add4.value = member[0].place
 district.value=  member[0].district
 state.value = member[0].state
+ pin.value = member[0].pincode
 
 
 
-generaldiv.style.display="none"
+
 }
 
 if (insmemb.length >0){
@@ -569,3 +573,4 @@ generaldiv.style.display="block"
 	</script>
 </body>
 </html>
+
