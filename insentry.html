@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -137,28 +138,28 @@ div{width:100%}
         <label for="name">Name</label>
       </div>
      <div class="form-floating mb-1 mt-1">
-            <input type="text" class="form-control" name="add1" placeholder="a" required>
+            <input type="text" class="form-control" name="add1" id="add1"  placeholder="a" required>
             <label for="add1">House No / Flat No / Plot No:</label>
           </div>
           <div class="form-floating mb-1 mt-1">
-            <input type="text" class="form-control" name="add2" placeholder="a" required>
+            <input type="text" class="form-control" name="add2" id="add2" placeholder="a" required>
             <label for="add2">Area / Apartment / Building Name:</label>
           </div>
           <div class="form-floating mb-1 mt-1">
-            <input type="text" class="form-control" name="add3" placeholder="a" required>
+            <input type="text" class="form-control" name="add3" id="add3" placeholder="a" required>
             <label for="add3">Locality:</label>
           </div>
           <div class="form-floating mb-1 mt-1">
-            <input type="text" class="form-control" name="add4" placeholder="a" required>
+            <input type="text" class="form-control" name="add4" id="add4" placeholder="a" required>
             <label for="add4">Vill / Town / City:</label>
           </div>
           <div class="form-floating mb-1 mt-1">
-            <input type="text" class="form-control" name="district" placeholder="a" required>
+            <input type="text" class="form-control" name="district" id="district" placeholder="a" required>
             <label for="district">District:</label>
           </div>
           <div style="display:flex">
             <div class="form-floating mb-1 mt-1">
-              <input type="text" class="form-control" name="state" placeholder="a" required>
+              <input type="text" class="form-control" name="state" id="state" placeholder="a" required>
               <label for="state">State:</label>
             </div>
             <div class="form-floating mb-1 mt-1">
@@ -199,7 +200,7 @@ div{width:100%}
             </div>
           </div>
           <div class="form-floating mb-1 mt-1">
-            <select class="form-select" name="gender" placeholder="a" required>
+            <select class="form-select" name="gender" id="gender" placeholder="a" required>
               <option value="">Select</option>
               <option value="Male">Male</option>
               <option value="Female">Female</option>
@@ -496,7 +497,24 @@ spname.value=ins2122.spname
 spmmyy.value = ins2122.spdob.substr(0,7)
 spdt.value = ins2122.spdob.substr(8,2)*1+1
 pensionacno.value = member[0].sbac
+gender.value=ins2122.gender
+nomname.value=ins2122.nomname
+nomrel.value=ins2122.nomrelation
+nommmyy.value=ins2122.nomdob.substr(0,7)
+nomdt.value=ins2122.nomdob.substr(8,2)*1+1
+
+
 // old values capture end
+
+//values from membership register
+add1.value = member[0].add1 
+add2.value = member[0].add2
+add3.value = member[0].add3
+add4.value = member[0].place
+district.value=  member[0].district
+state.value = member[0].state
+
+
 
 generaldiv.style.display="none"
 }
