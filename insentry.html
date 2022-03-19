@@ -83,17 +83,53 @@ div{width:100%}
 <li>While remitting the premium through <b>Google Pay / BHIM / Phone Pe </b>like applications furnish your SR No and Name in Remrks / Add Note / Details
 <li>Funish correct reference number in the data.
 <li>Some old data from Insurance 21-22 is also captured. Verify correctness of pre populated data
-<li>Pension Account Number and Adhar Number are validated for the correctness. Time 16:50
+<li>Pension Account Number and Adhar Number are validated for the correctness. Time 18:53
 </ol>
         <input style="width:50%; margin-left:25%;" type="number" class="form-control"  min="1" max="9999999"
           id='srno1' name='srno1' placeholder="a" required ><br>
-      <button style="width:50%; margin-left:25%; display:none " onclick="checkMemb()"  class="btn btn-primary" id='btnmemb'  >Check Membership</button>
+      <button style="width:50%; margin-left:25%; display:none " onclick="showpremiumTableDiv()"  class="btn btn-primary" id='btnmemb'  >Check Membership</button>
 <p id='msg'></p>
-
       </div>
-     
-
 </div>
+<div id="premiumTable" style="display:none; ">
+<h6>You are a Member</h6>
+<ol>
+<li>Remitt the premium based on the below table.
+<li>Note down the reference number before proceeding further
+<li><b>Click Proceed button only if you have remitted the premium and having the reference number</b> 
+</ol>
+<table align=center width=95% class="mytable">
+<tr bgcolor='cyan'><td colspan=3>Self and Family
+<tr><td>Premium <td>Base Policy<td>Top Up
+<tr><td>16402	<td>200000	<td>Nil
+<tr><td>22281	<td>200000	<td>200000
+<tr><td>20060	<td>300000	<td>Nil
+<tr><td>27676	<td>300000	<td>300000
+<tr><td>29199	<td>300000	<td>400000
+<tr><td>24780	<td>400000	<td>Nil
+<tr><td>37473	<td>400000	<td>500000
+</table>
+<br>
+<table  align=center width=95% class="mytable">
+<tr bgcolor='cyan'><td  colspan=3>Self Only
+<tr><td>Premium <td>Base Policy<td>Top Up
+<tr><td>10661	<td>200000	<td>Nil
+<tr><td>14482	<td>200000	<td>200000
+<tr><td>13039	<td>300000	<td>Nil
+<tr><td>17989	<td>300000	<td>300000
+<tr><td>18979	<td>300000	<td>400000
+<tr><td>16107	<td>400000	<td>Nil
+<tr><td>24358	<td>400000	<td>500000
+</table>
+<br>
+<table align=center width=95% ><tr align='center'><td width=50%>
+<button style=" ; display:block " onclick="backtogendiv()"  class="btn btn-primary" id='btnmemb1'  >Back</button>
+<td width=50%>
+<button style=" display:block " onclick="checkMemb()"  class="btn btn-primary" id='btnmemb1'  >Proceed</button>
+ </table>     
+</div>
+
+
 <form  id='dataform'  style = "display:none" name='submit-to-google-sheet'>
     <div class="container mt-3">
         <div name='data' id='data' >
@@ -284,6 +320,21 @@ div{width:100%}
 
 	<script type="text/javascript">
 	
+    function showpremiumTableDiv(){
+    inputsrno = srno1.value*1
+member = (activeMembers.filter(a => a.srno === inputsrno))
+if (member.length >0){
+generaldiv.style.display="none"
+premiumTable.style.display="block"
+msg.innerHTML= ""
+}
+else{msg.innerHTML= "<br><b>Sorry! You are not a member</b><br>Apply for IBRA (APTS) Membership and Visit this page<br><br>"
+srno1.style.display="none"
+btnmemb.style.display="none"
+srno1.value=""
+}  
+    }
+    
   function submitData(){
 //if(isvalidAcno(pensionacno.value)===true && validate(adharInput.value)===true){
 //if(isvalidAcno(pensionacno.value)) === false {alert("invalid acno")}
@@ -299,8 +350,14 @@ const scriptURL = 'https://script.google.com/macros/s/AKfycbz27uCks24-pOMfuP6Q5f
     spmmyy.value="";
     spdt.value="";
 }
+
+
+
   document.getElementById("srno").disabled=false;
   e.preventDefault()
+  verifyAdhar()
+validateacno()
+  
     fetch(scriptURL, { method: 'POST', body: new FormData(form)})
 form.reset();	  
 
@@ -487,6 +544,13 @@ getMyInsuranceData()
 }
    getMyData()          
 
+function backtogendiv(){
+generaldiv.style.display="block"
+premiumTable.style.display="none"
+
+}
+
+
 function checkMemb(){
 inputsrno = srno1.value*1
 member = (activeMembers.filter(a => a.srno === inputsrno))
@@ -501,6 +565,7 @@ document.getElementById('dataform').style.display="none"
 
 if (member.length >0){
 generaldiv.style.display="none"
+premiumTable.style.display="none"
 document.getElementById('dataform').style.display="block"
 srno.value=inputsrno
 document.getElementById('name').value= member[0].name
