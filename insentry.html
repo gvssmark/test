@@ -1,6 +1,7 @@
 
 
 
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -86,7 +87,7 @@ div{width:100%}
 <li>While remitting the premium through <b>Google Pay / BHIM / Phone Pe </b>like applications furnish your SR No and Name in Remrks / Add Note / Details
 <li>Funish correct reference number in the data.
 <li>Some old data from Insurance 21-22 is also captured. Verify correctness of pre populated data
-<li>Pension Account Number and Adhar Number are validated for the correctness. Time 01.02
+<li>Pension Account Number and Adhar Number are validated for the correctness. Time 10:04
 </ol>
         <input style="width:50%; margin-left:25%;" type="number" class="form-control"  min="1" max="9999999"
           id='srno1' name='srno1' placeholder="a" required ><br>
@@ -184,13 +185,21 @@ div{width:100%}
                 required>
               <label for="adhar">Adhar Number</label>
             </div>
-            <div class="form-floating mb-1 mt-1">
+          <div class="form-floating mb-1 mt-1">
+                <input type="number" class="form-control" onfocusout="validateacno()" name="pensionacno"  min="100000001" max="99999999999"  id='pensionacno'  placeholder="a" required>
+               
+              <label for="dt">Pension Account Number</label>
+            </div>
+            
+          </div>
+
+<div class="form-floating mb-1 mt-1">
               <input type="text" class="form-control" name="pan" id='pan'
                 pattern="[A-Za-z]{3}[Pp]{1}[A-Za-z]{1}[0-9]{4}[A-Za-z]{1}" placeholder="a" required>
               <label for="pan">P A N</label>
             </div>
-          </div>
-          <div style="display:flex">
+
+<div style="display:flex">
             <div class="form-floating mb-1 mt-1">
               <input type="month" class="form-control" onclick="clDate(dt)" onfocusout="setMaxDt(mmyy,dt)"  min='1922-01' max='1982-12' name="mmyy" id='mmyy' placeholder="a"
                 required>
@@ -210,11 +219,7 @@ div{width:100%}
             </select>
             <label for="gender" class="form-label">Gender</label>
                     </div>
-            <div class="form-floating mb-1 mt-1">
-                <input type="number" class="form-control" onfocusout="validateacno()" name="pensionacno"  min="100000001" max="99999999999"  id='pensionacno'  placeholder="a" required>
-               
-              <label for="dt">Pension Account Number</label>
-            </div>
+            
           
           <div class="form-floating mb-1 mt-1">
             <select class="form-select" name="retiredfrom" id="retiredfrom" placeholder="a" required>
@@ -284,10 +289,15 @@ div{width:100%}
 	<script type="text/javascript">
 	
   function submitData(){
-if(isvalidAcno(pensionacno.value)===true && validate(adharInput.value)===true){
- const scriptURL = 'https://script.google.com/macros/s/AKfycbz27uCks24-pOMfuP6Q5fnNjhtzzq2aHr_WGwhR5iwxuEX60h4/exec'
+//if(isvalidAcno(pensionacno.value)===true && validate(adharInput.value)===true){
+//if(isvalidAcno(pensionacno.value)) === false {alert("invalid acno")}
+if(isvalidAcno(pensionacno.value) === false){pensionacno.focus()}
+//if(verifyAdhar(adharInput.value) === false ){ adharInput.focus() }
+
+const scriptURL = 'https://script.google.com/macros/s/AKfycbz27uCks24-pOMfuP6Q5fnNjhtzzq2aHr_WGwhR5iwxuEX60h4/exec'
   const form = document.forms['submit-to-google-sheet']
   form.addEventListener('submit', e => {
+
    if(pArray.selfFam==="Self"){
     spname.value="";
     spmmyy.value="";
@@ -298,15 +308,19 @@ if(isvalidAcno(pensionacno.value)===true && validate(adharInput.value)===true){
 
   document.getElementById("srno").disabled=false;
   e.preventDefault()
+  verifyAdhar()
+validateacno()
+  
     fetch(scriptURL, { method: 'POST', body: new FormData(form)})
 form.reset();	  
+
 generaldiv.innerHTML="<h1>You have successfully sumbitted the Data<br>Visit Again to view the Data</h1>"
  dataform.style.display="none"
  generaldiv.style.display="block"
  
   })
 }
-}
+
 
 
     //Adhar Validation
@@ -347,7 +361,8 @@ let c = 0
 		if(validate(aadharNo)) {
              document.getElementById("adharInput").style.color="white"
 document.getElementById("adharInput").style.backgroundColor="Green"
-     	} else {
+validateacno()
+} else {
    document.getElementById("adharInput").style.color="white"
 document.getElementById("adharInput").style.backgroundColor="red"
         document.getElementById("adharInput").focus()
@@ -506,7 +521,7 @@ srno.value=inputsrno
 document.getElementById('name').value= member[0].name
 // get data from old insurance and set
 if(ins2122data.length>0){
-adharInput.value = ins2122.adhar
+adharInput.value = ins2122.adhar.toString().substr(0,11)
 pan.value = ins2122.pan
 email.value = ins2122.email
 mobileno.value = ins2122.mobile
@@ -517,7 +532,6 @@ dt.value = ins2122.dob.substr(8,2)*1+1
 spname.value=ins2122.spname
 spmmyy.value = ins2122.spdob.substr(0,7)
 spdt.value = ins2122.spdob.substr(8,2)*1+1
-pensionacno.value = member[0].sbac
 gender.value=ins2122.gender
 nomname.value=ins2122.nomname
 nomrel.value=ins2122.nomrelation
@@ -535,6 +549,9 @@ add4.value = member[0].place
 district.value=  member[0].district
 state.value = member[0].state
  pin.value = member[0].pincode
+pensionacno.value = member[0].sbac.toString().substr(0,8)
+verifyAdhar()
+validateacno()
 
 
 
