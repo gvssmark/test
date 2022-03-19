@@ -1,7 +1,3 @@
-
-
-
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -87,7 +83,7 @@ div{width:100%}
 <li>While remitting the premium through <b>Google Pay / BHIM / Phone Pe </b>like applications furnish your SR No and Name in Remrks / Add Note / Details
 <li>Funish correct reference number in the data.
 <li>Some old data from Insurance 21-22 is also captured. Verify correctness of pre populated data
-<li>Pension Account Number and Adhar Number are validated for the correctness. Time 10:04
+<li>Pension Account Number and Adhar Number are validated for the correctness. Time 16:50
 </ol>
         <input style="width:50%; margin-left:25%;" type="number" class="form-control"  min="1" max="9999999"
           id='srno1' name='srno1' placeholder="a" required ><br>
@@ -303,18 +299,12 @@ const scriptURL = 'https://script.google.com/macros/s/AKfycbz27uCks24-pOMfuP6Q5f
     spmmyy.value="";
     spdt.value="";
 }
-
-
-
   document.getElementById("srno").disabled=false;
   e.preventDefault()
-  verifyAdhar()
-validateacno()
-  
     fetch(scriptURL, { method: 'POST', body: new FormData(form)})
 form.reset();	  
 
-generaldiv.innerHTML="<h1>You have successfully sumbitted the Data<br>Visit Again to view the Data</h1>"
+generaldiv.innerHTML="<h1>Data Submitted<br>Visit Again to view the Data</h1>"
  dataform.style.display="none"
  generaldiv.style.display="block"
  
@@ -359,12 +349,10 @@ let c = 0
 	function verifyAdhar() {
 		var aadharNo = document.getElementById("adharInput").value;
 		if(validate(aadharNo)) {
-             document.getElementById("adharInput").style.color="white"
-document.getElementById("adharInput").style.backgroundColor="Green"
+             document.getElementById("adharInput").style.color="green"
 validateacno()
 } else {
-   document.getElementById("adharInput").style.color="white"
-document.getElementById("adharInput").style.backgroundColor="red"
+   document.getElementById("adharInput").style.color="red"
         document.getElementById("adharInput").focus()
 		}
 	}
@@ -374,15 +362,12 @@ document.getElementById("adharInput").style.backgroundColor="red"
     function validateacno(){
 acno=document.getElementById('pensionacno').value
 if (isvalidAcno(acno) === false){
-document.getElementById('pensionacno').style.color='white'
-document.getElementById('pensionacno').style.backgroundColor='red'
-
+document.getElementById('pensionacno').style.color='red'
 document.getElementById('pensionacno').focus()
 }
 
 else{
-document.getElementById('pensionacno').style.color='white'
-document.getElementById('pensionacno').style.backgroundColor='green'
+document.getElementById('pensionacno').style.color='green'
 }
 
 }
