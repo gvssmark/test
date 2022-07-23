@@ -6,34 +6,25 @@
 <title>CBS CD</title>
 <style>
 body{ margin:0px; background:powderblue; text-size:small;}
-input{margin-left: 20px;}
+input{margin: auto;}
  td{width:20px; text-align:center;}
  tr{height:20px; text-align:center;}
- table{ width:280px; margin-left:5px; align:center; border:1px solid black; border-collapse:collapse}
+ table{ width:360px; margin-left:5px; align:center; border:1px solid black; border-collapse:collapse}
  h4{text-align:center; color:red; margin-top:1px; }
- div{ width:358px; ;}
+ div{ width:360px; margin: auto;}
  p{margin-left:3px; margin-top:0px;}
   input::-webkit-outer-spin-button,
         input::-webkit-inner-spin-button {
             -webkit-appearance: none;
-            margin: 0;
+            margin: auto;
         }
-        div {
-          margin: auto;
- // 
- width: 360px;
- // border: 3px solid green;
- // padding: 10px;
-
-
-}
-</style>
+ </style>
 </head>
 <body>
-<div style="align:centre">
+<div >
 <h4>CBS Check Digit</h4>
 
-<p><input type='number' id='acnoInput' ><button onclick="calcCheckDigit()" id='btn'>Submit</button></p>
+<p><input type='number' id='acnoInput' ><br><button onclick="calcCheckDigit()" id='btn'>Submit</button></p>
 <p id='calculated'></p>
 
 <table align=center bgcolor=pink  border=1 id='cbscd'>
