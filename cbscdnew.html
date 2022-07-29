@@ -1,0 +1,89 @@
+
+
+
+<html>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<style>
+table{border-collapse: collapse; align:center}
+td{width:25px; height:25px; text-align:center}
+.cyan {background: cyan}
+.brown {background: AliceBlue
+}
+.yell {background: yellow}
+</style>
+
+<body>
+
+<div style="width:360px; margin: auto; background:powderblue">
+<h4 align=center><br>CBS Check Digit Calculation</h4>
+<input type="text" id="inputtext" style="width:300px;;margin-left:15px"><br><br>
+<input onclick="btnclick()"type="button" style="margin-left:15px; width:300px;" value="Submit"><br>
+
+<p id='para1' style="text-align: center"></p>
+<p id='para2' style="text-align: center"> </p>
+
+<br>
+</div>
+
+
+<script>
+
+function btnclick(){
+inpval= document.getElementById("inputtext").value
+cbscd(inpval) ? table() : document.getElementById("para1").innerHTML="Invalid check digit"
+//cbscd(440548819) ? "true" :"invalid"
+
+//table()
+document.getElementById("para2").innerHTML=`Check digit is the last digit of the account Number. Sum  of Cyan coloe cells is  ${sum}. Divide this with 10. The remider  ${sum % 10} is the check digit.  `
+}
+
+
+
+function cbscd(acno){
+cdar=[]
+    reparr=[]
+racno= acno.toString().split('')
+givencd=racno.pop()
+racno= racno.reverse()
+myar=[0,1,2,3,4,5,6,7,8,9]
+cdar.push(myar[racno[0]])
+reparr.push(myar)
+for (i=1; i<racno.length; i++){
+myar=myar.map(n=> (n*2)>11 ? (n*2)-11 : (n*2) );
+reparr.push(myar)
+cdar.push(myar[racno[i]])
+}
+sum = cdar.reduce((pv, cv) => pv + cv, 0);
+for (i=0; i<reparr.length;i++){
+reparr[i].push(racno[i]*1)
+reparr[i].push(cdar[i])
+}
+reparr.reverse()
+return sum %10 == givencd
+}
+
+//cbscd(409183332)
+//-------------reparr -------------
+
+function table() {
+tab="<table border=1 align=center>"
+for (i=0; i<reparr.length; i++){
+tab +="<tr>"
+td=""
+for (j=0; j<reparr[i].length-2; j++){
+     reparr[i][11] ===reparr[i][j] ? td += "<td class='cyan'>" + reparr[i][j] : td += "<td>" +reparr[i][j]
+} 
+tab += td +"<td class='yell'>" +reparr[i][10] +"<td class='brown'>" +reparr[i][11]
+td=""
+}
+tab +="</table>"
+document.getElementById("para1").innerHTML=tab
+}
+
+
+
+</script>
+
+</body>
+</html>
