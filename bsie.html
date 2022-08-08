@@ -1,0 +1,129 @@
+
+         
+    <!DOCTYPE html>
+<html>
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>IBRA-APTS</title>
+    
+    <style>
+    body {font-size: small; background:yellow; margin:auto; width:360px; border:1px sold black;}
+    table, tr, td  {border:1px solid black;
+    border-collapse: collapse;
+    width:360 px;
+    }
+    </style>
+    
+    </head>
+<body>
+<h1 id='year'>Ledger for the year </h1>
+<div style="border: 1px solid black; width:360px; background: powderblue; height:400px; overflow-y: scroll; ">
+
+<button onclick="everyacno()">Generate Leger</button>
+<p id="tdata">.</p>
+</div>
+Trial Balance, Balance Sheet and Income & Expenditure
+<div style="border: 1px solid black; width:360px; background: powderblue; height:200px; overflow-y: scroll; ">
+Here goes the Trial Balance; Balance Sheet; Income and expenditure<br>
+Here goes the Trial Balance; Balance Sheet; Income and expenditure<br>
+Here goes the Trial Balance; Balance Sheet; Income and expenditure<br>
+Here goes the Trial Balance; Balance Sheet; Income and expenditure<br>
+Here goes the Trial Balance; Balance Sheet; Income and expenditure<br>
+Here goes the Trial Balance; Balance Sheet; Income and expenditure<br>
+Here goes the Trial Balance; Balance Sheet; Income and expenditure<br>
+Here goes the Trial Balance; Balance Sheet; Income and expenditure<br>
+Here goes the Trial Balance; Balance Sheet; Income and expenditure<br>
+Here goes the Trial Balance; Balance Sheet; Income and expenditure<br>
+Here goes the Trial Balance; Balance Sheet; Income and expenditure<br>
+Here goes the Trial Balance; Balance Sheet; Income and expenditure<br>
+Here goes the Trial Balance; Balance Sheet; Income and expenditure<br>
+Here goes the Trial Balance; Balance Sheet; Income and expenditure<br>
+Here goes the Trial Balance; Balance Sheet; Income and expenditure<br>
+Here goes the Trial Balance; Balance Sheet; Income and expenditure<br>
+Here goes the Trial Balance; Balance Sheet; Income and expenditure<br>
+Here goes the Trial Balance; Balance Sheet; Income and expenditure<br>
+Here goes the Trial Balance; Balance Sheet; Income and expenditure<br>
+Here goes the Trial Balance; Balance Sheet; Income and expenditure<br>
+Here goes the Trial Balance; Balance Sheet; Income and expenditure<br>
+Here goes the Trial Balance; Balance Sheet; Income and expenditure<br>
+Here goes the Trial Balance; Balance Sheet; Income and expenditure<br>
+Here goes the Trial Balance; Balance Sheet; Income and expenditure<br>
+Here goes the Trial Balance; Balance Sheet; Income and expenditure<br>
+Here goes the Trial Balance; Balance Sheet; Income and expenditure<br>
+Here goes the Trial Balance; Balance Sheet; Income and expenditure<br>
+
+
+
+</div>
+
+<script>
+url = 'https://script.google.com/macros/s/AKfycbyM8VvTakfBAu16BnGsYoUZwHPnUW7dHiJs_Cg40VGxXI2cAOk/exec'
+            async function getMyData() {
+                response = await fetch(url)
+                data = await response.json()
+                tempData1 = data["jrnldata"]
+                bsyear = tempData1[0].dt
+                tempData = tempData1.filter(a => a.amt>0)
+                
+
+
+                }
+acturl = 'https://script.google.com/macros/s/AKfycbxg1OCW2FO6NzNvkFOUnIs4U3LE4DI0dCNgnrL5yQEWlgg1uaE/exec'
+            async function getActData() {
+                response = await fetch(acturl)
+                data1 = await response.json()
+                actData = data1["acctsdata"]
+                }
+                
+                
+getActData()                
+getMyData() 
+
+function everyacno(){
+document.getElementById("year").innerHTML = "Ledger for " + bsyear
+tabledata= "<table  ><tr><td>Date<td>Details<td>DC<td>Amount<td>Balance"
+
+for (j=2; j<actData.length; j++){
+actno = actData[j].acno
+actname = actData[j].acdisplay
+filtered =  tempData.filter(o => {return (o.drac == actno || o.crac == actno)}).map(a => ({ dt: gdt(a.dt), details: a.trdetail, drac: a.drac, crac: a.crac, amt: a.amt }));
+
+if (filtered.length>0) {
+filterac(actno)
+}
+
+
+}
+tabledata += "</table>"
+document.getElementById("tdata").innerHTML = tabledata
+}
+
+
+function filterac(acno){
+
+
+
+Math.floor(acno/1000) %2 ? balance = filtered[0].amt*-1: balance = filtered[0].amt
+Math.floor(acno/1000) %2 ? dc="Dr": dc="Cr"
+
+
+tabledata += "<tr><td colspan=5 align=center bgcolor=yellow>" + actname
+tabledata += "<tr><td>" + filtered[0].dt + "<td>"+filtered[0].details +"<td>"+dc+"<td align=right>" + filtered[0].amt+"<td align=right>"+balance 
+for (i=1; i<filtered.length; i++){
+filtered[i].drac == acno ? balance = balance - filtered[i].amt : balance = balance + filtered[i].amt
+filtered[i].drac == acno ? dc = "Dr": dc="Cr"
+tabledata += "<tr><td>"+filtered[i].dt+"<td>"+ filtered[i].details+"<td>"+dc+"<td align=right>"+filtered[i].amt+"<td align=right>"+balance
+}
+}
+
+function gdt (d){
+mm  = (new Date(d).getMonth()*1+1).toString().padStart(2,0)
+dd  = new Date(d).getDate().toString().padStart(2,0)
+yyyy= new Date(d).getFullYear()
+return dd+"/"+mm+"/"+yyyy
+}
+</script>  
+                
+
+</body>
+</html>
