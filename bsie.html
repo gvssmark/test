@@ -1,4 +1,5 @@
-<!DOCTYPE html>
+
+           <!DOCTYPE html>
 <html>
 <head>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -17,7 +18,7 @@ th{ background: red; color:white;
     </style>
     
     </head>
-<body>
+<body >
 <h1 align=center id='year'>Ledger</h1>
 <button style="display:block; margin:0 auto "  onclick="everyacno()">Generate Leger</button>
 <div style="width:360px; background: powderblue ; margin:0 auto; height:70vh; overflow-y:scroll; ">
@@ -64,6 +65,9 @@ filterac(actno)
 }
 tabledata += "</table>"
 document.getElementById("tdata").innerHTML = tabledata
+abc()
+alert("total assets= "+assts+ "    total liabilites=   "+liabs)
+
 }
 
 
@@ -90,6 +94,23 @@ dd  = new Date(d).getDate().toString().padStart(2,0)
 yyyy= new Date(d).getFullYear()
 return dd+"/"+mm+"/"+yyyy
 }
+
+function abc(){
+actDataReport = actData.filter(a => a.acno >0 & a.acno !=2003);
+acType =["ASSET","LIABILITY","RECEIPT", "PAYMENT" ];
+assts= sumOnType(acType[1])+sumOnType(acType[2])
+liabs= sumOnType(acType[0])+sumOnType(acType[3])
+}
+abc()
+function sumOnType(actype){
+totalsum = actDataReport.filter(a => a.actype ===actype).reduce((accumulator, current) => accumulator + current.bal, 0)
+return totalsum
+}
+
+
+
+
+
 </script>  
                 
 
