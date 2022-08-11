@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<style>
+.pulsing-2 {
+  width:100px;
+  height:100px;
+  border-radius: 50%;
+  background:red;
+  box-shadow: 0 0 0 0 #0004;
+  animation:pl2 1.5s infinite linear;
+  position: relative;
+}
+.pulsing-2:before,
+.pulsing-2:after {
+  content:"";
+  position: absolute;
+  inset:0;
+  border-radius: inherit;
+  box-shadow: 0 0 0 0 #0004;
+  animation: inherit;
+  animation-delay: -0.5s;
+}
+.pulsing-2:after {
+  animation-delay: -1s;
+}
+@keyframes pl2 {
+    100% {box-shadow: 0 0 0 40px #0000}
+}
+</style>
+</head>
+<body>
+
+<h2>How To Create A Loader</h2>
+
+<div class="pulsing-2" id='loader' style='display: block'></div>
+
+<div id='afterload' style='display:none; '><h1 id='h1'> Data is ready</h1> </div>
+<script>
+url = 'https://script.google.com/macros/s/AKfycbwU43y7aw-hY8rjx77YgViB5Vs2H5yv7i5GMuUUfB6YMLbEQn3D/exec'
+
+        async function getMyData() {
+            response = await fetch(url)
+            data = await response.json()
+            tempData = data["user"].sort((a, b) => a.srno - b.srno);
+            alphasorted = tempData.sort(function (a, b) { return a.name.localeCompare(b.name) })
+            mycities = Array.from(new Set(alphasorted.map(s => s.add3))).sort()
+            tempData.length>0? (document.getElementById('loader').style.display="none",
+            document.getElementById('afterload').style.display="block",
+            document.getElementById('h1').innerHTML = tempData.length): ""
+            
+            //getVariousArrays()
+        }
+
+        getMyData()
+
+</script>
+
+</body>
+</html>
