@@ -24,7 +24,7 @@ url = 'https://script.google.com/macros/s/AKfycbyM8VvTakfBAu16BnGsYoUZwHPnUW7dHi
                 data = await response.json()
                 tempData1 = data["jrnldata"]
                 bsyear = tempData1[0].dt
-                tempData = tempData1.filter(a => a.amt>0)
+                tempData = tempData1.filter(a => a.amt!=0)
 }
 acturl = 'https://script.google.com/macros/s/AKfycbxg1OCW2FO6NzNvkFOUnIs4U3LE4DI0dCNgnrL5yQEWlgg1uaE/exec'
             async function getActData() {
@@ -50,9 +50,9 @@ function everyacno(){
         
            
            abc()
-   acts="<br><table><tr><td>AcNo<td>Ac Name<td >Balance"
+   acts="<br><table><tr><td>AcNo<td id='top'>Ac Name<td >Balance"
 actDataReport.filter(a=> a.bal!=0).forEach( a => {acts += `<tr><td> ${a.acno} <td><a href='#${a.acno}'> ${a.acname} </a><td align=right>${a.bal}`})
-acts +="</table><br><br>"
+acts +="</table><br><br><br><br>"
 
 document.getElementById("tdata").innerHTML = acts + tabledata
 
@@ -62,7 +62,7 @@ document.getElementById("tdata").innerHTML = acts + tabledata
 
 function filterac(acno){
            Math.floor(acno/1000) %2 ? (balance = filtered[0].amt*-1, dc="Dr"): (balance = filtered[0].amt, dc="Cr")
-           tabledata += `<tr><td id=${acno} colspan=5 align=center bgcolor=yellow>${ actname} `
+           tabledata += `<tr height=50><td id=${acno} colspan=5 align=center bgcolor=yellow><a href=#top>${ actname} </a> `
            tabledata += "<tr><td>" + filtered[0].dt + "<td>"+filtered[0].details +"<td>"+dc+"<td align=right>" + filtered[0].amt+"<td align=right>"+balance 
            for (i=1; i<filtered.length; i++){
                       filtered[i].drac == acno ? balance = balance - filtered[i].amt : balance = balance + filtered[i].amt
