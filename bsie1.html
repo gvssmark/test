@@ -16,7 +16,7 @@ a {color:black; text-decoration:none; }
 <body >
 <h1 align=center id='year'>Ledger</h1>
 <button style="display:block; margin:0 auto "  onclick="everyacno()">Generate Leger</button>
-<div style="width:360px; background: powderblue ; margin:0 auto; height:80vh; overflow-y:scroll; ">
+<div style="width:360px; background: powderblue ; margin:0 auto;  overflow-y:scroll; ">
 <p id="tdata">.</p>
 </div>
 <script>
@@ -52,9 +52,9 @@ function everyacno(){
         
            
            abc()
-   acts="<br><table><tr><td>AcNo<td id='top'>Ac Name<td >Balance"
+   acts="<br><br><table><tr><td>AcNo<td id='top'>Ac Name<td >Balance"
 actDataReport.filter(a=> a.bal!=0).forEach( a => {acts += `<tr><td> ${a.acno} <td><a href='#${a.acno}'> ${a.acname} </a><td align=right>${a.bal}`})
-acts +="</table><br><br><br><br>"
+acts +="</table><br><br><br><br><br><br><br><br><br>"
 
 document.getElementById("tdata").innerHTML = acts + tabledata
 
