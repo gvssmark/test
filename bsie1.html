@@ -1,4 +1,5 @@
 
+
 <!DOCTYPE html>
 <html>
 <head>
@@ -7,6 +8,7 @@
 <style>
 body {font-size: small; background: #1a614429}
 table, tr, td  {border:1px solid black;border-collapse: collapse;width:360 px; margin-top:-15px;}
+td {height:20px;}
 th{ background: red; color:white;position: sticky;top: 0;}
 a {color:black; text-decoration:none; }
 </style>
@@ -62,7 +64,7 @@ document.getElementById("tdata").innerHTML = acts + tabledata
 
 function filterac(acno){
            Math.floor(acno/1000) %2 ? (balance = filtered[0].amt*-1, dc="Dr"): (balance = filtered[0].amt, dc="Cr")
-           tabledata += `<tr height=50><td id=${acno} colspan=5 align=center bgcolor=yellow><a href=#top>${ actname} </a> `
+           tabledata += `<tr><td id=${acno} colspan=5>&nbsp;<tr height=25><td  colspan=5 align=center bgcolor=yellow><a href=#top>${ actname} </a> `
            tabledata += "<tr><td>" + filtered[0].dt + "<td>"+filtered[0].details +"<td>"+dc+"<td align=right>" + filtered[0].amt+"<td align=right>"+balance 
            for (i=1; i<filtered.length; i++){
                       filtered[i].drac == acno ? balance = balance - filtered[i].amt : balance = balance + filtered[i].amt
