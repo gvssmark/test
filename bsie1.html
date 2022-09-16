@@ -52,9 +52,9 @@ function everyacno(){
         
            
            abc()
-   acts="<br><br><table><tr><td>AcNo<td id='top'>Ac Name<td >Balance"
+   acts="<br><br><table><tr><td>AcNo<td >Ac Name<td >Balance"
 actDataReport.filter(a=> a.bal!=0).forEach( a => {acts += `<tr><td> ${a.acno} <td><a href='#${a.acno}'> ${a.acname} </a><td align=right>${a.bal}`})
-acts +="</table><br><br><br><br><br><br><br><br><br>"
+acts +="</table><br><br><br><br><br><br><br><br><br><br><br><br><br><br>"
 
 document.getElementById("tdata").innerHTML = acts + tabledata
 
@@ -64,7 +64,7 @@ document.getElementById("tdata").innerHTML = acts + tabledata
 
 function filterac(acno){
            Math.floor(acno/1000) %2 ? (balance = filtered[0].amt*-1, dc="Dr"): (balance = filtered[0].amt, dc="Cr")
-           tabledata += `<tr><td id=${acno} colspan=5>&nbsp;<tr height=25><td  colspan=5 align=center bgcolor=yellow><a href=#top>${ actname} </a> `
+           tabledata += `<tr><td id=${acno} colspan=5>&nbsp;<tr height=25><td  colspan=5 align=center bgcolor=yellow><a href=#year>${ actname} </a> `
            tabledata += "<tr><td>" + filtered[0].dt + "<td>"+filtered[0].details +"<td>"+dc+"<td align=right>" + filtered[0].amt+"<td align=right>"+balance 
            for (i=1; i<filtered.length; i++){
                       filtered[i].drac == acno ? balance = balance - filtered[i].amt : balance = balance + filtered[i].amt
