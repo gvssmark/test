@@ -15,7 +15,7 @@ font-size:small;
 text-align:left; 
 }
 
-
+optgroup { font-size:5px; }
     body {
     width:360px; margin:auto;
       font-size: SMALL;
@@ -86,7 +86,7 @@ option{font-size:x-small}
 <li>While remitting the premium through <b>Google Pay / BHIM / Phone Pe </b>like applications furnish your SR No and Name in Remrks / Add Note / Details
 <li>Funish correct reference number in the data.
 <li>Some old data from Insurance 21-22 is also captured. Verify correctness of pre populated data
-<li>Pension Account Number and Adhar Number are validated for the correctness. Time 17:33
+<li>Pension Account Number and Adhar Number are validated for the correctness. Time 17:43
 </ol>
         <input style="width:50%; margin-left:25%;" type="number" class="form-control"  min="1" max="9999999"
           id='srno1' name='srno1' placeholder="a" required ><br>
@@ -145,7 +145,7 @@ option{font-size:x-small}
           <div class="form-floating mb-1 mt-1">
             <select onchange="selectedPremium()" class="form-select" name="premiumpaid" id="premiumpaid" placeholder="a" required>
 <option value="">Select</option>
-
+<optgroup>
 	      <option value="10661">&#x20B9 10661-Self-Base 2L-Topup 0L</option>
               <option value="14482">&#x20B9 14482-Self-Base 2L-Topup 2L</option>
               <option value="13039">&#x20B9 13039-Self-Base 3L-Topup 0L</option>
@@ -160,6 +160,7 @@ option{font-size:x-small}
               <option value="29199">&#x20B9 29199-Family-Base 3L-Topup 4L</option>
               <option value="24780">&#x20B9 24780-Family-Base 4L-Topup 0L</option>
               <option value="37473">&#x20B9 37473-Family-Base 4L-Topup 5L</option>
+	</optgroup>
             </select>
             </select>
             <label for="premiumpaid" class="form-label">Premium Paid</label>
