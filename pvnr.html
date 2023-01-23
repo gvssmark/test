@@ -3,10 +3,16 @@
 <head>
 <title>Page Title</title>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<style>
+body{background:powderblue;}
 
+div{width:360px; margin:auto;}
+table{border-collapse:collapse; }
+
+</style>
 </head>
 <body>
-
+<div>
 <table align=center width=350 bgcolor='powderblue'><tr><td>
 Principle: <td><input class='input' type='number' placeholder='principle' id='p'>
 
@@ -17,9 +23,9 @@ Principle: <td><input class='input' type='number' placeholder='principle' id='p'
 
 <tr><td colspan=2 align=center><button onclick='calc()'>Calculate</button>
 </table>
-<hr>
-<p id='result'></p>
 
+<p id='result'></p>
+</div>
 <script>
 const input = document.querySelector('input');
 input.addEventListener('change', (e) => {
@@ -36,18 +42,18 @@ nr=document.getElementById('n').value
 inst=Math.round(pr/nr)
 interest=Math.round((pr*1*rr)/1200)
 
-
+cumint = interest
 nr=nr*1+1
 tdata=`<table width=350 border=1 align=center><tr><td>Inst. No<td>Debit<td>Credit<td>Balance<tr><td>0<td>${pr}<td><td>${pr}
 `
 for(i=1;i<nr; i++){
-tdata += `<tr><td>${i}<td>${interest}<td>${inst}<td>${pr-(inst*i)}`
+tdata += `<tr><td>${i}<td>${interest}<td>${inst+interest}<td>${pr-(inst*i)}`
 
 interest=Math.round((pr-(inst*i))*1*rr/1200)
-
+cumint +=interest
 
 }
-document.getElementById('result').innerHTML=tdata
+document.getElementById('result').innerHTML=tdata+"</table> <br>Cumulative Interest: "+cumint
 }
 
 
