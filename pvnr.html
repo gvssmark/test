@@ -7,7 +7,7 @@
 </head>
 <body>
 
-<table align=center width=360 bgcolor='powderblue'><tr><td>
+<table align=center width=350 bgcolor='powderblue'><tr><td>
 Principle: <td><input class='input' type='number' placeholder='principle' id='p'>
 
 <tr><td>Interest Rate: <td><input class='input' type='number' placeholder='Interest Rate'  id='r'>
@@ -38,7 +38,7 @@ interest=Math.round((pr*1*rr)/1200)
 
 
 nr=nr*1+1
-tdata=`<table width=360 border=1 align=center><tr><td>Inst. No<td>Debit<td>Credit<td>Balance<tr><td>0<td>${pr}<td><td>${pr}
+tdata=`<table width=350 border=1 align=center><tr><td>Inst. No<td>Debit<td>Credit<td>Balance<tr><td>0<td>${pr}<td><td>${pr}
 `
 for(i=1;i<nr; i++){
 tdata += `<tr><td>${i}<td>${interest}<td>${inst}<td>${pr-(inst*i)}`
