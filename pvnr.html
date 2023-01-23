@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Page Title</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+</head>
+<body>
+
+<table align=center width=360 bgcolor='powderblue'><tr><td>
+Principle: <td><input class='input' type='number' placeholder='principle' id='p'>
+
+<tr><td>Interest Rate: <td><input class='input' type='number' placeholder='Interest Rate'  id='r'>
+
+
+<tr><td>Months: <td><input class='input' type='number' placeholder='Months'  id='n'>
+
+<tr><td colspan=2 align=center><button onclick='calc()'>Calculate</button>
+</table>
+<hr>
+<p id='result'></p>
+
+<script>
+const input = document.querySelector('input');
+input.addEventListener('change', (e) => {
+  const isValid = e.target.checkValidity();
+  
+});
+
+function calc(){
+
+pr=document.getElementById('p').value
+rr=document.getElementById('r').value
+nr=document.getElementById('n').value
+
+inst=Math.round(pr/nr)
+interest=Math.round((pr*1*rr)/1200)
+
+
+nr=nr*1+1
+tdata=`<table width=360 border=1 align=center><tr><td>Inst. No<td>Debit<td>Credit<td>Balance<tr><td>0<td>${pr}<td><td>${pr}
+`
+for(i=1;i<nr; i++){
+tdata += `<tr><td>${i}<td>${interest}<td>${inst}<td>${pr-(inst*i)}`
+
+interest=Math.round((pr-(inst*i))*1*rr/1200)
+
+
+}
+document.getElementById('result').innerHTML=tdata
+}
+
+
+
+</script>
+
+</body>
+</html>
