@@ -28,22 +28,27 @@ body {width:360px; }
 <tr id='12' onclick='skandano(this.id)'><td> ద్వాదశ స్కంధము
 </table>
 </div>
+<div id='ghatlist'></div>
 <h2  id='ghatname'>My First Heading</h1>
 <input type='checkbox' checked id='tog' onclick='sh()'>టీక</input>
 <input type='checkbox' checked id='tog1' onclick='sh1()'>టిప్పణి </input>
 <button id='btn1' onclick='skshow()'>Show Skandas</button>
 <div id='ghatdata'></div>
 
+
 <script>
 function skshow(){ document.getElementById('skandas').style.display='block' }
 function skandano(ba){
-ghat = tempData.filter(a=> a.sk ===ba*1 & a.gh ===2)
-todiv=''
-ghat.forEach(function (a)  {todiv += `<p class='padyam'> ${a.padyano} <br> ${a.padyam.replace(/(?:\r\n|\r|\n)/g, '<br>')}</p>
-<p class='tika'> టీక<br> ${a.tika} </p> <p class='tippani'> టిప్పణి<br> ${a.tippani}`})
-document.getElementById('ghatdata').innerHTML=todiv
-document.getElementById('ghatname').innerHTML=ghat[0].ghatta
-document.getElementById('skandas').style.display='none'
+skselect = ba*1
+ghats = tempData.filter(a=> a.sk ===ba*1)
+maxValue = Math.max.apply(null,ghats.map(function(o) { return o.gh; }));
+ghatnames='<table>'
+for (i=1; i<maxValue+1; i++){
+ghatnames += `<tr id=${i} onclick='ghatselect(this.id)' ><td> ${i}<td> ${ ghats.filter(a => a.gh === i)[0].ghatta} `
+}
+ghatnames += "</table>"
+document.getElementById('ghatlist').innerHTML=ghatnames
+document.getElementById('ghatlist').style.display='block'
 }
  url = 'https://script.google.com/macros/s/AKfycbwgoZT4fWoP3D4XSrt3CcLL5O7nKo5CDC6nnWt1a3sXZEnT2mzMf5rcVk0wxOJIeIWBvA/exec'
             async function getMyData() {
@@ -53,6 +58,19 @@ document.getElementById('skandas').style.display='none'
 getMyData()
 function sh(){document.querySelectorAll('.tika').forEach(function(el) {   el.style.display = el.style.display =='none' ? 'block' : 'none';});}
 function sh1(){document.querySelectorAll('.tippani').forEach(function(el) {   el.style.display = el.style.display =='none' ? 'block' : 'none';});}
+
+function ghatselect(a){
+ghsele = a*1
+ghat = tempData.filter(a=> a.sk ===skselect & a.gh ===ghsele)
+todiv=''
+ghat.forEach(function (a)  {todiv += `<p class='padyam'> ${a.padyano} <br> ${a.padyam.replace(/(?:\r\n|\r|\n)/g, '<br>')}</p>
+<p class='tika'> టీక<br> ${a.tika} </p> <p class='tippani'> టిప్పణి<br> ${a.tippani}`})
+document.getElementById('ghatdata').innerHTML=todiv
+document.getElementById('ghatname').innerHTML=ghat[0].ghatta
+document.getElementById('skandas').style.display='none'
+document.getElementById('ghatlist').style.display='none'
+
+}
 </script>
 </body>
 </html>
