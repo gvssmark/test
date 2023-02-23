@@ -9,7 +9,10 @@
 </style>
 </head>
 <body>
-<h1>My First Heading</h1>
+<h2 id='ghatname'>My First Heading</h1>
+<button id='tog' onclick='sh()'>Show/Hide Tika</button>
+<button id='tog1' onclick='sh1()'>Show/Hide Tippani</button>
+
 <div id='ghatdata'></div>
 
 <script>
@@ -23,8 +26,14 @@ todiv=''
 ghat.forEach(function (a)  {todiv += `<p class='padyam'> ${a.padyano} <br> ${a.padyam.replace(/(?:\r\n|\r|\n)/g, '<br>')}</p>
 <p class='tika'> టీక<br> ${a.tika} </p> <p class='tippani'> టిప్పణి<br> ${a.tippani}`})
 document.getElementById('ghatdata').innerHTML=todiv
+document.getElementById('ghatname').innerHTML=ghat[0].ghatta
+
 }
 getMyData()
+
+function sh(){document.querySelectorAll('.tika').forEach(function(el) {   el.style.display = el.style.display =='none' ? 'block' : 'none';});}
+function sh1(){document.querySelectorAll('.tippani').forEach(function(el) {   el.style.display = el.style.display =='none' ? 'block' : 'none';});}
+
 </script>
 </body>
 </html>
