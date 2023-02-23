@@ -3,37 +3,56 @@
 <head>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <style>
-.padyam { color:blue;}
+body {width:360px; }
+.padyam { color:blue; }
 .tika {color:red; display:block}
 .tippani {color:green; display:block}
+#skandas {color:red; }
 </style>
 </head>
 <body>
-<h2 id='ghatname'>My First Heading</h1>
-<button id='tog' onclick='sh()'>Show/Hide Tika</button>
-<button id='tog1' onclick='sh1()'>Show/Hide Tippani</button>
-
+<div id='skandas'><table align=center>
+<tr id='1' onclick='skandano(this.id)'><td> ప్రథమ స్కంధము
+<tr id='2' onclick='skandano(this.id)'><td>ద్వితీయ స్కంధము
+<tr id='3' onclick='skandano(this.id)'><td> తృతీయ స్కంధము
+<tr id='4' onclick='skandano(this.id)'><td> చతుర్థ స్కంధము
+<tr id='5.1' onclick='skandano(this.id)'><td> పంచమ స్కంధము - పూర్వ
+<tr id='5.2' onclick='skandano(this.id)'><td> పంచమ స్కంధము - ఉత్తర
+<tr id='6' onclick='skandano(this.id)'><td> షష్ఠ స్కంధము
+<tr id='7' onclick='skandano(this.id)'><td> సప్తమ స్కంధము
+<tr id='8' onclick='skandano(this.id)'><td> అష్టమ స్కంధము
+<tr id='9' onclick='skandano(this.id)'><td> నవమ స్కంధము
+<tr id='10.1' onclick='skandano(this.id)'><td> దశమ స్కంధము - పూర్వ
+<tr id='10.2' onclick='skandano(this.id)'><td> దశమ స్కంధము - ఉత్తర
+<tr id='11' onclick='skandano(this.id)'><td> ఏకాదశ స్కంధము
+<tr id='12' onclick='skandano(this.id)'><td> ద్వాదశ స్కంధము
+</table>
+</div>
+<h2  id='ghatname'>My First Heading</h1>
+<input type='checkbox' checked id='tog' onclick='sh()'>టీక</input>
+<input type='checkbox' checked id='tog1' onclick='sh1()'>టిప్పణి </input>
+<button id='btn1' onclick='skshow()'>Show Skandas</button>
 <div id='ghatdata'></div>
 
 <script>
- url = 'https://script.google.com/macros/s/AKfycbwgoZT4fWoP3D4XSrt3CcLL5O7nKo5CDC6nnWt1a3sXZEnT2mzMf5rcVk0wxOJIeIWBvA/exec'
-            async function getMyData() {
-                response = await fetch(url)
-                data = await response.json()
-                tempData = data["user"]
-ghat = tempData.filter(a=> a.sk ===1 & a.gh ===1)
+function skshow(){ document.getElementById('skandas').style.display='block' }
+function skandano(ba){
+ghat = tempData.filter(a=> a.sk ===ba*1 & a.gh ===2)
 todiv=''
 ghat.forEach(function (a)  {todiv += `<p class='padyam'> ${a.padyano} <br> ${a.padyam.replace(/(?:\r\n|\r|\n)/g, '<br>')}</p>
 <p class='tika'> టీక<br> ${a.tika} </p> <p class='tippani'> టిప్పణి<br> ${a.tippani}`})
 document.getElementById('ghatdata').innerHTML=todiv
 document.getElementById('ghatname').innerHTML=ghat[0].ghatta
-
+document.getElementById('skandas').style.display='none'
 }
+ url = 'https://script.google.com/macros/s/AKfycbwgoZT4fWoP3D4XSrt3CcLL5O7nKo5CDC6nnWt1a3sXZEnT2mzMf5rcVk0wxOJIeIWBvA/exec'
+            async function getMyData() {
+                response = await fetch(url)
+                data = await response.json()
+                tempData = data["user"] }
 getMyData()
-
 function sh(){document.querySelectorAll('.tika').forEach(function(el) {   el.style.display = el.style.display =='none' ? 'block' : 'none';});}
 function sh1(){document.querySelectorAll('.tippani').forEach(function(el) {   el.style.display = el.style.display =='none' ? 'block' : 'none';});}
-
 </script>
 </body>
 </html>
