@@ -13,12 +13,17 @@ body {width:360px; margin:auto; font-family: 'Suranna', serif; }
 .tika {color:red; display:block}
 .tippani {color:green; display:block}
 #skandas {color:red; margin-top:100px; }
-#fldiv {width:30px; height:30px; border-radius:25px; background:red; position:fixed; top:10px; margin-left:0px; z-index:10; color:white; font-size:1small; text-align:center;   }
-#fldiv1 {width:30px; height:30px; border-radius:25px; background:green; position:fixed; top:10px; margin-left:330px; z-index:10; color:white; font-size:1small; text-align:center;   }
+#fldiv {width:50px; height:50px; border-radius:25px; background:red; position:fixed; top:0px; margin-left:0px; z-index:10; color:white; font-size:1small; text-align:center;   }
+#fldiv1 {width:50px; height:50px; border-radius:25px; background:green; position:fixed; top:0px; margin-left:310px; z-index:10; color:white; font-size:1small; text-align:center;   }
 .header {top:0; position:fixed; background:powderblue; width:360px }
 #ghatlist{margin-top:100px;}
 #ghatdata{margin-top:100px; margin-left:10px;}
 #ghatname {margin-top:0px;}
+#footer{  bottom:0; height:30px; display:block; display: inline-block; display: none; zoom: 1; vertical-align: top; font-size: large; text-align:center}
+#left, #middle, #right {display: inline-block; padding:0}
+#left {width: 90px; background: red; color:white}
+#middle {width: 170px; background: white;}
+#right {width: 90px; background: red ; color:white}
 </style>
 </head>
 <body>
@@ -55,19 +60,38 @@ body {width:360px; margin:auto; font-family: 'Suranna', serif; }
 </div>
 <div id='ghatdata'></div>
 
+<div id='footer'>
+   <div id="left" onclick='pre()'>Previous</div>
+    <div id="middle"></div>
+    <div id="right" onclick='nxt()'>Next</div>
+
+</div>
 
 <script>
+
+function nxt(){
+ghatselect(ghsele+1)
+}
+
+function pre(){
+
+ghatselect(ghsele -1)
+}
+
 function skshow(){ document.getElementById('skandas').style.display='block' 
 document.getElementById('ghatdata').innerHTML=''
 document.getElementById('ghatname').innerHTML='తెలుగుభాగవతం'
+document.getElementById('footer').style.display='none'
 }
 
 function ghshow(){ document.getElementById('skandas').style.display='none' 
 document.getElementById('ghatdata').innerHTML=''
 document.getElementById('ghatname').innerHTML='తెలుగుభాగవతం'
 document.getElementById('ghatlist').style.display='block'
+document.getElementById('footer').style.display='none'
 }
 function skandano(ba){
+
 skselect = ba*1
 ghats = tempData.filter(a=> a.sk ===ba*1)
 maxValue = Math.max.apply(null,ghats.map(function(o) { return o.gh; }));
@@ -79,7 +103,7 @@ ghatnames += "</table>"
 document.getElementById('ghatlist').innerHTML=ghatnames
 document.getElementById('ghatlist').style.display='block'
 document.getElementById('skandas').style.display='none'
-
+document.getElementById('footer').style.display='none'
 }
  url = 'https://script.google.com/macros/s/AKfycbwgoZT4fWoP3D4XSrt3CcLL5O7nKo5CDC6nnWt1a3sXZEnT2mzMf5rcVk0wxOJIeIWBvA/exec'
             async function getMyData() {
@@ -101,6 +125,7 @@ document.getElementById('ghatdata').innerHTML=todiv
 document.getElementById('ghatname').innerHTML=ghat[0].skanda +'<br>'+ghat[0].ghatta
 document.getElementById('skandas').style.display='none'
 document.getElementById('ghatlist').style.display='none'
+document.getElementById('footer').style.display='block'
 
 }
 
