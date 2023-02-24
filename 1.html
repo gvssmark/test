@@ -8,8 +8,7 @@
 <link href="https://fonts.googleapis.com/css2?family=Suranna&display=swap" rel="stylesheet">
 
 <style>
-body {width:360px; margin:auto; border:1px solid black; 
-font-family: 'Suranna', serif; }
+body {width:360px; margin:auto; font-family: 'Suranna', serif; }
 .padyam { color:blue; }
 .tika {color:red; display:block}
 .tippani {color:green; display:block}
@@ -46,7 +45,7 @@ font-family: 'Suranna', serif; }
 
 <div class='header'>
 <div id='fldiv' onclick='skshow()'>స్కం</div>
-<div id='fldiv1' onclick='skshow()'>ఘ</div>
+<div id='fldiv1' onclick='ghshow()'>ఘ</div>
 
 <p  id='ghatname' align='center'>తెలుగుభాగవతం</p>
 <div style='margin-left:125px; margin-top:-24px;'>
@@ -58,7 +57,16 @@ font-family: 'Suranna', serif; }
 
 
 <script>
-function skshow(){ document.getElementById('skandas').style.display='block' }
+function skshow(){ document.getElementById('skandas').style.display='block' 
+document.getElementById('ghatdata').innerHTML=''
+document.getElementById('ghatname').innerHTML='తెలుగుభాగవతం'
+}
+
+function ghshow(){ document.getElementById('skandas').style.display='none' 
+document.getElementById('ghatdata').innerHTML=''
+document.getElementById('ghatname').innerHTML='తెలుగుభాగవతం'
+document.getElementById('ghatlist').style.display='block'
+}
 function skandano(ba){
 skselect = ba*1
 ghats = tempData.filter(a=> a.sk ===ba*1)
