@@ -2,13 +2,11 @@
 <html>
 <head>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Suranna&display=swap" rel="stylesheet">
-
+<link href="https://fonts.googleapis.com/css2?family=NTR&Suranna&display=swap" rel="stylesheet">
 <style>
-body {width:360px; margin:auto; font-family: 'Suranna', serif; }
+body {width:360px; margin:auto; font-family: 'NTR', 'Suranna',serif; }
 .padyam { color:blue; }
 .tika {color:red; display:block}
 .tippani {color:green; display:block}
@@ -21,14 +19,12 @@ body {width:360px; margin:auto; font-family: 'Suranna', serif; }
 #ghatname {margin-top:0px;}
 #footer{  bottom:0; height:30px; display:block; display: inline-block; display: none; zoom: 1; vertical-align: top; font-size: large; text-align:center}
 #left, #middle, #right {display: inline-block; padding:0}
-#left {width: 90px; background: red; color:white}
-#middle {width: 170px; background: white;}
-#right {width: 90px; background: red ; color:white}
+#left {width: 90px; background: red; color:white; border:none}
+#right {width: 90px; background: red ; color:white; border:none}
 </style>
 </head>
 <body>
 <div id='skandas'>
-
 <table align=center>
 <tr id='1' onclick='skandano(this.id)'><td> ప్రథమ స్కంధము
 <tr id='2' onclick='skandano(this.id)'><td>ద్వితీయ స్కంధము
@@ -47,11 +43,9 @@ body {width:360px; margin:auto; font-family: 'Suranna', serif; }
 </table>
 </div>
 <div id='ghatlist'></div>
-
 <div class='header'>
 <div id='fldiv' onclick='skshow()'>స్కం</div>
 <div id='fldiv1' onclick='ghshow()'>ఘ</div>
-
 <p  id='ghatname' align='center'>తెలుగుభాగవతం</p>
 <div style='margin-left:125px; margin-top:-24px;'>
 <input type='checkbox' checked id='tog' onclick='sh()'>టీక</input>
@@ -59,31 +53,24 @@ body {width:360px; margin:auto; font-family: 'Suranna', serif; }
 </div>
 </div>
 <div id='ghatdata'></div>
-
 <div id='footer'>
-   <div id="left" onclick='pre()'>Previous</div>
-    <div id="middle"></div>
-    <div id="right" onclick='nxt()'>Next</div>
-
+   <button id="left" onclick='pre()'>వెనుకకు</button>
+   <button id="right" onclick='nxt()'>ముందుకు</button>
 </div>
-
 <script>
-
 function nxt(){
-ghatselect(ghsele+1)
+ghsele = ghsele+1
+ghatselect(ghsele)
 }
-
 function pre(){
-
-ghatselect(ghsele -1)
+ghsele = ghsele -1
+ghatselect(ghsele)
 }
-
 function skshow(){ document.getElementById('skandas').style.display='block' 
 document.getElementById('ghatdata').innerHTML=''
 document.getElementById('ghatname').innerHTML='తెలుగుభాగవతం'
 document.getElementById('footer').style.display='none'
 }
-
 function ghshow(){ document.getElementById('skandas').style.display='none' 
 document.getElementById('ghatdata').innerHTML=''
 document.getElementById('ghatname').innerHTML='తెలుగుభాగవతం'
@@ -91,7 +78,6 @@ document.getElementById('ghatlist').style.display='block'
 document.getElementById('footer').style.display='none'
 }
 function skandano(ba){
-
 skselect = ba*1
 ghats = tempData.filter(a=> a.sk ===ba*1)
 maxValue = Math.max.apply(null,ghats.map(function(o) { return o.gh; }));
@@ -113,10 +99,11 @@ document.getElementById('footer').style.display='none'
 getMyData()
 function sh(){document.querySelectorAll('.tika').forEach(function(el) {   el.style.display = el.style.display =='none' ? 'block' : 'none';});}
 function sh1(){document.querySelectorAll('.tippani').forEach(function(el) {   el.style.display = el.style.display =='none' ? 'block' : 'none';});}
-
 function ghatselect(a){
-
 ghsele = a*1
+if (ghsele<1){ghsele=1;}
+if (ghsele>maxValue){ghsele=maxValue;}
+document.getElementById('footer').style.display='block'
 ghat = tempData.filter(a=> a.sk ===skselect & a.gh ===ghsele)
 todiv=''
 ghat.forEach(function (a)  {todiv += `<p class='padyam'> ${a.padyano} <br> ${a.padyam.replace(/(?:\r\n|\r|\n)/g, '<br>')}</p>
@@ -125,12 +112,8 @@ document.getElementById('ghatdata').innerHTML=todiv
 document.getElementById('ghatname').innerHTML=ghat[0].skanda +'<br>'+ghat[0].ghatta
 document.getElementById('skandas').style.display='none'
 document.getElementById('ghatlist').style.display='none'
-document.getElementById('footer').style.display='block'
-
+window.scrollTo(0, 0);
 }
-
-
 </script>
 </body>
 </html>
-
