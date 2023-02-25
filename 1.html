@@ -2,9 +2,11 @@
 <html>
 <head>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=NTR&Suranna&display=swap" rel="stylesheet">
+
 <style>
 body {width:360px; margin:auto; font-family: 'NTR', 'Suranna',serif; }
 .padyam { color:blue; }
@@ -13,7 +15,9 @@ body {width:360px; margin:auto; font-family: 'NTR', 'Suranna',serif; }
 #skandas {color:red; margin-top:100px; }
 #fldiv {width:50px; height:50px; border-radius:25px; background:red; position:fixed; top:0px; margin-left:0px; z-index:10; color:white; font-size:1small; text-align:center;   }
 #fldiv1 {width:50px; height:50px; border-radius:25px; background:green; position:fixed; top:0px; margin-left:310px; z-index:10; color:white; font-size:1small; text-align:center;   }
-.header {top:0; position:fixed; background:powderblue; width:360px }
+#fldiv2 {width:40px; height:40px; border-radius:25px; background:blue; position:fixed; top:50px; margin-left:250px; z-index:10; color:white; font-size:1small; text-align:center;  display:none }
+#fldiv3 {width:40px; height:40px; border-radius:25px; background:blue; position:fixed; top:50px; margin-left:60px; z-index:10; color:white; font-size:1small; text-align:center;  display:none  }
+.header {top:0; position:fixed; background:white; width:360px }
 #ghatlist{margin-top:100px;}
 #ghatdata{margin-top:100px; margin-left:10px;}
 #ghatname {margin-top:0px;}
@@ -25,6 +29,7 @@ body {width:360px; margin:auto; font-family: 'NTR', 'Suranna',serif; }
 </head>
 <body>
 <div id='skandas'>
+
 <table align=center>
 <tr id='1' onclick='skandano(this.id)'><td> ప్రథమ స్కంధము
 <tr id='2' onclick='skandano(this.id)'><td>ద్వితీయ స్కంధము
@@ -43,13 +48,16 @@ body {width:360px; margin:auto; font-family: 'NTR', 'Suranna',serif; }
 </table>
 </div>
 <div id='ghatlist'></div>
+
 <div class='header'>
 <div id='fldiv' onclick='skshow()'>స్కం</div>
 <div id='fldiv1' onclick='ghshow()'>ఘ</div>
+<div id='fldiv2' onclick='nxt()'>Next</div>
+<div id='fldiv3' onclick='pre()'>Prev</div>
 <p  id='ghatname' align='center'>తెలుగుభాగవతం</p>
 <div style='margin-left:125px; margin-top:-24px;'>
-<input type='checkbox' checked id='tog' onclick='sh()'>టీక</input>
-<input type='checkbox' checked id='tog1' onclick='sh1()'>టిప్పణి </input>
+<input type='checkbox' checked id='tik' onclick='sh()'>టీక</input>
+<input type='checkbox' checked id='tip' onclick='sh1()'>టిప్పణి </input>
 </div>
 </div>
 <div id='ghatdata'></div>
@@ -62,15 +70,18 @@ function nxt(){
 ghsele = ghsele+1
 ghatselect(ghsele)
 }
+
 function pre(){
 ghsele = ghsele -1
 ghatselect(ghsele)
 }
+
 function skshow(){ document.getElementById('skandas').style.display='block' 
 document.getElementById('ghatdata').innerHTML=''
 document.getElementById('ghatname').innerHTML='తెలుగుభాగవతం'
 document.getElementById('footer').style.display='none'
 }
+
 function ghshow(){ document.getElementById('skandas').style.display='none' 
 document.getElementById('ghatdata').innerHTML=''
 document.getElementById('ghatname').innerHTML='తెలుగుభాగవతం'
@@ -97,6 +108,9 @@ document.getElementById('footer').style.display='none'
                 data = await response.json()
                 tempData = data["user"] }
 getMyData()
+
+//tempData.filter(a=> a.padyam.includes('యడిగిన'))
+
 function sh(){document.querySelectorAll('.tika').forEach(function(el) {   el.style.display = el.style.display =='none' ? 'block' : 'none';});}
 function sh1(){document.querySelectorAll('.tippani').forEach(function(el) {   el.style.display = el.style.display =='none' ? 'block' : 'none';});}
 function ghatselect(a){
@@ -104,6 +118,8 @@ ghsele = a*1
 if (ghsele<1){ghsele=1;}
 if (ghsele>maxValue){ghsele=maxValue;}
 document.getElementById('footer').style.display='block'
+document.getElementById('fldiv2').style.display='block'
+document.getElementById('fldiv3').style.display='block'
 ghat = tempData.filter(a=> a.sk ===skselect & a.gh ===ghsele)
 todiv=''
 ghat.forEach(function (a)  {todiv += `<p class='padyam'> ${a.padyano} <br> ${a.padyam.replace(/(?:\r\n|\r|\n)/g, '<br>')}</p>
@@ -113,7 +129,10 @@ document.getElementById('ghatname').innerHTML=ghat[0].skanda +'<br>'+ghat[0].gha
 document.getElementById('skandas').style.display='none'
 document.getElementById('ghatlist').style.display='none'
 window.scrollTo(0, 0);
+document.getElementById('tik').checked = true
+document.getElementById('tip').checked = true
 }
 </script>
 </body>
 </html>
+
