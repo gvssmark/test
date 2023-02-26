@@ -9,7 +9,7 @@
 
 <style>
 * {box-sizing: border-box;}
-.pulsing-2 {margin: 0 auto;  top:100px; width:100px;  height:100px;  border-radius: 50%;  background:red;  box-shadow: 0 0 0 0 #0004;  animation:pl2 1.5s infinite linear;  position: relative;}
+.pulsing-2 {margin: 0 auto;  top:100px; width:50px;  height:50px;  border-radius: 50%;  background:red;  box-shadow: 0 0 0 0 #0004;  animation:pl2 1.5s infinite linear;  position: relative;}
 .pulsing-2:before,.pulsing-2:after {  content:"";  position: absolute;  inset:0;  border-radius: inherit;  box-shadow: 0 0 0 0 #0004;  animation: inherit;  animation-delay: -0.5s;}
 .pulsing-2:after {  animation-delay: -1s;}
 @keyframes pl2 {    100% {box-shadow: 0 0 0 40px #0000}}
@@ -117,13 +117,15 @@ document.getElementById('fldiv3').style.display='none'
 }
 function skandano(ba){
 document.querySelector('.chkboxs').style.display='none'
-
+//alert(typeof(ba))
 skselect = ba*1
-ghats = tempData.filter(a=> a.sk ===ba*1)
+ghats = tempData.filter(a=> a.sk ===skselect)
 maxValue = Math.max.apply(null,ghats.map(function(o) { return o.gh; }));
+unique = [...new Set(ghats.map(function(o) { return o.gh; }))];
+
 ghatnames='<table align=center>'
-for (i=1; i<maxValue+1; i++){
-ghatnames += `<tr id=${i} onclick='ghatselect(this.id)' ><td> ${i}<td> ${ ghats.filter(a => a.gh === i)[0].ghatta} `
+for (i=0; i<unique.length; i++){
+ghatnames += `<tr id=${unique[i]} onclick='ghatselect(this.id)' ><td> ${unique[i]}<td> ${ ghats.filter(a => a.gh === unique[i])[0].ghatta} `
 }
 ghatnames += "</table>"
 document.getElementById('ghatlist').innerHTML=ghatnames
