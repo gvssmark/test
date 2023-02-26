@@ -8,6 +8,7 @@
 <link href="https://fonts.googleapis.com/css2?family=NTR&Suranna&display=swap" rel="stylesheet">
 
 <style>
+* {box-sizing: border-box;}
 body {width:360px; margin:auto; font-family: 'NTR', 'Suranna',serif; }
 .padyam { color:blue; }
 .tika {color:red; display:block}
@@ -25,6 +26,7 @@ body {width:360px; margin:auto; font-family: 'NTR', 'Suranna',serif; }
 #left, #middle, #right {display: inline-block; padding:0}
 #left {width: 90px; background: red; color:white; border:none}
 #right {width: 90px; background: red ; color:white; border:none}
+.chkboxs {display:none}
 </style>
 </head>
 <body>
@@ -55,9 +57,9 @@ body {width:360px; margin:auto; font-family: 'NTR', 'Suranna',serif; }
 <div id='fldiv2' onclick='nxt()'>Next</div>
 <div id='fldiv3' onclick='pre()'>Prev</div>
 <p  id='ghatname' align='center'>తెలుగుభాగవతం</p>
-<div style='margin-left:125px; margin-top:-24px;'>
-<input type='checkbox' checked id='tik' onclick='sh()'>టీక</input>
-<input type='checkbox' checked id='tip' onclick='sh1()'>టిప్పణి </input>
+<div class='chkboxs' style='margin-left:125px; margin-top:-24px;'>
+<input  type='checkbox' checked id='tik' onclick='sh()'>టీక</input>
+<input  type='checkbox' checked id='tip' onclick='sh1()'>టిప్పణి </input>
 </div>
 </div>
 <div id='ghatdata'></div>
@@ -76,19 +78,34 @@ ghsele = ghsele -1
 ghatselect(ghsele)
 }
 
-function skshow(){ document.getElementById('skandas').style.display='block' 
+function skshow(){
+document.querySelector('.chkboxs').style.display='none'
+document.getElementById('skandas').style.display='block' 
 document.getElementById('ghatdata').innerHTML=''
 document.getElementById('ghatname').innerHTML='తెలుగుభాగవతం'
 document.getElementById('footer').style.display='none'
+document.getElementById('ghatlist').style.display='none'
+document.getElementById('fldiv2').style.display='none'
+document.getElementById('fldiv3').style.display='none'
+document.getElementById('ghatlist').style.display='none'
+
 }
 
-function ghshow(){ document.getElementById('skandas').style.display='none' 
+function ghshow(){ 
+document.querySelector('.chkboxs').style.display='none'
+
+document.getElementById('skandas').style.display='none' 
 document.getElementById('ghatdata').innerHTML=''
 document.getElementById('ghatname').innerHTML='తెలుగుభాగవతం'
 document.getElementById('ghatlist').style.display='block'
 document.getElementById('footer').style.display='none'
+document.getElementById('fldiv2').style.display='none'
+document.getElementById('fldiv3').style.display='none'
+//skselect=0
 }
 function skandano(ba){
+document.querySelector('.chkboxs').style.display='none'
+
 skselect = ba*1
 ghats = tempData.filter(a=> a.sk ===ba*1)
 maxValue = Math.max.apply(null,ghats.map(function(o) { return o.gh; }));
@@ -131,6 +148,7 @@ document.getElementById('ghatlist').style.display='none'
 window.scrollTo(0, 0);
 document.getElementById('tik').checked = true
 document.getElementById('tip').checked = true
+document.querySelector('.chkboxs').style.display='block'
 }
 </script>
 </body>
