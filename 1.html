@@ -9,6 +9,11 @@
 
 <style>
 * {box-sizing: border-box;}
+.pulsing-2 {margin: 0 auto;  top:100px; width:100px;  height:100px;  border-radius: 50%;  background:red;  box-shadow: 0 0 0 0 #0004;  animation:pl2 1.5s infinite linear;  position: relative;}
+.pulsing-2:before,.pulsing-2:after {  content:"";  position: absolute;  inset:0;  border-radius: inherit;  box-shadow: 0 0 0 0 #0004;  animation: inherit;  animation-delay: -0.5s;}
+.pulsing-2:after {  animation-delay: -1s;}
+@keyframes pl2 {    100% {box-shadow: 0 0 0 40px #0000}}
+
 body {width:360px; margin:auto; font-family: 'NTR', 'Suranna',serif; }
 .padyam { color:blue; }
 .tika {color:red; display:block}
@@ -30,8 +35,13 @@ body {width:360px; margin:auto; font-family: 'NTR', 'Suranna',serif; }
 </style>
 </head>
 <body>
-<div id='skandas'>
+<div class="pulsing-2" id='loader' style='display: block'></div>
 
+<div id='afterload' style='display:none; '>
+
+
+
+<div id='skandas'>
 <table align=center>
 <tr id='1' onclick='skandano(this.id)'><td> ప్రథమ స్కంధము
 <tr id='2' onclick='skandano(this.id)'><td>ద్వితీయ స్కంధము
@@ -66,6 +76,8 @@ body {width:360px; margin:auto; font-family: 'NTR', 'Suranna',serif; }
 <div id='footer'>
    <button id="left" onclick='pre()'>వెనుకకు</button>
    <button id="right" onclick='nxt()'>ముందుకు</button>
+</div>
+
 </div>
 <script>
 function nxt(){
@@ -123,7 +135,11 @@ document.getElementById('footer').style.display='none'
             async function getMyData() {
                 response = await fetch(url)
                 data = await response.json()
-                tempData = data["user"] }
+                tempData = data["user"] 
+                tempData.length>0? (document.getElementById('loader').style.display="none",
+            document.getElementById('afterload').style.display="block") :""
+                
+                }
 getMyData()
 
 //tempData.filter(a=> a.padyam.includes('యడిగిన'))
