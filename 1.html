@@ -121,7 +121,7 @@ document.querySelector('.chkboxs').style.display='none'
 skselect = ba*1
 ghats = tempData.filter(a=> a.sk ===ba*1)
 maxValue = Math.max.apply(null,ghats.map(function(o) { return o.gh; }));
-ghatnames='<table>'
+ghatnames='<table align=center>'
 for (i=1; i<maxValue+1; i++){
 ghatnames += `<tr id=${i} onclick='ghatselect(this.id)' ><td> ${i}<td> ${ ghats.filter(a => a.gh === i)[0].ghatta} `
 }
@@ -158,7 +158,7 @@ todiv=''
 ghat.forEach(function (a)  {todiv += `<p class='padyam'> ${a.padyano} <br> ${a.padyam.replace(/(?:\r\n|\r|\n)/g, '<br>')}</p>
 <p class='tika'> టీక<br> ${a.tika} </p> <p class='tippani'> టిప్పణి<br> ${a.tippani}`})
 document.getElementById('ghatdata').innerHTML=todiv
-document.getElementById('ghatname').innerHTML=ghat[0].skanda +'<br>'+ghat[0].ghatta
+document.getElementById('ghatname').innerHTML=ghat[0].skanda +'<br>'+ghsele+'-'+ghat[0].ghatta
 document.getElementById('skandas').style.display='none'
 document.getElementById('ghatlist').style.display='none'
 window.scrollTo(0, 0);
