@@ -8,6 +8,12 @@ p {
   font-size: 20px;
   margin-top: 60px;
 }
+  
+  table{border-collapse: collapse; border:1px solid white}
+td{width:80px}
+.r{background:blue; color:white}
+.r1{color:red; font-size:xx-large}
+
 </style>
 </head>
 <body>
@@ -34,7 +40,7 @@ var x = setInterval(function() {
   var h= Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
   var m= Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
   var s= Math.floor((distance % (1000 * 60)) / 1000);
-  dis= `<table align=center border=1><tr><td>Days<td>Hours <td>Minutes <td> Seconds <tr><td>${pad(d)}<td>${pad(h)}<td>${pad(m)}<td>${pad(s)}`
+  dis= `<table align=center border=1><tr class="r"><td>Days<td>Hours <td>Minutes <td> Seconds <tr class="r1"><td>${pad(d)}<td>${pad(h)}<td>${pad(m)}<td>${pad(s)}`
   
   // Output the result in an element with id="demo"
   document.getElementById("demo").innerHTML = dis
