@@ -34,9 +34,8 @@ var x = setInterval(function() {
   var h= Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
   var m= Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
   var s= Math.floor((distance % (1000 * 60)) / 1000);
+  dis= `<table align=center border=1><tr><td>Days<td>Hours <td>Minutes <td> Seconds <tr><td>${pad(d)}<td>${pad(h)}<td>${pad(m)}<td>${pad(s)}`
   
-  dis= `<table align=center border=1><tr><td>Days ${d}<td>Hours ${pad(h)}<td>Minutes ${pad(m)}<td> Seconds ${pad(s)}`
-    
   // Output the result in an element with id="demo"
   document.getElementById("demo").innerHTML = dis
     
