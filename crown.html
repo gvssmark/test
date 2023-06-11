@@ -6,7 +6,7 @@
 p {
   text-align: center;
   font-size: 20px;
-  margin-top: 0px;
+  margin-top: 60px;
 }
 </style>
 </head>
@@ -35,7 +35,7 @@ var x = setInterval(function() {
   var m= Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
   var s= Math.floor((distance % (1000 * 60)) / 1000);
   
-  dis= `<table border=1><tr><td>Days ${d}<td>Hours ${h}<td>Minutes ${m}<td> Seconds ${s}`
+  dis= `<table align=center border=1><tr><td>Days ${d}<td>Hours ${h}<td>Minutes ${m}<td> Seconds ${s}`
     
   // Output the result in an element with id="demo"
   document.getElementById("demo").innerHTML = dis
