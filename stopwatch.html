@@ -1,0 +1,108 @@
+
+<!DOCTYPE html>
+<html lang="en">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+  <style media="screen">
+    body {
+  font-family: arial;
+  background: #0776de;
+}
+#stopwatch {
+  width: 300px;
+  height: 90px;
+  margin: 100px auto;
+  background: white;
+  color: #333;
+  border-radius: 10px;
+  padding: 60px 50px 100px;
+  text-align: center;
+  font-size: 30px;
+}
+
+#stopwatch span {
+  background: #c7e0f8;
+  color: #0776de;
+  padding: 10px;
+  width: 55px;
+  border-radius: 5px;
+  margin: 3px;
+  display: inline-block;
+
+}
+.time{
+  
+  margin-left: -25px;
+}
+#stopwatch span{
+  margin-left: 20px;
+}
+#stopwatch button:first-of-type {
+  margin-top: 15px;
+}
+#stopwatch button {
+  font-size: 22px;
+  -webkit-appearance: none;
+  border: none;
+   background-color: #2e80b3;
+  color: white;
+  border-radius: 5px;
+  width: 140px;
+  height: 50px;
+  transition: .3s;
+}
+#stopwatch button:last-child{
+    background-color: #ae7617;
+}
+#stopwatch button:hover {
+
+  background: #333;
+  color: #fff;
+  cursor: pointer;
+}
+
+  </style>
+</head>
+<body>
+<center>
+<div id="stopwatch">
+<div class="time">
+ <span id="minute">00</span>
+ <span id="second">00</span>
+ <span id="ms">00</span>
+</div>
+  <br />
+  <button id="start" onclick="start();">Start</button>
+  <button id="stop" onclick="stop();">Stop</button>
+</div>
+</center>
+<script type="text/javascript">
+var timer = 0;
+var timerInterval;
+var ms = document.getElementById('ms');
+var second = document.getElementById('second');
+var minute = document.getElementById('minute');
+
+function start() {
+  stop();
+  timerInterval = setInterval(function() {
+    timer += 1/60;
+    msVal = Math.floor((timer - Math.floor(timer))*1000);
+    secondVal = Math.floor(timer) - Math.floor(timer/60) * 60;
+    minuteVal = Math.floor(timer/60);
+    ms.innerHTML = msVal < 10 ? "00" + msVal.toString() : msVal;
+    second.innerHTML = secondVal < 10 ? "0" + secondVal.toString() : secondVal;
+    minute.innerHTML = minuteVal < 10 ? "0" + minuteVal.toString() : minuteVal;
+  }, 1000/60);
+}
+
+function stop() {
+  clearInterval(timerInterval);
+}
+
+
+</script>
+</body>
+</html>
