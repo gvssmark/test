@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<style>
+.pulsing-2 {width:50px;height:50px;border-radius: 50%;background:purple; box-shadow: 0 10 20 30 #0004;animation:pl2 1.5s infinite linear;position: relative; margin:0 auto; top:50px;}
+.pulsing-2:before,.pulsing-2:after {  content:"";  position: absolute;  inset:0;  border-radius: inherit;  box-shadow: 0 0 0 0 #0004;  animation: inherit;  animation-delay: -0.1s;}
+.pulsing-2:after {  animation-delay: -1s;}
+@keyframes pl2 {    100% {box-shadow: 0 0 0 40px #0000}}
+</style>
+</head>
+<body>
+<div class="pulsing-2" id='loader' style='display: block' onclick='stop()'></div>
+<script>
+function stop(){document.getElementById('loader').style.display='none'}
+</script>
+</body>
+</html>
