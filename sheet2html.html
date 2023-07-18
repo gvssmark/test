@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta name="viewport" content="width=device-width, maximum-scale=1 , initial-scale=1.0">
+<title>Sheet Data to HTML</title>
+<style>
+body{margin:0 auto;     }
+table {border-collapse:collapse; align:center }
+h1 {text-align:center; }
+</style>
+</head>
+<body>
+
+<h1>Sheet Data to HTML</h1>
+
+<p id='tabledata'>My first paragraph.</p>
+<pre style='tex-align:left; '>
+//https://script.google.com/macros/s/AKfycbzDoDrtZefwMpwOlkE5SN6C72b_Ql0dGl7UnnDkKHUbY4GeMY8JOcfBPPgI4dpFDK3O/exec
+function doGet() {
+  var ss = SpreadsheetApp.openByUrl('https://docs.google.com/spreadsheets/d/1o3Ougo8wII9ASGujJihXQmri1CESfgVDfA1l1HXtaFM/edit#gid=0')
+  var dataSheet = ss.getSheetByName('Transactions'); 
+  var dataRange = dataSheet.getDataRange();
+  var dataValues = dataRange.getValues();  
+  return ContentService.createTextOutput(JSON.stringify(dataValues) ).setMimeType(ContentService.MimeType.JSON); 
+}
+
+
+</pre>
+<script>
+url='https://script.google.com/macros/s/AKfycbzDoDrtZefwMpwOlkE5SN6C72b_Ql0dGl7UnnDkKHUbY4GeMY8JOcfBPPgI4dpFDK3O/exec'
+
+async function getMyData() {
+response = await fetch(url)
+data = await response.json()
+data.splice(1,1)
+//data.shift()
+
+dtest= data.map(([dt, company, buy, dummy1, sell, dummy2]) => ({ dt, company, buy, dummy1, sell, dummy2 }))
+
+totable=''
+dtest.forEach(a=> totable+= `<tr><td>${a.dt}<td>${a.company}<td>${a.buy}<td>${a.dummy1}<td>${a.sell}<td>${a.dummy2}`)
+
+document.getElementById('tabledata').innerHTML=`<table border=1 align=center> ${totable}</table>`
+
+}
+
+getMyData()
+
+</script>
+
+</body>
+</html>
+
