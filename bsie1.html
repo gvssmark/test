@@ -58,7 +58,7 @@ function everyacno(){
            abc()
    acts="<br><table width=95% align=center ><tr><td>AcNo<td >Ac Name<td >Balance"
 actDataReport.filter(a=> a.bal!=0).forEach( a => {acts += `<tr><td> ${a.acno} <td><a href='#${a.acno}'> ${a.acname} </a><td align=right>${a.bal}`})
-acts +="</table><br>"
+acts +="</table><br><br>"
 
 document.getElementById("tdata").innerHTML = acts + tabledata
 
