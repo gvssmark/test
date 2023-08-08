@@ -46,9 +46,15 @@ acturl = 'https://script.google.com/macros/s/AKfycbxg1OCW2FO6NzNvkFOUnIs4U3LE4DI
 getMyData() 
 function accts(){
 tabledata= "<br><table class='accts'  align=center border=1 ><table width=95% align=center ><tr style='background:black; color:white; text-align:center; '><td>AcNo<td >Ac Name<td >Balance"
-actData.forEach(a=> {tabledata+= `<tr onclick='filterac(this.id)' id=${a.acno}><td>${a.acno} <td>${a.acname.toTitle()}<td align=right>${a.bal}`})
+actData.forEach(a=> {tabledata+= `<tr  id=${a.acno}><td>${a.acno} <td>${a.acname.toTitle()}<td align=right>${a.bal}`})
 tabledata += "</table>"
-document.getElementById("tdata").innerHTML = tabledata}
+document.getElementById("tdata").innerHTML = tabledata
+rows = document.getElementsByTagName('tr')
+Array.from(rows).forEach((row) => {
+  row.addEventListener('click', () => {
+filterac(row.id)});
+});
+}
 
 function filterac(acno){
 acno= +acno
