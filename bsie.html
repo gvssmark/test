@@ -67,7 +67,7 @@ acdata=`<table border=1 class='acdata' >`
            for (i=1; i<filtered.length; i++){
                       filtered[i].drac == acno ? balance = balance - filtered[i].amt : balance = balance + filtered[i].amt
                       filtered[i].drac == acno ? dc = "Dr": dc="Cr"
-                      acdata += "<tr><td>"+filtered[i].dt+"<td class='sfont'>"+ filtered[i].details.toString(toTitle()+"<td>"+dc+"<td align=right>"+filtered[i].amt+"<td align=right>"+balance
+                      acdata += "<tr><td>"+filtered[i].dt+"<td class='sfont'>"+ filtered[i].details.toString().toTitle()+"<td>"+dc+"<td align=right>"+filtered[i].amt+"<td align=right>"+balance
            }
           document.getElementById("acts").innerHTML = acdata
 }
