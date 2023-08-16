@@ -3,6 +3,11 @@
     <meta name="viewport" content="width=device-width, maximum-scale=1 , initial-scale=1.0">
 
 <style>
+    *{box-sizing: border-box;}
+    .modal {display: none;position: fixed;z-index: 1;padding-top: 1px;left: inherit;top: 0;width: 360px;height: 100%;overflow: auto;background-color: rgb(0, 0, 0);background-color: rgba(0, 0, 0, 0.4);}
+.modal-content {background-color: #99ffcc;margin: auto;padding: 2px;padding-bottom: 2px;border: 1px solid #888;width: 95%;border-radius: 15px;margin-top: 53px;}
+.close {color: #aaaaaa;float: right;font-size: 28px;font-weight: bold;}
+close:hover,.close:focus {color: #000;text-decoration: none;cursor: pointer;}
 table {border-collapse: collapse}
 tr:hover{background: grey}
 body {}
@@ -11,20 +16,40 @@ input {width:50%; background:cyan; outline:none; border:none;  }
 </style>
 </head>
 <body>
-<img  src='https://drive.google.com/uc?export=view&id=15WW2BTAiZsb9Jj8BLa8XzsN74rMeY2nS' width='300' height='300'>
+
+
+
+        <div id="myModal" class="modal">
+            <div class="modal-content">
+                <span class="close">&times;</span>
+                
+                <p id="modalData"> </p>
+            </div>
+        </div>
+        
+        
+        
+
 <div style='text-align:center; position:sticky; background:white; top:0; margin:0 auto;  width:90%'>
-<input type="text" id="myInput" onkeyup="searchTable()" placeholder="Search for names..">
-<p id='packid' style='background:red; color:white'></p>
+<input type="text" id="myInput" onkeyup="searchTable()" placeholder="Search for caption.."><br>
+<p id='packid' style='background:red; color:white; width:95%; margin:0 auto;'></p>
 </div>
-<br><br>
-<div id='datacount' style='color:red;  text-align:center; width:95%; margin: 0 auto; '></div>
+
+<div id='datacount' style='color:red;  text-align:center; width:95%;  '></div>
 
 <script>
 String.prototype.toTitle = function() {  return this.toLowerCase().replace(/(^|\s)\S/g, function(t) { return t.toUpperCase() });}
 
 captionsurl ='https://script.google.com/macros/s/AKfycbzgDXr5kx0DHMkRcue99PMVzr5WYa8OBcsS7oNkp1sqmYoD6mrmb8AYUlESFu-webuJ/exec'
-
 brandsurl=  'https://script.google.com/macros/s/AKfycbycJOssjC0n8feftgOW2lEO6peOj-w0r62fcTQKuD0LvtOlvGMeliHjg1AUXvCgMG5F2w/exec'
+
+async function cards() {
+response = await fetch(brandsurl)
+cardata = await response.json()
+carddata = cardata.map(([slno,cardname,phid]) =>({slno,cardname,phid}))
+}
+cards()
+
 async function getMyData() {
 response = await fetch(captionsurl)
 data = await response.json()
@@ -35,11 +60,15 @@ dtest = dtest.sort((a, b) => a.caption.localeCompare(b.caption));
 
 totable=''
 dtest.forEach(a=> totable+= `<tr id=${a.pack} onclick='showpack(${a.pack})'><td>${a.caption.toString().toTitle()}`)
-document.getElementById('datacount').innerHTML= `<table border=1 id='myTable' width=95%> ${totable} </table>`
+document.getElementById('datacount').innerHTML= `<table border=1 id='myTable' width=100%> ${totable} </table>`
 }
 getMyData()
 
-showpack =(a) => {document.getElementById('packid').innerHTML=`Found in Pack ${a}`}
+showpack =(x) => {document.getElementById('packid').innerHTML=`Found in Pack: ${carddata.filter(a=> a.slno === x)[0].cardname
+} - (${x})`; 
+photo = `<img  src='https://drive.google.com/uc?export=view&id=${carddata.filter(a=> a.slno === x)[0].phid}' width='300' height='300'>`
+document.getElementById("modalData").innerHTML = photo
+modal.style.display = "block";}
 
 
 function searchTable(searchStr) {
@@ -53,7 +82,23 @@ function searchTable(searchStr) {
   });
 }
 
-searchTable('love')
+var modal = document.getElementById("myModal");
+            var span = document.getElementsByClassName("close")[0];
+            window.onclick = function (event) {
+                if (event.target == modal) {
+                    modal.style.display = "none";
+                }
+            }
+            
+            modal.addEventListener("touchstart",hmodal)
+
+function hmodal(){modal.style.display = "none"}
+
+            
+           // modal.addEventListener("ontouchstart",modal.style.display = "none")
+            span.onclick = function () {
+                modal.style.display = "none";
+            }
 
 </script>
 </body>
