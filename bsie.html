@@ -1,9 +1,4 @@
-
-
-
-<!DOCTYPE html>
-<html>
-<head>
+<html><head>
     <meta name="viewport" content="width=device-width, maximum-scale=1 , initial-scale=1.0">
     <title>IBRA-Accounts</title>
 
@@ -23,8 +18,8 @@ td.sfont {font-size:xx-small}
 th {position: sticky; top:0; background: red;color:white; }
 </style></head>
 <body>
-<h3 align=center id='year'>Ledger</h3>
-<div id="tdata" style=" height:200px; overflow-x: hidden;  ; margin:0 auto;   ; align-items: center"></div>
+<h3 align="center" id="year">Ledger for 2022-23</h3>
+<div id="tdata" style=" height:200px; overflow-x: hidden;  ; margin:0 auto;   ; align-items: center"><br><br><table class="accts" align="center" border="1" width="95%"><tbody><tr style="background:black; color:white; text-align:center; "><th>AcNo</th><th>Ac Name</th><th>Balance</th></tr><tr id="1001"><td>1001 </td><td>Fixed Deposit</td><td align="right">850000</td></tr><tr id="1002"><td>1002 </td><td>Reinvestment Plan</td><td align="right">765142</td></tr><tr id="1003"><td>1003 </td><td>Fd Legal Fund</td><td align="right">100000</td></tr><tr id="1004"><td>1004 </td><td>Bank Account No 465693063</td><td align="right">264510</td></tr><tr id="1006"><td>1006 </td><td>Petty Cash</td><td align="right">-2908</td></tr><tr id="1007"><td>1007 </td><td>Bank Account No 852717857</td><td align="right">153553</td></tr><tr id="2001"><td>2001 </td><td>B/f From Last Bs</td><td align="right">1822965</td></tr><tr id="2002"><td>2002 </td><td>Subscriptions</td><td align="right">354972</td></tr><tr id="3002"><td>3002 </td><td>Area Meeting Expenditure</td><td align="right">92044</td></tr><tr id="3003"><td>3003 </td><td>General Body Meeting Expenditure</td><td align="right">47393</td></tr><tr id="3004"><td>3004 </td><td>Postages &amp; Couriers</td><td align="right">179</td></tr><tr id="3005"><td>3005 </td><td>Travelling Expenditure</td><td align="right">47693</td></tr><tr id="3006"><td>3006 </td><td>Printing &amp; Stationery</td><td align="right">3129</td></tr><tr id="4001"><td>4001 </td><td>Interest On Fdr</td><td align="right">64473</td></tr><tr id="4004"><td>4004 </td><td>Levy Collected</td><td align="right">78325</td></tr></tbody></table></div>
 <br><br>
 <div id="acts" style=" height:400px; overflow-x: hidden;  ; margin:-15px  auto;  align-items: center">.</div>
 <script>
@@ -47,9 +42,7 @@ acturl = 'https://script.google.com/macros/s/AKfycbxg1OCW2FO6NzNvkFOUnIs4U3LE4DI
         accts()  }
 getMyData() 
 function accts(){
-tabledata= "<br><br><table class='accts'  align=center border=1  width=95% align=center ><tr style='background:black; color:white; text-align:center; 
-
-'><th>AcNo<th >Ac Name<th >Balance"
+tabledata= "<br><br><table class='accts'  align=center border=1  width=95% align=center ><tr style='background:black; color:white; text-align:center; '><th>AcNo<th >Ac Name<th >Balance"
 actData.forEach(a=> {tabledata+= `<tr  id=${a.acno}><td>${a.acno} <td>${a.acname.toTitle()}<td align=right>${a.bal}`})
 tabledata += "</table>"
 document.getElementById("tdata").innerHTML = tabledata
@@ -63,23 +56,15 @@ filterac(row.id)});
 function filterac(acno){
 acno= +acno
 actname = actData.filter(a=> a.acno === acno)[0].acname
-filtered =  tempData.filter(o => {return (o.drac == acno || o.crac == acno)}).map(a => ({ dt: gdt(a.dt), details: a.trdetail, drac: a.drac, crac: a.crac, amt: 
-
-a.amt }));
+filtered =  tempData.filter(o => {return (o.drac == acno || o.crac == acno)}).map(a => ({ dt: gdt(a.dt), details: a.trdetail, drac: a.drac, crac: a.crac, amt: a.amt }));
 acdata=`<table border=1 class='acdata' >`
            Math.floor(acno/1000) %2 ? (balance = filtered[0].amt*-1, dc="Dr"): (balance = filtered[0].amt, dc="Cr")
-           acdata += `<br><tr ><th  colspan=5 align=center bgcolor=yellow>${acno}-${actname}<tr style='background:black; color:white; text-align:center; 
-
-'><th>Date<th>Details<th>DC<th>Amt<th>Bal`
-           acdata += "<tr><td>" + filtered[0].dt + "<td class='sfont'>"+filtered[0].details +"<td>"+dc+"<td align=right>" + filtered[0].amt+"<td 
-
-align=right>"+balance 
+           acdata += `<br><tr ><th  colspan=5 align=center bgcolor=yellow>${acno}-${actname}<tr style='background:black; color:white; text-align:center; '><th>Date<th>Details<th>DC<th>Amt<th>Bal`
+           acdata += "<tr><td>" + filtered[0].dt + "<td class='sfont'>"+filtered[0].details +"<td>"+dc+"<td align=right>" + filtered[0].amt+"<td align=right>"+balance 
            for (i=1; i<filtered.length; i++){
                       filtered[i].drac == acno ? balance = balance - filtered[i].amt : balance = balance + filtered[i].amt
                       filtered[i].drac == acno ? dc = "Dr": dc="Cr"
-                      acdata += "<tr><td>"+filtered[i].dt+"<td class='sfont'>"+ filtered[i].details.toString().toTitle()+"<td>"+dc+"<td align=right>"+filtered
-
-[i].amt+"<td align=right>"+balance
+                      acdata += "<tr><td>"+filtered[i].dt+"<td class='sfont'>"+ filtered[i].details.toString().toTitle()+"<td>"+dc+"<td align=right>"+filtered[i].amt+"<td align=right>"+balance
            }
           document.getElementById("acts").innerHTML = acdata
 }
@@ -90,6 +75,7 @@ function gdt (d){
            return dd+"/"+mm+"/"+yyyy
 }
 </script>
-</body>
-</html>
 
+
+
+</body></html>
