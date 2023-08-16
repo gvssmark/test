@@ -1,0 +1,119 @@
+<html>
+<head>
+    <meta name="viewport" content="width=device-width, maximum-scale=1 , initial-scale=1.0">
+
+<style>
+table {border-collapse: collapse}
+tr:hover{background: grey}
+body {}
+
+input {width:50%; background:cyan; outline:none; border:none;  }
+</style>
+</head>
+<body>
+<img  src='https://drive.google.com/uc?export=view&id=15WW2BTAiZsb9Jj8BLa8XzsN74rMeY2nS' width='300' height='300'>
+<div style='text-align:center; position:sticky; background:white; top:0; margin:0 auto;  width:90%'>
+<input type="text" id="myInput" onkeyup="searchTable()" placeholder="Search for names..">
+<p id='packid' style='background:red; color:white'></p>
+</div>
+<br><br>
+<div id='datacount' style='color:red;  text-align:center; width:95%; margin: 0 auto; '></div>
+
+<script>
+String.prototype.toTitle = function() {  return this.toLowerCase().replace(/(^|\s)\S/g, function(t) { return t.toUpperCase() });}
+
+captionsurl ='https://script.google.com/macros/s/AKfycbzgDXr5kx0DHMkRcue99PMVzr5WYa8OBcsS7oNkp1sqmYoD6mrmb8AYUlESFu-webuJ/exec'
+
+brandsurl=  'https://script.google.com/macros/s/AKfycbycJOssjC0n8feftgOW2lEO6peOj-w0r62fcTQKuD0LvtOlvGMeliHjg1AUXvCgMG5F2w/exec'
+async function getMyData() {
+response = await fetch(captionsurl)
+data = await response.json()
+dtest= data.map(([pack,caption,slno,capid]) => ({pack,caption,slno,capid }))
+dtest.shift()
+dtest = dtest.sort((a, b) => a.caption.localeCompare(b.caption));
+
+
+totable=''
+dtest.forEach(a=> totable+= `<tr id=${a.pack} onclick='showpack(${a.pack})'><td>${a.caption.toString().toTitle()}`)
+document.getElementById('datacount').innerHTML= `<table border=1 id='myTable' width=95%> ${totable} </table>`
+}
+getMyData()
+
+showpack =(a) => {document.getElementById('packid').innerHTML=`Found in Pack ${a}`}
+
+
+function searchTable(searchStr) {
+  const input = document.getElementById("myInput");
+  const inputStr = myInput.value.toUpperCase() //searchStr.toUpperCase() //myInput.value.toUpperCase();
+  document.querySelectorAll('#myTable tr:not(.header)').forEach((tr) => {
+    const anyMatch = [...tr.children]
+      .some(td => td.textContent.toUpperCase().includes(inputStr));
+    if (anyMatch) tr.style.removeProperty('display');
+    else tr.style.display = 'none';
+  });
+}
+
+searchTable('love')
+
+</script>
+</body>
+</html><html>
+<head>
+    <meta name="viewport" content="width=device-width, maximum-scale=1 , initial-scale=1.0">
+
+<style>
+table {border-collapse: collapse}
+tr:hover{background: grey}
+body {}
+
+input {width:50%; background:cyan; outline:none; border:none;  }
+</style>
+</head>
+<body>
+<img  src='https://drive.google.com/uc?export=view&id=15WW2BTAiZsb9Jj8BLa8XzsN74rMeY2nS' width='300' height='300'>
+<div style='text-align:center; position:sticky; background:white; top:0; margin:0 auto;  width:90%'>
+<input type="text" id="myInput" onkeyup="searchTable()" placeholder="Search for names..">
+<p id='packid' style='background:red; color:white'></p>
+</div>
+<br><br>
+<div id='datacount' style='color:red;  text-align:center; width:95%; margin: 0 auto; '></div>
+
+<script>
+String.prototype.toTitle = function() {  return this.toLowerCase().replace(/(^|\s)\S/g, function(t) { return t.toUpperCase() });}
+
+captionsurl ='https://script.google.com/macros/s/AKfycbzgDXr5kx0DHMkRcue99PMVzr5WYa8OBcsS7oNkp1sqmYoD6mrmb8AYUlESFu-webuJ/exec'
+
+brandsurl=  'https://script.google.com/macros/s/AKfycbycJOssjC0n8feftgOW2lEO6peOj-w0r62fcTQKuD0LvtOlvGMeliHjg1AUXvCgMG5F2w/exec'
+async function getMyData() {
+response = await fetch(captionsurl)
+data = await response.json()
+dtest= data.map(([pack,caption,slno,capid]) => ({pack,caption,slno,capid }))
+dtest.shift()
+dtest = dtest.sort((a, b) => a.caption.localeCompare(b.caption));
+
+
+totable=''
+dtest.forEach(a=> totable+= `<tr id=${a.pack} onclick='showpack(${a.pack})'><td>${a.caption.toString().toTitle()}`)
+document.getElementById('datacount').innerHTML= `<table border=1 id='myTable' width=95%> ${totable} </table>`
+}
+getMyData()
+
+showpack =(a) => {document.getElementById('packid').innerHTML=`Found in Pack ${a}`}
+
+
+function searchTable(searchStr) {
+  const input = document.getElementById("myInput");
+  const inputStr = myInput.value.toUpperCase() //searchStr.toUpperCase() //myInput.value.toUpperCase();
+  document.querySelectorAll('#myTable tr:not(.header)').forEach((tr) => {
+    const anyMatch = [...tr.children]
+      .some(td => td.textContent.toUpperCase().includes(inputStr));
+    if (anyMatch) tr.style.removeProperty('display');
+    else tr.style.display = 'none';
+  });
+}
+
+searchTable('love')
+
+</script>
+</body>
+</html>
