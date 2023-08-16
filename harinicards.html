@@ -1,3 +1,4 @@
+
 <html>
 <head>
     <meta name="viewport" content="width=device-width, maximum-scale=1 , initial-scale=1.0">
@@ -17,6 +18,15 @@ img {margin-left: auto; width: 100%;  margin-right: auto;}
 input {width:50%; background:cyan; outline:none; border:none;  }
 body {items-align: center;}
 div#datacount {margin:10px auto; }
+@media only screen and (min-width: 400px) {
+
+  body {
+    background: lightblue;
+    width:400px;
+    margin: auto
+
+}
+  }
 </style>
 </head>
 <body>
@@ -27,8 +37,8 @@ div#datacount {margin:10px auto; }
                 <p id="modalData"> </p>
             </div>
         </div>
-<div style='text-align:center; position:sticky; background:white; top:0; margin:0 auto;  width:100%'>
-<h3 align=center>Harini Cards</h3>
+<div id='topdiv' style='text-align:center; position:sticky; background:white; top:0; margin:0 auto;  width:100%'>
+<h3 align=center>Harini <span style='background:red; color: white; ' onclick='allcards()'>Cards</span> and <span style='background:yellow; color: red; ' onclick='captions()'>Captions</span></h3>
 <input type="text" id="myInput" onkeyup="searchTable()" placeholder="Search for caption.."><br>
 </div>
 <div id='datacount' style='color:red;  text-align:center; width:95%;  '></div>
@@ -40,6 +50,9 @@ async function cards() {
 response = await fetch(brandsurl)
 cardata = await response.json()
 carddata = cardata.map(([slno,cardname,phid]) =>({slno,cardname,phid}))
+cardtable=''
+carddata.forEach(a=> cardtable+= `<tr><td>${a.slno}<td>${a.cardname}`)
+ctable = `<table border=1> ${cardtable}</table>`
 }
 cards()
 async function getMyData() {
@@ -62,6 +75,9 @@ document.getElementById("modalData").innerHTML = photo; document.getElementById(
 modal.style.display = "block";
 document.getElementById("myInput").value=''
 }
+function allcards(){document.getElementById('datacount').innerHTML=ctable}
+function captions(){document.getElementById('datacount').innerHTML=`<table border=1 id='myTable' width=100%> ${totable} </table>`}
+
 function searchTable(searchStr) {
   const input = document.getElementById("myInput");
   const inputStr = myInput.value.toUpperCase() //searchStr.toUpperCase() //myInput.value.toUpperCase();
