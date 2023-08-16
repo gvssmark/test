@@ -21,7 +21,7 @@ td.sfont {font-size:xx-small}
 </style></head>
 <body>
 <h3 align=center id='year'>Ledger</h3>
-<div id="tdata" style="1width:360px;  ; margin:0 auto;  ; align-items: center"></div>
+<div id="tdata" style="1width:360px; height:200px; overflow-x: hidden;  ; margin:0 auto;  ; align-items: center"></div>
 <br><br>
 <div id="acts" style="1width:360px;  ; margin:0 auto;  ; align-items: center">.</div>
 <script>
@@ -44,7 +44,7 @@ acturl = 'https://script.google.com/macros/s/AKfycbxg1OCW2FO6NzNvkFOUnIs4U3LE4DI
         accts()  }
 getMyData() 
 function accts(){
-tabledata= "<br><table class='accts'  align=center border=1 ><table width=95% align=center ><tr style='background:black; color:white; text-align:center; '><td>AcNo<td >Ac Name<td >Balance"
+tabledata= "<br><br><table class='accts'  align=center border=1 ><table width=95% align=center ><tr style='background:black; color:white; text-align:center; '><td>AcNo<td >Ac Name<td >Balance"
 actData.forEach(a=> {tabledata+= `<tr  id=${a.acno}><td>${a.acno} <td>${a.acname.toTitle()}<td align=right>${a.bal}`})
 tabledata += "</table>"
 document.getElementById("tdata").innerHTML = tabledata
