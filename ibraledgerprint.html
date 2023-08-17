@@ -85,9 +85,7 @@ function filterac(acno){
            for (i=1; i<filtered.length; i++){
                       filtered[i].drac == acno ? balance = balance - filtered[i].amt : balance = balance + filtered[i].amt
                       filtered[i].drac == acno ? dc = "Dr": dc="Cr"
-                      tabledata += "<tr><td>"+filtered[i].dt+"<td>"+ filtered[i].details+"<td>"+dc+"<td align=right>"+filtered[i].amt+"<td 
-
-align=right>"+balance
+                      tabledata += "<tr><td>"+filtered[i].dt+"<td>"+ filtered[i].details+"<td>"+dc+"<td align=right>"+filtered[i].amt+"<td align=right>"+balance
            }
 }
 
