@@ -1,13 +1,12 @@
-
 <html>
 <head>
-    <meta name="viewport" content="width=device-width, maximum-scale=1 , initial-scale=1.0">
-    <title>Harini Cards</title>
-     <meta name="theme-color" content="#317EFB" />
+<meta name="viewport" content="width=device-width, maximum-scale=1 , initial-scale=1.0">
+<title>Harini Cards</title>
+<meta name="theme-color" content="#317EFB" />
 <style>
-    *{box-sizing: border-box;}
-    .modal {display: none;position: fixed;z-index: 1;padding-top: 1px;left: inherit;top: 0;width: 95%;height: 100%;overflow: auto;background-color: rgb(0, 0, 0);background-color: rgba(0, 0, 0, 0.4);}
-.modal-content {background-color: #99ffcc;margin: auto;padding: 2px;padding-bottom: 2px;border: 1px solid #888;width: 95%;border-radius: 15px 15px 0 0;margin-top: 90px;}
+*{box-sizing: border-box;}
+.modal {display: none;position: fixed;z-index: 1;padding-top: 1px; left: 18px ;top: 0;width: 95%;height: 100%;overflow: auto; ;}
+.modal-content {background-color: #99ffcc;margin:0 auto;padding: 2px;padding-bottom: 2px;border: 1px solid #888;width: 360px;border-radius: 15px 15px 0 0;margin-top: 90px;}
 #modalData {margin:auto}
 .close {color: #aaaaaa;float: right;font-size: 28px;font-weight: bold;}
 close:hover,.close:focus {color: #000;text-decoration: none;cursor: pointer;}
@@ -18,15 +17,7 @@ img {margin-left: auto; width: 100%;  margin-right: auto;}
 input {width:50%; background:cyan; outline:none; border:none;  }
 body {items-align: center;}
 div#datacount {margin:10px auto; }
-@media only screen and (min-width: 400px) {
-
-  body {
-    background: lightblue;
-    width:400px;
-    margin: auto
-
-}
-  }
+@media only screen and (min-width: 400px) {body {background: lightblue; width:400px; margin: auto} }
 </style>
 </head>
 <body>
@@ -37,7 +28,7 @@ div#datacount {margin:10px auto; }
                 <p id="modalData"> </p>
             </div>
         </div>
-<div id='topdiv' style='text-align:center; position:sticky; background:white; top:0; margin:0 auto;  width:100%'>
+<div id='topdiv' style='text-align:center; position:sticky; background:white; padding-top:10px; top:0px; margin:0 auto;  width:100%'>
 <h3 align=center>Harini <span style='background:red; color: white; ' onclick='allcards()'>Cards</span> and <span style='background:yellow; color: red; ' onclick='captions()'>Captions</span></h3>
 <input type="text" id="myInput" onkeyup="searchTable()" placeholder="Search for caption.."><br>
 </div>
@@ -50,8 +41,10 @@ async function cards() {
 response = await fetch(brandsurl)
 cardata = await response.json()
 carddata = cardata.map(([slno,cardname,phid]) =>({slno,cardname,phid}))
+carddata.shift()
+carddata=carddata.sort((a, b) => a.cardname.localeCompare(b.cardname));
 cardtable=''
-carddata.forEach(a=> cardtable+= `<tr><td>${a.slno}<td>${a.cardname}`)
+carddata.forEach(a=> cardtable+= `<tr onclick='showpack(${a.slno})'><td>${a.cardname}`)
 ctable = `<table border=1> ${cardtable}</table>`
 }
 cards()
@@ -62,7 +55,7 @@ dtest= data.map(([pack,caption,slno,capid]) => ({pack,caption,slno,capid }))
 dtest.shift()
 dtest = dtest.sort((a, b) => a.caption.localeCompare(b.caption));
 totable=''
-dtest.forEach(a=> totable+= `<tr id=${a.pack} onclick='showpack(${a.pack})'><td>${a.caption.toString().toTitle()}`)
+dtest.forEach(a=> totable+= `<tr  onclick='showpack(${a.pack})'><td>${a.caption.toString().toTitle()}`)
 document.getElementById('datacount').innerHTML= `<table border=1 id='myTable' width=100%> ${totable} </table>`
 }
 getMyData()
@@ -77,7 +70,6 @@ document.getElementById("myInput").value=''
 }
 function allcards(){document.getElementById('datacount').innerHTML=ctable}
 function captions(){document.getElementById('datacount').innerHTML=`<table border=1 id='myTable' width=100%> ${totable} </table>`}
-
 function searchTable(searchStr) {
   const input = document.getElementById("myInput");
   const inputStr = myInput.value.toUpperCase() //searchStr.toUpperCase() //myInput.value.toUpperCase();
@@ -89,10 +81,8 @@ function searchTable(searchStr) {
   });
 }
 var modal = document.getElementById("myModal");
-            var span = document.getElementsByClassName("close")[0];
-            span.onclick = function () {
-                modal.style.display = "none";
-            }
+var span = document.getElementsByClassName("close")[0];
+span.onclick = function () {modal.style.display = "none";}
 </script>
 </body>
 </html>
