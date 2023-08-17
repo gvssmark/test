@@ -9,11 +9,26 @@ table, tr, td  {border:1px solid black;border-collapse: collapse;width:360 px; m
 td {height:20px;}
 th{ background: red; color:white;position: sticky;top: 0;}
 a {color:black; text-decoration:none; }
+
+@media print 
+{
+    @page {
+      size: A4; /* DIN A4 standard, Europe */
+      margin: 25px;
+    }
+    html, body, table {width: 210mm; height: 282mm; font-family: Arial, Helvetica, sans-serif;  background: #FFF; overflow: visible; }
+    body {        padding-top: 0mm;    }
+ 
+}
+
+
 </style>
 </head>
 <body >
 <h1 align=center id='year'>Ledger</h1>
-<div id="tdata" style="width:360px;  ; margin:0 auto;  ; align-items: center">
+
+<div id="tdata" style="  ; margin:0 auto;  ; align-items: center">
+
 </div>
 <script>
 url = 'https://script.google.com/macros/s/AKfycbyM8VvTakfBAu16BnGsYoUZwHPnUW7dHiJs_Cg40VGxXI2cAOk/exec'
@@ -42,7 +57,9 @@ function everyacno(){
            for (j=0; j<actData.length; j++){
            actno = actData[j].acno
            actname = actData[j].acdisplay
-           filtered =  tempData.filter(o => {return (o.drac == actno || o.crac == actno)}).map(a => ({ dt: gdt(a.dt), details: a.trdetail, drac: a.drac, crac: a.crac, amt: a.amt }));
+           filtered =  tempData.filter(o => {return (o.drac == actno || o.crac == actno)}).map(a => ({ dt: gdt(a.dt), details: a.trdetail, drac: a.drac, crac: 
+
+a.crac, amt: a.amt }));
            if (filtered.length>0) {filterac(actno)}
            }
            tabledata += "</table>"
@@ -68,7 +85,9 @@ function filterac(acno){
            for (i=1; i<filtered.length; i++){
                       filtered[i].drac == acno ? balance = balance - filtered[i].amt : balance = balance + filtered[i].amt
                       filtered[i].drac == acno ? dc = "Dr": dc="Cr"
-                      tabledata += "<tr><td>"+filtered[i].dt+"<td>"+ filtered[i].details+"<td>"+dc+"<td align=right>"+filtered[i].amt+"<td align=right>"+balance
+                      tabledata += "<tr><td>"+filtered[i].dt+"<td>"+ filtered[i].details+"<td>"+dc+"<td align=right>"+filtered[i].amt+"<td 
+
+align=right>"+balance
            }
 }
 
