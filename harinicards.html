@@ -1,9 +1,6 @@
-
-
-
 <html>
 <head>
-<meta name="viewport" content="width=device-width, maximum-scale=1 , initial-scale=1.0">
+<meta name="viewport" content="width=device-width,  initial-scale=1.0">
 <title>Harini Cards</title>
 <meta name="theme-color" content="#FFFFFF" />
 <style>
@@ -11,8 +8,7 @@
 .modal {  display: none;  position: fixed;  z-index: 1;    left: 0;  top: 0;  width: 100%;  height: 100%;  overflow: auto;
   background-color: rgb(0,0,0);  background-color: rgba(0,0,0,0.4); }
 .modal-content {background-color: #99ffcc;margin:0 auto;padding: 2px;padding-bottom: 2px;border: 1px solid #888;width: 90%;border-radius: 15px 15px 0 0;margin-top: 90px;}
-        
-        #modalData {margin:auto}
+#modalData {margin:auto}
 .close {color: #aaaaaa;float: right;font-size: 28px;font-weight: bold;}
 close:hover,.close:focus {color: #000;text-decoration: none;cursor: pointer;}
 table {border-collapse: collapse}
@@ -56,9 +52,6 @@ cardata = await response.json()
 carddata = cardata.map(([slno,cardname,phid]) =>({slno,cardname,phid}))
 carddata.shift()
 carddata=carddata.sort((a, b) => a.cardname.localeCompare(b.cardname));
-cardtable=''
-carddata.forEach(a=> cardtable+= `<tr onclick='showpack(${a.slno})'><td>${a.cardname.toTitle()}  (${a.slno})  `)
-ctable = `<table border=1> ${cardtable}</table>`
 }
 cards()
 async function getMyData() {
@@ -83,23 +76,17 @@ document.getElementById("modalData").innerHTML = photo; document.getElementById(
 modal.style.display = "block";
 document.getElementById("myInput").value=''
 }
-
 function allcards(){
 carddata.forEach(a=> a.scanned = downloaded(a.slno))
 cardtable=''
 carddata.forEach(a=> cardtable+= `<tr onclick='showpack(${a.slno})'><td>${a.cardname.toTitle()} <span style='color:${a.scanned}'> (${a.slno}) </span>  `)
 document.getElementById('datacount').innerHTML=`<table border=1>${cardtable}</table>`}
-
 function captions(){
 dtest.forEach(a=> a.scanned = downloaded(a.pack))
 totable=''
 dtest.forEach(a=> totable+= `<tr  onclick='showpack(${a.pack})'><td>${a.caption.toString().toTitle()}<span style='color:${a.scanned}'> (${a.pack}) </span>`)
 document.getElementById('datacount').innerHTML= `<table border=1 id='myTable' width=100%> ${totable} </table>`
 }
-
-
-
-
 function searchTable(searchStr) {
   const input = document.getElementById("myInput");
   const inputStr = myInput.value.toUpperCase() //searchStr.toUpperCase() //myInput.value.toUpperCase();
@@ -114,6 +101,7 @@ var modal = document.getElementById("myModal");
 var span = document.getElementsByClassName("close")[0];
 span.onclick = function () {modal.style.display = "none";}
 downloaded = (a)=>(photodata.filter(x=> +x.packid === a).length>0 ?  'red' : '' )
+window.onclick = function (event) {if (event.target == modal) { modal.style.display = "none";}}
 </script>
 </body>
 </html>
