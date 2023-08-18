@@ -56,7 +56,7 @@ carddata = cardata.map(([slno,cardname,phid]) =>({slno,cardname,phid}))
 carddata.shift()
 carddata=carddata.sort((a, b) => a.cardname.localeCompare(b.cardname));
 cardtable=''
-carddata.forEach(a=> cardtable+= `<tr onclick='showpack(${a.slno})'><td>${a.cardname.toTitle()} <span style='color: ${downloaded(a.slno)}'> (${a.slno}) </span> `)
+carddata.forEach(a=> cardtable+= `<tr onclick='showpack(${a.slno})'><td>${a.cardname.toTitle()}  (${a.slno})  `)
 ctable = `<table border=1> ${cardtable}</table>`
 }
 cards()
