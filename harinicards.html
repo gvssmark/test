@@ -1,4 +1,5 @@
 
+
 <html>
 <head>
 <meta name="viewport" content="width=device-width, maximum-scale=1 , initial-scale=1.0">
@@ -55,7 +56,7 @@ carddata = cardata.map(([slno,cardname,phid]) =>({slno,cardname,phid}))
 carddata.shift()
 carddata=carddata.sort((a, b) => a.cardname.localeCompare(b.cardname));
 cardtable=''
-carddata.forEach(a=> cardtable+= `<tr onclick='showpack(${a.slno})'><td>${a.cardname.toTitle()}(${a.slno})`)
+carddata.forEach(a=> cardtable+= `<tr onclick='showpack(${a.slno})'><td>${a.cardname.toTitle()} <span style='color: ${downloaded(a.slno)}'> (${a.slno}) </span> `)
 ctable = `<table border=1> ${cardtable}</table>`
 }
 cards()
@@ -66,7 +67,7 @@ dtest= data.map(([pack,caption,slno,capid]) => ({pack,caption,slno,capid }))
 dtest.shift()
 dtest = dtest.sort((a, b) => a.caption.localeCompare(b.caption));
 totable=''
-dtest.forEach(a=> totable+= `<tr  onclick='showpack(${a.pack})'><td>${a.caption.toString().toTitle()} (${a.pack})`)
+dtest.forEach(a=> totable+= `<tr  onclick='showpack(${a.pack})'><td>${a.caption.toString().toTitle()}<span style='color:${downloaded(a.pack)}'> (${a.pack})</span>`)
 document.getElementById('datacount').innerHTML= `<table border=1 id='myTable' width=100%> ${totable} </table>`
 }
 getMyData()
@@ -97,6 +98,7 @@ function searchTable(searchStr) {
 var modal = document.getElementById("myModal");
 var span = document.getElementsByClassName("close")[0];
 span.onclick = function () {modal.style.display = "none";}
+downloaded = (a)=>(photodata.filter(x=> +x.packid === a).length>0 ?  'red' : '' )
 </script>
 </body>
 </html>
