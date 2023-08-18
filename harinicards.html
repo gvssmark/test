@@ -1,3 +1,4 @@
+
 <html>
 <head>
 <meta name="viewport" content="width=device-width, maximum-scale=1 , initial-scale=1.0">
@@ -39,6 +40,14 @@ div#datacount {margin:10px auto; }
 String.prototype.toTitle = function() {  return this.toLowerCase().replace(/(^|\s)\S/g, function(t) { return t.toUpperCase() });}
 captionsurl ='https://script.google.com/macros/s/AKfycbzgDXr5kx0DHMkRcue99PMVzr5WYa8OBcsS7oNkp1sqmYoD6mrmb8AYUlESFu-webuJ/exec'
 brandsurl=  'https://script.google.com/macros/s/AKfycbycJOssjC0n8feftgOW2lEO6peOj-w0r62fcTQKuD0LvtOlvGMeliHjg1AUXvCgMG5F2w/exec'
+photidurl='https://script.google.com/macros/s/AKfycbzyeO77TUf_80WKqLg8KlA1qTLu-z7FWyo8xX-IQ5ozsiPeIa3EjuDAvpHlA9YDVgJl/exec'
+async function getPhotoIds() {
+response = await fetch(photidurl)
+pdata = await response.json()
+photodata= pdata.map(([packid,photoid]) => ({packid,photoid}))
+photodata.shift()
+}
+getPhotoIds()
 async function cards() {
 response = await fetch(brandsurl)
 cardata = await response.json()
@@ -64,7 +73,8 @@ getMyData()
 showpack =(x) => {
 cdata = carddata.filter(a=> a.slno === x)[0]
 cname = cdata.cardname
-photo = cdata.phid
+photo= photodata.filter(a=> a.packid*1 === x)[0].photoid
+//photo = cdata.phid
 photo = `<img  src='https://drive.google.com/uc?export=view&id=${photo}' width='300' height='400'>`
 document.getElementById("modalData").innerHTML = photo; document.getElementById("nameHeader").innerHTML =   cname + '-(' + x +')'
 modal.style.display = "block";
