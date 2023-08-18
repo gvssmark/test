@@ -1,5 +1,6 @@
 
 
+
 <html>
 <head>
 <meta name="viewport" content="width=device-width, maximum-scale=1 , initial-scale=1.0">
@@ -83,8 +84,22 @@ modal.style.display = "block";
 document.getElementById("myInput").value=''
 }
 
-  function allcards(){document.getElementById('datacount').innerHTML=ctable}
-function captions(){document.getElementById('datacount').innerHTML=`<table border=1 id='myTable' width=100%> ${totable} </table>`}
+function allcards(){
+carddata.forEach(a=> a.scanned = downloaded(a.slno))
+cardtable=''
+carddata.forEach(a=> cardtable+= `<tr onclick='showpack(${a.slno})'><td>${a.cardname.toTitle()} <span style='color:${a.scanned}'> (${a.slno}) </span>  `)
+document.getElementById('datacount').innerHTML=`<table border=1>${cardtable}</table>`}
+
+function captions(){
+dtest.forEach(a=> a.scanned = downloaded(a.pack))
+totable=''
+dtest.forEach(a=> totable+= `<tr  onclick='showpack(${a.pack})'><td>${a.caption.toString().toTitle()}<span style='color:${a.scanned}'> (${a.pack}) </span>`)
+document.getElementById('datacount').innerHTML= `<table border=1 id='myTable' width=100%> ${totable} </table>`
+}
+
+
+
+
 function searchTable(searchStr) {
   const input = document.getElementById("myInput");
   const inputStr = myInput.value.toUpperCase() //searchStr.toUpperCase() //myInput.value.toUpperCase();
