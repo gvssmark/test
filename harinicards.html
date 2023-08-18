@@ -73,14 +73,16 @@ getMyData()
 showpack =(x) => {
 cdata = carddata.filter(a=> a.slno === x)[0]
 cname = cdata.cardname
-photo= photodata.filter(a=> a.packid*1 === x)[0].photoid
-//photo = cdata.phid
+nophoto = "1UhquVc6Yv7268a9hxgDe5h3m20JZQTU4"
+photoarray = photodata.filter(a=> +a.packid === x)
+photo= photoarray.length>0 ? photoarray[0].photoid : nophoto
 photo = `<img  src='https://drive.google.com/uc?export=view&id=${photo}' width='300' height='400'>`
 document.getElementById("modalData").innerHTML = photo; document.getElementById("nameHeader").innerHTML =   cname + '-(' + x +')'
 modal.style.display = "block";
 document.getElementById("myInput").value=''
 }
-function allcards(){document.getElementById('datacount').innerHTML=ctable}
+
+  function allcards(){document.getElementById('datacount').innerHTML=ctable}
 function captions(){document.getElementById('datacount').innerHTML=`<table border=1 id='myTable' width=100%> ${totable} </table>`}
 function searchTable(searchStr) {
   const input = document.getElementById("myInput");
