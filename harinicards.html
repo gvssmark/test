@@ -55,7 +55,7 @@ carddata = cardata.map(([slno,cardname,phid]) =>({slno,cardname,phid}))
 carddata.shift()
 carddata=carddata.sort((a, b) => a.cardname.localeCompare(b.cardname));
 cardtable=''
-carddata.forEach(a=> cardtable+= `<tr onclick='showpack(${a.slno})'><td>${a.cardname.toTitle()}`)
+carddata.forEach(a=> cardtable+= `<tr onclick='showpack(${a.slno})'><td>${a.cardname.toTitle()}(${a.slno})`)
 ctable = `<table border=1> ${cardtable}</table>`
 }
 cards()
@@ -66,7 +66,7 @@ dtest= data.map(([pack,caption,slno,capid]) => ({pack,caption,slno,capid }))
 dtest.shift()
 dtest = dtest.sort((a, b) => a.caption.localeCompare(b.caption));
 totable=''
-dtest.forEach(a=> totable+= `<tr  onclick='showpack(${a.pack})'><td>${a.caption.toString().toTitle()}`)
+dtest.forEach(a=> totable+= `<tr  onclick='showpack(${a.pack})'><td>${a.caption.toString().toTitle()} (${a.pack})`)
 document.getElementById('datacount').innerHTML= `<table border=1 id='myTable' width=100%> ${totable} </table>`
 }
 getMyData()
