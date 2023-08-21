@@ -1,3 +1,4 @@
+
 <html>
 <head>
 <meta name="viewport" content="width=device-width,  initial-scale=1.0">
@@ -9,7 +10,7 @@
   background-color: rgb(0,0,0);  background-color: rgba(0,0,0,0.4); }
 .modal-content {background-color: #99ffcc;margin:0 auto;padding: 2px;padding-bottom: 2px;border: 1px solid #888;width: 90%;border-radius: 15px 15px 0 0;margin-top: 90px;}
 #modalData {margin:auto}
-.close {color: #aaaaaa;float: right;font-size: 28px;font-weight: bold;}
+.close {color: red;float: right;;font-weight: bold;}
 close:hover,.close:focus {color: #000;text-decoration: none;cursor: pointer;}
 table {border-collapse: collapse}
 tr:hover{background: grey}
@@ -24,7 +25,9 @@ div#datacount {margin:10px auto; }
 <body>
         <div id="myModal" class="modal">
             <div class="modal-content">
-                <span class="close">&times;</span><br>
+            <div style='display:flex; width:100%; text-align:center; margin:0 auto;'>
+            <div style='width:33%' onclick='showcardphoto()'>Card</div><div style='width:33%' onclick='showcardtext()'>Captions</div><div style='width:33%' class="close">Close</div></div>
+                
                 <h4 align=center id="nameHeader"></h4>
                 <p id="modalData"> </p>
             </div>
@@ -65,9 +68,18 @@ dtest.forEach(a=> totable+= `<tr  onclick='showpack(${a.pack})'><td>${a.caption.
 document.getElementById('datacount').innerHTML= `<table border=1 id='myTable' width=100%> ${totable} </table>`
 }
 getMyData()
+
+function showcardtext(){document.getElementById("modalData").innerHTML=cardtemptable}
+function showcardphoto(){document.getElementById("modalData").innerHTML=photo}
+
+
 showpack =(x) => {
 cdata = carddata.filter(a=> a.slno === x)[0]
 cname = cdata.cardname
+cardtemp = dtest.filter(a=> +a.pack === x)
+cardtemptext=''
+cardtemp.forEach(a=> cardtemptext += `<tr><td>${a.caption}`)
+cardtemptable = `<table border=1 align=center> ${cardtemptext}</table>`
 nophoto = "1UhquVc6Yv7268a9hxgDe5h3m20JZQTU4"
 photoarray = photodata.filter(a=> +a.packid === x)
 photo= photoarray.length>0 ? photoarray[0].photoid : nophoto
@@ -76,6 +88,8 @@ document.getElementById("modalData").innerHTML = photo; document.getElementById(
 modal.style.display = "block";
 document.getElementById("myInput").value=''
 }
+
+
 function allcards(){
 carddata.forEach(a=> a.scanned = downloaded(a.slno))
 cardtable=''
