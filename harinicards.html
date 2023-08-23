@@ -75,7 +75,10 @@ document.getElementsByClassName('modal-content')[0].style.height='auto'
 dh=document.getElementsByClassName('modal-content')[0].clientHeight +5
 myMove(dh)
 }
-function showcardphoto(){document.getElementById("modalData").innerHTML=photo}
+function showcardphoto(){document.getElementById("modalData").innerHTML=photo
+document.getElementsByClassName('modal-content')[0].style.height='455px'
+dh=document.getElementsByClassName('modal-content')[0].clientHeight +5
+myMove(dh)}
 function myMove(z) {
   let id = null;
   const elem = document.getElementsByClassName('modal-content')[0]; 
@@ -107,6 +110,7 @@ photo = `<img  src='https://drive.google.com/uc?export=view&id=${photo}' width='
 document.getElementById("modalData").innerHTML = photo; document.getElementById("nameHeader").innerHTML =   cname + '-(' + x +')'
 modal.style.display = "block";
 document.getElementById("myInput").value=''
+document.getElementsByClassName('modal-content')[0].style.height='455px'  
 }
 
 
