@@ -1,29 +1,43 @@
-
 <html>
 <head>
 <meta name="viewport" content="width=device-width, maximum-scale=1 , initial-scale=1.0">
 <title>Membership Application</title>
-	<style>
+<style>
 #sig-canvas {
   border: 2px dotted #CCCCCC;
   border-radius: 15px;
   cursor: crosshair;
   background:cyan;
 }
-.container {width:360px; height:100vh }
+.container {width:360px;    }
+
+body {width:360px; align-items: center;  margin:auto;}
 div {width:360px; }
 .inputs {padding:5px; width:350px;}
 input { width:340px; outline:none; border:none; background:cyan; height:30px;}
 #sig-canvas {}
+@media print 
+{
+    @page {
+      size: A4; /* DIN A4 standard, Europe */
+      margin: 50px;
+    }
+    html, body {width: 210mm; height: 282mm; font-family: Arial, Helvetica, sans-serif; font-size: small; background: #FFF; overflow: visible; }
+    body {        padding-top: 0mm;    }
+
+}
 </style>
 </head>
 <body>
+<h2 align=center>IBRA-Membership Form</h2>
+<form>
 <div style='flex'>
-<div class='inputs'><input type='text' placeholder='name'></div>
+<div class='inputs'><input type='text' name='retname' placeholder='name'></div>
 <div class='inputs'><input type='text' placeholder='name'></div>
 <div class='inputs'><input type='text' placeholder='name'></div>
 <div class='inputs'><input type='text' placeholder='name'></div>
 </div>
+</form>
 
 <div class="container">
 		<div >Sign Here:
@@ -53,8 +67,6 @@ input { width:340px; outline:none; border:none; background:cyan; height:30px;}
 			</div>
 		</div>
 	</div>
- <br>
-<img id='photo'  src='' />   
     <script>
     (function() {
   window.requestAnimFrame = (function(callback) {
@@ -186,9 +198,6 @@ console.log(canvas)
     sigText.innerHTML = dataUrl;
 console.log(dataUrl)
     sigImage.setAttribute("src", dataUrl);
-    ph.setAttribute("src", dataUrl );
-    ph.width=300
-    ph.height=50
   }, false);
 
 })();
