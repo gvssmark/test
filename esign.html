@@ -1,45 +1,39 @@
 <!DOCTYPE html>
 <html>
-<head>
-<meta name="viewport" content="width=device-width,  initial-scale=1.0">
-
-
-<style>
+<head><style>
 svg {
-  margin: .5em;
+  mmargin: .5em;
   border: 1px solid gray;
   border-radius: .5em;
 }
-
 .flex {
   display: flex;
 }
-
 button {
   margin: .5em;
 }
-
-#pathdata {
-  font-family: monospace;
-  background: #ddd;
-  padding: 1em;
-  margin: 1em .5em;
-}
-
+#spanel {display: none}
 </style></head>
 <body>
-
-<svg id="sig_panel" xmlns="http://www.w3.org/2000/svg" width="300" height="100" viewBox="0 0 300 100">
-  <rect id="r" width="300" height="100" fill="#ffa"/>
-  <line x1="0" y1="80" x2="300" y2="80" stroke="#666" stroke-width="1" stroke-dasharray="3" shape-rendering="crispEdges" pointer-events="none"/>
+<div id='inputs'>
+<table>
+<tr><td><input type=text placeholder='sr no'>
+<tr><td><input type=text placeholder='sr no'>
+<tr><td><input type=text placeholder='sr no'>
+</table>
+<button onclick='shsignpanelsh()' id="signpanel">Show Signature Panel</button>
+</div>
+<div id='spanel'>
+<svg id="sig_panel"  width="300" height='100' >
+  <rect id="r" width="300" height='100' top='0px' fill="#ffa"/>
   <path id="p" stroke="navy" stroke-width="2" fill="none" pointer-events="none"/>
 </svg>
 <div class="flex">
-  <button id="show">Show signaure path data</button>
   <button id="clear">Clear signature</button>
+  <button onclick="shalldivs()">Submit</button>
 </div>
 <div id="pathdata"></div>
-
+</div>
 <script>
 //init
 let r = document.getElementById('r'),
@@ -108,8 +102,20 @@ function getSignature() {
 }
 
 //button handlers
-b_show.addEventListener('click', getSignature);
+//b_show.addEventListener('click', getSignature);
 b_clear.addEventListener('click', clearSignature);
+
+
+function shsignpanelsh(){
+document.getElementById('spanel').style.display='block'
+document.getElementById('inputs').style.display='none'
+}
+
+function shalldivs(){
+document.getElementById('spanel').style.display='block'
+document.getElementById('inputs').style.display='block'
+
+}
 
 
 </script>
