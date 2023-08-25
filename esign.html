@@ -1,21 +1,26 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <meta name="viewport" content="width=device-width,  initial-scale=1.0">
+<meta name="viewport" content="width=device-width,  initial-scale=1.0">
 <title>Signed</title>
-  <style>
+
+<style>
 svg {
   mmargin: .5em;
   border: 1px solid gray;
   border-radius: .5em;
 }
+
 .flex {
   display: flex;
 }
+
 button {
   margin: .5em;
 }
+
 #spanel {display: none}
+
 </style></head>
 <body>
 <div id='inputs'>
@@ -26,17 +31,23 @@ button {
 </table>
 <button onclick='shsignpanelsh()' id="signpanel">Show Signature Panel</button>
 </div>
+
+
 <div id='spanel'>
-<svg id="sig_panel"  width=100% height=100% >
-  <rect id="r" width=100% height=100% top='0px' fill="#ffa"/>
+<svg id="sig_panel"  width='360' height='400' >
+  <rect id="r" width='360' height='400' top='0' fill="#ffa"/>
   <path id="p" stroke="navy" stroke-width="2" fill="none" pointer-events="none"/>
 </svg>
+
 <div class="flex">
   <button id="clear">Clear signature</button>
   <button onclick="shalldivs()">Submit</button>
+
 </div>
+
 <div id="pathdata"></div>
 </div>
+
 <script>
 //init
 let r = document.getElementById('r'),
@@ -97,6 +108,7 @@ function clearSignature() {
   pathdata.textContent = '';
   signaturePath = '';
   p.setAttribute('d', '');
+  document.getElementById('inputs').style.display='none'
 }
 
 function getSignature() {
