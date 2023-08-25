@@ -1,51 +1,57 @@
+
 <html>
 <head><style>
 #sig-canvas {
   border: 2px dotted #CCCCCC;
   border-radius: 15px;
   cursor: crosshair;
+  background:cyan;
 }
-.container {width:360px; }
+.1container {width:360px; }
 div {width:360px; }
+.inputs {padding:5px; width:350px;}
+input { width:340px; outline:none; border:none; background:cyan; height:30px;}
+#sig-canvas {}
 </style>
 </head>
 <body>
-<!-- Content -->
-	<div class="container">
-		<div >
+<div style='flex'>
+<div class='inputs'><input type='text' placeholder='name'></div>
+<div class='inputs'><input type='text' placeholder='name'></div>
+<div class='inputs'><input type='text' placeholder='name'></div>
+<div class='inputs'><input type='text' placeholder='name'></div>
+</div>
+
+<div class="container">
+		<div >Sign Here:
 			<div >
-				<h1>E-Signature</h1>
-				<p>Sign in the canvas below and save your signature as an image!</p>
-			</div>
-		</div>
-		<div >
-			<div >
-		 		<canvas id="sig-canvas" width="360" height="100">
+		 		<canvas id="sig-canvas" width="340" height="100">
 		 			Get a better browser, bro.
 		 		</canvas>
 		 	</div>
 		</div>
 		<div >
 			<div >
-				<button class="btn btn-primary" id="sig-submitBtn">Submit Signature</button>
-				<button class="btn btn-default" id="sig-clearBtn">Clear Signature</button>
+				<button  id="sig-submitBtn">Submit Signature</button>
+				<button  id="sig-clearBtn">Clear Signature</button>
 			</div>
 		</div>
-		<br/>
-		<div >
+		
+		<div style='display:none;'>
 			<div >
-				<textarea id="sig-dataUrl" class="form-control" rows="5">Data URL for your signature will go here!</textarea>
+				<textarea   id="sig-dataUrl" >Data URL for your signature will go here!</textarea>
 			</div>
 		</div>
-		<br/>
+		
 		<div >
-			<div >
+			<div style='display:none;' >
 				<img id="sig-image" src="" alt="Your signature will go here!"/>
+                
 			</div>
 		</div>
 	</div>
- 
-<img id='photo' src=''></>   
+ <br>
+<img id='photo'  src='' />   
     <script>
     (function() {
   window.requestAnimFrame = (function(callback) {
@@ -54,21 +60,16 @@ div {width:360px; }
       window.mozRequestAnimationFrame ||
       window.oRequestAnimationFrame ||
       window.msRequestAnimaitonFrame ||
-      function(callback) {
-        window.setTimeout(callback, 1000 / 60);
-      };
+      function(callback) {window.setTimeout(callback, 1000 / 60);};
   })();
 
   var canvas = document.getElementById("sig-canvas");
   var ctx = canvas.getContext("2d");
   ctx.strokeStyle = "#222222";
-  ctx.lineWidth = 4;
+  ctx.lineWidth = 1;
 
   var drawing = false;
-  var mousePos = {
-    x: 0,
-    y: 0
-  };
+  var mousePos = {x: 0, y: 0};
   var lastPos = mousePos;
 
   canvas.addEventListener("mousedown", function(e) {
@@ -183,7 +184,8 @@ console.log(canvas)
 console.log(dataUrl)
     sigImage.setAttribute("src", dataUrl);
     ph.setAttribute("src", dataUrl );
-
+    ph.width=300
+    ph.height=50
   }, false);
 
 })();
