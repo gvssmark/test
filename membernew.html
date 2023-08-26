@@ -1,0 +1,265 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>New Member</title>
+
+<style>
+::placeholder {color:blue}
+
+* {  box-sizing: border-box;}
+input {border:none; width:180px; background:powderblue; }
+input:focus { background:cyan; outline: none }
+.tdwidth {width:150px;}
+table {width:100%; border: 0px solid black; border-collapse:collapse; margin:auto;}
+td:nth-child(1) {font-size:small; }
+textarea {border:none; outline:none; background:powderblue;}
+textarea:focus {background:cyan;}
+.trheight1 {height:50px;}
+button {background:cyan; border:none;height:25px; border-radius:15px ; box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19); 
+
+color:blue;    }
+#dataentry {margin:auto; width:360px; background:powderblue; padding:5px; border-radius:15px;}
+#pdf {display:none}
+table {border:1px solid black; border-collapse:collapse;}
+
+@media print 
+{
+    @page {size: A4; /* DIN A4 standard, Europe */      margin: 10px;    }
+    html, body,   {width: 210mm; height: 282mm; font-family: Arial, Helvetica, sans-serif; font-size: small; background: #FFF; overflow: visible; }
+    body {  padding-top: 0mm;    }
+table {width:100%}
+    tr {height:30px}
+.tdwidth {width:30%}
+  }
+#sig-canvas {
+  border: 2px dotted #CCCCCC;
+  border-radius: 15px;
+  cursor: crosshair;
+  background:cyan;
+}</style>
+</head>
+<body>
+<div id='dataentry'>
+<form action="javascript:disp();">
+<table border=0>
+<tr><td >Name <td ><input type='text' name='retname'id='retname' placeholder='Retiree Name'>
+<tr><td>SR Number<td><input type='number' name='srno'id='srno' placeholder='SR Number'>
+<tr><td>Date of Birth<td><input type='text' name='dob'id='dob' placeholder='DOB YYYYMMDD'>
+<tr><td>Qualification<td><input type='text' name='qual'id='qual' placeholder='Edcn Qualification'>
+<tr><td>Designation / Scale<td><input type='text' name='desig'id='desig' placeholder='Designation'>
+<tr><td>Br. / Off where Retd<td><input type='text' name='retbr'id='retbr' placeholder='Retired at '>
+<tr><td>Dt of Joining Bank<td><input type='text' name='doj'id='doj' placeholder='Dt of Joining Bank YYYYMMDD'>
+<tr><td>Date of Retirement<td><input type='text' name='dor'id='dor' placeholder='Retired on YYYYMMDD'>
+<tr><td>Basic Pay<td><input type='number' name='basic'id='basic' placeholder='Basic Pay'>
+<tr><td>FPP<td><input type='number' name='fpp'id='fpp' placeholder='FPP'>
+<tr><td>PQA<td><input type='number' name='pqa'id='pqa' placeholder='PQA'>
+<tr><td>Special Allowance<td><input type='number' name='spl'id='spl' placeholder='Special Allowance'>
+<tr><td>Pension Drawing Branch<td><input type='text' name='penbr'id='penbr' placeholder='Pension Branch'>
+<tr><td>Pension Account No<td><input type='number' name='sbac'id='sbac' placeholder='Pension Ac No'>
+<tr><td>Address<td><textarea name='add' rows="4" cols="24" id='add'   placeholder='Address' ></textarea>
+<tr><td>Mobile Number<td><input type='mobile' name='mob'id='mob' placeholder='Mobile No'>
+<tr><td>Email Address<td><input type='email' name='mail'id='mail' placeholder='Email'>
+<tr><td>Fixedline with STD Code<td><input type='text' name='fxdline'id='fxdline' placeholder='Fixed Line with STD'>
+<tr><td>Spouse Name<td><input type='text' name='spouse'id='spouse' placeholder='Spouse Name'>
+<tr><td colspan=2><div id='sigcanvas'>
+<canvas id="sig-canvas" width="340" height="100">
+</div>
+<button  id="sig-submitBtn">Submit Signature</button>
+</div>
+</table>
+</form>
+</div>
+<div id='pdf'></div>
+<script>
+var imgdata='';
+
+(function() {
+  window.requestAnimFrame = (function(callback) {
+    return window.requestAnimationFrame ||
+      window.webkitRequestAnimationFrame ||
+      window.mozRequestAnimationFrame ||
+      window.oRequestAnimationFrame ||
+      window.msRequestAnimaitonFrame ||
+      function(callback) {window.setTimeout(callback, 1000 / 60);};
+  })();
+
+  var canvas = document.getElementById("sig-canvas");
+  var ctx = canvas.getContext("2d");
+  ctx.strokeStyle = "#222222";
+  ctx.lineWidth = 1;
+
+  var drawing = false;
+  var mousePos = {x: 0, y: 0};
+  var lastPos = mousePos;
+
+  canvas.addEventListener("mousedown", function(e) {
+    drawing = true;
+    lastPos = getMousePos(canvas, e);
+  }, false);
+
+  canvas.addEventListener("mouseup", function(e) {
+    drawing = false;
+  }, false);
+
+  canvas.addEventListener("mousemove", function(e) {
+    mousePos = getMousePos(canvas, e);
+  }, false);
+
+  // Add touch event support for mobile
+  canvas.addEventListener("touchstart", function(e) {
+
+  }, false);
+
+  canvas.addEventListener("touchmove", function(e) {
+    var touch = e.touches[0];
+    var me = new MouseEvent("mousemove", {
+      clientX: touch.clientX,
+      clientY: touch.clientY
+    });
+    canvas.dispatchEvent(me);
+  }, false);
+
+  canvas.addEventListener("touchstart", function(e) {
+    mousePos = getTouchPos(canvas, e);
+    var touch = e.touches[0];
+    var me = new MouseEvent("mousedown", {
+      clientX: touch.clientX,
+      clientY: touch.clientY
+    });
+    canvas.dispatchEvent(me);
+  }, false);
+
+  canvas.addEventListener("touchend", function(e) {
+    var me = new MouseEvent("mouseup", {});
+    canvas.dispatchEvent(me);
+  }, false);
+
+  function getMousePos(canvasDom, mouseEvent) {
+    var rect = canvasDom.getBoundingClientRect();
+    return {
+      x: mouseEvent.clientX - rect.left,
+      y: mouseEvent.clientY - rect.top
+    }
+  }
+
+  function getTouchPos(canvasDom, touchEvent) {
+    var rect = canvasDom.getBoundingClientRect();
+    return {
+      x: touchEvent.touches[0].clientX - rect.left,
+      y: touchEvent.touches[0].clientY - rect.top
+    }
+  }
+
+  function renderCanvas() {
+    if (drawing) {
+      ctx.moveTo(lastPos.x, lastPos.y);
+      ctx.lineTo(mousePos.x, mousePos.y);
+      ctx.stroke();
+      lastPos = mousePos;
+    }
+  }
+
+  // Prevent scrolling when touching the canvas
+  document.body.addEventListener("touchstart", function(e) {
+    if (e.target == canvas) {
+      e.preventDefault();
+    }
+  }, false);
+  document.body.addEventListener("touchend", function(e) {
+    if (e.target == canvas) {
+      e.preventDefault();
+    }
+  }, false);
+  document.body.addEventListener("touchmove", function(e) {
+    if (e.target == canvas) {
+      e.preventDefault();
+    }
+  }, false);
+
+  (function drawLoop() {
+    requestAnimFrame(drawLoop);
+    renderCanvas();
+  })();
+
+  function clearCanvas() {
+    canvas.width = canvas.width;
+  }
+
+  // Set up the UI
+  var sigText = document.getElementById("sig-dataUrl");
+ 
+var ph =document.getElementById("photo");
+  var clearBtn = document.getElementById("sig-clearBtn");
+  var submitBtn = document.getElementById("sig-submitBtn");
+  
+  
+  
+  submitBtn.addEventListener("click", function(e) {
+    var dataUrl = canvas.toDataURL();
+
+    imgdata=dataUrl    
+    
+    imgdata=dataUrl
+  }, false);
+})();
+
+
+
+function disp(){
+ var sigImage = document.getElementById("sign");
+//sigImage.setAttribute("src", dataUrl);
+
+totable0 = `To<br>
+The General Secretary<br>
+Indian Bank Retirees’ Association<br>
+Flat No 401, Haritasa Residency,<br>
+New Nallakunta, Hyderabad 500044<br><br>
+Dear Comrade<br>
+<p style="  text-align: justify;">Please enrol me as member of the Retirees’ Association. I have read the Bye-laws and rules of the Association and I am 
+
+willing to abide by them. I am remitting a sum of Rs.1000/- (Rupees One Thousand only) towards one time admission fee and Life Membership.Amount Credited to SB 
+
+Account No 465693063 with Indian Bank, Himayatnagar Branch / Demand Draft / Cheque favouring Indian Bank Retirees’ Association, is enclosed.<br></p>
+Yours faithfully<br><br>
+<img id='sign' src=${imgdata} width=200 height=50 ><br>
+(${retname.value})<br>
+Signature<br><br>`
+
+totable1 = `<table border=1 width=100%>
+<tr><td classs='tdwidth'>SR No <td >${srno.value}
+<tr><td width=30%>Name of the Retiree<td>${retname.value}
+<tr><td>Date of Birth <td>${dob.value}
+<tr><td>Qualification<td>${qual.value}
+<tr><td>Designation<td>${desig.value}
+<tr><td>Retirement Branch / Office<td>${retbr.value}
+<tr><td>Date of Joining the Bank <td>${doj.value}
+<tr><td>Date of Retirement<td>${dor.value}
+<tr><td>Basic Pay <td>${basic.value} 
+<tr><td>FPP<td>${fpp.value}
+<tr><td>PQP<td>${pqa.value}
+<tr><td>Spl Allowance<td>${spl.value}
+
+<tr><td>Pension Drawing Branch<td>${penbr.value}
+<tr><td>Pension Account No<td>${sbac.value}
+
+<tr><td>Address<td>${add.value}
+<tr><td>Mobile No<td>${mob.value}
+<tr><td>Email Address<td>${mail.value}
+
+<tr><td>Fixed Line Number<td>${fxdline.value}
+<tr><td>Spouse Name<td>${spouse.value}
+</table>
+`
+document.getElementById('dataentry').style.display='none'
+document.getElementById('pdf').style.display='block'
+document.getElementById('pdf').innerHTML=totable0 + totable1 
+window.print()
+}
+
+
+</script>
+
+</body>
+</html>
