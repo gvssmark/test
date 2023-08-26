@@ -1,4 +1,5 @@
 
+
 <!DOCTYPE html>
 <html>
 <head>
@@ -7,16 +8,16 @@
 <title>New Member</title>
 
 <style>
+.inputs {padding:2px; width:350px; background:yellow;}
+input, textarea {width: 100%; border:1px solid grey; outline:none; height:22px;}
 ::placeholder {color:blue}
 html, body {margin: 0; height: 100%; overflow: hidden}
 
 * {  box-sizing: border-box;}
-input {border:none; width:180px; background:powderblue; }
 input:focus { background:cyan; outline: none }
 .tdwidth {width:150px;}
 table {width:100%; border: 0px solid black; border-collapse:collapse; margin:auto;}
 td:nth-child(1) {font-size:small; }
-textarea {border:none; outline:none; background:powderblue;}
 textarea:focus {background:cyan;}
 .trheight1 {height:50px;}
 button {background:cyan; border:none;height:25px; border-radius:15px ; box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19); 
@@ -46,27 +47,28 @@ table {width:100%}
 <body>
 <div id='dataentry'>
 <form action="javascript:shsignpanel();">
-<table border=0>
-<tr><td >Name <td ><input type='text' name='retname'id='retname' placeholder='Retiree Name'>
-<tr><td>SR Number<td><input type='number' name='srno'id='srno' placeholder='SR Number'>
-<tr><td>Date of Birth<td><input type='text' name='dob'id='dob' placeholder='DOB YYYYMMDD'>
-<tr><td>Qualification<td><input type='text' name='qual'id='qual' placeholder='Edcn Qualification'>
-<tr><td>Designation / Scale<td><input type='text' name='desig'id='desig' placeholder='Designation'>
-<tr><td>Br. / Off where Retd<td><input type='text' name='retbr'id='retbr' placeholder='Retired at '>
-<tr><td>Dt of Joining Bank<td><input type='text' name='doj'id='doj' placeholder='Dt of Joining Bank YYYYMMDD'>
-<tr><td>Date of Retirement<td><input type='text' name='dor'id='dor' placeholder='Retired on YYYYMMDD'>
-<tr><td>Basic Pay<td><input type='number' name='basic'id='basic' placeholder='Basic Pay'>
-<tr><td>FPP<td><input type='number' name='fpp'id='fpp' placeholder='FPP'>
-<tr><td>PQA<td><input type='number' name='pqa'id='pqa' placeholder='PQA'>
-<tr><td>Special Allowance<td><input type='number' name='spl'id='spl' placeholder='Special Allowance'>
-<tr><td>Pension Drawing Branch<td><input type='text' name='penbr'id='penbr' placeholder='Pension Branch'>
-<tr><td>Pension Account No<td><input type='number' name='sbac'id='sbac' placeholder='Pension Ac No'>
-<tr><td>Address<td><textarea name='add' rows="4" cols="24" id='add'   placeholder='Address' ></textarea>
-<tr><td>Mobile Number<td><input type='mobile' name='mob'id='mob' placeholder='Mobile No'>
-<tr><td>Email Address<td><input type='email' name='mail'id='mail' placeholder='Email'>
-<tr><td>Fixedline with STD Code<td><input type='text' name='fxdline'id='fxdline' placeholder='Fixed Line with STD'>
-<tr><td>Spouse Name<td><input type='text' name='spouse'id='spouse' placeholder='Spouse Name'>
-</table>
+<div class='inputs' >
+<input type='text' name='retname'id='retname' placeholder='Retiree Name'>
+</div>
+
+<div class='inputs' ><input type='number' name='srno'id='srno' placeholder='SR Number'></div>
+<div class='inputs' ><input type='text' name='dob'id='dob' placeholder='DOB YYYYMMDD'></div>
+<div class='inputs' ><input type='text' name='qual'id='qual' placeholder='Edcn Qualification'></div>
+<div class='inputs' ><input type='text' name='desig'id='desig' placeholder='Designation'></div>
+<div class='inputs' ><input type='text' name='retbr'id='retbr' placeholder='Retired at '></div>
+<div class='inputs' ><input type='text' name='doj'id='doj' placeholder='Dt of Joining Bank YYYYMMDD'></div>
+<div class='inputs' ><input type='text' name='dor'id='dor' placeholder='Retired on YYYYMMDD'></div>
+<div class='inputs' ><input type='number' name='basic'id='basic' placeholder='Basic Pay'></div>
+<div class='inputs' ><input type='number' name='fpp'id='fpp' placeholder='FPP'></div>
+<div class='inputs' ><input type='number' name='pqa'id='pqa' placeholder='PQA'></div>
+<div class='inputs' ><input type='number' name='spl'id='spl' placeholder='Special Allowance'></div>
+<div class='inputs' ><input type='text' name='penbr'id='penbr' placeholder='Pension Branch'></div>
+<div class='inputs' ><input type='number' name='sbac'id='sbac' placeholder='Pension Ac No'></div>
+<div class='inputs' ><textarea name='add' rows="4" cols="24" id='add'   placeholder='Address with PIN code' ></textarea></div>
+<div class='inputs' ><input type='mobile' name='mob'id='mob' placeholder='Mobile No'></div>
+<div class='inputs' ><input type='email' name='mail'id='mail' placeholder='Email'></div>
+<div class='inputs' ><input type='text' name='fxdline'id='fxdline' placeholder='Fixed Line with STD'></div>
+<div class='inputs' ><input type='text' name='spouse'id='spouse' placeholder='Spouse Name'></div>
 <button>Submit Signature</button>
 </form>
 </div>
