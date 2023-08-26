@@ -1,5 +1,6 @@
 
 
+
 <!DOCTYPE html>
 <html>
 <head>
@@ -48,6 +49,7 @@ table {width:100%}
 </head>
 <body>
 <div id='dataentry'>
+<h2 align=center>IBRA Membership Form</h2>
 <form action="javascript:shsignpanel();">
 <div class='inputs' >
 <input type='text' name='retname'id='retname' placeholder='Retiree Name'>
@@ -207,8 +209,7 @@ var ph =document.getElementById("photo");
   var submitBtn = document.getElementById("sig-submitBtn");
    clearBtn.addEventListener("click", function(e) {
     clearCanvas();
-    sigText.innerHTML = "Data URL for your signature will go here!";
-    sigImage.setAttribute("src", "");
+    
   }, false);
   
   
