@@ -20,7 +20,7 @@ table {width:100%; border: 0px solid black; border-collapse:collapse; margin:aut
 td:nth-child(1) {font-size:small; }
 textarea:focus {background:cyan;}
 .trheight1 {height:50px;}
-button {background:cyan; border:none;height:25px; border-radius:15px ; box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19); 
+button { background:cyan; border:none;height:25px; border-radius:15px ; box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19); 
 
 color:blue;    }
 #dataentry {margin:auto; width:360px; background:powderblue; padding:5px; border-radius:15px;}
@@ -42,6 +42,8 @@ table {width:100%}
   border-radius: 15px;
   cursor: crosshair;
   background:cyan;
+  margin: 10px ; 
+  
 }</style>
 </head>
 <body>
@@ -76,7 +78,7 @@ table {width:100%}
 <div id='sigcanvas' style='display:none; '>
 <canvas id="sig-canvas" width="340" height="100" ></canvas>
 </div>
-<div id='btn'  style='display:none'><button  id="sig-submitBtn">Submit the Signature</button>
+<div id='btn'  style='display:none'><button  id="sig-submitBtn">Submit the Signature</button><button id='sig-clearBtn'>Clear Signature</button><button onclick='back()'>Back to Data</button>
 </div>
 </div>
 
@@ -203,7 +205,11 @@ var imgdata='';
 var ph =document.getElementById("photo");
   var clearBtn = document.getElementById("sig-clearBtn");
   var submitBtn = document.getElementById("sig-submitBtn");
-  
+   clearBtn.addEventListener("click", function(e) {
+    clearCanvas();
+    sigText.innerHTML = "Data URL for your signature will go here!";
+    sigImage.setAttribute("src", "");
+  }, false);
   
   
   submitBtn.addEventListener("click", function(e) {
@@ -218,7 +224,6 @@ var ph =document.getElementById("photo");
 function disp(){
 document.getElementById('sigcanvas').style.display='none'
  var sigImage = document.getElementById("sign");
-//sigImage.setAttribute("src", dataUrl);
 
 totable0 = `To<br>
 The General Secretary<br>
@@ -270,15 +275,16 @@ document.getElementById('btn').style.display='none'
 
 function shsignpanel(){
 document.getElementById('btn').style.display='block'
-
 document.getElementById('sigcanvas').style.display='block'
 document.getElementById('dataentry').style.display='none'
 document.body.style.overflowY = "visible";
-
-
 }
 
-
+function back(){
+document.getElementById('sigcanvas').style.display='none'
+document.getElementById('dataentry').style.display='block'
+document.getElementById('btn').style.display='none'
+}
 </script>
 
 </body>
