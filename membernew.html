@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html>
 <head>
@@ -33,6 +34,7 @@ table {border:1px solid black; border-collapse:collapse;}
 table {width:100%}
     tr {height:30px}
 .tdwidth {width:30%}
+#pr {display:none; }
   }
 #sig-canvas {
   border: 2px dotted #CCCCCC;
@@ -43,7 +45,7 @@ table {width:100%}
 </head>
 <body>
 <div id='dataentry'>
-<form action="javascript:disp();">
+<form action="javascript:shsignpanel();">
 <table border=0>
 <tr><td >Name <td ><input type='text' name='retname'id='retname' placeholder='Retiree Name'>
 <tr><td>SR Number<td><input type='number' name='srno'id='srno' placeholder='SR Number'>
@@ -64,14 +66,19 @@ table {width:100%}
 <tr><td>Email Address<td><input type='email' name='mail'id='mail' placeholder='Email'>
 <tr><td>Fixedline with STD Code<td><input type='text' name='fxdline'id='fxdline' placeholder='Fixed Line with STD'>
 <tr><td>Spouse Name<td><input type='text' name='spouse'id='spouse' placeholder='Spouse Name'>
-<tr><td colspan=2><div id='sigcanvas'>
-<canvas id="sig-canvas" width="340" height="100">
-</div>
-<button  id="sig-submitBtn">Submit Signature</button>
-</div>
 </table>
+<button>Submit Signature</button>
 </form>
 </div>
+
+<div id='sigcanvas' style='display:none; '>
+<canvas id="sig-canvas" width="340" height="100" ></canvas>
+</div>
+<div id='btn'  style='display:none'><button  id="sig-submitBtn">Submit the Signature</button>
+</div>
+</div>
+
+
 <div id='pdf'></div>
 <script>
 var imgdata='';
@@ -199,16 +206,19 @@ var ph =document.getElementById("photo");
   
   submitBtn.addEventListener("click", function(e) {
     var dataUrl = canvas.toDataURL();
-
-    imgdata=dataUrl    
+    imgdata=dataUrl 
+    alert(imgdata)
+    disp()
     
-    imgdata=dataUrl
+ //   window.print()
+    
   }, false);
 })();
 
 
 
 function disp(){
+document.getElementById('sigcanvas').style.display='none'
  var sigImage = document.getElementById("sign");
 //sigImage.setAttribute("src", dataUrl);
 
@@ -217,7 +227,7 @@ The General Secretary<br>
 Indian Bank Retirees’ Association<br>
 Flat No 401, Haritasa Residency,<br>
 New Nallakunta, Hyderabad 500044<br><br>
-Dear Comrade<br>
+Dear Comrade<br> <button id='pr' onclick='javascript:window.print()'>Print This Document</button>
 <p style="  text-align: justify;">Please enrol me as member of the Retirees’ Association. I have read the Bye-laws and rules of the Association and I am 
 
 willing to abide by them. I am remitting a sum of Rs.1000/- (Rupees One Thousand only) towards one time admission fee and Life Membership.Amount Credited to SB 
@@ -256,7 +266,17 @@ totable1 = `<table border=1 width=100%>
 document.getElementById('dataentry').style.display='none'
 document.getElementById('pdf').style.display='block'
 document.getElementById('pdf').innerHTML=totable0 + totable1 
-window.print()
+document.getElementById('btn').style.display='none'
+//window.print()
+}
+
+function shsignpanel(){
+document.getElementById('btn').style.display='block'
+
+document.getElementById('sigcanvas').style.display='block'
+document.getElementById('dataentry').style.display='none'
+
+
 }
 
 
