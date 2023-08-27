@@ -23,6 +23,35 @@ let isDrawing = false;
 let startX = 0;
 let startY = 0;
 
+
+signatureCanvas.addEventListener('touchstart', (e) => {
+    isDrawing = true;
+    const touch = e.touches[0];
+    lastX = touch.clientX - signatureCanvas.getBoundingClientRect().left;
+    lastY = touch.clientY - signatureCanvas.getBoundingClientRect().top;
+    signatureCtx.beginPath();
+    signatureCtx.moveTo(lastX, lastY);
+});
+
+signatureCanvas.addEventListener('touchmove', (e) => {
+    if (!isDrawing) return;
+
+    const touch = e.touches[0];
+    const currentX = touch.clientX - signatureCanvas.getBoundingClientRect().left;
+    const currentY = touch.clientY - signatureCanvas.getBoundingClientRect().top;
+
+    signatureCtx.lineTo(currentX, currentY);
+    signatureCtx.stroke();
+
+    lastX = currentX;
+    lastY = currentY;
+});
+
+signatureCanvas.addEventListener('touchend', () => {
+    isDrawing = false;
+});
+
+
 signatureCanvas.addEventListener('mousedown', (e) => {
     isDrawing = true;
     startX = e.clientX - signatureCanvas.getBoundingClientRect().left;
