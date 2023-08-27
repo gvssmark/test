@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Image Capture and Crop</title>
+</head>
+<body>
+    <div id="camera-container">
+        <video id="camera-view"></video>
+        <button id="capture-btn">Capture</button>
+    </div>
+    <div id="crop-container">
+        <img id="captured-image" alt="Captured Image">
+        <div id="crop-area"></div>
+        <button id="crop-btn">Crop</button>
+    </div>
+    <script>
+    const cameraView = document.getElementById('camera-view');
+const captureButton = document.getElementById('capture-btn');
+const capturedImage = document.getElementById('captured-image');
+const cropArea = document.getElementById('crop-area');
+const cropButton = document.getElementById('crop-btn');
+
+// Access the device camera and display the stream in the video element
+navigator.mediaDevices.getUserMedia({ video: true })
+    .then(stream => {
+        cameraView.srcObject = stream;
+    })
+    .catch(error => {
+        console.error('Error accessing camera:', error);
+    });
+
+// Capture an image from the camera feed
+captureButton.addEventListener('click', () => {
+    const canvas = document.createElement('canvas');
+    canvas.width = cameraView.videoWidth;
+    canvas.height = cameraView.videoHeight;
+    canvas.getContext('2d').drawImage(cameraView, 0, 0, canvas.width, canvas.height);
+    capturedImage.src = canvas.toDataURL('image/jpeg');
+    cropArea.style.display = 'block';
+});
+
+// Crop the captured image
+cropButton.addEventListener('click', () => {
+    const cropX = /* calculate crop area x */;
+    const cropY = /* calculate crop area y */;
+    const cropWidth = /* calculate crop area width */;
+    const cropHeight = /* calculate crop area height */;
+
+    const croppedCanvas = document.createElement('canvas');
+    croppedCanvas.width = cropWidth;
+    croppedCanvas.height = cropHeight;
+    const ctx = croppedCanvas.getContext('2d');
+    ctx.drawImage(capturedImage, cropX, cropY, cropWidth, cropHeight, 0, 0, cropWidth, cropHeight);
+    
+    // Now you can use the croppedCanvas.toDataURL() to get the cropped image data URL or perform other actions.
+});
+
+    </script>
+</body>
+</html>
