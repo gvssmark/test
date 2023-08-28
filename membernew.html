@@ -1,6 +1,7 @@
 
 
 
+
 <!DOCTYPE html>
 <html>
 <head>
@@ -43,7 +44,9 @@ table {width:100%}
   border-radius: 15px;
   cursor: crosshair;
   background:cyan;
-  margin: 10px ; 
+  margin: 10px ;}
+  
+.row {display:flex; width:100% } 
   
 }</style>
 </head>
@@ -56,12 +59,29 @@ table {width:100%}
 </div>
 
 <div class='inputs' ><input type='number' name='srno'id='srno' placeholder='SR Number' required></div>
-<div class='inputs' ><input type='text' name='dob'id='dob' placeholder='DOB YYYYMMDD' required></div>
+
+<div class='inputs row' >
+<div class='row'><input type='number' name='dobyr'id='dobyr' placeholder='DOB Year' inputmode='number' required></div>
+<div class='row'><input type='number' name='dobmm'id='dobmm' placeholder='DOB Month' inputmode='number' min="1" max="12" required></div>
+<div class='row'><input type='number' name='dobday'id='dobday' placeholder='DOB Day' inputmode='number' min="1" max="31" required></div>
+</div>
+
 <div class='inputs' ><input type='text' name='qual'id='qual' placeholder='Edcn Qualification' required></div>
 <div class='inputs' ><input type='text' name='desig'id='desig' placeholder='Designation' required></div>
 <div class='inputs' ><input type='text' name='retbr'id='retbr' placeholder='Retired at ' required></div>
-<div class='inputs' ><input type='text' name='doj'id='doj' placeholder='Dt of Joining Bank YYYYMMDD' required></div>
-<div class='inputs' ><input type='text' name='dor'id='dor' placeholder='Retired on YYYYMMDD' required></div>
+
+<div class='inputs row' >
+<div class='row'><input type='number' name='dojyr'id='dojyr' placeholder='DOJ Year' inputmode='number' required></div>
+<div class='row'><input type='number' name='dojmm'id='dojmm' placeholder='DOJ Month' inputmode='number' min="1" max="12" required></div>
+<div class='row'><input type='number' name='dojday'id='dojday' placeholder='DOJ Day' inputmode='number' min="1" max="31" required></div>
+</div>
+
+
+<div class='inputs row' >
+<div class='row'><input type='number' name='doryr'id='doryr' placeholder='DOR Year' inputmode='number'  required></div>
+<div class='row'><input type='number' name='dormm'id='dormm' placeholder='DOR Month' inputmode='number' min="1" max="12" required></div>
+<div class='row'><input type='number' name='dorday'id='dorday' placeholder='DOR Day' inputmode='number' min="1" max="31" required></div>
+</div>
 <div class='inputs' ><input type='number' name='basic'id='basic' placeholder='Basic Pay'></div>
 <div class='inputs' ><input type='number' name='fpp'id='fpp' placeholder='FPP'></div>
 <div class='inputs' ><input type='number' name='pqa'id='pqa' placeholder='PQA'></div>
@@ -245,12 +265,12 @@ Signature<br><br>`
 totable1 = `<table border=1 width=100%>
 <tr><td classs='tdwidth'>SR No <td >${srno.value}
 <tr><td width=30%>Name of the Retiree<td>${retname.value}
-<tr><td>Date of Birth <td>${dob.value}
+<tr><td>Date of Birth <td>${dobday.value}-${dobmm.value}-${dobyr.value}
 <tr><td>Qualification<td>${qual.value}
 <tr><td>Designation<td>${desig.value}
 <tr><td>Retirement Branch / Office<td>${retbr.value}
-<tr><td>Date of Joining the Bank <td>${doj.value}
-<tr><td>Date of Retirement<td>${dor.value}
+<tr><td>Date of Joining the Bank <td>${dojday.value}-${dojmm.value}-${dojyr.value}
+<tr><td>Date of Retirement<td>${dorday.value}-${dormm.value}-${doryr.value}
 <tr><td>Basic Pay <td>${basic.value} 
 <tr><td>FPP<td>${fpp.value}
 <tr><td>PQP<td>${pqa.value}
