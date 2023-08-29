@@ -2,6 +2,7 @@
 
 
 
+
 <!DOCTYPE html>
 <html>
 <head>
@@ -55,44 +56,37 @@ table {width:100%}
 <h2 align=center>IBRA Membership Form</h2>
 <form action="javascript:shsignpanel();">
 <div class='inputs' >
-<input type='text' name='retname'id='retname' placeholder='Retiree Name' required>
+<input type='text' name='retname'id='retname' placeholder='Retiree Name' required >
 </div>
 
-<div class='inputs' ><input type='number' name='srno'id='srno' placeholder='SR Number'  inputmode='numeric' required></div>
-
-<div class='inputs row' >
-<div class='row'><input type='number' name='dobyr'id='dobyr' placeholder='DOB Year' inputmode='numeric' required></div>
-<div class='row'><input type='number' name='dobmm'id='dobmm' placeholder='DOB Month' inputmode='numeric' min="1" max="12" required></div>
-<div class='row'><input type='number' name='dobday'id='dobday' placeholder='DOB Day' inputmode='numeric' min="1" max="31" required></div>
-</div>
-
-<div class='inputs' ><input type='text' name='qual'id='qual' placeholder='Edcn Qualification' required></div>
-<div class='inputs' ><input type='text' name='desig'id='desig' placeholder='Designation' required></div>
-<div class='inputs' ><input type='text' name='retbr'id='retbr' placeholder='Retired at ' required></div>
-
-<div class='inputs row' >
-<div class='row'><input type='number' name='dojyr'id='dojyr' placeholder='DOJ Year' inputmode='numeric' required></div>
-<div class='row'><input type='number' name='dojmm'id='dojmm' placeholder='DOJ Month' inputmode='numeric' min="1" max="12" required></div>
-<div class='row'><input type='number' name='dojday'id='dojday' placeholder='DOJ Day' inputmode='numeric' min="1" max="31" required></div>
+<div  ><input type='number' name='srno'id='srno' placeholder='SR Number'  inputmode='numeric' required  ></div>
+<div class='inputs row' style='background:cyan '>
+<div class='row'>Dates  of Birth</div>
+<div class='row'>Joining</div>
+<div class='row'>Retirement</div>
 </div>
 
 
 <div class='inputs row' >
-<div class='row'><input type='number' name='doryr'id='doryr' placeholder='DOR Year' inputmode='numeric'  required></div>
-<div class='row'><input type='number' name='dormm'id='dormm' placeholder='DOR Month' inputmode='numeric' min="1" max="12" required></div>
-<div class='row'><input type='number' name='dorday'id='dorday' placeholder='DOR Day' inputmode='numeric' min="1" max="31" required></div>
+<div class='row'><input type='date' name='dob'id='dob'  required ></div>
+<div class='row'><input type='date' name='doj'id='doj'  required   ></div>
+<div class='row'><input type='date' name='dor'id='dor'  required  ></div>
 </div>
+
+<div class='inputs' ><input type='text' name='qual'id='qual' placeholder='Edcn Qualification'  required ></div>
+<div class='inputs' ><input type='text' name='desig'id='desig' placeholder='Designation' required  ></div>
+<div class='inputs' ><input type='text' name='retbr'id='retbr' placeholder='Retired at ' required  ></div>
 <div class='inputs' ><input type='number' name='basic'id='basic' placeholder='Basic Pay' inputmode='numeric'></div>
 <div class='inputs' ><input type='number' name='fpp'id='fpp' placeholder='FPP' inputmode='numeric'></div>
 <div class='inputs' ><input type='number' name='pqa'id='pqa' placeholder='PQA'  inputmode='numeric'></div>
 <div class='inputs' ><input type='number' name='spl'id='spl' placeholder='Special Allowance'  inputmode='numeric'></div>
-<div class='inputs' ><input type='text' name='penbr'id='penbr' placeholder='Pension Branch' required></div>
-<div class='inputs' ><input type='number' name='sbac'id='sbac' placeholder='Pension Ac No'  inputmode='numeric' required></div>
-<div class='inputs' ><textarea name='add' rows="4" cols="24" id='add'   placeholder='Address with PIN code' required></textarea></div>
-<div class='inputs' ><input type='mobile' name='mob'id='mob' placeholder='Mobile No'  inputmode='tel' required></div>
-<div class='inputs' ><input type='email' name='mail'id='mail' placeholder='Email'  inputmode='email' required></div>
+<div class='inputs' ><input type='text' name='penbr'id='penbr' placeholder='Pension Branch' required  required  ></div>
+<div class='inputs' ><input type='number' name='sbac'id='sbac' placeholder='Pension Ac No'  inputmode='numeric'  required ></div>
+<div class='inputs' ><textarea name='add' rows="4" cols="24" id='add'   placeholder='Address with PIN code'  required ></textarea></div>
+<div class='inputs' ><input type='mobile' name='mob'id='mob' placeholder='Mobile No'  inputmode='tel'  required ></div>
+<div class='inputs' ><input type='email' name='mail'id='mail' placeholder='Email'  inputmode='email' required  ></div>
 <div class='inputs' ><input type='text' name='fxdline'id='fxdline' placeholder='Fixed Line with STD'  inputmode='numeric'></div>
-<div class='inputs' ><input type='text' name='spouse'id='spouse' placeholder='Spouse Name' required></div>
+<div class='inputs' ><input type='text' name='spouse'id='spouse' placeholder='Spouse Name' required  ></div>
 <button>Submit Signature</button>
 </form>
 </div>
@@ -242,6 +236,8 @@ var ph =document.getElementById("photo");
 
 
 
+
+
 function disp(){
 document.getElementById('sigcanvas').style.display='none'
  var sigImage = document.getElementById("sign");
@@ -265,12 +261,12 @@ Signature<br><br>`
 totable1 = `<table border=1 width=100%>
 <tr><td classs='tdwidth'>SR No <td >${srno.value}
 <tr><td width=30%>Name of the Retiree<td>${retname.value}
-<tr><td>Date of Birth <td>${dobday.value.padStart(2,0).padStart(2,0)}-${dobmm.value.padStart(2,0)}-${dobyr.value}
+<tr><td>Date of Birth <td>${dob.value}
 <tr><td>Qualification<td>${qual.value}
 <tr><td>Designation<td>${desig.value}
 <tr><td>Retirement Branch / Office<td>${retbr.value}
-<tr><td>Date of Joining the Bank <td>${dojday.value.padStart(2,0)}-${dojmm.value.padStart(2,0)}-${dojyr.value}
-<tr><td>Date of Retirement<td>${dorday.value.padStart(2,0)}-${dormm.value.padStart(2,0)}-${doryr.value}
+<tr><td>Date of Joining the Bank <td>${doj.value}
+<tr><td>Date of Retirement<td>${dor.value}
 <tr><td>Basic Pay <td>${basic.value} 
 <tr><td>FPP<td>${fpp.value}
 <tr><td>PQP<td>${pqa.value}
@@ -306,6 +302,9 @@ document.getElementById('sigcanvas').style.display='none'
 document.getElementById('dataentry').style.display='block'
 document.getElementById('btn').style.display='none'
 }
+
+
+
 </script>
 
 </body>
