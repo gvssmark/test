@@ -261,12 +261,12 @@ Signature<br><br>`
 totable1 = `<table border=1 width=100%>
 <tr><td classs='tdwidth'>SR No <td >${srno.value}
 <tr><td width=30%>Name of the Retiree<td>${retname.value}
-<tr><td>Date of Birth <td>${dob.value}
+<tr><td>Date of Birth <td>${dt(dob.value)}
 <tr><td>Qualification<td>${qual.value}
 <tr><td>Designation<td>${desig.value}
 <tr><td>Retirement Branch / Office<td>${retbr.value}
-<tr><td>Date of Joining the Bank <td>${doj.value}
-<tr><td>Date of Retirement<td>${dor.value}
+<tr><td>Date of Joining the Bank <td>${dt(doj.value)}
+<tr><td>Date of Retirement<td>${dt(dor.value)}
 <tr><td>Basic Pay <td>${basic.value} 
 <tr><td>FPP<td>${fpp.value}
 <tr><td>PQP<td>${pqa.value}
@@ -303,6 +303,7 @@ document.getElementById('dataentry').style.display='block'
 document.getElementById('btn').style.display='none'
 }
 
+ dt =(a)=>{b= a.split('-');return `${b[2]}-${b[1]}-${b[0]}`}
 
 
 </script>
