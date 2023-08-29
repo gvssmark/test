@@ -55,15 +55,15 @@ table {width:100%}
 <h2 align=center>IBRA Membership Form</h2>
 <form action="javascript:shsignpanel();">
 <div class='inputs' >
-<input type='text' name='retname'id='retname' placeholder='Retiree Name'>
+<input type='text' name='retname'id='retname' placeholder='Retiree Name' required>
 </div>
 
-<div class='inputs' ><input type='number' name='srno'id='srno' placeholder='SR Number' required></div>
+<div class='inputs' ><input type='number' name='srno'id='srno' placeholder='SR Number'  inputmode='numeric' required></div>
 
 <div class='inputs row' >
-<div class='row'><input type='number' name='dobyr'id='dobyr' placeholder='DOB Year' inputmode='number' required></div>
-<div class='row'><input type='number' name='dobmm'id='dobmm' placeholder='DOB Month' inputmode='number' min="1" max="12" required></div>
-<div class='row'><input type='number' name='dobday'id='dobday' placeholder='DOB Day' inputmode='number' min="1" max="31" required></div>
+<div class='row'><input type='number' name='dobyr'id='dobyr' placeholder='DOB Year' inputmode='numeric' required></div>
+<div class='row'><input type='number' name='dobmm'id='dobmm' placeholder='DOB Month' inputmode='numeric' min="1" max="12" required></div>
+<div class='row'><input type='number' name='dobday'id='dobday' placeholder='DOB Day' inputmode='numeric' min="1" max="31" required></div>
 </div>
 
 <div class='inputs' ><input type='text' name='qual'id='qual' placeholder='Edcn Qualification' required></div>
@@ -71,27 +71,27 @@ table {width:100%}
 <div class='inputs' ><input type='text' name='retbr'id='retbr' placeholder='Retired at ' required></div>
 
 <div class='inputs row' >
-<div class='row'><input type='number' name='dojyr'id='dojyr' placeholder='DOJ Year' inputmode='number' required></div>
-<div class='row'><input type='number' name='dojmm'id='dojmm' placeholder='DOJ Month' inputmode='number' min="1" max="12" required></div>
-<div class='row'><input type='number' name='dojday'id='dojday' placeholder='DOJ Day' inputmode='number' min="1" max="31" required></div>
+<div class='row'><input type='number' name='dojyr'id='dojyr' placeholder='DOJ Year' inputmode='numeric' required></div>
+<div class='row'><input type='number' name='dojmm'id='dojmm' placeholder='DOJ Month' inputmode='numeric' min="1" max="12" required></div>
+<div class='row'><input type='number' name='dojday'id='dojday' placeholder='DOJ Day' inputmode='numeric' min="1" max="31" required></div>
 </div>
 
 
 <div class='inputs row' >
-<div class='row'><input type='number' name='doryr'id='doryr' placeholder='DOR Year' inputmode='number'  required></div>
-<div class='row'><input type='number' name='dormm'id='dormm' placeholder='DOR Month' inputmode='number' min="1" max="12" required></div>
-<div class='row'><input type='number' name='dorday'id='dorday' placeholder='DOR Day' inputmode='number' min="1" max="31" required></div>
+<div class='row'><input type='number' name='doryr'id='doryr' placeholder='DOR Year' inputmode='numeric'  required></div>
+<div class='row'><input type='number' name='dormm'id='dormm' placeholder='DOR Month' inputmode='numeric' min="1" max="12" required></div>
+<div class='row'><input type='number' name='dorday'id='dorday' placeholder='DOR Day' inputmode='numeric' min="1" max="31" required></div>
 </div>
-<div class='inputs' ><input type='number' name='basic'id='basic' placeholder='Basic Pay'></div>
-<div class='inputs' ><input type='number' name='fpp'id='fpp' placeholder='FPP'></div>
-<div class='inputs' ><input type='number' name='pqa'id='pqa' placeholder='PQA'></div>
-<div class='inputs' ><input type='number' name='spl'id='spl' placeholder='Special Allowance'></div>
+<div class='inputs' ><input type='number' name='basic'id='basic' placeholder='Basic Pay' inputmode='numeric'></div>
+<div class='inputs' ><input type='number' name='fpp'id='fpp' placeholder='FPP' inputmode='numeric'></div>
+<div class='inputs' ><input type='number' name='pqa'id='pqa' placeholder='PQA'  inputmode='numeric'></div>
+<div class='inputs' ><input type='number' name='spl'id='spl' placeholder='Special Allowance'  inputmode='numeric'></div>
 <div class='inputs' ><input type='text' name='penbr'id='penbr' placeholder='Pension Branch' required></div>
-<div class='inputs' ><input type='number' name='sbac'id='sbac' placeholder='Pension Ac No' required></div>
+<div class='inputs' ><input type='number' name='sbac'id='sbac' placeholder='Pension Ac No'  inputmode='numeric' required></div>
 <div class='inputs' ><textarea name='add' rows="4" cols="24" id='add'   placeholder='Address with PIN code' required></textarea></div>
-<div class='inputs' ><input type='mobile' name='mob'id='mob' placeholder='Mobile No' required></div>
-<div class='inputs' ><input type='email' name='mail'id='mail' placeholder='Email' required></div>
-<div class='inputs' ><input type='text' name='fxdline'id='fxdline' placeholder='Fixed Line with STD'></div>
+<div class='inputs' ><input type='mobile' name='mob'id='mob' placeholder='Mobile No'  inputmode='tel' required></div>
+<div class='inputs' ><input type='email' name='mail'id='mail' placeholder='Email'  inputmode='email' required></div>
+<div class='inputs' ><input type='text' name='fxdline'id='fxdline' placeholder='Fixed Line with STD'  inputmode='numeric'></div>
 <div class='inputs' ><input type='text' name='spouse'id='spouse' placeholder='Spouse Name' required></div>
 <button>Submit Signature</button>
 </form>
