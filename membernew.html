@@ -90,6 +90,21 @@ table {width:100%}
 
 <div id='pdf'></div>
 <script>
+  
+today = new Date()
+d=today.getDate()
+m=today.getMonth()
+y=today.getFullYear()
+
+dob.min = `${y-90}-01-01` //1933
+dob.max = `${y-30}-01-01` //1973
+
+doj.min = `${y-70}-01-01` //1953
+doj.max = `${y-30}-01-01` //1993
+
+dor.min = `${y-30}-01-01` //1993
+dor.max = dor.max = `${y}-${(m+1).toString().padStart(2,0)}-${(d-1).toString().padStart(2,0)}` //2023
+
 var imgdata='';
 
 (function() {
