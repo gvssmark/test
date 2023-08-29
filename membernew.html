@@ -60,17 +60,10 @@ table {width:100%}
 </div>
 
 <div  ><input type='number' name='srno'id='srno' placeholder='SR Number'  inputmode='numeric' required  ></div>
-<div class='inputs row' style='background:cyan '>
-<div class='row'>Dates  of Birth</div>
-<div class='row'>Joining</div>
-<div class='row'>Retirement</div>
-</div>
-
-
 <div class='inputs row' >
-<div class='row'><input type='date' name='dob'id='dob'  required ></div>
-<div class='row'><input type='date' name='doj'id='doj'  required   ></div>
-<div class='row'><input type='date' name='dor'id='dor'  required  ></div>
+<div class='row'><input type='text' name='dob'id='dob' placeholder='Birthday' class="textbox-n" onfocus="(this.type='date')" onblur="(this.type='text')"   required ></div>
+<div class='row'><input type='text' name='doj' id='doj' placeholder='Joining Date' class="textbox-n" onfocus="(this.type='date')" onblur="(this.type='text')"  required   ></div>
+<div class='row'><input type='text' name='dor'id='dor' placeholder='Retired on' class="textbox-n" onfocus="(this.type='date')" onblur="(this.type='text')" required  ></div>
 </div>
 
 <div class='inputs' ><input type='text' name='qual'id='qual' placeholder='Edcn Qualification'  required ></div>
