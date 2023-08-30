@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html>
 <head>
@@ -57,9 +58,9 @@ table {width:100%}
 <div  ><input type='number' name='srno'id='srno' placeholder='SR Number'  inputmode='numeric' required  ></div>
 <div>Birthday------------Joining------------Retirement</div>  
 <div class='inputs row' >
-<div class='row'><input type='date' name='dob'id='dob' placeholder='Birthday' class="textbox-n" onfocus="(this.type='date')" onblur="(this.type='text')"   required ></div>
-<div class='row'><input type='date' name='doj' id='doj' placeholder='Joining Date' class="textbox-n" onfocus="(this.type='date')" onblur="(this.type='text')"  required   ></div>
-<div class='row'><input type='date' name='dor'id='dor' placeholder='Retired on' class="textbox-n" onfocus="(this.type='date')" onblur="(this.type='text')" required  ></div>
+<div class='row'><input type='date' onblur='shdates()' name='dob'id='dob' placeholder='Birthday' class="textbox-n" onfocus="(this.type='date')" onblur="(this.type='text')"   required ></div>
+<div class='row' ><input type='date' name='doj' id='doj' placeholder='Joining Date' class="textbox-n" onfocus="(this.type='date')" onblur="(this.type='text')"  required disabled  ></div>
+<div class='row'><input type='date' name='dor'id='dor' placeholder='Retired on' class="textbox-n" onfocus="(this.type='date')" onblur="(this.type='text')" required disabled ></div>
 </div>
 
 <div class='inputs' ><input type='text' name='qual'id='qual' placeholder='Edcn Qualification'  required ></div>
@@ -90,20 +91,30 @@ table {width:100%}
 
 <div id='pdf'></div>
 <script>
-  
+
+function shdates(){
+Dob = document.getElementById('dob').value
+if(Dob.length >0){
+document.getElementById('doj').disabled = false
+document.getElementById('dor').disabled = false
+dobdate = new Date(Dob)
+doby = dobdate.getFullYear()
+
+doj.min = `${doby+20}-01-01` //1953
+doj.max = `${doby+30}-01-01` //1993
+
+dor.min = `${doby+50}-01-01` //1953
+dor.max = `${doby+60}-12-31` //1993
+}
+}
 today = new Date()
 d=today.getDate()
 m=today.getMonth()
 y=today.getFullYear()
 
 dob.min = `${y-90}-01-01` //1933
-dob.max = `${y-30}-01-01` //1973
+dob.max = `${y-50}-01-01` //1973
 
-doj.min = `${y-70}-01-01` //1953
-doj.max = `${y-30}-01-01` //1993
-
-dor.min = `${y-30}-01-01` //1993
-dor.max = dor.max = `${y}-${(m+1).toString().padStart(2,0)}-${(d-1).toString().padStart(2,0)}` //2023
 
 var imgdata='';
 
