@@ -344,7 +344,7 @@ dt= new Date(a)
 birthyear = dt.getFullYear()
 birthmonth = dt.getMonth()+1
 birthday = dt.getDate()
-r1 =  new Date(birthyear+50,birthmonth,1);
+r1 =  new Date(new Date(birthyear+50,birthmonth,1)-1);
 r2 = new Date(new Date(birthyear+50,birthmonth-1,1)-1)
 rday = birthday>1 ? r1 : r2;
 return ddmmyyyy(rday) 
@@ -356,7 +356,7 @@ dt= new Date(a)
 birthyear = dt.getFullYear()
 birthmonth = dt.getMonth()+1
 birthday = dt.getDate()
-r1 =  new Date(birthyear+60,birthmonth,1);
+r1 =  new Date(new Date(birthyear+60,birthmonth,1)-1);
 r2 = new Date(new Date(birthyear+60,birthmonth-1,1)-1)
 rday = birthday>1 ? r1 : r2;
 return ddmmyyyy(rday) 
