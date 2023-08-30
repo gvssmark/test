@@ -1,4 +1,5 @@
 
+
 <!DOCTYPE html>
 <html>
 <head>
@@ -56,7 +57,7 @@ table {width:100%}
 </div>
 
 <div  ><input type='number' name='srno'id='srno' placeholder='SR Number'  inputmode='numeric' required  ></div>
-<div>Birthday------------Joining------------Retirement</div>  
+<div>Birthday--------------Joining--------------Retirement</div>  
 <div class='inputs row' >
 <div class='row'><input type='date' onblur='shdates()' name='dob'id='dob' placeholder='Birthday' class="textbox-n" onfocus="(this.type='date')" onblur="(this.type='text')"   required ></div>
 <div class='row' ><input type='date' name='doj' id='doj' placeholder='Joining Date' class="textbox-n" onfocus="(this.type='date')" onblur="(this.type='text')"  required disabled  ></div>
@@ -91,6 +92,14 @@ table {width:100%}
 
 <div id='pdf'></div>
 <script>
+today = new Date()
+d=today.getDate()
+m=today.getMonth()
+y=today.getFullYear()
+
+dob.min = `${y-90}-01-01` //1933
+dob.max = `${y-50}-01-01` //1973
+
 
 function shdates(){
 Dob = document.getElementById('dob').value
@@ -104,16 +113,12 @@ doj.min = `${doby+20}-01-01` //1953
 doj.max = `${doby+30}-01-01` //1993
 
 dor.min = `${doby+50}-01-01` //1953
-dor.max = `${doby+60}-12-31` //1993
-}
-}
-today = new Date()
-d=today.getDate()
-m=today.getMonth()
-y=today.getFullYear()
+x =`${y}-${((m+1).toString().padStart(2,0)
+)}-${(d).toString().padStart(2,0)}`
 
-dob.min = `${y-90}-01-01` //1933
-dob.max = `${y-50}-01-01` //1973
+dor.max = x //1993
+}
+}
 
 
 var imgdata='';
