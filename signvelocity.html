@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Signature Capture with Velocity</title>
+</head>
+<body>
+    <canvas id="signatureCanvas" width="400" height="200" style="border: 1px solid black;"></canvas><br>
+    <button id="captureButton">Capture Signature</button>
+    <button id="cropButton">Crop Signature</button><br><br>
+    <canvas id="croppedCanvas" width="200" height="100" style="border: 1px solid black;"></canvas>
+    <img id="croppedImage" src="" alt="Cropped Signature" style="display: none;">
+    <script>
+    const signatureCanvas = document.getElementById('signatureCanvas');
+const captureButton = document.getElementById('captureButton');
+const cropButton = document.getElementById('cropButton');
+const croppedCanvas = document.getElementById('croppedCanvas');
+const croppedImage = document.getElementById('croppedImage');
+
+const signatureCtx = signatureCanvas.getContext('2d');
+const croppedCtx = croppedCanvas.getContext('2d');
+
+let isDrawing = false;
+let lastX = 0;
+let lastY = 0;
+let lastTimestamp = 0;
+let lastVelocity = 0;
+
+signatureCanvas.addEventListener('touchstart', (e) => {
+    isDrawing = true;
+    const touch = e.touches[0];
+    lastX = touch.clientX - signatureCanvas.getBoundingClientRect().left;
+    lastY = touch.clientY - signatureCanvas.getBoundingClientRect().top;
+    lastTimestamp = Date.now();
+    signatureCtx.beginPath();
+    signatureCtx.moveTo(lastX, lastY);
+});
+
+signatureCanvas.addEventListener('touchmove', (e) => {
+    if (!isDrawing) return;
+
+    const touch = e.touches[0];
+    const currentX = touch.clientX - signatureCanvas.getBoundingClientRect().left;
+    const currentY = touch.clientY - signatureCanvas.getBoundingClientRect().top;
+
+    const currentTime = Date.now();
+    const deltaTime = currentTime - lastTimestamp;
+    const distance = Math.sqrt((currentX - lastX) ** 2 + (currentY - lastY) ** 2);
+    const velocity = distance / deltaTime;
+
+    const lineWidth = Math.min(5, lastVelocity + velocity);
+    signatureCtx.lineWidth = lineWidth;
+
+    signatureCtx.lineTo(currentX, currentY);
+    signatureCtx.stroke();
+
+    lastX = currentX;
+    lastY = currentY;
+    lastTimestamp = currentTime;
+    lastVelocity = velocity;
+});
+
+signatureCanvas.addEventListener('touchend', () => {
+    isDrawing = false;
+    lastVelocity = 0;
+});
+
+captureButton.addEventListener('click', () => {
+    croppedCanvas.width = signatureCanvas.width;
+    croppedCanvas.height = signatureCanvas.height;
+    croppedCtx.drawImage(signatureCanvas, 0, 0);
+    croppedImage.src = croppedCanvas.toDataURL();
+    croppedImage.style.display = 'inline';
+});
+
+cropButton.addEventListener('click', () => {
+    // Additional processing can be done here, e.g., sending the cropped image to the server.
+    alert('Cropped signature is ready to be processed.');
+});
+
+    </script>
+
+
+</body>
+</html>
