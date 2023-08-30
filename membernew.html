@@ -1,5 +1,6 @@
 
 
+
 <!DOCTYPE html>
 <html>
 <head>
@@ -112,11 +113,10 @@ doby = dobdate.getFullYear()
 doj.min = `${doby+20}-01-01` //1953
 doj.max = `${doby+30}-01-01` //1993
 
-dor.min = `${doby+50}-01-01` //1953
-x =`${y}-${((m+1).toString().padStart(2,0)
-)}-${(d).toString().padStart(2,0)}`
+dor.min = retday50(dob.value)  //`${doby+50}-01-01` //1953
+//x =`${y}-${((m+1).toString().padStart(2,0))}-${(d).toString().padStart(2,0)}`
 
-dor.max = x //1993
+dor.max = retday60(dob.value) > ddmmyyyy(new Date()) ? ddmmyyyy(new Date()) : retday60(dob.value)  //x //1993
 }
 }
 
@@ -324,6 +324,44 @@ document.getElementById('btn').style.display='none'
 }
 
  dt =(a)=>{b= a.split('-');return `${b[2]}-${b[1]}-${b[0]}`}
+
+padl = (a)  => (a.toString().padStart(2,0))
+
+
+
+function ddmmyyyy(a){
+d=padl(a.getDate())
+m=padl(a.getMonth()+1)
+y=a.getFullYear()
+return dmy = `${y}-${m}-${d}`
+}
+
+
+
+
+function retday50(a){
+dt= new Date(a)
+birthyear = dt.getFullYear()
+birthmonth = dt.getMonth()+1
+birthday = dt.getDate()
+r1 =  new Date(birthyear+50,birthmonth,1);
+r2 = new Date(new Date(birthyear+50,birthmonth-1,1)-1)
+rday = birthday>1 ? r1 : r2;
+return ddmmyyyy(rday) 
+}
+
+
+function retday60(a){
+dt= new Date(a)
+birthyear = dt.getFullYear()
+birthmonth = dt.getMonth()+1
+birthday = dt.getDate()
+r1 =  new Date(birthyear+60,birthmonth,1);
+r2 = new Date(new Date(birthyear+60,birthmonth-1,1)-1)
+rday = birthday>1 ? r1 : r2;
+return ddmmyyyy(rday) 
+}
+
 
 
 </script>
