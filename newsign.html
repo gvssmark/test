@@ -1,0 +1,109 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <title>Canvas Resize</title>
+
+    <script type="text/javascript">
+        function resize_canvas(){
+            canvas = document.getElementById("signatureCanvas");
+            if (canvas.width  < window.innerWidth)
+            {
+                canvas.width  = window.innerWidth-100;
+            }
+
+            if (canvas.height < window.innerHeight)
+            {
+                canvas.height = window.innerHeight-100;
+            }
+        }
+    </script>
+</head>
+
+<body onresize="resize_canvas()">
+<body>
+    <canvas id="signatureCanvas" width="400" height="200" style="border: 1px solid black;"></canvas><br><br>
+    <button id="captureButton">Capture Signature</button>
+    <button id="clearButton">Clear Signature</button>
+    <br>
+    <br>
+    <img id="croppedImage" src="" width=200 height=100 alt="Cropped Signature" style="display: none;">
+    <script>
+const signatureCanvas = document.getElementById('signatureCanvas');
+const captureButton = document.getElementById('captureButton');
+const clearButton = document.getElementById('clearButton');
+const croppedImage = document.getElementById('croppedImage');
+const signatureCtx = signatureCanvas.getContext('2d');
+
+let isDrawing = false;
+let startX = 0;
+let startY = 0;
+
+
+signatureCanvas.addEventListener('touchstart', (e) => {
+    isDrawing = true;
+    const touch = e.touches[0];
+    lastX = touch.clientX - signatureCanvas.getBoundingClientRect().left;
+    lastY = touch.clientY - signatureCanvas.getBoundingClientRect().top;
+    signatureCtx.beginPath();
+    signatureCtx.moveTo(lastX, lastY);
+});
+
+signatureCanvas.addEventListener('touchmove', (e) => {
+    if (!isDrawing) return;
+
+    const touch = e.touches[0];
+    const currentX = touch.clientX - signatureCanvas.getBoundingClientRect().left;
+    const currentY = touch.clientY - signatureCanvas.getBoundingClientRect().top;
+
+    signatureCtx.lineTo(currentX, currentY);
+    signatureCtx.stroke();
+
+    lastX = currentX;
+    lastY = currentY;
+});
+
+signatureCanvas.addEventListener('touchend', () => {
+    isDrawing = false;
+});
+
+
+signatureCanvas.addEventListener('mousedown', (e) => {
+    isDrawing = true;
+    startX = e.clientX - signatureCanvas.getBoundingClientRect().left;
+    startY = e.clientY - signatureCanvas.getBoundingClientRect().top;
+    signatureCtx.beginPath();
+    signatureCtx.moveTo(startX, startY);
+});
+
+signatureCanvas.addEventListener('mousemove', (e) => {
+    if (isDrawing) {
+        const x = e.clientX - signatureCanvas.getBoundingClientRect().left;
+        const y = e.clientY - signatureCanvas.getBoundingClientRect().top;
+        signatureCtx.lineTo(x, y);
+        signatureCtx.stroke();
+    }
+});
+
+signatureCanvas.addEventListener('mouseup', () => {
+    isDrawing = false;
+});
+
+captureButton.addEventListener('click', () => {
+    croppedImage.src = signatureCanvas.toDataURL();
+    croppedImage.style.display = 'inline';
+});
+
+clearButton.addEventListener('click', () => {
+signatureCanvas.width=signatureCanvas.width
+croppedImage.src=''
+
+});
+
+
+
+    </script>
+    
+    
+</body>
+</html>
