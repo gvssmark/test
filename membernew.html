@@ -52,7 +52,7 @@ table {width:100%}
 <body>
 <div id='dataentry'>
 <h2 align=center style=" margin-top: 0;">IBRA Membership Form</h2>
-<form style=" margin-top: -15px;"action="javascript:shsignpanel();">
+<form style=" margin-top: -15px;"action="javascript:shsignpanel();" onsubmit="return validateForm()">
 <div class='inputs' >
 <input type='text' name='retname'id='retname' placeholder='Retiree Name' required >
 </div>
@@ -364,6 +364,10 @@ r2 = new Date(new Date(birthyear+60,birthmonth-1,1)-1)
 rday = birthday>1 ? r1 : r2;
 return ddmmyyyy(rday) 
 }
+
+function validateForm() {
+if(doj.value < doj.min || doj.value > doj.max || dor.value < dor.min || dor.value > dor.max ) {document.getElementById('errmsg').style.display  ='block'; return false; }
+return true; } 
 
 
 
