@@ -1,0 +1,351 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
+
+<title>New Member</title>
+
+<style>
+
+  #signature-container {
+    position: relative;
+    width: 100%;
+    height: 60vh;
+    border: 1px solid #000;
+    overflow: hidden;
+  }
+  #signature {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: white;
+    touch-action: none;
+  }
+  #buttons {
+    text-align: center;
+    margin-top: 10px;
+  }
+.inputs {padding:2px; width:350px; background:yellow;}
+input, textarea {width: 100%; border:1px solid grey; outline:none; height:22px;}
+::placeholder {color:blue}
+/*html, body {margin: 0; height: 100%; overflow: hidden}*/
+
+* {  box-sizing: border-box;}
+input:focus { background:cyan; outline: none }
+.tdwidth {width:150px;}
+table {width:100%; border: 0px solid black; border-collapse:collapse; margin:auto;}
+td:nth-child(1) {font-size:small; }
+textarea:focus {background:cyan;}
+.trheight1 {height:50px;}
+button { background:cyan; border:none;height:25px; border-radius:15px ; box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19); 
+
+color:blue;    }
+#dataentry {margin:auto; width:360px; background:powderblue; padding:5px; border-radius:15px;}
+#pdf {display:none}
+table {border:1px solid black; border-collapse:collapse;}
+
+@media print 
+{
+    @page {size: A4; /* DIN A4 standard, Europe */      margin: 10px;    }
+    html, body,   {width: 210mm; height: 282mm; font-family: Arial, Helvetica, sans-serif; font-size: small; background: #FFF; overflow: visible; }
+    body {  padding-top: 0mm;    }
+table {width:100%}
+    tr {height:30px}
+.tdwidth {width:30%}
+#pr {display:none; }
+  }
+#sig-canvas {
+  border: 2px dotted #CCCCCC;
+  border-radius: 15px;
+  cursor: crosshair;
+  background:cyan;
+  margin: 10px ;}
+  
+.row {display:flex; width:100% } 
+  
+}</style>
+</head>
+<body>
+<div id='dataentry'>
+<h2 align=center style=" margin-top: 0;">IBRA Membership Form</h2>
+<form style=" margin-top: -15px;"action="javascript:shsignpanel();" >
+<div class='inputs' >
+<input type='text' name='retname'id='retname' placeholder='Retiree Name'  >
+</div>
+
+<div  ><input type='number' name='srno'id='srno' placeholder='SR Number'  inputmode='numeric'   ></div>
+<div class=' row' style='background:black; color:white; font-size: small'>
+<div class='row'>Birth  Date</div> <div class='row'>Joining Date</div> <div class='row'>Retirement Date</div>
+</div>
+
+<div class='inputs row' >
+<div class='row'><input type='date' onblur='shdates()' name='dob'id='dob' placeholder='Birthday' class="textbox-n" onfocus="(this.type='date')" onblur="(this.type='text')"    ></div>
+<div class='row' ><input type='date' name='doj' id='doj' placeholder='Joining Date' class="textbox-n" onfocus="(this.type='date')" onblur="(this.type='text')"   disabled  ></div>
+<div class='row'><input type='date' name='dor'id='dor' placeholder='Retired on' class="textbox-n" onfocus="(this.type='date')" onblur="(this.type='text')"  disabled ></div>
+</div>
+
+<div class='inputs' ><input type='text' name='qual'id='qual' placeholder='Edcn Qualification'   ></div>
+<div class='inputs' ><input type='text' name='desig'id='desig' placeholder='Designation'   ></div>
+<div class='inputs' ><input type='text' name='retbr'id='retbr' placeholder='Retired at '   ></div>
+<div class='inputs' ><input type='number' name='basic'id='basic' placeholder='Basic Pay' inputmode='numeric'></div>
+<div class='inputs' ><input type='number' name='fpp'id='fpp' placeholder='FPP' inputmode='numeric'></div>
+<div class='inputs' ><input type='number' name='pqa'id='pqa' placeholder='PQA'  inputmode='numeric'></div>
+<div class='inputs' ><input type='number' name='spl'id='spl' placeholder='Special Allowance'  inputmode='numeric'></div>
+<div class='inputs' ><input type='text' name='penbr'id='penbr' placeholder='Pension Branch'     ></div>
+<div class='inputs' ><input type='number' name='sbac'id='sbac' placeholder='Pension Ac No'  inputmode='numeric'   ></div>
+<div class='inputs' ><textarea name='add' rows="4" cols="24" id='add'   placeholder='Address with PIN code'   ></textarea></div>
+<div class='inputs' ><input type='mobile' name='mob'id='mob' placeholder='Mobile No'  inputmode='tel'   ></div>
+<div class='inputs' ><input type='email' name='mail'id='mail' placeholder='Email'  inputmode='email'   ></div>
+<div class='inputs' ><input type='text' name='fxdline'id='fxdline' placeholder='Fixed Line with STD'  inputmode='numeric'></div>
+<div class='inputs' ><input type='text' name='spouse'id='spouse' placeholder='Spouse Name'   ></div>
+<button>Capture  Signature</button><span id='errmsg' style='display:none'>Check Dates</span>
+</form>
+</div>
+
+</div>
+
+<div id="signature-container" style='display:none'>
+<div>
+  <canvas id="signature" ></canvas>
+  </div>
+
+</div>
+
+<div id="buttons" style='display:none'>
+  <button id="save">Submmit</button>
+<button id="clear">Clear</button>
+  <button id="back">back</button>
+</div>
+
+<div id='pdf'></div>
+<script>
+today = new Date()
+d=today.getDate()
+m=today.getMonth()
+y=today.getFullYear()
+
+dob.min = `${y-90}-01-01` //1933
+dob.max = `${y-50}-01-01` //1973
+
+
+function shdates(){
+Dob = document.getElementById('dob').value
+if(Dob.length >0){
+document.getElementById('doj').disabled = false
+document.getElementById('dor').disabled = false
+dobdate = new Date(Dob)
+doby = dobdate.getFullYear()
+
+doj.min = `${doby+20}-01-01` //1953
+doj.max = `${doby+30}-01-01` //1993
+
+dor.min = retday50(dob.value)  //`${doby+50}-01-01` //1953
+//x =`${y}-${((m+1).toString().padStart(2,0))}-${(d).toString().padStart(2,0)}`
+
+dor.max = retday60(dob.value) > ddmmyyyy(new Date()) ? ddmmyyyy(new Date()) : retday60(dob.value)  //x //1993
+}
+}
+
+
+const canvas = document.getElementById('signature');
+const clearButton = document.getElementById('clear');
+const saveButton = document.getElementById('save');
+const backButton = document.getElementById('back');
+
+const signatureContainer = document.getElementById('signature-container');
+
+const ctx = canvas.getContext('2d');
+let drawing = false;
+
+canvas.width = signatureContainer.offsetWidth;
+canvas.height = signatureContainer.offsetHeight;
+
+window.addEventListener('resize', () => {
+  canvas.width = signatureContainer.offsetWidth;
+  canvas.height = signatureContainer.offsetHeight;
+});
+
+canvas.addEventListener('mousedown', startDrawing);
+canvas.addEventListener('mousemove', draw);
+canvas.addEventListener('mouseup', stopDrawing);
+canvas.addEventListener('touchstart', startDrawing);
+canvas.addEventListener('touchmove', draw);
+canvas.addEventListener('touchend', stopDrawing);
+
+clearButton.addEventListener('click', clearSignature);
+saveButton.addEventListener('click', saveSignature);
+backButton.addEventListener('click', back);
+
+function startDrawing(e) {
+  e.preventDefault();
+  drawing = true;
+  draw(e);
+}
+
+function draw(e) {
+  if (!drawing) return;
+
+  const x = (e.clientX || e.touches[0].clientX) - canvas.getBoundingClientRect().left;
+  const y = (e.clientY || e.touches[0].clientY) - canvas.getBoundingClientRect().top;
+
+  ctx.lineWidth = 1;
+  ctx.lineCap = 'round';
+  ctx.strokeStyle = 'red';
+
+  ctx.lineTo(x, y);
+  ctx.stroke();
+  ctx.beginPath();
+  ctx.moveTo(x, y);
+}
+
+function stopDrawing() {
+  drawing = false;
+  ctx.beginPath();
+}
+
+function clearSignature() {
+  ctx.clearRect(0, 0, canvas.width, canvas.height);
+}
+
+function saveSignature() {
+  const image = canvas.toDataURL();
+  //const link = document.createElement('a');
+  //link.href = image;
+  //link.download = 'signature.png';
+  //link.click();
+ // alert(image)
+disp()
+}  
+
+function back(){
+document.getElementById('signature-container').style.display='none'
+document.getElementById('dataentry').style.display='block'
+document.getElementById('buttons').style.display='none'
+}
+
+
+//var sigText = document.getElementById("sig-dataUrl");
+ 
+
+
+
+
+
+
+function disp(){
+document.getElementById('signature-container').style.display='none'
+document.getElementById('buttons').style.display='none'
+ var sigImage = document.getElementById("sign");
+
+totable0 = `To<br>
+The General Secretary<br>
+Indian Bank Retirees’ Association<br>
+Flat No 401, Haritasa Residency,<br>
+New Nallakunta, Hyderabad 500044<br><br>
+Dear Comrade<br> <button id='pr' onclick='javascript:window.print()'>Print This Document</button>
+<p style="  text-align: justify;">Please enrol me as member of the Retirees’ Association. I have read the Bye-laws and rules of the Association and I am 
+
+willing to abide by them. I am remitting a sum of Rs.1000/- (Rupees One Thousand only) towards one time admission fee and Life Membership.Amount Credited to SB 
+
+Account No 465693063 with Indian Bank, Himayatnagar Branch / Demand Draft / Cheque favouring Indian Bank Retirees’ Association, is enclosed.<br></p>
+Yours faithfully<br><br>
+<img id='sign' src=${canvas.toDataURL()} width=200 height=100 ><br>
+(${retname.value})<br>
+Signature<br><br>`
+
+totable1 = `<table border=1 width=100%>
+<tr><td classs='tdwidth'>SR No <td >${srno.value}
+<tr><td width=30%>Name of the Retiree<td>${retname.value}
+<tr><td>Date of Birth <td>${dtString(dob.value)}
+<tr><td>Qualification<td>${qual.value}
+<tr><td>Designation<td>${desig.value}
+<tr><td>Retirement Branch / Office<td>${retbr.value}
+<tr><td>Date of Joining the Bank <td>${dtString(doj.value)}
+<tr><td>Date of Retirement<td>${dtString(dor.value)}
+<tr><td>Basic Pay <td>${basic.value} 
+<tr><td>FPP<td>${fpp.value}
+<tr><td>PQP<td>${pqa.value}
+<tr><td>Spl Allowance<td>${spl.value}
+
+<tr><td>Pension Drawing Branch<td>${penbr.value}
+<tr><td>Pension Account No<td>${sbac.value}
+
+<tr><td>Address<td>${add.value}
+<tr><td>Mobile No<td>${mob.value}
+<tr><td>Email Address<td>${mail.value}
+
+<tr><td>Fixed Line Number<td>${fxdline.value}
+<tr><td>Spouse Name<td>${spouse.value}
+</table>
+`
+document.getElementById('dataentry').style.display='none'
+document.getElementById('pdf').style.display='block'
+document.getElementById('pdf').innerHTML=totable0 + totable1 
+document.getElementById('btn').style.display='none'
+//window.print()
+}
+
+function shsignpanel(){
+//document.getElementById('btn').style.display='block'
+document.getElementById('signature-container').style.display='block'
+document.getElementById('dataentry').style.display='none'
+//document.body.style.overflowY = "visible";
+document.getElementById('buttons').style.display='block'
+buttons
+
+canvas.width = signatureContainer.offsetWidth;
+canvas.height = signatureContainer.offsetHeight;
+}
+
+
+ dtString =(a)=>{b= a.split('-');return `${b[2]}-${b[1]}-${b[0]}`}
+
+padl = (a)  => (a.toString().padStart(2,0))
+
+
+
+function ddmmyyyy(a){
+d=padl(a.getDate())
+m=padl(a.getMonth()+1)
+y=a.getFullYear()
+return dmy = `${y}-${m}-${d}`
+}
+
+
+
+
+function retday50(a){
+dt= new Date(a)
+birthyear = dt.getFullYear()
+birthmonth = dt.getMonth()+1
+birthday = dt.getDate()
+r1 =  new Date(new Date(birthyear+50,birthmonth,1)-1);
+r2 = new Date(new Date(birthyear+50,birthmonth-1,1)-1)
+rday = birthday>1 ? r1 : r2;
+return ddmmyyyy(rday) 
+}
+
+
+function retday60(a){
+dt= new Date(a)
+birthyear = dt.getFullYear()
+birthmonth = dt.getMonth()+1
+birthday = dt.getDate()
+r1 =  new Date(new Date(birthyear+60,birthmonth,1)-1);
+r2 = new Date(new Date(birthyear+60,birthmonth-1,1)-1)
+rday = birthday>1 ? r1 : r2;
+return ddmmyyyy(rday) 
+}
+
+function validateForm() {
+if(dob.value < dob.min || dob.value > dob.max || doj.value < doj.min || doj.value > doj.max || dor.value < dor.min || dor.value > dor.max ) {document.getElementById('errmsg').style.display  ='block'; return false; }
+return true; } 
+
+
+
+</script>
+
+</body>
+</html>
