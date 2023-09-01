@@ -1,13 +1,10 @@
-
 <!DOCTYPE html>
 <html>
 <head>
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
-
 <title>New Member</title>
-
 <style>
-img {transform: scale(0.30); margin:0}
+img {displaay:block; margin-left:0}
   #signature-container {
     position: relative;
     width: 100%;
@@ -32,7 +29,6 @@ img {transform: scale(0.30); margin:0}
 input, textarea {width: 100%; border:1px solid grey; outline:none; height:22px;}
 ::placeholder {color:blue}
 /*html, body {margin: 0; height: 100%; overflow: hidden}*/
-
 * {  box-sizing: border-box;}
 input:focus { background:cyan; outline: none }
 .tdwidth {width:150px;}
@@ -41,12 +37,10 @@ td:nth-child(1) {font-size:small; }
 textarea:focus {background:cyan;}
 .trheight1 {height:50px;}
 button { background:cyan; border:none;height:25px; border-radius:15px ; box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19); 
-
 color:blue;    }
 #dataentry {margin:auto; width:360px; background:powderblue; padding:5px; border-radius:15px;}
 #pdf {display:none}
 table {border:1px solid black; border-collapse:collapse;}
-
 @media print 
 {
     @page {size: A4; /* DIN A4 standard, Europe */      margin: 10px;    }
@@ -65,7 +59,7 @@ table {width:100%}
   margin: 10px ;}
   
 .row {display:flex; width:100% } 
-  
+ 
 }</style>
 </head>
 <body>
@@ -75,49 +69,43 @@ table {width:100%}
 <div class='inputs' >
 <input type='text' name='retname'id='retname' placeholder='Retiree Name' required >
 </div>
-
-<div  ><input type='number' name='srno'id='srno' placeholder='SR Number'  inputmode='numeric'  required  ></div>
+<div  ><input type='number' name='srno'id='srno' placeholder='SR Number'  inputmode='numeric'   required   ></div>
 <div class=' row' style='background:black; color:white; font-size: small'>
 <div class='row'>Birth  Date</div> <div class='row'>Joining Date</div> <div class='row'>Retirement Date</div>
 </div>
-
 <div class='inputs row' >
-<div class='row'><input type='date' onblur='shdates()' name='dob'id='dob' placeholder='Birthday'  required  ></div>
-<div class='row' ><input type='date' name='doj' id='doj'  required  disabled  ></div>
-<div class='row'><input type='date' name='dor'id='dor'   required disabled ></div>
+<div class='row'><input type='date' onblur='shdates()' name='dob'id='dob' placeholder='Birthday'   required   ></div>
+<div class='row' ><input type='date' name='doj' id='doj'    disabled  required  ></div>
+<div class='row'><input type='date' name='dor'id='dor'    disabled  required ></div>
 </div>
-
-<div class='inputs' ><input type='text' name='qual'id='qual' placeholder='Edcn Qualification'   required ></div>
-<div class='inputs' ><input type='text' name='desig'id='desig' placeholder='Designation'  required  ></div>
-<div class='inputs' ><input type='text' name='retbr'id='retbr' placeholder='Retired at '   required ></div>
-<div class='inputs' ><input type='number' name='basic'id='basic' placeholder='Basic Pay' inputmode='numeric'></div>
+<div class='inputs' ><input type='text' name='qual'id='qual' placeholder='Edcn Qualification'   required   ></div>
+<div class='inputs' ><input type='text' name='desig'id='desig' placeholder='Designation'    required  ></div>
+<div class='inputs' ><input type='text' name='retbr'id='retbr' placeholder='Retired at '  required    ></div>
+<div class='inputs' ><input type='number' name='basic'id='basic' placeholder='Basic Pay' required  inputmode='numeric'></div>
 <div class='inputs' ><input type='number' name='fpp'id='fpp' placeholder='FPP' inputmode='numeric'></div>
 <div class='inputs' ><input type='number' name='pqa'id='pqa' placeholder='PQA'  inputmode='numeric'></div>
 <div class='inputs' ><input type='number' name='spl'id='spl' placeholder='Special Allowance'  inputmode='numeric'></div>
-<div class='inputs' ><input type='text' name='penbr'id='penbr' placeholder='Pension Branch'    required  ></div>
-<div class='inputs' ><input type='number' name='sbac'id='sbac' placeholder='Pension Ac No'  inputmode='numeric'   ></div>
-<div class='inputs' ><textarea name='add' rows="4" cols="24" id='add'   placeholder='Address with PIN code'  required  ></textarea></div>
-<div class='inputs' ><input type='mobile' name='mob'id='mob' placeholder='Mobile No'  inputmode='tel'  required  ></div>
-<div class='inputs' ><input type='email' name='mail'id='mail' placeholder='Email'  inputmode='email'  required  ></div>
+<div class='inputs' ><input type='text' name='penbr'id='penbr' placeholder='Pension Branch'   required     ></div>
+<div class='inputs' ><input type='number' name='sbac'id='sbac' placeholder='Pension Ac No'  inputmode='numeric'  required   ></div>
+<div class='inputs' ><textarea name='add' rows="4" cols="24" id='add'   placeholder='Address with PIN code'   required   ></textarea></div>
+<div class='inputs' ><input type='mobile' name='mob'id='mob' placeholder='Mobile No'  inputmode='tel'  required    ></div>
+<div class='inputs' ><input type='email' name='mail'id='mail' placeholder='Email'  inputmode='email'    ></div>
 <div class='inputs' ><input type='text' name='fxdline'id='fxdline' placeholder='Fixed Line with STD'  inputmode='numeric'></div>
 <div class='inputs' ><input type='text' name='spouse'id='spouse' placeholder='Spouse Name'   ></div>
 <button>Capture  Signature</button><span id='errmsg' style='display:none'>Check Dates</span>
 </form>
 </div>
-
 </div>
 
 <div id="signature-container" style='display:none'>
 <div>
   <canvas id="signature" ></canvas>
   </div>
-
 </div>
-
 <div id="buttons" style='display:none'>
   <button id="save">Submmit</button>
 <button id="clear">Clear</button>
-  <button id="back">back</button>
+  <button id="back">Back</button>
 </div>
 
 <div id='pdf'></div>
@@ -126,10 +114,8 @@ today = new Date()
 d=today.getDate()
 m=today.getMonth()
 y=today.getFullYear()
-
 dob.min = `${y-90}-01-01` //1933
 dob.max = `${y-50}-01-01` //1973
-
 
 function shdates(){
 Dob = document.getElementById('dob').value
@@ -138,13 +124,9 @@ document.getElementById('doj').disabled = false
 document.getElementById('dor').disabled = false
 dobdate = new Date(Dob)
 doby = dobdate.getFullYear()
-
 doj.min = `${doby+20}-01-01` //1953
 doj.max = `${doby+30}-01-01` //1993
-
 dor.min = retday50(dob.value)  //`${doby+50}-01-01` //1953
-//x =`${y}-${((m+1).toString().padStart(2,0))}-${(d).toString().padStart(2,0)}`
-
 dor.max = retday60(dob.value) > ddmmyyyy(new Date()) ? ddmmyyyy(new Date()) : retday60(dob.value)  //x //1993
 }
 }
@@ -154,28 +136,23 @@ const canvas = document.getElementById('signature');
 const clearButton = document.getElementById('clear');
 const saveButton = document.getElementById('save');
 const backButton = document.getElementById('back');
-
 const signatureContainer = document.getElementById('signature-container');
-
 const ctx = canvas.getContext('2d');
 let drawing = false;
 let signaturePath = [];
 tsign=''
 canvas.width = signatureContainer.offsetWidth;
 canvas.height = signatureContainer.offsetHeight;
-
 window.addEventListener('resize', () => {
   canvas.width = signatureContainer.offsetWidth;
   canvas.height = signatureContainer.offsetHeight;
 });
-
 canvas.addEventListener('mousedown', startDrawing);
 canvas.addEventListener('mousemove', draw);
 canvas.addEventListener('mouseup', stopDrawing);
 canvas.addEventListener('touchstart', startDrawing);
 canvas.addEventListener('touchmove', draw);
 canvas.addEventListener('touchend', stopDrawing);
-
 clearButton.addEventListener('click', clearSignature);
 saveButton.addEventListener('click', saveSignature);
 backButton.addEventListener('click', back);
@@ -188,17 +165,13 @@ function startDrawing(e) {
 
 function draw(e) {
   if (!drawing) return;
-
   const x = (e.clientX || e.touches[0].clientX) - canvas.getBoundingClientRect().left;
   const y = (e.clientY || e.touches[0].clientY) - canvas.getBoundingClientRect().top;
-
   ctx.lineWidth = 1;
   ctx.lineCap = 'round';
   ctx.strokeStyle = 'red';
-
   ctx.lineTo(x, y);
   ctx.stroke();
-
   // Store the drawn path
   signaturePath.push({ x, y });
 }
@@ -236,7 +209,7 @@ function saveSignature() {
 
   // Convert the temporary canvas to a data URL and save it
   const signatureDataURL = tempCanvas.toDataURL();
- 
+
 tsign = signatureDataURL
 disp()
 }  
@@ -247,19 +220,10 @@ document.getElementById('dataentry').style.display='block'
 document.getElementById('buttons').style.display='none'
 }
 
-
-//var sigText = document.getElementById("sig-dataUrl");
- 
-
-
-
-
-
-
 function disp(){
 document.getElementById('signature-container').style.display='none'
 document.getElementById('buttons').style.display='none'
- var sigImage = document.getElementById("sign");
+var sigImage = document.getElementById("sign");
 
 totable0 = `To<br>
 The General Secretary<br>
@@ -268,74 +232,50 @@ Flat No 401, Haritasa Residency,<br>
 New Nallakunta, Hyderabad 500044<br><br>
 Dear Comrade<br> <button id='pr' onclick='javascript:window.print()'>Print This Document</button>
 <p style="  text-align: justify;">Please enrol me as member of the Retirees’ Association. I have read the Bye-laws and rules of the Association and I am 
-
 willing to abide by them. I am remitting a sum of Rs.1000/- (Rupees One Thousand only) towards one time admission fee and Life Membership.Amount Credited to SB 
-
 Account No 465693063 with Indian Bank, Himayatnagar Branch / Demand Draft / Cheque favouring Indian Bank Retirees’ Association, is enclosed.<br></p>
 Yours faithfully<br>
-Signature<br> <img id='sign' src=${tsign}>`
+ <img id='sign' src=${tsign}><br>
+ Signature<br>`
 
-totable1 = `<table border=1 width=100%>
-<tr><td classs='tdwidth'>SR No <td >${srno.value}
-<tr><td width=30%>Name of the Retiree<td>${retname.value}
-<tr><td>Date of Birth <td>${dtString(dob.value)}
-<tr><td>Qualification<td>${qual.value}
-<tr><td>Designation<td>${desig.value}
+  totable1 = `<table border=1 width=100%>
+<tr><td width=30%>Name of the Retiree<td>${retname.value} - SR No: ${srno.value}
+<tr><td>Dates <td>Birthday: ${dtString(dob.value)} / Joining Date: ${dtString(doj.value)} / Retirement: ${dtString(dor.value)}
+<tr><td>Design / Qualification<td>${desig.value} / ${qual.value}
 <tr><td>Retirement Branch / Office<td>${retbr.value}
-<tr><td>Date of Joining the Bank <td>${dtString(doj.value)}
-<tr><td>Date of Retirement<td>${dtString(dor.value)}
-<tr><td>Basic Pay <td>${basic.value} 
-<tr><td>FPP<td>${fpp.value}
-<tr><td>PQP<td>${pqa.value}
-<tr><td>Spl Allowance<td>${spl.value}
-
-<tr><td>Pension Drawing Branch<td>${penbr.value}
-<tr><td>Pension Account No<td>${sbac.value}
-
+<tr><td>Pay Details <td>Basic: ${basic.value} / FPP : ${fpp.value} / PQP: ${pqa.value} / Spl All: ${spl.value}
+<tr><td>Pension Br<td>${penbr.value} / Acc No ${sbac.value}
 <tr><td>Address<td>${add.value}
-<tr><td>Mobile No<td>${mob.value}
+<tr><td>Phones<td>Mobile: ${mob.value} / Fixed: ${fxdline.value}
 <tr><td>Email Address<td>${mail.value}
-
-<tr><td>Fixed Line Number<td>${fxdline.value}
 <tr><td>Spouse Name<td>${spouse.value}
 </table>
 `
 document.getElementById('dataentry').style.display='none'
 document.getElementById('pdf').style.display='block'
 document.getElementById('pdf').innerHTML=totable0 + totable1 
-document.getElementById('btn').style.display='none'
-//window.print()
+allinputs = document.getElementsByTagName('input')
+copyallinputs=''
+for (i=0; i<allinputs.length; i++){copyallinputs+= allinputs[i].value+" # "}
+copyallinputs += add.value
+navigator.clipboard.writeText(copyallinputs);
 }
 
 function shsignpanel(){
-//document.getElementById('btn').style.display='block'
 document.getElementById('signature-container').style.display='block'
 document.getElementById('dataentry').style.display='none'
-//document.body.style.overflowY = "visible";
 document.getElementById('buttons').style.display='block'
-buttons
-
 canvas.width = signatureContainer.offsetWidth;
 canvas.height = signatureContainer.offsetHeight;
 }
-
-
  dtString =(a)=>{b= a.split('-');return `${b[2]}-${b[1]}-${b[0]}`}
-
 padl = (a)  => (a.toString().padStart(2,0))
-
-
-
 function ddmmyyyy(a){
 d=padl(a.getDate())
 m=padl(a.getMonth()+1)
 y=a.getFullYear()
 return dmy = `${y}-${m}-${d}`
 }
-
-
-
-
 function retday50(a){
 dt= new Date(a)
 birthyear = dt.getFullYear()
@@ -346,8 +286,6 @@ r2 = new Date(new Date(birthyear+50,birthmonth-1,1)-1)
 rday = birthday>1 ? r1 : r2;
 return ddmmyyyy(rday) 
 }
-
-
 function retday60(a){
 dt= new Date(a)
 birthyear = dt.getFullYear()
@@ -358,14 +296,9 @@ r2 = new Date(new Date(birthyear+60,birthmonth-1,1)-1)
 rday = birthday>1 ? r1 : r2;
 return ddmmyyyy(rday) 
 }
-
 function validateForm() {
 if(dob.value < dob.min || dob.value > dob.max || doj.value < doj.min || doj.value > doj.max || dor.value < dor.min || dor.value > dor.max ) {document.getElementById('errmsg').style.display  ='block'; return false; }
 return true; } 
-
-
-
 </script>
-
 </body>
 </html>
