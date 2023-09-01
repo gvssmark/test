@@ -7,7 +7,7 @@
 <title>New Member</title>
 
 <style>
-img {transform: scale(0.30);}
+img {transform: scale(0.30); margin:0}
   #signature-container {
     position: relative;
     width: 100%;
@@ -71,34 +71,34 @@ table {width:100%}
 <body>
 <div id='dataentry'>
 <h2 align=center style=" margin-top: 0;">IBRA Membership Form</h2>
-<form style=" margin-top: -15px;"action="javascript:shsignpanel();" >
+<form style=" margin-top: -15px;"action="javascript:shsignpanel();" onsubmit="validateForm()" >
 <div class='inputs' >
-<input type='text' name='retname'id='retname' placeholder='Retiree Name'  >
+<input type='text' name='retname'id='retname' placeholder='Retiree Name' required >
 </div>
 
-<div  ><input type='number' name='srno'id='srno' placeholder='SR Number'  inputmode='numeric'   ></div>
+<div  ><input type='number' name='srno'id='srno' placeholder='SR Number'  inputmode='numeric'  required  ></div>
 <div class=' row' style='background:black; color:white; font-size: small'>
 <div class='row'>Birth  Date</div> <div class='row'>Joining Date</div> <div class='row'>Retirement Date</div>
 </div>
 
 <div class='inputs row' >
-<div class='row'><input type='date' onblur='shdates()' name='dob'id='dob' placeholder='Birthday' class="textbox-n" onfocus="(this.type='date')" onblur="(this.type='text')"    ></div>
-<div class='row' ><input type='date' name='doj' id='doj' placeholder='Joining Date' class="textbox-n" onfocus="(this.type='date')" onblur="(this.type='text')"   disabled  ></div>
-<div class='row'><input type='date' name='dor'id='dor' placeholder='Retired on' class="textbox-n" onfocus="(this.type='date')" onblur="(this.type='text')"  disabled ></div>
+<div class='row'><input type='date' onblur='shdates()' name='dob'id='dob' placeholder='Birthday'  required  ></div>
+<div class='row' ><input type='date' name='doj' id='doj'  required  disabled  ></div>
+<div class='row'><input type='date' name='dor'id='dor'   required disabled ></div>
 </div>
 
-<div class='inputs' ><input type='text' name='qual'id='qual' placeholder='Edcn Qualification'   ></div>
-<div class='inputs' ><input type='text' name='desig'id='desig' placeholder='Designation'   ></div>
-<div class='inputs' ><input type='text' name='retbr'id='retbr' placeholder='Retired at '   ></div>
+<div class='inputs' ><input type='text' name='qual'id='qual' placeholder='Edcn Qualification'   required ></div>
+<div class='inputs' ><input type='text' name='desig'id='desig' placeholder='Designation'  required  ></div>
+<div class='inputs' ><input type='text' name='retbr'id='retbr' placeholder='Retired at '   required ></div>
 <div class='inputs' ><input type='number' name='basic'id='basic' placeholder='Basic Pay' inputmode='numeric'></div>
 <div class='inputs' ><input type='number' name='fpp'id='fpp' placeholder='FPP' inputmode='numeric'></div>
 <div class='inputs' ><input type='number' name='pqa'id='pqa' placeholder='PQA'  inputmode='numeric'></div>
 <div class='inputs' ><input type='number' name='spl'id='spl' placeholder='Special Allowance'  inputmode='numeric'></div>
-<div class='inputs' ><input type='text' name='penbr'id='penbr' placeholder='Pension Branch'     ></div>
+<div class='inputs' ><input type='text' name='penbr'id='penbr' placeholder='Pension Branch'    required  ></div>
 <div class='inputs' ><input type='number' name='sbac'id='sbac' placeholder='Pension Ac No'  inputmode='numeric'   ></div>
-<div class='inputs' ><textarea name='add' rows="4" cols="24" id='add'   placeholder='Address with PIN code'   ></textarea></div>
-<div class='inputs' ><input type='mobile' name='mob'id='mob' placeholder='Mobile No'  inputmode='tel'   ></div>
-<div class='inputs' ><input type='email' name='mail'id='mail' placeholder='Email'  inputmode='email'   ></div>
+<div class='inputs' ><textarea name='add' rows="4" cols="24" id='add'   placeholder='Address with PIN code'  required  ></textarea></div>
+<div class='inputs' ><input type='mobile' name='mob'id='mob' placeholder='Mobile No'  inputmode='tel'  required  ></div>
+<div class='inputs' ><input type='email' name='mail'id='mail' placeholder='Email'  inputmode='email'  required  ></div>
 <div class='inputs' ><input type='text' name='fxdline'id='fxdline' placeholder='Fixed Line with STD'  inputmode='numeric'></div>
 <div class='inputs' ><input type='text' name='spouse'id='spouse' placeholder='Spouse Name'   ></div>
 <button>Capture  Signature</button><span id='errmsg' style='display:none'>Check Dates</span>
@@ -192,9 +192,9 @@ function draw(e) {
   const x = (e.clientX || e.touches[0].clientX) - canvas.getBoundingClientRect().left;
   const y = (e.clientY || e.touches[0].clientY) - canvas.getBoundingClientRect().top;
 
-  ctx.lineWidth = 2;
+  ctx.lineWidth = 1;
   ctx.lineCap = 'round';
-  ctx.strokeStyle = '#000';
+  ctx.strokeStyle = 'red';
 
   ctx.lineTo(x, y);
   ctx.stroke();
@@ -236,7 +236,7 @@ function saveSignature() {
 
   // Convert the temporary canvas to a data URL and save it
   const signatureDataURL = tempCanvas.toDataURL();
- // alert(signatureDataURL)
+ 
 tsign = signatureDataURL
 disp()
 }  
@@ -272,10 +272,8 @@ Dear Comrade<br> <button id='pr' onclick='javascript:window.print()'>Print This 
 willing to abide by them. I am remitting a sum of Rs.1000/- (Rupees One Thousand only) towards one time admission fee and Life Membership.Amount Credited to SB 
 
 Account No 465693063 with Indian Bank, Himayatnagar Branch / Demand Draft / Cheque favouring Indian Bank Retirees’ Association, is enclosed.<br></p>
-Yours faithfully<br><br>
-<img id='sign' src=${tsign}  ><br>
-(${retname.value})<br>
-Signature<br><br>`
+Yours faithfully<br>
+Signature<br> <img id='sign' src=${tsign}>`
 
 totable1 = `<table border=1 width=100%>
 <tr><td classs='tdwidth'>SR No <td >${srno.value}
