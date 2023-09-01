@@ -120,14 +120,16 @@ dob.max = `${y-50}-01-01` //1973
 function shdates(){
 Dob = document.getElementById('dob').value
 if(Dob.length >0){
-document.getElementById('doj').disabled = false
-document.getElementById('dor').disabled = false
 dobdate = new Date(Dob)
 doby = dobdate.getFullYear()
-doj.min = `${doby+20}-01-01` //1953
-doj.max = `${doby+30}-01-01` //1993
-dor.min = retday50(dob.value)  //`${doby+50}-01-01` //1953
+doj.min = `${doby+20}-01-01` 
+doj.max = `${doby+30}-01-01` 
+dor.min = retday50(dob.value)  
 dor.max = retday60(dob.value) > ddmmyyyy(new Date()) ? ddmmyyyy(new Date()) : retday60(dob.value)  //x //1993
+doj.value =`${doby+25}-01-01`
+dor.value = retday50(dob.value)
+document.getElementById('doj').disabled = false
+document.getElementById('dor').disabled = false
 }
 }
 
