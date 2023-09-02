@@ -48,11 +48,11 @@ function handleTouchMove(event) {
     const currentX = event.touches[0].pageX;
     const diffX = startX - currentX;
 
-    if (diffX > 0) {
+    if (diffX > 50) {
         // Swiped from right to left
         currentIndex = (currentIndex + 1) % functions.length;
         functions[currentIndex]();
-    } else if (diffX < 0) {
+    } else if (diffX < 50) {
         // Swiped from left to right
         currentIndex = (currentIndex - 1 + functions.length) % functions.length;
         functions[currentIndex]();
