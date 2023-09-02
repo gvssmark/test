@@ -1,27 +1,53 @@
-
-<!DOCTYPE html>
 <html>
 <head>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
-<title>New Member</title>
+    <meta name="viewport" content="width=device-width, maximum-scale=1 , initial-scale=1.0">
+    <meta name="theme-color" content="#000000" />
+    <title>IBAP RETIREES GOOGLE GROUP</title>
+    <style>
+    * {box-sizing:border-box; }
+    body{width:360px; overflow-x:scroll; margin:0 auto; }
+    img {width:70px; border-radius:10px;   display: block;  margin-left: auto; margin-right: auto;
+}
+table {border-collapse:collapse; }
+        </style>
 </head>
-
 <body>
 
-<h1>Send WhatsApp Message</h1>
-
-<p>Send to Sundari</p>
-<p id='msg' ></p>
-<button onclick='m()'>Send</button>
-
+<h1 align=center>Events Today</h1>
+<div id='eventsToday'></div>
 <script>
+        cd = new Date()
+d= cd.getDate()
+m= cd.getMonth()+1
 
-function m(){
-text = 'I am sending a whatsapp message'
-text = encodeURIComponent(text)
-document.getElementById('msg').innerHTML = `<a href='http://wa.me/919502815309?text=${text}'>Send Message</a>`}
+        url = 'https://script.google.com/macros/s/AKfycbwU43y7aw-hY8rjx77YgViB5Vs2H5yv7i5GMuUUfB6YMLbEQn3D/exec'
+
+        async function getMyData() {
+            response = await fetch(url)
+            data = await response.json()
+            tempData = data["user"].sort((a, b) => a.srno - b.srno);
+            alphasorted = tempData.sort(function (a, b) { return a.name.localeCompare(b.name) })
+            bdays = alphasorted.map(a => ({ srno: a.srno, name: a.name, bm: a.bm, bd: a.bd, photo: a.photoid, event:'Birthday',mob1: a.mob1 }))
+            mdays = alphasorted.map(a => ({ srno: a.srno, name: a.name, mm: a.mm, md: a.md, photo: a.photoid,event:'Marriage day',mob1: a.mob1 }))
+            
+            
+            
+bds = bdays.filter(a => a.bd === d ).filter(a => a.bm === m )
+mds = mdays.filter(a => a.md === d ).filter(a => a.mm === m )
+
+eventsTable= `<table border=1 width=100% >`
+mds.forEach(a => 
+{encoded = encodeURIComponent(`Dear ${a.name}, I wish you a Happy Wedding Anniversay`);
+eventsTable += `<tr><td><img  src='https://drive.google.com/uc?export=view&id=${a.photo}'><td>${a.name}<br>${a.event}<br>${a.mob1} <br><a href='http://wa.me/91${a.mob1}text=${encoded}'>Send Message</a>` })
+
+mds.forEach(a => 
+{encoded = encodeURIComponent(`Dear ${a.name}, I wish you a Happy Birthday`);
+eventsTable += `<tr><td><img  src='https://drive.google.com/uc?export=view&id=${a.photo}'><td>${a.name}<br>${a.event}<br>${a.mob1} <br><a href='http://wa.me/91${a.mob1}text=${encoded}'>Send Message</a>` })
+
+document.getElementById("eventsToday").innerHTML = eventsTable+ "</table>"
+
+}
+
+        getMyData()
 </script>
-
 </body>
-</html>
-
