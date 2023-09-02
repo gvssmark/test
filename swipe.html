@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Swipe Actions</title>
+    <style>
+        #swipeDiv {
+            width: 300px;
+            height: 500px;
+            background-color: lightblue;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 24px;
+            overflow: hidden;
+        }
+    </style>
+</head>
+<body>
+    <div id="swipeDiv">Swipe Here</div>
+
+    <script>
+    const swipeDiv = document.getElementById('swipeDiv');
+
+let currentIndex = 0;
+const functions = [
+    () => changeContent('f1'),
+    () => changeContent('f2'),
+    () => changeContent('f3'),
+    () => changeContent('f4')
+];
+
+swipeDiv.addEventListener('touchstart', handleTouchStart, false);
+swipeDiv.addEventListener('touchmove', handleTouchMove, false);
+
+let startX = null;
+
+function handleTouchStart(event) {
+    startX = event.touches[0].pageX;
+}
+
+function handleTouchMove(event) {
+    if (!startX) return;
+
+    const currentX = event.touches[0].pageX;
+    const diffX = startX - currentX;
+
+    if (diffX > 0) {
+        // Swiped from right to left
+        currentIndex = (currentIndex + 1) % functions.length;
+        functions[currentIndex]();
+    } else if (diffX < 0) {
+        // Swiped from left to right
+        currentIndex = (currentIndex - 1 + functions.length) % functions.length;
+        functions[currentIndex]();
+    }
+
+    startX = null;
+}
+
+function changeContent(content) {
+    swipeDiv.textContent = content;
+}
+
+function f1(){
+swipeDiv.backgroundColor='red'
+}
+function f2(){
+swipeDiv.backgroundColor='blue'
+}
+function f3(){
+swipeDiv.backgroundColor='green'
+}
+function f4(){
+swipeDiv.backgroundColor='yellow'
+}
+
+
+    
+    </script>
+</body>
+</html>
