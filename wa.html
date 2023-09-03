@@ -8,7 +8,7 @@
     body{width:350px; overflow:hidden; margin:50px auto;  background:blue; }
 textarea {box-sizing:border-box; width:100%; outline:none; border:1px solid black;  }
 table {border-collapse:collapse; }
-button {width:50%; height:50px; border:none; font-size:large }
+button {width:50%; height:70px; border:none; font-size:large }
 h1 {color:white; }
         </style>
 </head>
@@ -23,16 +23,19 @@ h1 {color:white; }
 <textarea placeholder='Your Message' name='mymsg' id='mymsg'></textarea>
 </div>
 <br>
-<Button onclick='gen()' style='background:red; color:white'>Generate Mesaage</button><button onclick="javascript:location.href=url" id='wa' style ='background:green; color:white'>Send WhatsApp</button>
+<Button onclick='gen()' style='background:red; color:white'>Generate Mesaage</button><button  id='wa' style ='background:green; color:white'>Send WhatsApp</button>
 </div>
 <script>
+
 
 function gen(){
 encoded = encodeURIComponent(mymsg.value)
 url = `<a href='https://wa.me/91${tel.value}?text=${encoded}'></a>`
-//document.getElementById('wa').src = url
-alert(url)
 }
+
+document.getElementById("wa").onclick = function () {location.href = url;
+    };
+
 
 </script>
 </body>
