@@ -1,9 +1,11 @@
+
 <!DOCTYPE html>
 <html>
 <head>
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
 <title>New Member</title>
 <style>
+body {width:360px; margin:0 auto}
 img {displaay:block; margin-left:0; width:150px;}
   #signature-container {
     position: relative;
@@ -38,7 +40,7 @@ textarea:focus {background:cyan;}
 .trheight1 {height:50px;}
 button { background:cyan; border:none;height:25px; border-radius:15px ; box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19); 
 color:blue;    }
-#dataentry {margin:auto; width:360px; background:powderblue; padding:5px; border-radius:15px;}
+#dataentry {margin:auto; width:360px; background:powderblue; padding:5px; border-radius:15px; display:none}
 #pdf {display:none}
 table {border:1px solid black; border-collapse:collapse;}
 @media print 
@@ -50,6 +52,7 @@ table {width:100%}
     tr {height:30px}
 .tdwidth {width:30%}
 #pr {display:none; }
+body {width:100%; margin:0 auto}
   }
 #sig-canvas {
   border: 2px dotted #CCCCCC;
@@ -59,10 +62,34 @@ table {width:100%}
   margin: 10px ;}
   
 .row {display:flex; width:100% } 
+li:nth-child(even) {background:#FFE4E1;}
+
+
  
 }</style>
 </head>
 <body>
+<div id='home'>
+<h2 align=center style=" margin-top: 0;">IBRA Membership Form</h2>
+<li>This is for capturing data of new retiree member</li>
+<li>Birth Year is assumed as between Current Year -90  and -55 .</li>
+<li>After entry of exact Date of Birth, Date of Joining, Retirement Date will be auto populated. Correct them as required.</li>
+<li>After filling the data, click Capture signatue button. In the next screen, you can put the signature with your finger. You can rotate the screen also. </li>
+<li>If you are not satisfied with the signature, click on clear button and sign again. Ater your satisfy that your signature is ok, then click on submit button.</li>
+<li>Your data with signaure will be displayed. Click on print Button. This will prompt you to save the data in a pdf format. It will be saved in the <b>Downloads folder</b>.</li>
+<li>Open WhatsApp and send the pdf file as attachment. In the message box, long press and paste the data.(data for paste is readily captured) </li>
+<li>Ensure to remit the membership fee</li>
+
+<li>Existing Members - Please do not submit this form again</li>
+
+<br><br>
+<button onclick='shdata()'>Proceed to Data Form</button>
+
+
+
+
+
+</div>
 <div id='dataentry'>
 <h2 align=center style=" margin-top: 0;">IBRA Membership Form</h2>
 <form style=" margin-top: -15px;"action="javascript:shsignpanel();" onsubmit="validateForm()" >
@@ -134,6 +161,9 @@ document.getElementById('dor').disabled = false
 }
 }
 
+function shdata(){document.getElementById('dataentry').style.display='block'
+document.getElementById('home').style.display='none'
+}
 
 const canvas = document.getElementById('signature');
 const clearButton = document.getElementById('clear');
