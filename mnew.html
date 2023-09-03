@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
 <title>New Member</title>
 <style>
-body {width:360px; margin:0 auto}
+
 img {displaay:block; margin-left:0; width:150px;}
   #signature-container {
     position: relative;
@@ -41,7 +41,7 @@ textarea:focus {background:cyan;}
 button { background:cyan; border:none;height:25px; border-radius:15px ; box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19); 
 color:blue;    }
 #dataentry {margin:auto; width:360px; background:powderblue; padding:5px; border-radius:15px; display:none}
-#pdf {display:none}
+#pdf {display:none; border:1px solid black; }
 table {border:1px solid black; border-collapse:collapse;}
 @media print 
 {
@@ -64,7 +64,7 @@ body {width:100%; margin:0 auto}
 .row {display:flex; width:100% } 
 li:nth-child(even) {background:#FFE4E1;}
 
-
+#home{width:360px; margin:0 auto;}
  
 }</style>
 </head>
@@ -135,7 +135,7 @@ li:nth-child(even) {background:#FFE4E1;}
   <button id="back">Back</button>
 </div>
 
-<div id='pdf'></div>
+<div id='pdf'>test</div>
 <script>
 today = new Date()
 d=today.getDate()
