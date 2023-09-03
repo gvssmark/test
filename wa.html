@@ -1,0 +1,38 @@
+<html>
+<head>
+    <meta name="viewport" content="width=device-width, maximum-scale=1 , initial-scale=1.0">
+    <meta name="theme-color" content="#000000" />
+    <title>IBAP RETIREES GOOGLE GROUP</title>
+    <style>
+    * {box-sizing:border-box; }
+    body{width:350px; overflow:hidden; margin:50px auto;  background:blue; }
+textarea {box-sizing:border-box; width:100%; outline:none; border:1px solid black;  }
+table {border-collapse:collapse; }
+button {width:50%; height:50px; border:none; font-size:large }
+h1 {color:white; }
+        </style>
+</head>
+<body>
+<h1 align=center>WhatsApp</h1>
+<div style='width:350px; '>
+<div>
+<input type='tel' name='tel' id='tel' placeholder='Mobile Number' maxlength="10" style='width:100%; font-size:x-large; outline:none; border:none; border:1px solid black;'>
+</div>
+<br>
+<div>
+<textarea placeholder='Your Message' name='mymsg' id='mymsg'></textarea>
+</div>
+<br>
+<Button onclick='gen()' style='background:red; color:white'>Generate Mesaage</button><button onclick="javascript:location.href=url" id='wa' style ='background:green; color:white'>Send WhatsApp</button>
+</div>
+<script>
+
+function gen(){
+encoded = encodeURIComponent(mymsg.value)
+url = `<a href='https://wa.me/91${tel.value}?text=${encoded}'></a>`
+//document.getElementById('wa').src = url
+alert(url)
+}
+
+</script>
+</body>
