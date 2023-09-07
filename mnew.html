@@ -150,13 +150,14 @@ Dob = document.getElementById('dob').value
 if(Dob.length >0){
 dobdate = new Date(Dob)
 doby = dobdate.getFullYear()
-dor.value = retday60(dob.value) 
-  doj.value =`${doby+25}-01-01`
+//dor.value = retday60(dob.value) 
+doj.value =`${doby+25}-01-01`
 doj.min = `${doby+20}-01-01` 
 doj.max = `${doby+30}-01-01` 
   
 dor.min = retday50(dob.value)  
 dor.max = retday60(dob.value) > ddmmyyyy(new Date()) ? ddmmyyyy(new Date()) : retday60(dob.value)  //x //1993
+dor.value = new Date(retday60(dob.value) )> today ? ddmmyyyy(today) : ddmmyyyy(new Date(retday60(dob.value) ))
 
 
 document.getElementById('doj').disabled = false
