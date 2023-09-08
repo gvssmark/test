@@ -70,7 +70,7 @@
             // Open a new window for printing
             const printWindow = window.open('', '', 'width=600,height=400');
             printWindow.document.write(`<h1>Employee ID: ${empId}</h1>`);
-            printWindow.document.write(`<img src="${photoSrc}" alt="Employee Photo" style="max-width: 100%; max-height: 100%;">`);
+            printWindow.document.write(`<img src="${photoSrc}" alt="Employee Photo" style="max-width: 200px; max-height: 100px;">`);
             printWindow.document.close();
             printWindow.print();
         }
