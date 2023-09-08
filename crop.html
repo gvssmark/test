@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Employee Details</title>
+  <meta name="viewport" content="width=device-width,  initial-scale=1.0">
+
+    <style>
+        #photo-container {
+            width: 200px;
+            height: 200px;
+            border: 1px solid #ccc;
+            overflow: hidden;
+        }
+
+        #employee-photo {
+            max-width: 100%;
+            max-height: 100%;
+        }
+    </style>
+</head>
+<body>
+    <h1>Employee Details</h1>
+    <form>
+        <label for="empId">Employee ID:</label>
+        <input type="text" id="empId" name="empId" required><br><br>
+
+        <label for="photo">Photo:</label>
+        <input type="file" id="photo" name="photo" accept="image/*" required><br><br>
+
+        <div id="photo-container">
+            <img id="employee-photo" src="#" alt="Employee Photo">
+        </div><br><br>
+
+        <button type="button" onclick="cropPhoto()">Crop Photo</button><br><br>
+
+        <button type="button" onclick="printData()">Print Data</button>
+    </form>
+
+    <script>
+        // Function to preview the selected image
+        document.getElementById("photo").addEventListener("change", function() {
+            const file = this.files[0];
+            if (file) {
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    document.getElementById("employee-photo").src = e.target.result;
+                };
+                reader.readAsDataURL(file);
+            }
+        });
+
+        // Function to simulate cropping (replace with actual cropping logic)
+        function cropPhoto() {
+            // Replace this with your cropping logic
+            alert("Cropping photo...");
+        }
+
+        // Function to print the form data
+        function printData() {
+            // Get the Employee ID
+            const empId = document.getElementById("empId").value;
+
+            // Check if a photo is selected
+            const photoSrc = document.getElementById("employee-photo").src;
+            if (photoSrc === "") {
+                alert("Please select a photo.");
+                return;
+            }
+
+            // Open a new window for printing
+            const printWindow = window.open('', '', 'width=600,height=400');
+            printWindow.document.write(`<h1>Employee ID: ${empId}</h1>`);
+            printWindow.document.write(`<img src="${photoSrc}" alt="Employee Photo" style="max-width: 100%; max-height: 100%;">`);
+            printWindow.document.close();
+            printWindow.print();
+        }
+    </script>
+</body>
+</html>
