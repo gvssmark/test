@@ -230,10 +230,10 @@ function saveSignature() {
   }
 
   // Calculate the bounding box of the signature
-  const minX = Math.min(...signaturePath.map(point => point.x));
-  const minY = Math.min(...signaturePath.map(point => point.y));
-  const maxX = Math.max(...signaturePath.map(point => point.x));
-  const maxY = Math.max(...signaturePath.map(point => point.y));
+  const minX = Math.min(...signaturePath.map(point => point.x))-10;
+  const minY = Math.min(...signaturePath.map(point => point.y))-10;
+  const maxX = Math.max(...signaturePath.map(point => point.x))+10;
+  const maxY = Math.max(...signaturePath.map(point => point.y))+10;
 
   // Create a temporary canvas to copy the signature
   const tempCanvas = document.createElement('canvas');
