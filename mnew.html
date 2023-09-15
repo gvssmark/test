@@ -1,4 +1,5 @@
 
+
 <!DOCTYPE html>
 <html>
 <head>
@@ -27,7 +28,7 @@ img {displaay:block; margin-left:0; width:150px;}
     text-align: center;
     margin-top: 10px;
   }
-.inputs {padding:2px; width:350px; ;}
+.inputs {padding:2px; width:100%; ;}
 input, textarea {width: 100%; ; outline:none; height:27px;}
 ::placeholder {color:blue; font-size:large; font-family: "Courier New", Courier, monospace;}
 /*html, body {margin: 0; height: 100%; overflow: hidden}*/
@@ -40,7 +41,7 @@ textarea:focus {background:cyan;}
 .trheight1 {height:50px;}
 button { background:cyan; border:none;height:25px; border-radius:15px ; box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19); 
 color:blue;    }
-#dataentry { margin:auto; width:360px; ; padding:5px; border-radius:15px; overflow: hidden; display:none;box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);     }
+#dataentry { margin:auto;  ; padding:5px; border-radius:15px; overflow: hidden; display:none;box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);     }
 #pdf {display:none;  }
 table {border:1px solid black; border-collapse:collapse;}
 @media print 
@@ -64,7 +65,13 @@ body {width:100%; margin:0 auto}
 .row {display:flex; width:100% } 
 li:nth-child(even) {background:#FFE4E1;}
 
-#home{width:360px; margin:0 auto;;font-size:small ;overflow: hidden;}
+#home{ margin:0 auto;;font-size:small ;overflow: hidden;}
+
+@media only screen and (min-width: 400px) {
+  body {
+     margin: auto; width:50%; 
+  }
+}
  
 }</style>
 </head>
@@ -101,9 +108,9 @@ li:nth-child(even) {background:#FFE4E1;}
 <div class='row'>Birth  Date</div> <div class='row'>Joining Date</div> <div class='row'>Retirement Date</div>
 </div>
 <div class='inputs row' >
-<div class='row'><input type='date' onblur='shdates()' name='dob' value='1900-01-01' id='dob' placeholder='Birthday'   required   ></div>
-<div class='row' ><input type='date' name='doj' id='doj' value='1900-01-01'   disabled  required  ></div>
-<div class='row'><input type='date' name='dor'id='dor'  value='1900-01-01'  disabled  required ></div>
+<div class='row'><input type='date' onblur='shdates()' name='dob' value='1900-01-01'  id='dob' placeholder='Birthday'   required   ></div>
+<div class='row' ><input type='date' name='doj' id='doj' value='1900-01-01'    disabled  required  ></div>
+<div class='row'><input type='date' name='dor'id='dor'  value='1900-01-01'   disabled  required ></div>
 </div>
 <div class='inputs' ><input type='text' name='qual'id='qual' placeholder='Edcn Qualification'      ></div>
 <div class='inputs' ><input type='text' name='desig'id='desig' placeholder='Designation'    required  ></div>
