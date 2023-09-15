@@ -102,8 +102,8 @@ li:nth-child(even) {background:#FFE4E1;}
 </div>
 <div class='inputs row' >
 <div class='row'><input type='date' onblur='shdates()' name='dob'id='dob' placeholder='Birthday'   required   ></div>
-<div class='row' ><input type='date' name='doj' id='doj'    disabled  required  ></div>
-<div class='row'><input type='date' name='dor'id='dor'    disabled  required ></div>
+<div class='row' ><input type='date' name='doj' id='doj' value='1900-01-01'   disabled  required  ></div>
+<div class='row'><input type='date' name='dor'id='dor'  value='1900-01-01'  disabled  required ></div>
 </div>
 <div class='inputs' ><input type='text' name='qual'id='qual' placeholder='Edcn Qualification'      ></div>
 <div class='inputs' ><input type='text' name='desig'id='desig' placeholder='Designation'    required  ></div>
@@ -141,7 +141,7 @@ today = new Date()
 d=today.getDate()
 m=today.getMonth()
 y=today.getFullYear()
-  dob.value = `${y-55}-01-01`
+//  dob.value = `${y-55}-01-01`
 dob.min = `${y-90}-01-01` //1933
 dob.max = `${y-50}-12-31` //1973
 
@@ -151,13 +151,13 @@ if(Dob.length >0){
 dobdate = new Date(Dob)
 doby = dobdate.getFullYear()
 //dor.value = retday60(dob.value) 
-doj.value =`${doby+25}-01-01`
+//doj.value =`${doby+25}-01-01`
 doj.min = `${doby+20}-01-01` 
 doj.max = `${doby+30}-01-01` 
   
 dor.min = retday50(dob.value)  > ddmmyyyy(new Date()) ? ddmmyyyy(new Date()) : retday50(dob.value)
 dor.max = retday60(dob.value) > ddmmyyyy(new Date()) ? ddmmyyyy(new Date()) : retday60(dob.value)  //x //1993
-dor.value = new Date(retday60(dob.value) )> today ? ddmmyyyy(today) : ddmmyyyy(new Date(retday60(dob.value) ))
+//dor.value = new Date(retday60(dob.value) )> today ? ddmmyyyy(today) : ddmmyyyy(new Date(retday60(dob.value) ))
 
 
 document.getElementById('doj').disabled = false
