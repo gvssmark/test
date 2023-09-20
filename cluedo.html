@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta name="viewport" content="width=device-width,  initial-scale=1.0">
+<title>Cluedo</title>
+<style>
+*{box-sizing: border-box;}
+.No {background:pink}
+.Yes {background:#FDEBD0}
+select {width:200px; padding:10px; margin:5px; width:80%}
+#tdata tr{height:30px}
+table {border-collapse:collapse; width:90%}
+body { margin: auto; items-align: center;}
+@media only screen and (min-width: 400px) {body {background: lightblue; width:50%; margin: auto} .modal {width:50%; left:25% }}
+
+</style>
+</head>
+<body>
+<h1>CLUEDO</H1>
+<div id='playerlist'>
+	<input id='playlist' type='text' value='Hemanth, Harini, Nalini, Komali, Mayukha'><br><br>
+	<button onclick='btnPlist()'>Player List</button>
+</div>
+<div id='divOptions' style='display:none'>
+	<div id='playersSelect'>test</div>
+	<div>
+		  <select id="suspect" name="suspectlist" >
+	  	  <option value="Mustard">Col. Mustard</option>
+		  <option value="Green">Rev. Green</option>
+		  <option value="Plum">Prof. Plum</option>
+		  <option value="Scarlet">Miss. Scarlet</option>
+ 		 <option value="White">Mrs. White</option>
+ 		 <option value="Peacock">Mrs. Peacock</option>
+		</select>Person
+	</div>
+	<div>
+		<select id="suspectroom" name="suspectroomlist" >
+ 		 <option value="Dining">Dining Room</option>
+ 		 <option value="Kitchen">Kitchen</option>
+  		<option value="Hall">Hall</option>
+  		<option value="Lounge">Lounge</option>
+		  <option value="Ballroom">Ballroom</option>
+ 		 <option value="Study">Study</option>
+		  <option value="Library">Library</option>
+		  <option value="conservatory">Conservatory</option>
+		</select>Room
+	</div>
+	<div>
+		<select id="suspectweapon" name="suspectweaponlist" >
+		  <option value="Dagger">Dagger</option>
+  		<option value="Spanner">Spanner</option>
+		  <option value="Candlestick">Candle stick</option>
+		  <option value="Revolver">Revolver</option>
+		  <option value="Rope">Rope</option>
+		  <option value="Leadpiping">Lead Piping</option>
+		</select>Weapon
+		<br>
+		<button onclick='noteResponses()'>Note Reponses</button>
+	</div>
+</div>
+
+<div id='Respnses'></div>
+<div id='respPara'></div>
+<br>
+<div id='resprep'></div>
+<script>
+playerResponses=[]
+function btnPlist(){
+plist= document.getElementById('playlist').value
+plist  = plist.split(",").map(function(item) {return item.trim()})
+plistoptions=''
+plist.forEach(a=> plistoptions += `<option value=${a}>${a}</option>`)
+pl=`<select id="player" name="playerlist" >${plistoptions}</select>Player`
+document.getElementById('playersSelect').innerHTML=pl
+document.getElementById('divOptions').style.display='block'
+document.getElementById('playerlist').style.display='none'
+}
+
+function noteResponses(){
+p=document.getElementById('player').value
+sp=document.getElementById('suspect').value
+sr=document.getElementById('suspectroom').value
+sw=document.getElementById('suspectweapon').value
+document.getElementById('divOptions').style.display='none'
+document.getElementById('Respnses').innerHTML = `<h3>${p}'s Call <br>${sp}-${sr}-${sw}</h3>`
+respTabledata=''
+plistfilterd = plist.filter((a)=> {return a!==p})
+plistfilterd.forEach((item)=> respTabledata += `<tr><td width=150>${item}<td onclick="noclick('${item}')" width=50>No<td  onclick="yesclick('${item}')" width=50>Yes`)
+respTabledata1 =`<table id='tdata' border=1>${respTabledata}</table>`
+document.getElementById('respPara').innerHTML= respTabledata1
+document.getElementById('respPara').style.display='block'
+}
+
+
+respHeader=`<table border=1><tr><td>Player<td>Person<td>Room<td>Weapon<td>Resp By<td>Ans`
+function respreport(){
+respdata=''
+unquiearray(playerResponses)
+
+deduplicatedArray.forEach(a=> respdata  += `<tr class=${a.resp}><td>${a.p}<td>${a.sp}<td>${a.sr}<td>${a.sw}<td>${a.a}<td >${a.resp}`)
+document.getElementById('resprep').innerHTML =`${respHeader}${respdata}</table>`
+}
+function noclick(a){
+playerResponses.push({p,sp,sr,sw,a,'resp':'No'})
+respreport()
+}
+function yesclick(a){
+playerResponses.push({p,sp,sr,sw,a,'resp':'Yes'})
+document.getElementById('divOptions').style.display='block'
+document.getElementById('respPara').style.display='none'
+document.getElementById('Respnses').innerHTML =''
+respreport()
+}
+
+function unquiearray(a){
+ uniqueRows = {};
+ deduplicatedArray = a.filter((item) => {
+   key = JSON.stringify(item);
+  if (!uniqueRows[key]) {
+    uniqueRows[key] = true;
+    return true;
+  }
+  return false;
+});}
+</script>
+</body>
+</html>
+
