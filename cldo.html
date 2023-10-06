@@ -1,0 +1,300 @@
+<!DOCTYPE html>
+<html>
+<head>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+<meta name="viewport" content="width=device-width,  initial-scale=1.0">
+<style>
+table, th, tr {width:100%;  border:1px solid black; border-collapse: collapse; border: 1px solid; font-size:small;}
+td { text-align:center;font-size:small; border-collapse: collapse; border:1px solid black; }
+.Y {background:green; color:green}
+.X {background:red; color:red}
+.u {background:pink; color:pink}
+.M {background:yellow; color:yellow}
+select {width:100%; border:none; height:30px; }
+#bottomdiv {bottom:0; position:fixed; background:green; color:white; width:100%; margin: auto;}
+#allsuspectstable {display:none}
+</style></head>
+<body>
+
+<div id='allsuspectstable'></div><br>
+<div id='suspectsheldby' >
+<table border=1><tr style='background:black; color:white; height:30px; '><td>Suspect<td>Held By<tr><td>
+<select id="suspectselect" name="suspectlist" >
+<option value="">Select</option>
+	  	  <option value="Col. Mustard">Col. Mustard</option>
+		  <option value="Rev. Green">Rev. Green</option>
+		  <option value="Prof. Plum">Prof. Plum</option>
+		  <option value="Miss. Scarlet">Miss. Scarlet</option>
+ 		 <option value="Mrs. White">Mrs. White</option>
+ 		 <option value="Mrs. Peacock">Mrs. Peacock</option>
+ 		 <option value="Dining Room">Dining Room</option>
+ 		 <option value="Kitchen">Kitchen</option>
+  		<option value="Hall">Hall</option>
+  		<option value="Lounge">Lounge</option>
+		  <option value="Ballroom">Ballroom</option>
+          <option value="Billiard Room">Billiard Room</option>
+ 		 <option value="Study">Study</option>
+		  <option value="Library">Library</option>
+		  <option value="Conservatory">Conservatory</option>
+		  <option value="Dagger">Dagger</option>
+  		<option value="Spanner">Spanner</option>
+		  <option value="Candle stick">Candle stick</option>
+		  <option value="Revolver">Revolver</option>
+		  <option value="Rope">Rope</option>
+		  <option value="Lead Piping">Lead Piping</option>
+          </select>
+
+
+<td id='plistdropdown'>Held By
+<tr style=' color:white; height:30px; '><td  onclick='updarray()' style='background:red'>Update<td style='background:green' onclick='hidesuspectsheldby()'>Done</table>
+</div>
+
+<hr>
+<div id='allplayers' style='display:none'></div>
+<div id='suspectsselection' style='display:none'>
+<table border=1><tr style='background:black; color:white; height:30px; '>
+<td >Player
+<td>Person<td>Room<td>Wepon
+
+<tr style='height:50px;'><td id='plistincall'><td>
+		  <select id="suspectperson" name="suspectlist" >
+	  	  <option value="">Select</option>
+	  	  <option value="Col. Mustard">Col. Mustard</option>
+		  <option value="Rev. Green">Rev. Green</option>
+		  <option value="Prof. Plum">Prof. Plum</option>
+		  <option value="Miss. Scarlet">Miss. Scarlet</option>
+ 		 <option value="Mrs. White">Mrs. White</option>
+ 		 <option value="Mrs. Peacock">Mrs. Peacock</option>
+		</select>
+<td>
+<select id="suspectroom" name="suspectroomlist" >
+<option value="">Select</option>
+ 		 <option value="Dining Room">Dining Room</option>
+ 		 <option value="Kitchen">Kitchen</option>
+  		<option value="Hall">Hall</option>
+  		<option value="Lounge">Lounge</option>
+		  <option value="Ballroom">Ballroom</option>
+ 		 <option value="Study">Study</option>
+ 		 <option value="Billiard Room">Billiard Room</option>
+		  <option value="Library">Library</option>
+		  <option value="Conservatory">Conservatory</option>
+		</select>
+<td>
+<select id="suspectweapon" name="suspectweaponlist" >
+<option value="">Select</option>
+		  <option value="Dagger">Dagger</option>
+  		<option value="Spanner">Spanner</option>
+		  <option value="Candle stick">Candle stick</option>
+		  <option value="Revolver">Revolver</option>
+		  <option value="Rope">Rope</option>
+		  <option value="Lead Piping">Lead Piping</option>
+		</select>
+<tr style='height:30px; background:yellow'><td colspan=4 onclick='playersuspected()'>Proceed
+</table>
+ </div>       
+<h4 id='playercalledlist'></h4>
+<div id='suspectstable'></div> <br>
+<div id='playerresponses'></div>
+<div id='bottomdiv'><table><tr><td id='btom1' >Show Table<td onclick='bottom2()'>Update<td onclick='bottom3()'>Suspect Response<td onclick='bottom4()'>Show Log</table></div>
+</div>
+<div id='resplog'></div>
+<script>
+
+function hidesuspectsheldby(){document.getElementById('suspectsheldby').style.display='none'
+document.getElementById('suspectsselection').style.display='block'
+}
+
+function bottom1(){
+document.getElementById('allsuspectstable').style.display='block'
+
+}
+
+function bottom2(){
+document.getElementById('suspectsheldby').style.display='block'
+document.getElementById('suspectsselection').style.display='none'
+}
+function bottom3(){
+document.getElementById('suspectsselection').style.display='block'
+document.getElementById('playercalledlist').style.display='none'
+document.getElementById('suspectstable').style.display='none'
+document.getElementById('playerresponses').style.display='none'
+document.getElementById('suspectsheldby').style.display='none'
+
+
+}
+
+function hidetable(){document.getElementById('allsuspectstable').style.display='none'}
+
+playersarray =['ME','HEMANTH','HARINI','KOMALI','MAYUKHA','GEETHA']
+allsus = [
+   [ 'suspect','ME','HEM','HAR','KOM','MAY','GEE'], 
+   ['Col. Mustard','u','u','u','u','u','u'],
+   ['Rev. Green','u','u','u','u','u','u'],
+   ['Prof. Plum','u','u','u','u','u','u'],
+   ['Miss. Scarlet','u','u','u','u','u','u'],
+   ['Mrs. White','u','u','u','u','u','u'],
+   ['Mrs. Peacock','u','u','u','u','u','u'],
+   ['Dagger','u','u','u','u','u','u'],
+   ['Spanner','u','u','u','u','u','u'],
+   ['Candle stick','u','u','u','u','u','u'],
+   ['Revolver','u','u','u','u','u','u'],
+   ['Rope','u','u','u','u','u','u'],
+   ['Lead Piping','u','u','u','u','u','u'],
+   ['Dining Room','u','u','u','u','u','u'],
+   ['Kitchen','u','u','u','u','u','u'],
+   ['Hall','u','u','u','u','u','u'],
+   ['Lounge','u','u','u','u','u','u'],
+   ['Ballroom','u','u','u','u','u','u'],
+   ['Billiard Room','u','u','u','u','u','u'],
+   ['Study','u','u','u','u','u','u'],
+   ['Library','u','u','u','u','u','u'],
+   ['Conservatory','u','u','u','u','u','u']
+]
+
+//for changing the allsus array
+//plist='me,harini,sundari'
+//plist= plist.toUpperCase().split(",")
+//for(i=0; i<plist.length; i++){allsus[0][i+1]=plist[i].substring(0,3)}
+//for(i=0; i<allsus.length; i++){//for(j=0;j<plist.length;j++){allsus[i].pop()}
+//}
+
+
+//this function is for marking x to all players 
+function updateX(){
+for(i=0; i< allsus.length; i++){
+foundY= allsus[i].findIndex(a=> a==='Y')
+allsusilength = allsus[i].length
+if(foundY >0 ){
+for(j=1; j<allsusilength; j++){
+allsus[i][j]='X'}
+allsus[i][foundY]='Y'}}}
+
+// this function is to note 'y' for a player against the suspect
+function updarray(){
+s=document.getElementById('suspectselect').value
+p=document.getElementById('player').value
+//alert(s+p)
+suspIndex = allsus.findIndex(a=> a[0]===s)
+playIndex = allsus[0].findIndex(a=> a===p)
+//alert(allsus[suspIndex][playIndex])
+cstatus = allsus[suspIndex][playIndex]
+if(cstatus !='X'){allsus[suspIndex][playIndex]="Y"}
+//alert(allsus[suspIndex][playIndex])
+updateX()
+makeTableHTML(allsus, 'allsuspectstable')
+console.table(allsus)
+}
+makeTableHTML(allsus, 'allsuspectstable')
+function makeTableHTML(arr, element) {
+ newtable= `<table border=1>${arr.reduce((c, o) => c += `<tr>${o.reduce((c, d) => (c += `<td class='${d}'>${d}</td>`), '')}</tr>`, '')}</table> <br><button onclick='hidetable()'>Hide</button>`
+ document.getElementById(element).innerHTML=newtable 
+}
+
+//on call by a player the following array will be created
+
+function playersuspected(room,person,wepon){
+
+room   = document.getElementById('suspectroom').value
+person = document.getElementById('suspectperson').value
+wepon  = document.getElementById('suspectweapon').value
+caller = document.getElementById('plistincall').childNodes[0].value
+suspectedh4 = `Call by ${caller} : <br> ${person} - ${wepon} - ${room}  `
+document.getElementById('playercalledlist').innerHTML= suspectedh4
+oncallarray = allsus.filter(a=> a[0] === room || a[0] === person || a[0] === wepon || a[0] === 'suspect' )
+makeTableHTML(oncallarray, 'suspectstable')
+resptab()
+document.getElementById('suspectsselection').style.display='none'
+document.getElementById('suspectstable').style.display = 'block'
+document.getElementById('playerresponses').style.display = 'block'
+document.getElementById('playercalledlist').style.display = 'block'
+
+
+}
+
+//playerlist dropdown
+function crplist(){
+//playersarray =['ME','HEMANTH','HARINI','KOMALI','MAYUKHA','GEETHA']
+plistoptions=''
+playersarray.forEach(a=> plistoptions += `<option value=${a.substring(0,3)}>${a}</option>`)
+pl=`<select id="player" name="playerlist" ><option value="">Select</option>${plistoptions}</select>`
+document.getElementById('plistdropdown').innerHTML=pl
+document.getElementById('plistincall').innerHTML=pl
+
+plistincall
+}
+crplist()
+
+//usage  
+//updarray('Rope','KOM')
+//playersuspected('Lounge','Prof. Plum','Dagger')
+
+function resptab(){
+caller = document.getElementById('plistincall').childNodes[0].value
+
+filteredcallers = allsus[0].filter(a=> a !=caller && a != 'suspect')
+
+
+console.table(filteredcallers)
+resptabdata=''
+filteredcallers .forEach(a=> resptabdata+= `<tr style='height:40px;' ><td>${a}<td onclick='responseNo(this.id)' id='N${a}'>No<td onclick='responseYes(this.id)'id='Y${a}'>Yes`)
+document.getElementById('playerresponses').innerHTML =`<table border=1>${resptabdata}</table><br>`
+}
+
+function responseNo(a){
+rplayer = a.substring(1)
+caller = document.getElementById('plistincall').childNodes[0].value
+rroom = document.getElementById('suspectroom').value
+rperson = document.getElementById('suspectperson').value
+rwepon= document.getElementById('suspectweapon').value
+yesnoresponsee(rplayer, rroom, 'X' )
+yesnoresponsee(rplayer, rwepon, 'X' )
+yesnoresponsee(rplayer, rperson, 'X' )
+resparray.push([caller,rroom,rperson,rwepon,rplayer,'X' ])
+makeTableHTML(resparray, 'resplog')
+}
+
+function responseYes(a){
+rplayer = a.substring(1)
+caller = document.getElementById('plistincall').childNodes[0].value
+rroom = document.getElementById('suspectroom').value
+rperson = document.getElementById('suspectperson').value
+rwepon= document.getElementById('suspectweapon').value
+yesnoresponsee(rplayer, rroom, 'M' )
+yesnoresponsee(rplayer, rwepon, 'M' )
+yesnoresponsee(rplayer, rperson, 'M' )
+resparray.push([caller,rroom,rperson,rwepon,rplayer,'M'])
+makeTableHTML(resparray, 'resplog')
+document.getElementById('suspectsselection').style.display='block'
+document.getElementById('suspectstable').style.display = 'none'
+document.getElementById('playerresponses').style.display = 'none'
+document.getElementById('playercalledlist').innerHTML=''
+
+
+ 
+}
+function yesnoresponsee(p, s, r ){
+suspIndex = allsus.findIndex(a=> a[0]===s)
+playIndex = allsus[0].findIndex(a=> a===p)
+cstatus = allsus[suspIndex][playIndex]
+//alert(cstatus)
+if(cstatus ==='u' || cstatus ==='M'){allsus[suspIndex][playIndex]=r}
+makeTableHTML(allsus, 'allsuspectstable')
+makeTableHTML(oncallarray, 'suspectstable')
+//makeTableHTML(resparray, 'resplog')
+}
+resparray=[['Call','Room','Person','Wepon','RespBy','Response']]
+
+$(document).ready(function(){
+  $("#btom1").click(function(){
+    $("#allsuspectstable").toggle(1000, function(){
+      //alert("The toggle() method is finished!");
+    });
+  });
+});
+</script>
+
+</body>
+</html>
+
+
+
