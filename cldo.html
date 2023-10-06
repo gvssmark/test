@@ -95,7 +95,7 @@ select {width:100%; border:none; height:30px; }
 <h4 id='playercalledlist'></h4>
 <div id='suspectstable'></div> <br>
 <div id='playerresponses'></div>
-<div id='bottomdiv'><table><tr><td id='btom1' >Show Table<td onclick='bottom2()'>Update<td onclick='bottom3()'>Suspect Response<td onclick='bottom4()'>Show Log</table></div>
+<div id='bottomdiv'><table><tr><td id='btom1' >Show Table<td onclick='bottom2()'>Update<td onclick='bottom3()'>Suspect Response<td id='btom4' >Show Log</table></div>
 </div>
 <div id='resplog'></div>
 <script>
@@ -186,7 +186,7 @@ console.table(allsus)
 }
 makeTableHTML(allsus, 'allsuspectstable')
 function makeTableHTML(arr, element) {
- newtable= `<table border=1>${arr.reduce((c, o) => c += `<tr>${o.reduce((c, d) => (c += `<td class='${d}'>${d}</td>`), '')}</tr>`, '')}</table> <br><button onclick='hidetable()'>Hide</button>`
+ newtable= `<table border=1>${arr.reduce((c, o) => c += `<tr>${o.reduce((c, d) => (c += `<td class='${d}'>${d}</td>`), '')}</tr>`, '')}</table> <br>`
  document.getElementById(element).innerHTML=newtable 
 }
 
@@ -290,6 +290,13 @@ $(document).ready(function(){
       //alert("The toggle() method is finished!");
     });
   });
+  $("#btom4").click(function(){
+    $("#resplog").toggle(1000, function(){
+      //alert("The toggle() method is finished!");
+    });
+  });
+
+
 });
 </script>
 
