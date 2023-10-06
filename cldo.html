@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html>
 <head>
@@ -47,14 +48,17 @@ select {width:100%; border:none; height:30px; }
 
 <td id='plistdropdown'>Held By
 <tr style=' color:white; height:30px; '><td  onclick='updarray()' style='background:red'>Update<td style='background:green' onclick='hidesuspectsheldby()'>Done</table>
+<li>Update cards held by you
+<li>Update cards as you suspect
 </div>
 
-<hr>
-<div id='allplayers' style='display:none'></div>
-<div id='suspectsselection' style='display:none'>
+
+<div id='allplayers' style='display:none'>allplayers</div>
+
+<div id='suspectsselection' style='display:none'><h4>Suspects Guess by a Player. Selct from the dropdown<h4>
+
 <table border=1><tr style='background:black; color:white; height:30px; '>
-<td >Player
-<td>Person<td>Room<td>Wepon
+<td >Player<td>Person<td>Room<td>Wepon
 
 <tr style='height:50px;'><td id='plistincall'><td>
 		  <select id="suspectperson" name="suspectlist" >
@@ -95,9 +99,11 @@ select {width:100%; border:none; height:30px; }
 <h4 id='playercalledlist'></h4>
 <div id='suspectstable'></div> <br>
 <div id='playerresponses'></div>
-<div id='bottomdiv'><table><tr><td id='btom1' >Show Table<td onclick='bottom2()'>Update<td onclick='bottom3()'>Suspect Response<td id='btom4' >Show Log</table></div>
+<div id='bottomdiv'><table><tr><td id='btom1' >Show Table<td id='btom2'>Update<td id='btom3'>Suspect Response<td id='btom4' >Show Log</table></div>
 </div>
+<div id='responseslog' style='display:none'><h4>Response by Players</h4>
 <div id='resplog'></div>
+</div>
 <script>
 
 function hidesuspectsheldby(){document.getElementById('suspectsheldby').style.display='none'
@@ -109,19 +115,7 @@ document.getElementById('allsuspectstable').style.display='block'
 
 }
 
-function bottom2(){
-document.getElementById('suspectsheldby').style.display='block'
-document.getElementById('suspectsselection').style.display='none'
-}
-function bottom3(){
-document.getElementById('suspectsselection').style.display='block'
-document.getElementById('playercalledlist').style.display='none'
-document.getElementById('suspectstable').style.display='none'
-document.getElementById('playerresponses').style.display='none'
-document.getElementById('suspectsheldby').style.display='none'
 
-
-}
 
 function hidetable(){document.getElementById('allsuspectstable').style.display='none'}
 
@@ -285,16 +279,11 @@ makeTableHTML(oncallarray, 'suspectstable')
 resparray=[['Call','Room','Person','Wepon','RespBy','Response']]
 
 $(document).ready(function(){
-  $("#btom1").click(function(){
-    $("#allsuspectstable").toggle(1000, function(){
-      //alert("The toggle() method is finished!");
-    });
-  });
-  $("#btom4").click(function(){
-    $("#resplog").toggle(1000, function(){
-      //alert("The toggle() method is finished!");
-    });
-  });
+
+  $("#btom1").click(function(){$("#allsuspectstable").toggle(1000, function(){});});
+  $("#btom4").click(function(){$("#responseslog").toggle(1000, function(){});});
+  $("#btom3").click(function(){$("#suspectsselection").toggle(1000, function(){});});
+  $("#btom2").click(function(){$("#suspectsheldby").toggle(1000, function(){});});
 
 
 });
