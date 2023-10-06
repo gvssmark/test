@@ -1,4 +1,5 @@
 
+
 <!DOCTYPE html>
 <html>
 <head>
@@ -15,7 +16,7 @@ select {width:100%; border:none; height:30px; }
 #bottomdiv {bottom:0; position:fixed; background:green; color:white; width:100%; margin: auto;}
 #allsuspectstable {display:none}
 </style></head>
-<body>
+<body onload='inital()'>
 
 <div id='allsuspectstable'></div><br>
 <div id='suspectsheldby' >
@@ -119,7 +120,11 @@ document.getElementById('allsuspectstable').style.display='block'
 
 function hidetable(){document.getElementById('allsuspectstable').style.display='none'}
 
-playersarray =['ME','HEMANTH','HARINI','KOMALI','MAYUKHA','GEETHA']
+var playersarray=[]
+var plist=''
+
+function inital(){
+plist = prompt("Enter Player Names commas separted", "mark,sundari,nalini");
 allsus = [
    [ 'suspect','ME','HEM','HAR','KOM','MAY','GEE'], 
    ['Col. Mustard','u','u','u','u','u','u'],
@@ -144,13 +149,20 @@ allsus = [
    ['Library','u','u','u','u','u','u'],
    ['Conservatory','u','u','u','u','u','u']
 ]
+//plist='mee,komali,harini,sundari,hemanth'
+plist= plist.toUpperCase().split(",")
+playersarray =plist
 
-//for changing the allsus array
-//plist='me,harini,sundari'
-//plist= plist.toUpperCase().split(",")
-//for(i=0; i<plist.length; i++){allsus[0][i+1]=plist[i].substring(0,3)}
-//for(i=0; i<allsus.length; i++){//for(j=0;j<plist.length;j++){allsus[i].pop()}
-//}
+
+for(i=0; i<plist.length; i++){allsus[0][i+1]=plist[i].substring(0,3)}
+deletehowmany = 6- plist.length
+for(i=0; i<allsus.length; i++){for(j=0;j<deletehowmany;j++){allsus[i].pop()}}
+
+makeTableHTML(allsus, 'allsuspectstable')
+
+crplist()
+
+}
 
 
 //this function is for marking x to all players 
@@ -178,7 +190,7 @@ updateX()
 makeTableHTML(allsus, 'allsuspectstable')
 console.table(allsus)
 }
-makeTableHTML(allsus, 'allsuspectstable')
+//makeTableHTML(allsus, 'allsuspectstable')
 function makeTableHTML(arr, element) {
  newtable= `<table border=1>${arr.reduce((c, o) => c += `<tr>${o.reduce((c, d) => (c += `<td class='${d}'>${d}</td>`), '')}</tr>`, '')}</table> <br>`
  document.getElementById(element).innerHTML=newtable 
@@ -207,14 +219,15 @@ document.getElementById('playercalledlist').style.display = 'block'
 
 //playerlist dropdown
 function crplist(){
-//playersarray =['ME','HEMANTH','HARINI','KOMALI','MAYUKHA','GEETHA']
+
+//['ME','HEMANTH','HARINI','KOMALI','MAYUKHA','GEETHA']
 plistoptions=''
 playersarray.forEach(a=> plistoptions += `<option value=${a.substring(0,3)}>${a}</option>`)
 pl=`<select id="player" name="playerlist" ><option value="">Select</option>${plistoptions}</select>`
 document.getElementById('plistdropdown').innerHTML=pl
 document.getElementById('plistincall').innerHTML=pl
 
-plistincall
+
 }
 crplist()
 
