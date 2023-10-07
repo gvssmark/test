@@ -124,11 +124,19 @@ select {width:100%; border:none; height:30px; }
 
 shbytoarray=[['By','Susp','To']]
 function shtoby(){
-sh1 =document.getElementsByTagName('select')[2].value
-sh2 =document.getElementsByTagName('select')[3].value
-sh3 =document.getElementsByTagName('select')[4].value
+sh1e =document.getElementsByTagName('select')[2]
+sh2e =document.getElementsByTagName('select')[3]
+sh3e =document.getElementsByTagName('select')[4]
+sh1 = sh1e.value
+sh2 = sh2e.value
+sh3 = sh3e.value
+
 if((sh1*1 !=0) && (sh2*1 !=0) && (sh3*1 !=0)  ){
 shbytoarray.push([sh1,sh2,sh3])
+sh1e.selectedIndex=0
+sh2e.selectedIndex=0
+sh3e.selectedIndex=0
+
 }
 makeTableHTML(shbytoarray, 'shtobytable')
 }
