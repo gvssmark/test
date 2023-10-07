@@ -4,6 +4,7 @@
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
 <meta name="viewport" content="width=device-width,  initial-scale=1.0">
 <style>
+input {padding:2px; width:80%; border:1px solid black; background:black; color:white; outline:none; margin:5px ; ;}
 table, th, tr {width:100%;  border:1px solid black; border-collapse: collapse; border: 1px solid; font-size:small;}
 td { text-align:center;font-size:small; border-collapse: collapse; border:1px solid black; }
 .Y {background:green; color:green}
@@ -14,9 +15,21 @@ select {width:100%; border:none; height:30px; }
 #bottomdiv {bottom:0; position:fixed; background:green; color:white; width:100%; margin: auto;}
 #allsuspectstable {display:none}
 </style></head>
-<body onload='inital()'>
+<body >
+<div id='playerlistcreate' style='margin:auto; border:1px solid black;  display: flex;  align-items: center;'>
+<form  action="javascript:captureplist();">
+<h4>Player Names - Starting with you in clockwise<h4>
+<input type='text' name='pl1' pattern="[a-zA-Z]+"  placeholder='Player 1' required><br><br>
+<input type='text' name='pl2' pattern="[a-zA-Z]+" placeholder='Player 1' required><br><br>
+<input type='text' name='pl3' pattern="[a-zA-Z]+" placeholder='Player 1' required><br><br>
+<input type='text' name='pl4' pattern="[a-zA-Z]+" placeholder='Player 1' ><br><br>
+<input type='text' name='pl5' pattern="[a-zA-Z]+" placeholder='Player 1' ><br><br>
+<input type='text' name='pl6' pattern="[a-zA-Z]+" placeholder='Player 1' ><br><br>
+<button>Submit</button>
+</form>
+</div>
 <div id='allsuspectstable'></div><br>
-<div id='suspectsheldby' >
+<div id='suspectsheldby' style='display:none'>
 <table border=1><tr style='background:black; color:white; height:30px; '><td>Suspect<td>Held By<tr><td>
 <select id="suspectselect" name="suspectlist" >
 <option value="0">Select</option>
@@ -90,22 +103,32 @@ select {width:100%; border:none; height:30px; }
  </div>       
 <h4 id='playercalledlist'></h4>
 <div id='suspectstable'></div> 
-
 <div id='playerresponses'></div>
-<div id='bottomdiv'><table><tr><td id='btom1' >Show Table<td id='btom2'>Update<td id='btom3'>Suspect Response<td id='btom4' >Show Log</table></div>
+<div id='bottomdiv' style='display:none'><table><tr><td id='btom1' >Show Table<td id='btom2'>Update<td id='btom3'>Suspect Response<td id='btom4' >Show Log</table></div>
 </div>
 <div id='responseslog' style='display:none'><h4>Response by Players</h4>
 <div id='resplog'></div>
 </div>
 <script>
-function hidesuspectsheldby(){document.getElementById('suspectsheldby').style.display='none'
-document.getElementById('suspectsselection').style.display='block'}
-function bottom1(){document.getElementById('allsuspectstable').style.display='block'}
-function hidetable(){document.getElementById('allsuspectstable').style.display='none'}
+function hidesuspectsheldby(){document.getElementById('suspectsheldby').style.display='none'; document.getElementById('suspectsselection').style.display='block'}
 var playersarray=[]
 var plist=''
-plist = prompt("Enter Player Names commas separted", "mark,sundari,nalini");
 allsus = [   [ 'suspect'],    ['Col. Mustard'],   ['Rev. Green'],   ['Prof. Plum'],   ['Miss. Scarlet'],   ['Mrs. White'],   ['Mrs. Peacock'],   ['Dagger'],   ['Spanner'],   ['Candle stick'],   ['Revolver'],   ['Rope'],   ['Lead Piping'],   ['Dining Room'],   ['Kitchen'],   ['Hall'],   ['Lounge'],   ['Ballroom'],    ['Billiard Room'],   ['Study'],   ['Library'],   ['Conservatory']]
+function captureplist(){
+plist=''
+allinputs = document.getElementsByTagName('input')
+for (i=0; i<allinputs.length-1; i++){if(allinputs[i].value.length>0){plist += `${allinputs[i].value},`}}
+plist = plist.slice(0, -1).toUpperCase().split(",") 
+console.log(plist)
+playersarray =plist
+for(i=0; i<plist.length; i++){allsus[0].push(plist[i].substring(0,3))}
+for(i=1; i<allsus.length; i++){for(j=0;j<plist.length;j++){allsus[i].push('u')}}
+makeTableHTML(allsus, 'allsuspectstable')
+crplist()
+document.getElementById('suspectsheldby').style.display='block'
+document.getElementById('playerlistcreate').style.display='none'
+document.getElementById('bottomdiv').style.display='block'
+}
 function inital(){
 plist= plist.toUpperCase().split(",")
 playersarray =plist
