@@ -19,7 +19,7 @@ select {width:100%; border:none; height:30px; }
 <div id='suspectsheldby' >
 <table border=1><tr style='background:black; color:white; height:30px; '><td>Suspect<td>Held By<tr><td>
 <select id="suspectselect" name="suspectlist" >
-<option value="">Select</option>
+<option value="0">Select</option>
 	  	  <option value="Col. Mustard">Col. Mustard</option>
 		  <option value="Rev. Green">Rev. Green</option>
 		  <option value="Prof. Plum">Prof. Plum</option>
@@ -46,6 +46,7 @@ select {width:100%; border:none; height:30px; }
 <tr style=' color:white; height:30px; '><td  onclick='updarray()' style='background:red'>Update<td style='background:green' onclick='hidesuspectsheldby()'>Done</table>
 <li>Update cards held by you
 <li>Update cards as you suspect
+<h4 id='optnotselected' style='color:red; font-size:large'></h4>
 </div>
 <div id='allplayers' style='display:none'>allplayers</div>
 <div id='suspectsselection' style='display:none'><h4>Suspects Guess by a Player. Selct from the dropdown<h4>
@@ -53,7 +54,7 @@ select {width:100%; border:none; height:30px; }
 <td >Player<td>Person<td>Room<td>Wepon
 <tr style='height:50px;'><td id='plistincall'><td>
 		  <select id="suspectperson" name="suspectlist" >
-	  	  <option value="">Select</option>
+	  	  <option value="0">Select</option>
 	  	  <option value="Col. Mustard">Col. Mustard</option>
 		  <option value="Rev. Green">Rev. Green</option>
 		  <option value="Prof. Plum">Prof. Plum</option>
@@ -63,7 +64,7 @@ select {width:100%; border:none; height:30px; }
 		</select>
 <td>
 <select id="suspectroom" name="suspectroomlist" >
-<option value="">Select</option>
+<option value="0">Select</option>
  		 <option value="Dining Room">Dining Room</option>
  		 <option value="Kitchen">Kitchen</option>
   		<option value="Hall">Hall</option>
@@ -76,7 +77,7 @@ select {width:100%; border:none; height:30px; }
 		</select>
 <td>
 <select id="suspectweapon" name="suspectweaponlist" >
-<option value="">Select</option>
+<option value="0">Select</option>
 		  <option value="Dagger">Dagger</option>
   		<option value="Spanner">Spanner</option>
 		  <option value="Candle stick">Candle stick</option>
@@ -88,7 +89,8 @@ select {width:100%; border:none; height:30px; }
 </table>
  </div>       
 <h4 id='playercalledlist'></h4>
-<div id='suspectstable'></div> <br>
+<div id='suspectstable'></div> 
+
 <div id='playerresponses'></div>
 <div id='bottomdiv'><table><tr><td id='btom1' >Show Table<td id='btom2'>Update<td id='btom3'>Suspect Response<td id='btom4' >Show Log</table></div>
 </div>
@@ -103,10 +105,7 @@ function hidetable(){document.getElementById('allsuspectstable').style.display='
 var playersarray=[]
 var plist=''
 plist = prompt("Enter Player Names commas separted", "mark,sundari,nalini");
-allsus = [   [ 'suspect'],    ['Col. Mustard'],   ['Rev. Green'],   ['Prof. Plum'],   ['Miss. Scarlet'],   ['Mrs. White'],   ['Mrs. Peacock'],   ['Dagger'],
-   ['Spanner'],   ['Candle stick'],   ['Revolver'],   ['Rope'],   ['Lead Piping'],   ['Dining Room'],   ['Kitchen'],   ['Hall'],   ['Lounge'],   ['Ballroom'],
-   ['Billiard Room'],   ['Study'],   ['Library'],   ['Conservatory']]
-
+allsus = [   [ 'suspect'],    ['Col. Mustard'],   ['Rev. Green'],   ['Prof. Plum'],   ['Miss. Scarlet'],   ['Mrs. White'],   ['Mrs. Peacock'],   ['Dagger'],   ['Spanner'],   ['Candle stick'],   ['Revolver'],   ['Rope'],   ['Lead Piping'],   ['Dining Room'],   ['Kitchen'],   ['Hall'],   ['Lounge'],   ['Ballroom'],    ['Billiard Room'],   ['Study'],   ['Library'],   ['Conservatory']]
 function inital(){
 plist= plist.toUpperCase().split(",")
 playersarray =plist
@@ -126,6 +125,8 @@ allsus[i][foundY]='Y'}}}
 function updarray(){
 s=document.getElementById('suspectselect').value
 p=document.getElementById('player').value
+if(s*1 === 0 || p*1===0) {document.getElementById('optnotselected').innerHTML='Options Not Selected!'; return false}
+document.getElementById('optnotselected').innerHTML=''
 suspIndex = allsus.findIndex(a=> a[0]===s)
 playIndex = allsus[0].findIndex(a=> a===p)
 cstatus = allsus[suspIndex][playIndex]
@@ -143,6 +144,9 @@ room   = document.getElementById('suspectroom').value
 person = document.getElementById('suspectperson').value
 wepon  = document.getElementById('suspectweapon').value
 caller = document.getElementById('plistincall').childNodes[0].value
+if(room*1===0 || person*1 ===0 || wepon*1 ===0 || caller*1 ===0 ){ suspectedh4='Options Not Selected!'; 
+document.getElementById('playercalledlist').innerHTML= suspectedh4
+return false}
 suspectedh4 = `Call by ${caller} : <br> ${person} - ${wepon} - ${room}  `
 document.getElementById('playercalledlist').innerHTML= suspectedh4
 oncallarray = allsus.filter(a=> a[0] === room || a[0] === person || a[0] === wepon || a[0] === 'suspect' )
@@ -156,7 +160,7 @@ document.getElementById('playercalledlist').style.display = 'block'
 function crplist(){
 plistoptions=''
 playersarray.forEach(a=> plistoptions += `<option value=${a.substring(0,3)}>${a}</option>`)
-pl=`<select id="player" name="playerlist" ><option value="">Select</option>${plistoptions}</select>`
+pl=`<select id="player" name="playerlist" ><option value="0">Select</option>${plistoptions}</select>`
 document.getElementById('plistdropdown').innerHTML=pl
 document.getElementById('plistincall').innerHTML=pl
 }
@@ -178,7 +182,7 @@ rwepon= document.getElementById('suspectweapon').value
 yesnoresponsee(rplayer, rroom, 'X' )
 yesnoresponsee(rplayer, rwepon, 'X' )
 yesnoresponsee(rplayer, rperson, 'X' )
-resparray.push([caller,rroom,rperson,rwepon,rplayer,'X' ])
+resparray.push([caller,rperson,rroom,rwepon,rplayer,'X' ])
 makeTableHTML(resparray, 'resplog')
 }
 function responseYes(a){
@@ -190,7 +194,7 @@ rwepon= document.getElementById('suspectweapon').value
 yesnoresponsee(rplayer, rroom, 'M' )
 yesnoresponsee(rplayer, rwepon, 'M' )
 yesnoresponsee(rplayer, rperson, 'M' )
-resparray.push([caller,rroom,rperson,rwepon,rplayer,'M'])
+resparray.push([caller,rperson,rroom,rwepon,rplayer,'M'])
 makeTableHTML(resparray, 'resplog')
 document.getElementById('suspectsselection').style.display='block'
 document.getElementById('suspectstable').style.display = 'none'
@@ -201,11 +205,12 @@ function yesnoresponsee(p, s, r ){
 suspIndex = allsus.findIndex(a=> a[0]===s)
 playIndex = allsus[0].findIndex(a=> a===p)
 cstatus = allsus[suspIndex][playIndex]
+//if(cstatus ==='Y'){document.getElementById('cardheldstatus').innerHTML= "Check Response!" ; return false}
 if(cstatus ==='u' || cstatus ==='M'){allsus[suspIndex][playIndex]=r}
 makeTableHTML(allsus, 'allsuspectstable')
 makeTableHTML(oncallarray, 'suspectstable')
 }
-resparray=[['Call','Room','Person','Wepon','RespBy','Response']]
+resparray=[['Call','Person','Room','Wepon','RespBy','Response']]
 $(document).ready(function(){
   $("#btom1").click(function(){$("#allsuspectstable").toggle(1000, function(){});});
   $("#btom4").click(function(){$("#responseslog").toggle(1000, function(){});});
