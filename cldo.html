@@ -1,9 +1,11 @@
 
+
 <!DOCTYPE html>
 <html>
 <head>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
 <meta name="viewport" content="width=device-width,  initial-scale=1.0">
+
 <style>
 input {padding:2px; width:80%; border:1px solid black; background:black; color:white; outline:none; margin-left:10%; margin-right:10%; ; ;}
 ::placeholder {color:yellow}
@@ -16,6 +18,8 @@ td { text-align:center;font-size:small; border-collapse: collapse; border:1px so
 select {width:100%; border:none; height:30px; }
 #bottomdiv {bottom:0; position:fixed; background:green; color:white; width:100%; margin: auto;}
 #allsuspectstable {display:none}
+@media only screen and (min-width: 400px) {body {background: lightblue; width:50%; margin: auto}
+
 </style></head>
 <body >
 <div id='playerlistcreate' style='margin:auto; border:1px solid black; align-items: center;'>
@@ -32,6 +36,7 @@ select {width:100%; border:none; height:30px; }
 </div>
 <div id='allsuspectstable'></div><br>
 <div id='suspectsheldby' style='display:none'>
+<h4>Cards Held By</h4>
 <table border=1><tr style='background:black; color:white; height:30px; '><td>Suspect<td>Held By<tr><td>
 <select id="suspectselect" name="suspectlist" >
 <option value="0">Select</option>
@@ -64,16 +69,18 @@ select {width:100%; border:none; height:30px; }
 <h4 id='optnotselected' style='color:red; font-size:large'></h4>
 
 <div id='shown'>
+<h4>Cards Shown To / By</h4>
 <table>
 <tr><td>Shown By<td>Suspect<td>Shown to
 <tr><td id='shby'>shby<td id='shsus'><td id='shto'>shto
 <tr onclick='shtoby()' style='height:30px; background:black; color:white;'><td colspan=3>Update Shown List
-</table>
+</table><br>
+<h4>Cards Shown To / By Log</h4>
 <div id='shtobytable'></div>
 </div>
 </div>
 <div id='allplayers' style='display:none'>allplayers</div>
-<div id='suspectsselection' style='display:none'><h4>Suspects Guess by a Player. Selct from the dropdown<h4>
+<div id='suspectsselection' style='display:none'><h4>Suspects Guess by a Player.<h4>
 <table border=1><tr style='background:black; color:white; height:30px; '>
 <td >Player<td>Person<td>Room<td>Wepon
 <tr style='height:50px;'><td id='plistincall'><td>
@@ -121,12 +128,13 @@ select {width:100%; border:none; height:30px; }
 <div id='resplog'></div>
 </div>
 <script>
+allselects = document.getElementsByTagName('select')
 
 shbytoarray=[['By','Susp','To']]
 function shtoby(){
-sh1e =document.getElementsByTagName('select')[2]
-sh2e =document.getElementsByTagName('select')[3]
-sh3e =document.getElementsByTagName('select')[4]
+sh1e =allselects[2]
+sh2e =allselects[3]
+sh3e =allselects[4]
 sh1 = sh1e.value
 sh2 = sh2e.value
 sh3 = sh3e.value
@@ -178,8 +186,10 @@ allsus[i][j]='X'}
 allsus[i][foundY]='Y'}}}
 
 function updarray(){
-s=document.getElementById('suspectselect').value
-p=document.getElementById('player').value
+s1=allselects[0]
+p1=allselects[1]
+s= s1.value
+p= p1.value
 if(s*1 === 0 || p*1===0) {document.getElementById('optnotselected').innerHTML='Options Not Selected!'; return false}
 document.getElementById('optnotselected').innerHTML=''
 suspIndex = allsus.findIndex(a=> a[0]===s)
@@ -189,16 +199,24 @@ if(cstatus !='X'){allsus[suspIndex][playIndex]="Y"}
 updateX()
 makeTableHTML(allsus, 'allsuspectstable')
 console.table(allsus)
+s1.selectedIndex=0
+p1.selectedIndex=0
+
 }
 function makeTableHTML(arr, element) {
  newtable= `<table border=1>${arr.reduce((c, o) => c += `<tr>${o.reduce((c, d) => (c += `<td class='${d}'>${d}</td>`), '')}</tr>`, '')}</table> <br>`
  document.getElementById(element).innerHTML=newtable 
 }
 function playersuspected(room,person,wepon){
-room   = document.getElementById('suspectroom').value
-person = document.getElementById('suspectperson').value
-wepon  = document.getElementById('suspectweapon').value
-caller = document.getElementById('plistincall').childNodes[0].value
+s5 =allselects[5]
+s6 =allselects[6]
+s7 =allselects[7]
+s8 =allselects[8]
+caller = s5.value
+person = s6.value
+room   = s7.value
+wepon  = s8.value
+
 if(room*1===0 || person*1 ===0 || wepon*1 ===0 || caller*1 ===0 ){ suspectedh4='Options Not Selected!'; 
 document.getElementById('playercalledlist').innerHTML= suspectedh4
 return false}
@@ -211,6 +229,11 @@ document.getElementById('suspectsselection').style.display='none'
 document.getElementById('suspectstable').style.display = 'block'
 document.getElementById('playerresponses').style.display = 'block'
 document.getElementById('playercalledlist').style.display = 'block'
+//s5.selectedIndex=0
+//s6.selectedIndex=0
+//s7.selectedIndex=0
+//s8.selectedIndex=0
+
 }
 
 function crplist(){
@@ -276,6 +299,10 @@ cstatus = allsus[suspIndex][playIndex]
 if(cstatus ==='u' || cstatus ==='M'){allsus[suspIndex][playIndex]=r}
 makeTableHTML(allsus, 'allsuspectstable')
 makeTableHTML(oncallarray, 'suspectstable')
+//s5.selectedIndex=0
+//s6.selectedIndex=0
+//s7.selectedIndex=0
+//s8.selectedIndex=0
 }
 resparray=[['Call','Person','Room','Wepon','RespBy','Response']]
 $(document).ready(function(){
