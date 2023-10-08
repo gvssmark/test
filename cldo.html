@@ -1,8 +1,3 @@
-
-
-
-
-
 <!DOCTYPE html>
 <html>
 <head>
@@ -317,10 +312,7 @@ yesnoresponsee(rplayer, person, 'M' )
 resparray.push([caller,person,room,wepon,rplayer,'M'])
 makeTableHTML(resparray, 'resplog')
 //document.getElementById('playercalledlist').innerHTML=''
-s5.selectedIndex=0
-s6.selectedIndex=0
-s7.selectedIndex=0
-s8.selectedIndex=0
+
 
 }
 
@@ -329,6 +321,10 @@ document.getElementById('suspectsselection').style.display='block'
 document.getElementById('suspectstable').style.display = 'none'
 document.getElementById('playerresponses').style.display = 'none'
 document.getElementById('playercalledlist').innerHTML=''
+s5.selectedIndex=0
+s6.selectedIndex=0
+s7.selectedIndex=0
+s8.selectedIndex=0
 }
 
 function yesnoresponsee(p, s, r ){
