@@ -150,7 +150,7 @@ sh2 = sh2e.value
 sh3 = sh3e.value
 
 if((sh1*1 !=0) && (sh2*1 !=0) && (sh3*1 !=0)  ){
-shbytoarray.push([sh1,sh2,sh3])
+if(sh1 != sh3){shbytoarray.push([sh1,sh2,sh3])}
 sh1e.selectedIndex=0
 sh2e.selectedIndex=0
 sh3e.selectedIndex=0
