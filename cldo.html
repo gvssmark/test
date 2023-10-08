@@ -1,5 +1,6 @@
 
 
+
 <!DOCTYPE html>
 <html>
 <head>
@@ -16,13 +17,22 @@ td { text-align:center;font-size:small; border-collapse: collapse; border:1px so
 .u {background:pink; color:pink}
 .M {background:yellow; color:yellow}
 select {width:100%; border:none; height:30px; }
-#bottomdiv {bottom:0; position:fixed; background:green; color:white; width:100%; margin: auto;}
-#allsuspectstable {display:none}
-@media only screen and (min-width: 400px) {body {background: lightblue; width:50%; margin: auto}#bottomdiv {width:50%; margin: auto}}
-
+#bottomdiv {left:0; top:0; position:fixed; background:green; color:white; width:100%; margin: auto; display:none; margin:auto; }
+#allsuspectstable {display:none; margin-top:50px;}
+@media only screen and (min-width: 400px) {body {background: lightblue; width:50%; margin: auto}
+#bottomdiv {width:50%; margin: auto}}
+#playerlistcreate{margin:auto; border:1px solid black; align-items: center;}
+#formbtn{margin-left:20%; margin-rigt:20%; width:60%; background:blue; color:white; border:none; height:30px}
+#suspectsheldby{display:none}
+#allplayers{display:none}
+#suspectsselection{display:none}
+#responseslog{display:none}
+h4 {color:red; font-size:large}
+.trclass {background:black; color:white; height:30px; }
+body {overscroll-behavior: contain; }
 </style></head>
 <body >
-<div id='playerlistcreate' style='margin:auto; border:1px solid black; align-items: center;'>
+<div id='playerlistcreate' >
 <form  action="javascript:captureplist();">
 <h4 align='center'>Player Names - Starting with you in clockwise<h4>
 <input type='text' name='pl1' pattern="[a-zA-Z]+"  placeholder='Player 1' required value='gvss'><br><br>
@@ -31,13 +41,13 @@ select {width:100%; border:none; height:30px; }
 <input type='text' name='pl4' pattern="[a-zA-Z]+" placeholder='Player 1' ><br><br>
 <input type='text' name='pl5' pattern="[a-zA-Z]+" placeholder='Player 1' ><br><br>
 <input type='text' name='pl6' pattern="[a-zA-Z]+" placeholder='Player 1' ><br><br>
-<button style='margin-left:20%; margin-rigt:20%; width:60%; background:blue; color:white; border:none; height:30px '>Submit</button>
+<button id='formbtn'>Submit</button>
 </form>
 </div>
 <div id='allsuspectstable'></div><br>
-<div id='suspectsheldby' style='display:none'>
+<div id='suspectsheldby' >
 <h4>Cards Held By</h4>
-<table border=1><tr style='background:black; color:white; height:30px; '><td>Suspect<td>Held By<tr><td>
+<table id='suspectsheldbytable' border=1><tr class='trclass' ><td>Suspect<td>Held By<tr><td>
 <select id="suspectselect" name="suspectlist" >
 <option value="0">Select</option>
 	  	  <option value="Col. Mustard">Col. Mustard</option>
@@ -66,21 +76,21 @@ select {width:100%; border:none; height:30px; }
 <tr style=' color:white; height:30px; '><td  onclick='updarray()' style='background:red'>Update<td style='background:green' onclick='hidesuspectsheldby()'>Done</table>
 <li>Update cards held by you
 <li>Update cards as you suspect
-<h4 id='optnotselected' style='color:red; font-size:large'></h4>
+<h4 id='optnotselected' ></h4>
 
 <div id='shown'>
 <h4>Cards Shown To / By</h4>
 <table>
 <tr><td>Shown By<td>Suspect<td>Shown to
 <tr><td id='shby'>shby<td id='shsus'><td id='shto'>shto
-<tr onclick='shtoby()' style='height:30px; background:black; color:white;'><td colspan=3>Update Shown List
+<tr  class='trclass' onclick='shtoby()' ><td colspan=3>Update Shown List
 </table><br>
 <h4>Cards Shown To / By Log</h4>
 <div id='shtobytable'></div>
 </div>
 </div>
-<div id='allplayers' style='display:none'>allplayers</div>
-<div id='suspectsselection' style='display:none'><h4>Suspects Guess by a Player.<h4>
+<div id='allplayers' >allplayers</div>
+<div id='suspectsselection' ><h4>Suspects Guess by a Player.<h4>
 <table border=1><tr style='background:black; color:white; height:30px; '>
 <td >Player<td>Person<td>Room<td>Wepon
 <tr style='height:50px;'><td id='plistincall'><td>
@@ -116,15 +126,15 @@ select {width:100%; border:none; height:30px; }
 		  <option value="Rope">Rope</option>
 		  <option value="Lead Piping">Lead Piping</option>
 		</select>
-<tr style='height:30px; background:yellow'><td colspan=4 onclick='playersuspected()'>Proceed
+<tr class='trclass' ><td colspan=4 onclick='playersuspected()'>Proceed
 </table>
  </div>       
 <h4 id='playercalledlist'></h4>
 <div id='suspectstable'></div> 
 <div id='playerresponses'></div>
-<div id='bottomdiv' style='display:none'><table><tr><td id='btom1' >Show Table<td id='btom2'>Update<td id='btom3'>Suspect Response<td id='btom4' >Show Log</table></div>
+<div id='bottomdiv' ><table><tr><td id='btom1' >Show Table<td id='btom2'>Update<td id='btom3'>Suspect Response<td id='btom4' >Show Log</table></div>
 </div>
-<div id='responseslog' style='display:none'><h4>Response by Players</h4>
+<div id='responseslog' ><h4>Response by Players</h4>
 <div id='resplog'></div>
 </div>
 <script>
@@ -265,31 +275,37 @@ document.getElementById('playerresponses').innerHTML =`<table border=1>${resptab
 }
 function responseNo(a){
 rplayer = a.substring(1)
-caller = document.getElementById('plistincall').childNodes[0].value
-rroom = document.getElementById('suspectroom').value
-rperson = document.getElementById('suspectperson').value
-rwepon= document.getElementById('suspectweapon').value
-yesnoresponsee(rplayer, rroom, 'X' )
-yesnoresponsee(rplayer, rwepon, 'X' )
-yesnoresponsee(rplayer, rperson, 'X' )
-resparray.push([caller,rperson,rroom,rwepon,rplayer,'X' ])
+caller = s5.value
+person = s6.value
+room   = s7.value
+wepon  = s8.value
+yesnoresponsee(rplayer, room, 'X' )
+yesnoresponsee(rplayer, wepon, 'X' )
+yesnoresponsee(rplayer, person, 'X' )
+resparray.push([caller,person,room,wepon,rplayer,'X' ])
 makeTableHTML(resparray, 'resplog')
 }
 function responseYes(a){
 rplayer = a.substring(1)
-caller = document.getElementById('plistincall').childNodes[0].value
-rroom = document.getElementById('suspectroom').value
-rperson = document.getElementById('suspectperson').value
-rwepon= document.getElementById('suspectweapon').value
-yesnoresponsee(rplayer, rroom, 'M' )
-yesnoresponsee(rplayer, rwepon, 'M' )
-yesnoresponsee(rplayer, rperson, 'M' )
-resparray.push([caller,rperson,rroom,rwepon,rplayer,'M'])
+caller = s5.value
+person = s6.value
+room   = s7.value
+wepon  = s8.value
+
+yesnoresponsee(rplayer, room, 'M' )
+yesnoresponsee(rplayer, wepon, 'M' )
+yesnoresponsee(rplayer, person, 'M' )
+resparray.push([caller,person,room,wepon,rplayer,'M'])
 makeTableHTML(resparray, 'resplog')
 document.getElementById('suspectsselection').style.display='block'
 document.getElementById('suspectstable').style.display = 'none'
 document.getElementById('playerresponses').style.display = 'none'
 document.getElementById('playercalledlist').innerHTML=''
+s5.selectedIndex=0
+s6.selectedIndex=0
+s7.selectedIndex=0
+s8.selectedIndex=0
+
 }
 function yesnoresponsee(p, s, r ){
 suspIndex = allsus.findIndex(a=> a[0]===s)
