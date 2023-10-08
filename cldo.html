@@ -32,6 +32,7 @@ td { text-align:center;font-size:small; border-collapse: collapse; border:1px so
 .X {background:red; color:red}
 .u {background:pink; color:pink}
 .M {background:yellow; color:yellow}
+.s {width:50px; height:30px}
 select {width:100%; border:none; height:30px; }
 #bottomdiv {left:0; top:0; position:fixed; background:green; color:white; width:100%; margin: auto; display:none; margin:auto; }
 #allsuspectstable {display:none; margin-top:50px;}
@@ -46,6 +47,7 @@ select {width:100%; border:none; height:30px; }
 h4 {color:red; font-size:large}
 .trclass {background:black; color:white; height:30px; }
 body {overscroll-behavior: contain; }
+button {border:none; }
 </style></head>
 <body >
 <div id='playerlistcreate' >
@@ -286,7 +288,7 @@ caller = document.getElementById('plistincall').childNodes[0].value
 filteredcallers = allsus[0].filter(a=> a !=caller && a != 'suspect')
 console.table(filteredcallers)
 resptabdata='<tr class="trclass"><td>Response By<td>Response No<td>Response Yes '
-filteredcallers .forEach(a=> resptabdata+= `<tr style='height:40px;' ><td>${a}<td><button  onclick='responseNo(this.id)' id='N${a}'>No</button><td><button onclick='responseYes(this.id)'id='Y${a}'>Yes</button>`)
+filteredcallers .forEach(a=> resptabdata+= `<tr style='height:40px;' ><td>${a}<td><button class='X s'  onclick='responseNo(this.id)' id='N${a}'>No</button><td><button class='M s' onclick='responseYes(this.id)'id='Y${a}'>Yes</button>`)
 document.getElementById('playerresponses').innerHTML =`<table border=1>${resptabdata}<tr class='trclass'><td onclick='confirmyesno()' colspan=3>Confirm</table><br>`
 }
 
