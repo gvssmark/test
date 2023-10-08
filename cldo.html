@@ -305,7 +305,10 @@ yesnoresponsee(rplayer, person, 'X' )
 resparray.push([caller,person,room,wepon,rplayer,'X' ])
 makeTableHTML(resparray, 'resplog')
 yid=`Y${rplayer}`
+nid=`N${rplayer}`
 document.getElementById(yid).disabled=true
+document.getElementById(nid).disabled=true
+
 }
 
 function responseYes(a){
