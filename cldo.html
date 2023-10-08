@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html>
 <head>
@@ -180,7 +181,7 @@ allsus = [   [ 'suspect'],    ['Col. Mustard'],   ['Rev. Green'],   ['Prof. Plum
 function captureplist(){
 plist=''
 allinputs = document.getElementsByTagName('input')
-for (i=0; i<allinputs.length-1; i++){if(allinputs[i].value.length>0){plist += `${allinputs[i].value},`}}
+for (i=0; i<allinputs.length; i++){if(allinputs[i].value.length>0){plist += `${allinputs[i].value},`}}
 plist = plist.slice(0, -1).toUpperCase().split(",") 
 console.log(plist)
 playersarray =plist
@@ -285,11 +286,13 @@ filteredcallers = allsus[0].filter(a=> a !=caller && a != 'suspect')
 console.table(filteredcallers)
 resptabdata='<tr class="trclass"><td>Response By<td>Response No<td>Response Yes '
 filteredcallers .forEach(a=> resptabdata+= `<tr style='height:40px;' ><td>${a}<td onclick='responseNo(this.id)' id='N${a}'>No<td onclick='responseYes(this.id)'id='Y${a}'>Yes`)
-document.getElementById('playerresponses').innerHTML =`<table border=1>${resptabdata}</table><br>`
+document.getElementById('playerresponses').innerHTML =`<table border=1>${resptabdata}<tr class='trclass'><td onclick='confirmyesno()' colspan=3>Confirm</table><br>`
 }
 
-noresponsenumber=0
+///noresponsenumber=filteredcallers.length
 function responseNo(a){
+
+console.log(a)
 rplayer = a.substring(1)
 caller = s5.value
 person = s6.value
@@ -300,8 +303,7 @@ yesnoresponsee(rplayer, wepon, 'X' )
 yesnoresponsee(rplayer, person, 'X' )
 resparray.push([caller,person,room,wepon,rplayer,'X' ])
 makeTableHTML(resparray, 'resplog')
-noresponsenumber++
-if (noresponsenumber === filteredcallers.length){confirmyesno();noresponsenumber=0 }
+
 }
 
 function responseYes(a){
