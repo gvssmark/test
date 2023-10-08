@@ -1,11 +1,29 @@
 
 
 
+
 <!DOCTYPE html>
 <html>
 <head>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
-<meta name="viewport" content="width=device-width,  initial-scale=1.0">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+<script>
+  // Check if the device is in landscape mode
+  if (window.innerHeight < window.innerWidth) {
+    // Change to portrait mode
+    screen.orientation.lock("portrait")
+      .then(function success() {
+        // Request fullscreen mode
+        if (document.documentElement.requestFullscreen) {
+          document.documentElement.requestFullscreen();
+        }
+      })
+      .catch(function error() {
+        console.error("Could not lock orientation to portrait mode.");
+      });
+  }
+</script>
+
 
 <style>
 input {padding:2px; width:80%; border:1px solid black; background:black; color:white; outline:none; margin-left:10%; margin-right:10%; ; ;}
