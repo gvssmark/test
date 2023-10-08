@@ -2,6 +2,7 @@
 
 
 
+
 <!DOCTYPE html>
 <html>
 <head>
@@ -287,9 +288,9 @@ function resptab(){
 caller = document.getElementById('plistincall').childNodes[0].value
 filteredcallers = allsus[0].filter(a=> a !=caller && a != 'suspect')
 console.table(filteredcallers)
-resptabdata=''
+resptabdata='<tr class="trclass"><td>Response By<td>Response No<td>Response Yes '
 filteredcallers .forEach(a=> resptabdata+= `<tr style='height:40px;' ><td>${a}<td onclick='responseNo(this.id)' id='N${a}'>No<td onclick='responseYes(this.id)'id='Y${a}'>Yes`)
-document.getElementById('playerresponses').innerHTML =`<table border=1>${resptabdata}</table><br>`
+document.getElementById('playerresponses').innerHTML =`<table border=1>${resptabdata}<tr class='trclass'><td onclick='confirmyesno()' colspan=3>Confirm</table><br>`
 }
 function responseNo(a){
 rplayer = a.substring(1)
@@ -315,16 +316,21 @@ yesnoresponsee(rplayer, wepon, 'M' )
 yesnoresponsee(rplayer, person, 'M' )
 resparray.push([caller,person,room,wepon,rplayer,'M'])
 makeTableHTML(resparray, 'resplog')
-document.getElementById('suspectsselection').style.display='block'
-document.getElementById('suspectstable').style.display = 'none'
-document.getElementById('playerresponses').style.display = 'none'
-document.getElementById('playercalledlist').innerHTML=''
+//document.getElementById('playercalledlist').innerHTML=''
 s5.selectedIndex=0
 s6.selectedIndex=0
 s7.selectedIndex=0
 s8.selectedIndex=0
 
 }
+
+function confirmyesno(){
+document.getElementById('suspectsselection').style.display='block'
+document.getElementById('suspectstable').style.display = 'none'
+document.getElementById('playerresponses').style.display = 'none'
+document.getElementById('playercalledlist').innerHTML=''
+}
+
 function yesnoresponsee(p, s, r ){
 suspIndex = allsus.findIndex(a=> a[0]===s)
 playIndex = allsus[0].findIndex(a=> a===p)
