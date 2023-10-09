@@ -5,6 +5,7 @@
 <!DOCTYPE html>
 <html>
 <head>
+<title>The Cluedo Game</title>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
 <script>
@@ -41,7 +42,7 @@ select {width:100%; border:none; height:30px; }
 @media only screen and (min-width: 400px) {body {background: lightblue; width:50%; margin: auto}
 #bottomdiv {width:50%; margin: auto}}
 #playerlistcreate{margin:auto; border:1px solid black; align-items: center;}
-#formbtn{margin-left:20%; margin-rigt:20%; width:60%; background:blue; color:white; border:none; height:30px}
+#formbtn{margin-left:20%; margin-right:20%; width:60%; background:blue; color:white; border:none; height:30px}
 #suspectsheldby{display:none}
 #allplayers{display:none}
 #suspectsselection{display:none}
@@ -56,7 +57,7 @@ button {border:none; }
 <body >
 <div id='playerlistcreate' >
 <form  action="javascript:captureplist();">
-<h4 align='center'>Player Names - Starting with you in clockwise<h4>
+<h4 align='center'>Player Names - Starting with you in clockwise</h4>
 <input type='text' name='pl1' pattern="[a-zA-Z]+"  placeholder='Player 1' required value='gvss'><br><br>
 <input type='text' name='pl2' pattern="[a-zA-Z]+" placeholder='Player 2' required value='sundari'><br><br>
 <input type='text' name='pl3' pattern="[a-zA-Z]+" placeholder='Player 3' required value='harini'><br><br>
@@ -111,7 +112,7 @@ button {border:none; }
 </div>
 </div>
 <div id='allplayers' >allplayers</div>
-<div id='suspectsselection' ><h4>Suspects Guess by a Player.<h4>
+<div id='suspectsselection' ><h4>Suspects Guess by a Player.</h4>
 <table border=1><tr style='background:black; color:white; height:30px; '>
 <td >Player<td>Person<td>Room<td>Wepon
 <tr style='height:50px;'><td id='plistincall'><td>
