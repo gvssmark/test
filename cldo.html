@@ -370,15 +370,23 @@ makeTableHTML(oncallarray, 'suspectstable')
 }
 resparray=[['Call','Person','Room','Wepon','RespBy','Response']]
 $(document).ready(function(){
-  $("#btom1").click(function(){$("#allsuspectstable").toggle(1000, function(){});});
+  $("#btom1").click(function(){hidealldivs(),$("#allsuspectstable").toggle(1000, function(){});});
  // $("#btom4").click(function(){$("#responseslog, #logs").toggle(1000, function(){});});
-  $("#btom4").click(function(){$("#logs").toggle(1000, function(){});});
-  $("#btom3").click(function(){$("#suspectsselection").toggle(1000, function(){});});
-  $("#btom2").click(function(){$("#suspectsheldby").toggle(1000, function(){});});
+  $("#btom4").click(function(){hidealldivs(), $("#logs").toggle(1000, function(){});});
+  $("#btom3").click(function(){hidealldivs(), $("#suspectsselection").toggle(1000, function(){});});
+  $("#btom2").click(function(){hidealldivs(), $("#suspectsheldby").toggle(1000, function(){});});
 });
 
 function hidesuspectsdiv(){
 document.getElementById('suspectsselection').style.display='none'
+}
+
+function hidealldivs(){
+document.getElementById('allsuspectstable').style.display='none'
+document.getElementById('logs').style.display='none'
+document.getElementById('suspectsselection').style.display='none'
+document.getElementById('suspectsheldby').style.display='none'
+
 }
 
 </script>
