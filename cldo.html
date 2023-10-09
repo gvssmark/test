@@ -2,6 +2,7 @@
 
 
 
+
 <!DOCTYPE html>
 <html>
 <head>
@@ -96,7 +97,7 @@ button {border:none; }
 		  <option value="Lead Piping">Lead Piping</option>
           </select>
 <td id='plistdropdown'>Held By
-<tr style=' color:white; height:30px; '><td  onclick='updarray()' style='background:red'>Update<td style='background:green' onclick='hidesuspectsheldby()'>Done</table>
+<tr style=' color:white; height:30px; '><td  onclick='updarray()' style='background:red'>Update<td style='background:green' onclick='hidesuspectsheldby(); MeUpdateX()'>Done</table>
 <li>Update cards held by you
 <li>Update cards as you suspect
 <h4 id='optnotselected' ></h4>
@@ -393,7 +394,14 @@ document.getElementById('allsuspectstable').style.display='none'
 document.getElementById('logs').style.display='none'
 document.getElementById('suspectsselection').style.display='none'
 document.getElementById('suspectsheldby').style.display='none'
+}
 
+function MeUpdateX(){
+for(i=0; i<allsus.length; i++){
+if(allsus[i][1]==='u'){allsus[i][1]='X'}
+makeTableHTML(allsus, 'allsuspectstable')
+
+}
 }
 
 </script>
