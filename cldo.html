@@ -1,6 +1,7 @@
 
 
 
+
 <!DOCTYPE html>
 <html>
 <head>
@@ -296,8 +297,13 @@ crsusplist()
 
 crplist()
 function resptab(){
-caller = document.getElementById('plistincall').childNodes[0].value
-filteredcallers = allsus[0].filter(a=> a !=caller && a != 'suspect')
+caller = allselects[5].value
+filteredcallers = allsus[0].filter(a=>  a != 'suspect')
+callerIndex = filteredcallers.findIndex(a=> a===caller)
+for (i=0; i<callerIndex ; i++){a= filteredcallers.shift(); filteredcallers.push(a)}
+filteredcallers.shift()
+
+
 
 resptabdata='<tr class="trclass"><td>Response By<td>Response No<td>Response Yes '
 filteredcallers .forEach(a=> resptabdata+= `<tr style='height:40px;' ><td>${a}<td><button class='X s'  onclick='responseNo(this.id)' id='N${a}'>No</button><td><button class='M s' onclick='responseYes(this.id)'id='Y${a}'>Yes</button>`)
