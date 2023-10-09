@@ -1,5 +1,6 @@
 
 
+
 <!DOCTYPE html>
 <html>
 <head>
@@ -43,22 +44,24 @@ select {width:100%; border:none; height:30px; }
 #suspectsheldby{display:none}
 #allplayers{display:none}
 #suspectsselection{display:none}
-#responseslog{display:none}
+#responseslog{display:block}
 h4 {color:red; font-size:large}
 .trclass {background:black; color:white; height:30px; }
 body {overscroll-behavior: contain; }
 button {border:none; }
+#logs {display:none}
+#shtobytable{display:block}
 </style></head>
 <body >
 <div id='playerlistcreate' >
 <form  action="javascript:captureplist();">
 <h4 align='center'>Player Names - Starting with you in clockwise<h4>
 <input type='text' name='pl1' pattern="[a-zA-Z]+"  placeholder='Player 1' required value='gvss'><br><br>
-<input type='text' name='pl2' pattern="[a-zA-Z]+" placeholder='Player 1' required value='sundari'><br><br>
-<input type='text' name='pl3' pattern="[a-zA-Z]+" placeholder='Player 1' required value='harini'><br><br>
-<input type='text' name='pl4' pattern="[a-zA-Z]+" placeholder='Player 1' ><br><br>
-<input type='text' name='pl5' pattern="[a-zA-Z]+" placeholder='Player 1' ><br><br>
-<input type='text' name='pl6' pattern="[a-zA-Z]+" placeholder='Player 1' ><br><br>
+<input type='text' name='pl2' pattern="[a-zA-Z]+" placeholder='Player 2' required value='sundari'><br><br>
+<input type='text' name='pl3' pattern="[a-zA-Z]+" placeholder='Player 3' required value='harini'><br><br>
+<input type='text' name='pl4' pattern="[a-zA-Z]+" placeholder='Player 4' value='komali' ><br><br>
+<input type='text' name='pl5' pattern="[a-zA-Z]+" placeholder='Player 5' value='mayu'><br><br>
+<input type='text' name='pl6' pattern="[a-zA-Z]+" placeholder='Player 6' value='hemanth'><br><br>
 <button id='formbtn'>Submit</button>
 </form>
 </div>
@@ -103,8 +106,7 @@ button {border:none; }
 <tr><td id='shby'>shby<td id='shsus'><td id='shto'>shto
 <tr  class='trclass' onclick='shtoby()' ><td colspan=3>Update Shown List
 </table><br>
-<h4>Cards Shown To / By Log</h4>
-<div id='shtobytable'></div>
+
 </div>
 </div>
 <div id='allplayers' >allplayers</div>
@@ -150,12 +152,21 @@ button {border:none; }
 <h4 id='playercalledlist'></h4>
 <div id='suspectstable'></div> 
 <div id='playerresponses'></div>
-<div id='bottomdiv' ><table><tr><td id='btom1' >Show Table<td id='btom2'>Update<td id='btom3'>Suspect Response<td id='btom4' >Show Log</table></div>
+<div id='bottomdiv' ><table><tr><td id='btom3'>Suspects<td onclick='hidesuspectsdiv()' id='btom2'>Holdings<td id='btom1' >Data<td  id='btom4' >Logs</table></div>
 </div>
-<div id='responseslog' ><h4>Response by Players</h4>
-<div id='resplog'></div>
+
+
+
+<div id='logs'>
+<h4>Cards Shown To / By Log</h4>
+<div id='shtobytable'>shtobytable</div>
+<h4>Response by Players</h4>
+<div id='resplog'>resplog</div>
 </div>
 <script>
+
+function btm4(){
+document.getElementById('logs').style.display='block'}
 allselects = document.getElementsByTagName('select')
 
 shbytoarray=[['By','Susp','To']]
@@ -186,15 +197,16 @@ plist=''
 allinputs = document.getElementsByTagName('input')
 for (i=0; i<allinputs.length; i++){if(allinputs[i].value.length>0){plist += `${allinputs[i].value},`}}
 plist = plist.slice(0, -1).toUpperCase().split(",") 
-console.log(plist)
+
 playersarray =plist
 for(i=0; i<plist.length; i++){allsus[0].push(plist[i].substring(0,3))}
 for(i=1; i<allsus.length; i++){for(j=0;j<plist.length;j++){allsus[i].push('u')}}
 makeTableHTML(allsus, 'allsuspectstable')
 crplist()
-document.getElementById('suspectsheldby').style.display='block'
+document.getElementById('suspectsheldby').style.display='none'
 document.getElementById('playerlistcreate').style.display='none'
 document.getElementById('bottomdiv').style.display='block'
+document.getElementById('suspectsselection').style.display='block'
 }
 function inital(){
 plist= plist.toUpperCase().split(",")
@@ -226,7 +238,7 @@ cstatus = allsus[suspIndex][playIndex]
 if(cstatus !='X'){allsus[suspIndex][playIndex]="Y"}
 updateX()
 makeTableHTML(allsus, 'allsuspectstable')
-console.table(allsus)
+
 s1.selectedIndex=0
 p1.selectedIndex=0
 
@@ -286,7 +298,7 @@ crplist()
 function resptab(){
 caller = document.getElementById('plistincall').childNodes[0].value
 filteredcallers = allsus[0].filter(a=> a !=caller && a != 'suspect')
-console.table(filteredcallers)
+
 resptabdata='<tr class="trclass"><td>Response By<td>Response No<td>Response Yes '
 filteredcallers .forEach(a=> resptabdata+= `<tr style='height:40px;' ><td>${a}<td><button class='X s'  onclick='responseNo(this.id)' id='N${a}'>No</button><td><button class='M s' onclick='responseYes(this.id)'id='Y${a}'>Yes</button>`)
 document.getElementById('playerresponses').innerHTML =`<table border=1>${resptabdata}<tr class='trclass'><td onclick='confirmyesno()' colspan=3>Confirm</table><br>`
@@ -295,7 +307,7 @@ document.getElementById('playerresponses').innerHTML =`<table border=1>${resptab
 ///noresponsenumber=filteredcallers.length
 function responseNo(a){
 
-console.log(a)
+
 rplayer = a.substring(1)
 caller = s5.value
 person = s6.value
@@ -310,6 +322,8 @@ yid=`Y${rplayer}`
 nid=`N${rplayer}`
 document.getElementById(yid).disabled=true
 document.getElementById(nid).disabled=true
+document.getElementById(yid).style.opacity = "0.5";
+document.getElementById(nid).style.opacity = "0.5";
 
 }
 
@@ -357,10 +371,16 @@ makeTableHTML(oncallarray, 'suspectstable')
 resparray=[['Call','Person','Room','Wepon','RespBy','Response']]
 $(document).ready(function(){
   $("#btom1").click(function(){$("#allsuspectstable").toggle(1000, function(){});});
-  $("#btom4").click(function(){$("#responseslog").toggle(1000, function(){});});
+ // $("#btom4").click(function(){$("#responseslog, #logs").toggle(1000, function(){});});
+  $("#btom4").click(function(){$("#logs").toggle(1000, function(){});});
   $("#btom3").click(function(){$("#suspectsselection").toggle(1000, function(){});});
   $("#btom2").click(function(){$("#suspectsheldby").toggle(1000, function(){});});
 });
+
+function hidesuspectsdiv(){
+document.getElementById('suspectsselection').style.display='none'
+}
+
 </script>
 </body>
 </html>
