@@ -269,6 +269,8 @@ function hidesuspectsheldby(){document.getElementById('suspectsheldby').style.di
 var playersarray=[]
 var plist=''
 allsus = [   [ 'suspect'],    ['Col. Mustard'],   ['Rev. Green'],   ['Prof. Plum'],   ['Miss. Scarlet'],   ['Mrs. White'],   ['Mrs. Peacock'],   ['Dagger'],   ['Spanner'],   ['Candle stick'],   ['Revolver'],   ['Rope'],   ['Lead Piping'],   ['Dining Room'],   ['Kitchen'],   ['Hall'],   ['Lounge'],   ['Ballroom'],    ['Billiard Room'],   ['Study'],   ['Library'],   ['Conservatory']]
+
+	
 function captureplist(){
 plist=''
 allinputs = document.getElementsByTagName('input')
@@ -278,6 +280,7 @@ plist = plist.slice(0, -1).toUpperCase().split(",")
 playersarray =plist
 for(i=0; i<plist.length; i++){allsus[0].push(plist[i].substring(0,3))}
 for(i=1; i<allsus.length; i++){for(j=0;j<plist.length;j++){allsus[i].push('u')}}
+confirmedArray =[]	
 makeTableHTML(allsus, 'allsuspectstable')
 crplist()
 document.getElementById('suspectsheldby').style.display='none'
