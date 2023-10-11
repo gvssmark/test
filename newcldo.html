@@ -1,0 +1,456 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>The Cluedo Game</title>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+<style>
+input {padding:2px; width:80%; border:1px solid black; background:black; color:white; outline:none; margin-left:10%; margin-right:10%; ; ;}
+::placeholder {color:yellow}
+table, th, tr {width:100%;  border:1px solid black; border-collapse: collapse; border: 1px solid; font-size:small;}
+td { text-align:center;font-size:small; border-collapse: collapse; border:1px solid black; }
+.Y {background:green; color:green}
+.X {background:red; color:red}
+.u {background:pink; color:pink}
+.M {background:yellow; color:yellow}
+.m {opacity: 0.5;}
+.s {width:50px; height:30px}
+select {width:100%; border:none; height:30px; }
+#bottomdiv { top:0; position:fixed; background:green; color:white; width:100%; margin: auto; display:none; margin:auto; }
+#allsuspectstable {display:none; margin-top:50px;}
+@media only screen and (min-width: 400px) {body {background: lightblue; width:50%; margin: auto}
+#bottomdiv {width:50%; margin: auto}}
+#playerlistcreate{margin:auto; border:1px solid black; align-items: center;}
+#formbtn{margin-left:20%; margin-right:20%; width:60%; background:blue; color:white; border:none; height:30px}
+#suspectsheldby{display:none}
+#allplayers{display:none}
+#suspectsselection{display:none}
+#responseslog{display:block}
+h4 {color:red; font-size:large}
+.trclass {background:black; color:white; height:30px; }
+body {overscroll-behavior: contain; }
+button {border:none; }
+#logs {display:none}
+#shtobytable{display:block}
+</style></head>
+<body >
+<div id='playerlistcreate' >
+<form  action="javascript:captureplist();">
+<h4 align='center'>Player Names - Starting with you in clockwise</h4>
+<input type='text' name='pl1' pattern="[a-zA-Z]+"  placeholder='Player 1' required value='gvss'><br><br>
+<input type='text' name='pl2' pattern="[a-zA-Z]+" placeholder='Player 2' required value='sundari'><br><br>
+<input type='text' name='pl3' pattern="[a-zA-Z]+" placeholder='Player 3' required value='harini'><br><br>
+<input type='text' name='pl4' pattern="[a-zA-Z]+" placeholder='Player 4' value='komali' ><br><br>
+<input type='text' name='pl5' pattern="[a-zA-Z]+" placeholder='Player 5' value='mayu'><br><br>
+<input type='text' name='pl6' pattern="[a-zA-Z]+" placeholder='Player 6' value='hemanth'><br><br>
+<button id='formbtn'>Submit</button>
+</form>
+</div>
+<div id='allsuspectstable'></div><br>
+<div id='suspectsheldby' >
+<h4>Cards Held By</h4>
+<table id='suspectsheldbytable' border=1><tr class='trclass' ><td>Suspect<td>Held By<tr><td>
+<select id="suspectselect" name="suspectlist" >
+<option value="0">Select</option>
+	  	  <option value="Col. Mustard">Col. Mustard</option>
+		  <option value="Rev. Green">Rev. Green</option>
+		  <option value="Prof. Plum">Prof. Plum</option>
+		  <option value="Miss. Scarlet">Miss. Scarlet</option>
+ 		 <option value="Mrs. White">Mrs. White</option>
+ 		 <option value="Mrs. Peacock">Mrs. Peacock</option>
+ 		 <option value="Dining Room">Dining Room</option>
+ 		 <option value="Kitchen">Kitchen</option>
+  		<option value="Hall">Hall</option>
+  		<option value="Lounge">Lounge</option>
+		  <option value="Ballroom">Ballroom</option>
+          <option value="Billiard Room">Billiard Room</option>
+ 		 <option value="Study">Study</option>
+		  <option value="Library">Library</option>
+		  <option value="Conservatory">Conservatory</option>
+		  <option value="Dagger">Dagger</option>
+  		<option value="Spanner">Spanner</option>
+		  <option value="Candle stick">Candle stick</option>
+		  <option value="Revolver">Revolver</option>
+		  <option value="Rope">Rope</option>
+		  <option value="Lead Piping">Lead Piping</option>
+          </select>
+<td id='plistdropdown'>Held By
+<tr style=' color:white; height:30px; '><td  onclick='updarray()' style='background:red'>Update<td style='background:green' onclick='hidesuspectsheldby(); MeUpdateX()'>Done</table>
+<li>Update cards held by you
+<li>Update cards as you suspect
+<h4 id='optnotselected' ></h4>
+
+<div id='shown'>
+<h4>Cards Shown To / By</h4>
+<table>
+<tr><td>Shown By<td>Suspect<td>Shown to
+<tr><td id='shby'>shby<td id='shsus'><td id='shto'>shto
+<tr  class='trclass' onclick='shtoby()' ><td colspan=3>Update Shown List
+</table><br>
+
+</div>
+</div>
+<div id='allplayers' >allplayers</div>
+<div id='suspectsselection' ><h4>Suspects Guess by a Player.</h4>
+<table border=1><tr style='background:black; color:white; height:30px; '>
+<td >Player<td>Person<td>Room<td>Wepon
+<tr style='height:50px;'><td id='plistincall'><td>
+		  <select id="suspectperson" name="suspectlist" >
+	  	  <option value="0">Select</option>
+	  	  <option value="Col. Mustard">Col. Mustard</option>
+		  <option value="Rev. Green">Rev. Green</option>
+		  <option value="Prof. Plum">Prof. Plum</option>
+		  <option value="Miss. Scarlet">Miss. Scarlet</option>
+ 		 <option value="Mrs. White">Mrs. White</option>
+ 		 <option value="Mrs. Peacock">Mrs. Peacock</option>
+		</select>
+<td>
+<select id="suspectroom" name="suspectroomlist" >
+<option value="0">Select</option>
+ 		 <option value="Dining Room">Dining Room</option>
+ 		 <option value="Kitchen">Kitchen</option>
+  		<option value="Hall">Hall</option>
+  		<option value="Lounge">Lounge</option>
+		  <option value="Ballroom">Ballroom</option>
+ 		 <option value="Study">Study</option>
+ 		 <option value="Billiard Room">Billiard Room</option>
+		  <option value="Library">Library</option>
+		  <option value="Conservatory">Conservatory</option>
+		</select>
+<td>
+<select id="suspectweapon" name="suspectweaponlist" >
+<option value="0">Select</option>
+		  <option value="Dagger">Dagger</option>
+  		<option value="Spanner">Spanner</option>
+		  <option value="Candle stick">Candle stick</option>
+		  <option value="Revolver">Revolver</option>
+		  <option value="Rope">Rope</option>
+		  <option value="Lead Piping">Lead Piping</option>
+		</select>
+<tr class='trclass' ><td colspan=4 onclick='playersuspected()'>Proceed
+</table>
+ </div>       
+<h4 id='playercalledlist'></h4>
+<div id='suspectstable'></div> 
+<div id='playerresponses'></div>
+<div id='bottomdiv' ><table><tr><td id='btom3'>Suspects<td onclick='hidesuspectsdiv()' id='btom2'>Holdings<td id='btom1' >Data<td  id='btom4' >Logs</table></div>
+</div>
+
+
+
+<div id='logs'>
+<h4>Cards Shown To / By Log</h4>
+<div id='shtobytable'>shtobytable</div>
+<h4>Response by Players</h4>
+<div id='resplog'>resplog</div>
+</div>
+
+<div id='chklocalstorage' style='display:none; border:1px solid black;
+  align-items: center; background:blue; font-size:large; color:white;'>
+  <h1 align=center>Culedo Game</h1>
+<br><br> 
+<button onclick='recreate()' style='width:50%; height:50px; margin-left:25%'>Resotre Old Data</button><br><br><br><br>
+<button onclick='norecreate()' style='width:50%;  height:50px; margin-left:25%'>Create New Game</button><br><br><br><br>
+
+</div>
+<script>
+
+localStorage.getItem('allsus') != null ? shrestore() : ""
+
+function shrestore(){
+document.getElementById('chklocalstorage').style.display='block'
+document.getElementById('playerlistcreate').style.display='none'
+}
+
+function norecreate(){
+localStorage.removeItem('allsus')
+localStorage.removeItem('plist')
+localStorage.removeItem('resparray')
+localStorage.removeItem('playersarray')
+localStorage.removeItem('shbytoarray')
+document.getElementById('playerlistcreate').style.display='block'
+document.getElementById('chklocalstorage').style.display='none'
+}
+
+function recreate(){
+allsus=JSON.parse(localStorage.getItem('allsus'))
+plist= JSON.parse(localStorage.getItem('plist'))
+playersarray= JSON.parse(localStorage.getItem('playersarray'))
+resparray = JSON.parse(localStorage.getItem('resparray'))
+shbytoarray=JSON.parse(localStorage.getItem('shbytoarray'))
+playersarray =plist
+makeTableHTML(allsus, 'allsuspectstable')
+crplist()
+document.getElementById('suspectsheldby').style.display='none'
+document.getElementById('playerlistcreate').style.display='none'
+document.getElementById('bottomdiv').style.display='block'
+document.getElementById('suspectsselection').style.display='block'
+makeTableHTML(resparray, 'resplog')
+makeTableHTML(shbytoarray, 'shtobytable')
+document.getElementById('chklocalstorage').style.display='none'
+}
+
+//---------------------
+function btm4(){
+document.getElementById('logs').style.display='block'}
+allselects = document.getElementsByTagName('select')
+
+shbytoarray=[['By','Susp','To']]
+function shtoby(){
+sh1e =allselects[2]
+sh2e =allselects[3]
+sh3e =allselects[4]
+sh1 = sh1e.value
+sh2 = sh2e.value
+sh3 = sh3e.value
+
+if((sh1*1 !=0) && (sh2*1 !=0) && (sh3*1 !=0)  ){
+if(sh1 != sh3){shbytoarray.push([sh1,sh2,sh3])}
+sh1e.selectedIndex=0
+sh2e.selectedIndex=0
+sh3e.selectedIndex=0
+
+}
+addtolocalstorate()
+makeTableHTML(shbytoarray, 'shtobytable')
+}
+
+function hidesuspectsheldby(){document.getElementById('suspectsheldby').style.display='none'; document.getElementById('suspectsselection').style.display='block'}
+var playersarray=[]
+var plist=''
+allsus = [   [ 'suspect'],    ['Col. Mustard'],   ['Rev. Green'],   ['Prof. Plum'],   ['Miss. Scarlet'],   ['Mrs. White'],   ['Mrs. Peacock'],   ['Dagger'],   ['Spanner'],   ['Candle stick'],   ['Revolver'],   ['Rope'],   ['Lead Piping'],   ['Dining Room'],   ['Kitchen'],   ['Hall'],   ['Lounge'],   ['Ballroom'],    ['Billiard Room'],   ['Study'],   ['Library'],   ['Conservatory']]
+function captureplist(){
+plist=''
+allinputs = document.getElementsByTagName('input')
+for (i=0; i<allinputs.length; i++){if(allinputs[i].value.length>0){plist += `${allinputs[i].value},`}}
+plist = plist.slice(0, -1).toUpperCase().split(",") 
+
+playersarray =plist
+for(i=0; i<plist.length; i++){allsus[0].push(plist[i].substring(0,3))}
+for(i=1; i<allsus.length; i++){for(j=0;j<plist.length;j++){allsus[i].push('u')}}
+makeTableHTML(allsus, 'allsuspectstable')
+crplist()
+document.getElementById('suspectsheldby').style.display='none'
+document.getElementById('playerlistcreate').style.display='none'
+document.getElementById('bottomdiv').style.display='block'
+document.getElementById('suspectsselection').style.display='block'
+addtolocalstorate()
+}
+function inital(){
+plist= plist.toUpperCase().split(",")
+playersarray =plist
+for(i=0; i<plist.length; i++){allsus[0].push(plist[i].substring(0,3))}
+for(i=1; i<allsus.length; i++){for(j=0;j<plist.length;j++){allsus[i].push('u')}}
+makeTableHTML(allsus, 'allsuspectstable')
+crplist()
+}
+function updateX(){
+for(i=0; i< allsus.length; i++){
+foundY= allsus[i].findIndex(a=> a==='Y')
+allsusilength = allsus[i].length
+if(foundY >0 ){
+for(j=1; j<allsusilength; j++){
+allsus[i][j]='X'}
+allsus[i][foundY]='Y'
+addtolocalstorate()
+}}}
+
+function updarray(){
+s1=allselects[0]
+p1=allselects[1]
+s= s1.value
+p= p1.value
+if(s*1 === 0 || p*1===0) {document.getElementById('optnotselected').innerHTML='Options Not Selected!'; return false}
+document.getElementById('optnotselected').innerHTML=''
+suspIndex = allsus.findIndex(a=> a[0]===s)
+playIndex = allsus[0].findIndex(a=> a===p)
+cstatus = allsus[suspIndex][playIndex]
+if(cstatus !='X'){allsus[suspIndex][playIndex]="Y"}
+updateX()
+makeTableHTML(allsus, 'allsuspectstable')
+
+s1.selectedIndex=0
+p1.selectedIndex=0
+
+}
+function makeTableHTML(arr, element) {
+ newtable= `<table border=1>${arr.reduce((c, o) => c += `<tr>${o.reduce((c, d) => (c += `<td class='${d}'>${d}</td>`), '')}</tr>`, '')}</table> <br>`
+ document.getElementById(element).innerHTML=newtable 
+}
+function playersuspected(room,person,wepon){
+s5 =allselects[5]
+s6 =allselects[6]
+s7 =allselects[7]
+s8 =allselects[8]
+caller = s5.value
+person = s6.value
+room   = s7.value
+wepon  = s8.value
+
+if(room*1===0 || person*1 ===0 || wepon*1 ===0 || caller*1 ===0 ){ suspectedh4='Options Not Selected!'; 
+document.getElementById('playercalledlist').innerHTML= suspectedh4
+return false}
+suspectedh4 = `Call by ${caller} : <br> ${person} - ${wepon} - ${room}  `
+document.getElementById('playercalledlist').innerHTML= suspectedh4
+oncallarray = allsus.filter(a=> a[0] === room || a[0] === person || a[0] === wepon || a[0] === 'suspect' )
+makeTableHTML(oncallarray, 'suspectstable')
+resptab()
+document.getElementById('suspectsselection').style.display='none'
+document.getElementById('suspectstable').style.display = 'block'
+document.getElementById('playerresponses').style.display = 'block'
+document.getElementById('playercalledlist').style.display = 'block'
+//s5.selectedIndex=0
+//s6.selectedIndex=0
+//s7.selectedIndex=0
+//s8.selectedIndex=0
+
+}
+
+function crplist(){
+plistoptions=''
+playersarray.forEach(a=> plistoptions += `<option value=${a.substring(0,3)}>${a}</option>`)
+pl=`<select id="player" name="playerlist" ><option value="0">Select</option>${plistoptions}</select>`
+document.getElementById('plistdropdown').innerHTML=pl
+document.getElementById('plistincall').innerHTML=pl
+document.getElementById('shby').innerHTML=pl
+document.getElementById('shto').innerHTML=pl
+}
+
+function crsusplist(){
+crsuslist=''
+for(i=1; i<allsus.length; i++){crsuslist+= `<option value="${allsus[i][0]}">${allsus[i][0]}</option>`} 
+sl=`<select  name="playerlist" ><option value='0'>Select</option> ${crsuslist}</select>`
+document.getElementById('shsus').innerHTML=sl
+}
+crsusplist()
+
+crplist()
+
+function resptab(){
+caller = allselects[5].value
+filteredcallers = allsus[0].filter(a=>  a != 'suspect')
+callerIndex = filteredcallers.findIndex(a=> a===caller)
+for (i=0; i<callerIndex ; i++){a= filteredcallers.shift(); filteredcallers.push(a)}
+filteredcallers.shift()
+resptabdata='<tr class="trclass"><td>Response By<td>Response No<td>Response Yes '
+filteredcallers .forEach(a=> resptabdata+= `<tr style='height:40px;' ><td>${a}<td><button class='X s'  onclick='responseNo(this.id)' id='N${a}'>No</button><td><button class='M s' onclick='responseYes(this.id)'id='Y${a}'>Yes</button>`)
+document.getElementById('playerresponses').innerHTML =`<table border=1>${resptabdata}<tr class='trclass'><td onclick='confirmyesno()' colspan=3>Confirm</table><br>`
+}
+
+
+///noresponsenumber=filteredcallers.length
+function responseNo(a){
+
+
+rplayer = a.substring(1)
+caller = s5.value
+person = s6.value
+room   = s7.value
+wepon  = s8.value
+yesnoresponsee(rplayer, room, 'X' )
+yesnoresponsee(rplayer, wepon, 'X' )
+yesnoresponsee(rplayer, person, 'X' )
+resparray.push([caller,person,room,wepon,rplayer,'X' ])
+makeTableHTML(resparray, 'resplog')
+yid=`Y${rplayer}`
+nid=`N${rplayer}`
+
+document.getElementById(yid).disabled=true
+document.getElementById(nid).disabled=true
+document.getElementById(yid).style.opacity = "0.5";
+document.getElementById(nid).style.opacity = "0.5";
+addtolocalstorate()
+}
+
+function responseYes(a){
+rplayer = a.substring(1)
+caller = s5.value
+person = s6.value
+room   = s7.value
+wepon  = s8.value
+
+yesnoresponsee(rplayer, room, 'M' )
+yesnoresponsee(rplayer, wepon, 'M' )
+yesnoresponsee(rplayer, person, 'M' )
+resparray.push([caller,person,room,wepon,rplayer,'M'])
+makeTableHTML(resparray, 'resplog')
+//document.getElementById('playercalledlist').innerHTML=''
+addtolocalstorate()
+diablebuttons()
+//confirmyesno()
+
+}
+
+function diablebuttons(){
+disabledresptabdata='<tr class="trclass"><td>Response By<td>Response No<td>Response Yes '
+filteredcallers .forEach(a=> disabledresptabdata+= `<tr style='height:40px;' ><td>${a}<td><button class='X s m'  >No</button><td><button class='M s m' >Yes</button>`)
+document.getElementById('playerresponses').innerHTML =`<table border=1>${disabledresptabdata}<tr class='trclass'><td onclick='confirmyesno()' colspan=3>Confirm</table><br>`
+}
+
+
+function confirmyesno(){
+document.getElementById('suspectsselection').style.display='block'
+document.getElementById('suspectstable').style.display = 'none'
+document.getElementById('playerresponses').style.display = 'none'
+document.getElementById('playercalledlist').innerHTML=''
+s5.selectedIndex=0
+s6.selectedIndex=0
+s7.selectedIndex=0
+s8.selectedIndex=0
+}
+
+function yesnoresponsee(p, s, r ){
+suspIndex = allsus.findIndex(a=> a[0]===s)
+playIndex = allsus[0].findIndex(a=> a===p)
+cstatus = allsus[suspIndex][playIndex]
+//if(cstatus ==='Y'){document.getElementById('cardheldstatus').innerHTML= "Check Response!" ; return false}
+if(cstatus ==='u' || cstatus ==='M'){allsus[suspIndex][playIndex]=r}
+makeTableHTML(allsus, 'allsuspectstable')
+makeTableHTML(oncallarray, 'suspectstable')
+//s5.selectedIndex=0
+//s6.selectedIndex=0
+//s7.selectedIndex=0
+//s8.selectedIndex=0
+addtolocalstorate()
+}
+resparray=[['Call','Person','Room','Wepon','RespBy','Response']]
+$(document).ready(function(){
+  $("#btom1").click(function(){hidealldivs(),$("#allsuspectstable").toggle(1000, function(){});});
+ // $("#btom4").click(function(){$("#responseslog, #logs").toggle(1000, function(){});});
+  $("#btom4").click(function(){hidealldivs(), $("#logs").toggle(1000, function(){});});
+  $("#btom3").click(function(){hidealldivs(), $("#suspectsselection").toggle(1000, function(){});});
+  $("#btom2").click(function(){hidealldivs(), $("#suspectsheldby").toggle(1000, function(){});});
+});
+
+function hidesuspectsdiv(){
+document.getElementById('suspectsselection').style.display='none'
+}
+
+function hidealldivs(){
+document.getElementById('allsuspectstable').style.display='none'
+document.getElementById('logs').style.display='none'
+document.getElementById('suspectsselection').style.display='none'
+document.getElementById('suspectsheldby').style.display='none'
+}
+
+function MeUpdateX(){
+for(i=0; i<allsus.length; i++){
+if(allsus[i][1]==='u'){allsus[i][1]='X'}
+makeTableHTML(allsus, 'allsuspectstable')
+addtolocalstorate()
+}
+}
+
+
+function addtolocalstorate(){
+localStorage.setItem('allsus',JSON.stringify(allsus))
+localStorage.setItem('plist',JSON.stringify(plist))
+localStorage.setItem('resparray',JSON.stringify(resparray))
+localStorage.setItem('playersarray',JSON.stringify(playersarray))
+localStorage.setItem('shbytoarray',JSON.stringify(shbytoarray))
+}
+
+
+</script>
+</body>
+</html>
