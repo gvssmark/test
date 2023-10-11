@@ -129,7 +129,8 @@ button {border:none; }
 		  <option value="Lead Piping">Lead Piping</option>
 		</select>
 <tr class='trclass' ><td colspan=4 onclick='playersuspected()'>Proceed
-</table>
+</table><br>Suspicion:
+<div id='yessuspects'></div>
  </div>       
 <h4 id='playercalledlist'></h4>
 <div id='suspectstable'></div> 
@@ -206,6 +207,9 @@ if(allsus[i].join('').slice(plist.length*-1).includes("M")){
 suspicionArray.push(allsus[i])
 }
 makeTableHTML(suspicionArray, 'suspicionaTableData')
+makeTableHTML(suspicionArray, 'yessuspects')
+
+
 }
 }
 
