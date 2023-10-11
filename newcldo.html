@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html>
 <head>
@@ -139,8 +140,11 @@ button {border:none; }
 
 
 <div id='logs'>
+<table><tr><td>Shown<td>Suspects<td>Responses</table>
 <h4>Cards Shown To / By Log</h4>
 <div id='shtobytable'>shtobytable</div>
+<h4>Suspect Table</h4>
+<div id='suspicionaTableData'>shtobytable</div>
 <h4>Response by Players</h4>
 <div id='resplog'>resplog</div>
 </div>
@@ -168,16 +172,19 @@ localStorage.removeItem('plist')
 localStorage.removeItem('resparray')
 localStorage.removeItem('playersarray')
 localStorage.removeItem('shbytoarray')
+localStorage.removeItem('suspicionArray')
 document.getElementById('playerlistcreate').style.display='block'
 document.getElementById('chklocalstorage').style.display='none'
 }
-
+suspicionArray=[]
 function recreate(){
 allsus=JSON.parse(localStorage.getItem('allsus'))
 plist= JSON.parse(localStorage.getItem('plist'))
 playersarray= JSON.parse(localStorage.getItem('playersarray'))
 resparray = JSON.parse(localStorage.getItem('resparray'))
 shbytoarray=JSON.parse(localStorage.getItem('shbytoarray'))
+suspicionArray=JSON.parse(localStorage.getItem('suspicionArray'))
+
 playersarray =plist
 makeTableHTML(allsus, 'allsuspectstable')
 crplist()
@@ -188,6 +195,18 @@ document.getElementById('suspectsselection').style.display='block'
 makeTableHTML(resparray, 'resplog')
 makeTableHTML(shbytoarray, 'shtobytable')
 document.getElementById('chklocalstorage').style.display='none'
+makeTableHTML(suspicionArray, 'suspicionaTableData')
+}
+
+function generatesuspectstable(){
+suspicionArray=[]
+suspicionArray.push(allsus[0])    
+for (i=1; i<allsus.length; i++){
+if(allsus[i].join('').slice(plist.length*-1).includes("M")){
+suspicionArray.push(allsus[i])
+}
+makeTableHTML(suspicionArray, 'suspicionaTableData')
+}
 }
 
 //---------------------
@@ -378,7 +397,7 @@ makeTableHTML(resparray, 'resplog')
 addtolocalstorate()
 diablebuttons()
 //confirmyesno()
-
+generatesuspectstable()
 }
 
 function diablebuttons(){
@@ -448,6 +467,8 @@ localStorage.setItem('plist',JSON.stringify(plist))
 localStorage.setItem('resparray',JSON.stringify(resparray))
 localStorage.setItem('playersarray',JSON.stringify(playersarray))
 localStorage.setItem('shbytoarray',JSON.stringify(shbytoarray))
+localStorage.setItem('suspicionArray',JSON.stringify(suspicionArray))
+
 }
 
 
