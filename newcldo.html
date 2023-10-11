@@ -1,4 +1,5 @@
 
+
 <!DOCTYPE html>
 <html>
 <head>
@@ -131,6 +132,9 @@ button {border:none; }
 <tr class='trclass' ><td colspan=4 onclick='playersuspected()'>Proceed
 </table><br>Suspicion:
 <div id='yessuspects'></div>
+<br>Confirmed:
+<div id='confirmedsuspectstable'></div>
+
  </div>       
 <h4 id='playercalledlist'></h4>
 <div id='suspectstable'></div> 
@@ -145,6 +149,8 @@ button {border:none; }
 <h4>Cards Shown To / By Log</h4>
 <div id='shtobytable'>shtobytable</div>
 <h4>Suspect Table</h4>
+Confirmed:
+<div id='confirmedTableData'>confirmed</div>
 <div id='suspicionaTableData'>shtobytable</div>
 <h4>Response by Players</h4>
 <div id='resplog'>resplog</div>
@@ -174,6 +180,8 @@ localStorage.removeItem('resparray')
 localStorage.removeItem('playersarray')
 localStorage.removeItem('shbytoarray')
 localStorage.removeItem('suspicionArray')
+localStorage.removeItem('confirmedArray')
+
 document.getElementById('playerlistcreate').style.display='block'
 document.getElementById('chklocalstorage').style.display='none'
 }
@@ -185,6 +193,8 @@ playersarray= JSON.parse(localStorage.getItem('playersarray'))
 resparray = JSON.parse(localStorage.getItem('resparray'))
 shbytoarray=JSON.parse(localStorage.getItem('shbytoarray'))
 suspicionArray=JSON.parse(localStorage.getItem('suspicionArray'))
+confirmedArray=JSON.parse(localStorage.getItem('confirmedArray'))
+
 
 playersarray =plist
 makeTableHTML(allsus, 'allsuspectstable')
@@ -198,6 +208,10 @@ makeTableHTML(shbytoarray, 'shtobytable')
 document.getElementById('chklocalstorage').style.display='none'
 makeTableHTML(suspicionArray, 'suspicionaTableData')
 makeTableHTML(suspicionArray, 'yessuspects')
+makeTableHTML(confirmedArray, 'confirmedTableData')
+makeTableHTML(confirmedArray, 'confirmedsuspectstable')
+
+//
 }
 
 function generatesuspectstable(){
@@ -209,10 +223,22 @@ suspicionArray.push(allsus[i])
 }
 makeTableHTML(suspicionArray, 'suspicionaTableData')
 makeTableHTML(suspicionArray, 'yessuspects')
-
-
 }
 }
+
+function suspectsConfirmed(){
+confirmedArray=[]
+confirmedArray.push(allsus[0])    
+for (i=1; i<allsus.length; i++){
+if(allsus[i].join('').slice(plist.length*-1) === 'X'.padEnd(plist.length,'X')){
+confirmedArray.push(allsus[i])
+}
+makeTableHTML(confirmedArray, 'confirmedTableData')
+makeTableHTML(confirmedArray, 'confirmedsuspectstable')
+}
+}
+
+
 
 //---------------------
 function btm4(){
@@ -384,6 +410,8 @@ document.getElementById(nid).disabled=true
 document.getElementById(yid).style.opacity = "0.5";
 document.getElementById(nid).style.opacity = "0.5";
 addtolocalstorate()
+suspectsConfirmed()
+
 }
 
 function responseYes(a){
@@ -403,6 +431,8 @@ addtolocalstorate()
 diablebuttons()
 //confirmyesno()
 generatesuspectstable()
+suspectsConfirmed()
+
 }
 
 function diablebuttons(){
@@ -436,6 +466,7 @@ makeTableHTML(oncallarray, 'suspectstable')
 //s7.selectedIndex=0
 //s8.selectedIndex=0
 addtolocalstorate()
+
 }
 resparray=[['Call','Person','Room','Wepon','RespBy','Response']]
 $(document).ready(function(){
@@ -473,7 +504,7 @@ localStorage.setItem('resparray',JSON.stringify(resparray))
 localStorage.setItem('playersarray',JSON.stringify(playersarray))
 localStorage.setItem('shbytoarray',JSON.stringify(shbytoarray))
 localStorage.setItem('suspicionArray',JSON.stringify(suspicionArray))
-
+localStorage.setItem('confirmedArray',JSON.stringify(confirmedArray))
 }
 
 
