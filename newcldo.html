@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html>
 <head>
@@ -5,10 +6,12 @@
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
 <style>
+div {box-shadow: 5px 10px 8px #888888;}
+box-sizing: border-box;
 input {padding:2px; width:80%; border:1px solid black; background:black; color:white; outline:none; margin-left:10%; margin-right:10%; ; ;}
-::placeholder {color:yellow}
-table, th, tr {width:100%;  border:1px solid black; border-collapse: collapse; border: 1px solid; font-size:small;}
-td { text-align:center;font-size:small; border-collapse: collapse; border:1px solid black; }
+::placeholder {color:red}
+table, th, tr {width:100%;  border:1px solid white; border-collapse: collapse; border: 1px solid; font-size:small;}
+td { text-align:center;font-size:small; border-collapse: collapse; border:1px solid white; }
 .Y {background:green; color:green}
 .X {background:red; color:red}
 .u {background:pink; color:pink}
@@ -20,7 +23,7 @@ select {width:100%; border:none; height:30px; }
 #allsuspectstable {display:none; margin-top:50px;}
 @media only screen and (min-width: 400px) {body {background: lightblue; width:50%; margin: auto}
 #bottomdiv {width:50%; margin: auto}}
-#playerlistcreate{margin:auto; border:1px solid black; align-items: center;}
+#playerlistcreate{margin:auto;  align-items: center;}
 #formbtn{margin-left:20%; margin-right:20%; width:60%; background:blue; color:white; border:none; height:30px}
 #suspectsheldby{display:none}
 #allplayers{display:none}
@@ -40,10 +43,10 @@ button {border:none; }
 <input type='text' name='pl1' pattern="[a-zA-Z]+"  placeholder='Player 1' required value='gvss'><br><br>
 <input type='text' name='pl2' pattern="[a-zA-Z]+" placeholder='Player 2' required value='sundari'><br><br>
 <input type='text' name='pl3' pattern="[a-zA-Z]+" placeholder='Player 3' required value='harini'><br><br>
-<input type='text' name='pl4' pattern="[a-zA-Z]+" placeholder='Player 4' value='komali' ><br><br>
-<input type='text' name='pl5' pattern="[a-zA-Z]+" placeholder='Player 5' value='mayu'><br><br>
-<input type='text' name='pl6' pattern="[a-zA-Z]+" placeholder='Player 6' value='hemanth'><br><br>
-<button id='formbtn'>Submit</button>
+<input type='text' name='pl4' pattern="[a-zA-Z]+" placeholder='Player 4' value='' ><br><br>
+<input type='text' name='pl5' pattern="[a-zA-Z]+" placeholder='Player 5' value=''><br><br>
+<input type='text' name='pl6' pattern="[a-zA-Z]+" placeholder='Player 6' value=''><br><br>
+<button id='formbtn'>Submit</button><br><br>
 </form>
 </div>
 <div id='allsuspectstable'></div><br>
@@ -137,7 +140,7 @@ button {border:none; }
 <h4 id='playercalledlist'></h4>
 <div id='suspectstable'></div> 
 <div id='playerresponses'></div>
-<div id='bottomdiv' ><table><tr><td id='btom3'>Suspects<td onclick='hidesuspectsdiv()' id='btom2'>Holdings<td id='btom1' >Data<td  id='btom4' >Logs</table></div>
+<div id='bottomdiv' ><table border=0><tr><td id='btom3'>Suspects<td onclick='hidesuspectsdiv()' id='btom2'>Holdings<td id='btom1' >Data<td  id='btom4' >Logs</table></div>
 </div>
 
 <div id='logs'>
