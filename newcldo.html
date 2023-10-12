@@ -1,10 +1,7 @@
-
-
-
 <!DOCTYPE html>
 <html>
 <head>
-<title>The Cluedo Game</title>
+<title>The New Cluedo Game</title>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
 <style>
@@ -143,8 +140,6 @@ button {border:none; }
 <div id='bottomdiv' ><table><tr><td id='btom3'>Suspects<td onclick='hidesuspectsdiv()' id='btom2'>Holdings<td id='btom1' >Data<td  id='btom4' >Logs</table></div>
 </div>
 
-
-
 <div id='logs'>
 <table><tr><td>Shown<td>Suspects<td>Responses</table>
 <h4>Cards Shown To / By Log</h4>
@@ -164,7 +159,6 @@ Suspcion:
 <br><br> 
 <button onclick='recreate()' style='width:50%; height:50px; margin-left:25%'>Resotre Old Data</button><br><br><br><br>
 <button onclick='norecreate()' style='width:50%;  height:50px; margin-left:25%'>Create New Game</button><br><br><br><br>
-
 </div>
 <script>
 
@@ -183,11 +177,12 @@ localStorage.removeItem('playersarray')
 localStorage.removeItem('shbytoarray')
 localStorage.removeItem('suspicionArray')
 localStorage.removeItem('confirmedArray')
-
 document.getElementById('playerlistcreate').style.display='block'
 document.getElementById('chklocalstorage').style.display='none'
 }
+
 suspicionArray=[]
+
 function recreate(){
 allsus=JSON.parse(localStorage.getItem('allsus'))
 plist= JSON.parse(localStorage.getItem('plist'))
@@ -196,8 +191,6 @@ resparray = JSON.parse(localStorage.getItem('resparray'))
 shbytoarray=JSON.parse(localStorage.getItem('shbytoarray'))
 suspicionArray=JSON.parse(localStorage.getItem('suspicionArray'))
 confirmedArray=JSON.parse(localStorage.getItem('confirmedArray'))
-
-
 playersarray =plist
 makeTableHTML(allsus, 'allsuspectstable')
 crplist()
@@ -212,8 +205,6 @@ makeTableHTML(suspicionArray, 'suspicionaTableData')
 makeTableHTML(suspicionArray, 'yessuspects')
 makeTableHTML(confirmedArray, 'confirmedTableData')
 makeTableHTML(confirmedArray, 'confirmedsuspectstable')
-
-//
 }
 
 function generatesuspectstable(){
@@ -240,14 +231,11 @@ makeTableHTML(confirmedArray, 'confirmedsuspectstable')
 }
 }
 
+function btm4(){document.getElementById('logs').style.display='block'}
 
-
-//---------------------
-function btm4(){
-document.getElementById('logs').style.display='block'}
 allselects = document.getElementsByTagName('select')
-
 shbytoarray=[['By','Susp','To']]
+
 function shtoby(){
 sh1e =allselects[2]
 sh2e =allselects[3]
@@ -255,30 +243,28 @@ sh3e =allselects[4]
 sh1 = sh1e.value
 sh2 = sh2e.value
 sh3 = sh3e.value
-
 if((sh1*1 !=0) && (sh2*1 !=0) && (sh3*1 !=0)  ){
 if(sh1 != sh3){shbytoarray.push([sh1,sh2,sh3])}
 sh1e.selectedIndex=0
 sh2e.selectedIndex=0
 sh3e.selectedIndex=0
-
 }
 addtolocalstorate()
 makeTableHTML(shbytoarray, 'shtobytable')
+makeTableHTML(suspicionArray, 'suspicionaTableData')
+makeTableHTML(suspicionArray, 'yessuspects')
 }
 
 function hidesuspectsheldby(){document.getElementById('suspectsheldby').style.display='none'; document.getElementById('suspectsselection').style.display='block'}
 var playersarray=[]
 var plist=''
 allsus = [   [ 'suspect'],    ['Col. Mustard'],   ['Rev. Green'],   ['Prof. Plum'],   ['Miss. Scarlet'],   ['Mrs. White'],   ['Mrs. Peacock'],   ['Dagger'],   ['Spanner'],   ['Candle stick'],   ['Revolver'],   ['Rope'],   ['Lead Piping'],   ['Dining Room'],   ['Kitchen'],   ['Hall'],   ['Lounge'],   ['Ballroom'],    ['Billiard Room'],   ['Study'],   ['Library'],   ['Conservatory']]
-
 	
 function captureplist(){
 plist=''
 allinputs = document.getElementsByTagName('input')
 for (i=0; i<allinputs.length; i++){if(allinputs[i].value.length>0){plist += `${allinputs[i].value},`}}
 plist = plist.slice(0, -1).toUpperCase().split(",") 
-
 playersarray =plist
 for(i=0; i<plist.length; i++){allsus[0].push(plist[i].substring(0,3))}
 for(i=1; i<allsus.length; i++){for(j=0;j<plist.length;j++){allsus[i].push('u')}}
@@ -291,6 +277,7 @@ document.getElementById('bottomdiv').style.display='block'
 document.getElementById('suspectsselection').style.display='block'
 addtolocalstorate()
 }
+	
 function inital(){
 plist= plist.toUpperCase().split(",")
 playersarray =plist
@@ -299,6 +286,7 @@ for(i=1; i<allsus.length; i++){for(j=0;j<plist.length;j++){allsus[i].push('u')}}
 makeTableHTML(allsus, 'allsuspectstable')
 crplist()
 }
+	
 function updateX(){
 for(i=0; i< allsus.length; i++){
 foundY= allsus[i].findIndex(a=> a==='Y')
@@ -323,15 +311,17 @@ cstatus = allsus[suspIndex][playIndex]
 if(cstatus !='X'){allsus[suspIndex][playIndex]="Y"}
 updateX()
 makeTableHTML(allsus, 'allsuspectstable')
-
+makeTableHTML(suspicionArray, 'suspicionaTableData')
+makeTableHTML(suspicionArray, 'yessuspects')
 s1.selectedIndex=0
 p1.selectedIndex=0
-
 }
+
 function makeTableHTML(arr, element) {
  newtable= `<table border=1>${arr.reduce((c, o) => c += `<tr>${o.reduce((c, d) => (c += `<td class='${d}'>${d}</td>`), '')}</tr>`, '')}</table> <br>`
  document.getElementById(element).innerHTML=newtable 
 }
+
 function playersuspected(room,person,wepon){
 s5 =allselects[5]
 s6 =allselects[6]
@@ -341,7 +331,6 @@ caller = s5.value
 person = s6.value
 room   = s7.value
 wepon  = s8.value
-
 if(room*1===0 || person*1 ===0 || wepon*1 ===0 || caller*1 ===0 ){ suspectedh4='Options Not Selected!'; 
 document.getElementById('playercalledlist').innerHTML= suspectedh4
 return false}
@@ -354,11 +343,6 @@ document.getElementById('suspectsselection').style.display='none'
 document.getElementById('suspectstable').style.display = 'block'
 document.getElementById('playerresponses').style.display = 'block'
 document.getElementById('playercalledlist').style.display = 'block'
-//s5.selectedIndex=0
-//s6.selectedIndex=0
-//s7.selectedIndex=0
-//s8.selectedIndex=0
-
 }
 
 function crplist(){
@@ -392,11 +376,7 @@ filteredcallers .forEach(a=> resptabdata+= `<tr style='height:40px;' ><td>${a}<t
 document.getElementById('playerresponses').innerHTML =`<table border=1>${resptabdata}<tr class='trclass'><td onclick='confirmyesno()' colspan=3>Confirm</table><br>`
 }
 
-
-///noresponsenumber=filteredcallers.length
 function responseNo(a){
-
-
 rplayer = a.substring(1)
 caller = s5.value
 person = s6.value
@@ -409,14 +389,12 @@ resparray.unshift([caller,person,room,wepon,rplayer,'X' ])
 makeTableHTML(resparray, 'resplog')
 yid=`Y${rplayer}`
 nid=`N${rplayer}`
-
 document.getElementById(yid).disabled=true
 document.getElementById(nid).disabled=true
 document.getElementById(yid).style.opacity = "0.5";
 document.getElementById(nid).style.opacity = "0.5";
 addtolocalstorate()
 suspectsConfirmed()
-
 }
 
 function responseYes(a){
@@ -425,7 +403,6 @@ caller = s5.value
 person = s6.value
 room   = s7.value
 wepon  = s8.value
-
 yesnoresponsee(rplayer, room, 'M' )
 yesnoresponsee(rplayer, wepon, 'M' )
 yesnoresponsee(rplayer, person, 'M' )
@@ -434,10 +411,8 @@ makeTableHTML(resparray, 'resplog')
 //document.getElementById('playercalledlist').innerHTML=''
 addtolocalstorate()
 diablebuttons()
-//confirmyesno()
 generatesuspectstable()
 suspectsConfirmed()
-
 }
 
 function diablebuttons(){
@@ -453,7 +428,6 @@ document.getElementById('suspectstable').style.display = 'none'
 document.getElementById('playerresponses').style.display = 'none'
 document.getElementById('playercalledlist').innerHTML=''
 document.getElementById('updateshow').innerHTML=`${rplayer} has shown to you ${person} / ${wepon} / ${room} update data`
-
 s5.selectedIndex=0
 s6.selectedIndex=0
 s7.selectedIndex=0
@@ -475,14 +449,9 @@ function yesnoresponsee(p, s, r ){
 suspIndex = allsus.findIndex(a=> a[0]===s)
 playIndex = allsus[0].findIndex(a=> a===p)
 cstatus = allsus[suspIndex][playIndex]
-//if(cstatus ==='Y'){document.getElementById('cardheldstatus').innerHTML= "Check Response!" ; return false}
 if(cstatus ==='u' || cstatus ==='M'){allsus[suspIndex][playIndex]=r}
 makeTableHTML(allsus, 'allsuspectstable')
 makeTableHTML(oncallarray, 'suspectstable')
-//s5.selectedIndex=0
-//s6.selectedIndex=0
-//s7.selectedIndex=0
-//s8.selectedIndex=0
 }
 	
 resparray=[['Call','Person','Room','Wepon','RespBy','Response']]
@@ -513,7 +482,6 @@ addtolocalstorate()
 }
 }
 
-
 function addtolocalstorate(){
 localStorage.setItem('allsus',JSON.stringify(allsus))
 localStorage.setItem('plist',JSON.stringify(plist))
@@ -523,8 +491,6 @@ localStorage.setItem('shbytoarray',JSON.stringify(shbytoarray))
 localStorage.setItem('suspicionArray',JSON.stringify(suspicionArray))
 localStorage.setItem('confirmedArray',JSON.stringify(confirmedArray))
 }
-
-
 </script>
 </body>
 </html>
