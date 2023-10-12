@@ -251,8 +251,7 @@ sh3e.selectedIndex=0
 }
 addtolocalstorate()
 makeTableHTML(shbytoarray, 'shtobytable')
-makeTableHTML(suspicionArray, 'suspicionaTableData')
-makeTableHTML(suspicionArray, 'yessuspects')
+generatesuspectstable()
 }
 
 function hidesuspectsheldby(){document.getElementById('suspectsheldby').style.display='none'; document.getElementById('suspectsselection').style.display='block'}
@@ -311,8 +310,7 @@ cstatus = allsus[suspIndex][playIndex]
 if(cstatus !='X'){allsus[suspIndex][playIndex]="Y"}
 updateX()
 makeTableHTML(allsus, 'allsuspectstable')
-makeTableHTML(suspicionArray, 'suspicionaTableData')
-makeTableHTML(suspicionArray, 'yessuspects')
+generatesuspectstable()
 s1.selectedIndex=0
 p1.selectedIndex=0
 }
