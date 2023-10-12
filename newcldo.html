@@ -1,5 +1,6 @@
 
 
+
 <!DOCTYPE html>
 <html>
 <head>
@@ -89,7 +90,7 @@ button {border:none; }
 <tr><td id='shby'>shby<td id='shsus'><td id='shto'>shto
 <tr  class='trclass' onclick='shtoby()' ><td colspan=3>Update Shown List
 </table><br>
-
+<p id='updateshow'></p>
 </div>
 </div>
 <div id='allplayers' >allplayers</div>
@@ -451,6 +452,8 @@ document.getElementById('suspectsheldby').style.display='block';
 document.getElementById('suspectstable').style.display = 'none'
 document.getElementById('playerresponses').style.display = 'none'
 document.getElementById('playercalledlist').innerHTML=''
+document.getElementById('updateshow').innerHTML=`${rplayer} has shown to you ${person} / ${wepon} / ${room} update data`
+
 s5.selectedIndex=0
 s6.selectedIndex=0
 s7.selectedIndex=0
@@ -461,6 +464,7 @@ document.getElementById('suspectsselection').style.display='block'
 document.getElementById('suspectstable').style.display = 'none'
 document.getElementById('playerresponses').style.display = 'none'
 document.getElementById('playercalledlist').innerHTML=''
+document.getElementById('updateshow').innerHTML=''
 s5.selectedIndex=0
 s6.selectedIndex=0
 s7.selectedIndex=0
