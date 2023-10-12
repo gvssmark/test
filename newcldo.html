@@ -445,21 +445,8 @@ filteredcallers .forEach(a=> disabledresptabdata+= `<tr style='height:40px;' ><t
 document.getElementById('playerresponses').innerHTML =`<table border=1>${disabledresptabdata}<tr class='trclass'><td onclick='confirmyesno()' colspan=3>Confirm</table><br>`
 }
 
-
 function confirmyesno(){
-document.getElementById('suspectsselection').style.display='block'
-document.getElementById('suspectstable').style.display = 'none'
-document.getElementById('playerresponses').style.display = 'none'
-document.getElementById('playercalledlist').innerHTML=''
-s5.selectedIndex=0
-s6.selectedIndex=0
-s7.selectedIndex=0
-s8.selectedIndex=0
-}
-
-function confirmyesno(){
-
-if(caller === allsus[0][1]) {alert('Update Shown by data and Holding Data');
+if(caller === allsus[0][1]) {
 document.getElementById('suspectsheldby').style.display='block';
 document.getElementById('suspectstable').style.display = 'none'
 document.getElementById('playerresponses').style.display = 'none'
