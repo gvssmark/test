@@ -457,21 +457,29 @@ s7.selectedIndex=0
 s8.selectedIndex=0
 }
 
-function yesnoresponsee(p, s, r ){
-suspIndex = allsus.findIndex(a=> a[0]===s)
-playIndex = allsus[0].findIndex(a=> a===p)
-cstatus = allsus[suspIndex][playIndex]
-//if(cstatus ==='Y'){document.getElementById('cardheldstatus').innerHTML= "Check Response!" ; return false}
-if(cstatus ==='u' || cstatus ==='M'){allsus[suspIndex][playIndex]=r}
-makeTableHTML(allsus, 'allsuspectstable')
-makeTableHTML(oncallarray, 'suspectstable')
-//s5.selectedIndex=0
-//s6.selectedIndex=0
-//s7.selectedIndex=0
-//s8.selectedIndex=0
-addtolocalstorate()
+function confirmyesno(){
 
+if(caller === allsus[0][1]) {alert('Update Shown by data and Holding Data');
+document.getElementById('suspectsheldby').style.display='block';
+document.getElementById('suspectstable').style.display = 'none'
+document.getElementById('playerresponses').style.display = 'none'
+document.getElementById('playercalledlist').innerHTML=''
+s5.selectedIndex=0
+s6.selectedIndex=0
+s7.selectedIndex=0
+s8.selectedIndex=0
 }
+else{
+document.getElementById('suspectsselection').style.display='block'
+document.getElementById('suspectstable').style.display = 'none'
+document.getElementById('playerresponses').style.display = 'none'
+document.getElementById('playercalledlist').innerHTML=''
+s5.selectedIndex=0
+s6.selectedIndex=0
+s7.selectedIndex=0
+s8.selectedIndex=0}
+}
+	
 resparray=[['Call','Person','Room','Wepon','RespBy','Response']]
 $(document).ready(function(){
   $("#btom1").click(function(){hidealldivs(),$("#allsuspectstable").toggle(1000, function(){});});
