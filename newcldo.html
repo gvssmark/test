@@ -466,6 +466,20 @@ s6.selectedIndex=0
 s7.selectedIndex=0
 s8.selectedIndex=0}
 }
+
+function yesnoresponsee(p, s, r ){
+suspIndex = allsus.findIndex(a=> a[0]===s)
+playIndex = allsus[0].findIndex(a=> a===p)
+cstatus = allsus[suspIndex][playIndex]
+//if(cstatus ==='Y'){document.getElementById('cardheldstatus').innerHTML= "Check Response!" ; return false}
+if(cstatus ==='u' || cstatus ==='M'){allsus[suspIndex][playIndex]=r}
+makeTableHTML(allsus, 'allsuspectstable')
+makeTableHTML(oncallarray, 'suspectstable')
+//s5.selectedIndex=0
+//s6.selectedIndex=0
+//s7.selectedIndex=0
+//s8.selectedIndex=0
+}
 	
 resparray=[['Call','Person','Room','Wepon','RespBy','Response']]
 $(document).ready(function(){
