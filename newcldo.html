@@ -1,4 +1,5 @@
 
+
 <!DOCTYPE html>
 <html>
 <head>
@@ -77,7 +78,11 @@ button {border:none; }
 		  <option value="Lead Piping">Lead Piping</option>
           </select>
 <td id='plistdropdown'>Held By
-<tr style=' color:white; height:30px; '><td  onclick='updarray()' style='background:red'>Update<td style='background:green' onclick='hidesuspectsheldby(); MeUpdateX()'>Done</table>
+<tr style=' color:white; height:30px; '><td colspan=2>
+<div onclick='updarray()' style=' height:30px; background:red; font-size:large; '>Update</div>
+
+<div id='maxclickdone' onclick='hidesuspectsheldby(); MeUpdateX()' style=' height:30px; background:green; font-size:large; display:none '>Done</div>
+</table>
 <li>Update all cards held by you and then ONLY click Done
 <li>Update cards as you suspect
 <h4 id='optnotselected' ></h4>
@@ -165,7 +170,7 @@ Suspcion:
 <script>
 
 localStorage.getItem('allsus') != null ? shrestore() : ""
-
+maxcards=''
 function shrestore(){
 document.getElementById('chklocalstorage').style.display='block'
 document.getElementById('playerlistcreate').style.display='none'
@@ -194,6 +199,8 @@ shbytoarray=JSON.parse(localStorage.getItem('shbytoarray'))
 suspicionArray=JSON.parse(localStorage.getItem('suspicionArray'))
 confirmedArray=JSON.parse(localStorage.getItem('confirmedArray'))
 playersarray =plist
+maxcards=JSON.parse(localStorage.getItem('maxcards'))
+
 makeTableHTML(allsus, 'allsuspectstable')
 crplist()
 document.getElementById('suspectsheldby').style.display='none'
@@ -277,6 +284,8 @@ document.getElementById('playerlistcreate').style.display='none'
 document.getElementById('bottomdiv').style.display='block'
 document.getElementById('suspectsheldby').style.display='block'
 addtolocalstorate()
+maxcards=Math.ceil(18/plist.length)
+console.log(maxcards)
 }
 	
 function inital(){
@@ -310,6 +319,15 @@ suspIndex = allsus.findIndex(a=> a[0]===s)
 playIndex = allsus[0].findIndex(a=> a===p)
 cstatus = allsus[suspIndex][playIndex]
 if(cstatus !='X'){allsus[suspIndex][playIndex]="Y"}
+
+if(cstatus ==='u'){
+if(p1.selectedIndex === 1){maxcards--; console.log(maxcards);
+extracards  = 18%plist.length
+if(extracards >0 && maxcards ===1){ document.getElementById('maxclickdone').style.display='block'}
+if(maxcards ===0){ document.getElementById('maxclickdone').style.display='none'; MeUpdateX()}
+}
+
+}
 updateX()
 makeTableHTML(allsus, 'allsuspectstable')
 generatesuspectstable()
@@ -475,8 +493,13 @@ document.getElementById('suspectsheldby').style.display='none'
 }
 
 function MeUpdateX(){
+
 for(i=0; i<allsus.length; i++){
 if(allsus[i][1]==='u'){allsus[i][1]='X'}
+
+document.getElementById('maxclickdone').style.display='none'
+//allselects[1].remove(0)
+//remove(x.selectedIndex)
 makeTableHTML(allsus, 'allsuspectstable')
 addtolocalstorate()
 }
@@ -490,6 +513,8 @@ localStorage.setItem('playersarray',JSON.stringify(playersarray))
 localStorage.setItem('shbytoarray',JSON.stringify(shbytoarray))
 localStorage.setItem('suspicionArray',JSON.stringify(suspicionArray))
 localStorage.setItem('confirmedArray',JSON.stringify(confirmedArray))
+localStorage.setItem('maxcards',JSON.stringify(maxcards))
+
 }
 </script>
 </body>
