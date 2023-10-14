@@ -1,6 +1,3 @@
-
-
-
 <!DOCTYPE html>
 <html>
 <head>
@@ -406,7 +403,7 @@ wepon  = s8.value
 yesnoresponsee(rplayer, room, 'X' )
 yesnoresponsee(rplayer, wepon, 'X' )
 yesnoresponsee(rplayer, person, 'X' )
-resparray.unshift([caller,person,room,wepon,rplayer,'X' ])
+resparray.splice(1, 0,[caller,person,room,wepon,rplayer,'X'])
 makeTableHTML(resparray, 'resplog')
 yid=`Y${rplayer}`
 nid=`N${rplayer}`
@@ -427,7 +424,7 @@ wepon  = s8.value
 yesnoresponsee(rplayer, room, 'M' )
 yesnoresponsee(rplayer, wepon, 'M' )
 yesnoresponsee(rplayer, person, 'M' )
-resparray.unshift([caller,person,room,wepon,rplayer,'M'])
+resparray.splice(1, 0,[caller,person,room,wepon,rplayer,'M'])
 makeTableHTML(resparray, 'resplog')
 //document.getElementById('playercalledlist').innerHTML=''
 addtolocalstorate()
