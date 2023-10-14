@@ -1,5 +1,6 @@
 
 
+
 <!DOCTYPE html>
 <html>
 <head>
@@ -285,7 +286,7 @@ document.getElementById('bottomdiv').style.display='block'
 document.getElementById('suspectsheldby').style.display='block'
 addtolocalstorate()
 maxcards=Math.ceil(18/plist.length)
-
+cardsheld(plist.length)
 }
 	
 function inital(){
@@ -323,8 +324,10 @@ if(cstatus !='X'){allsus[suspIndex][playIndex]="Y"}
 if(cstatus ==='u'){
 if(p1.selectedIndex === 1){maxcards--; ;
 extracards  = 18%plist.length
+document.getElementById('optnotselected').innerHTML=`You are to update ${maxcards} cards`
 if(extracards >0 && maxcards ===1){ document.getElementById('maxclickdone').style.display='block'}
-if(maxcards ===0){ document.getElementById('maxclickdone').style.display='none'; MeUpdateX()}
+if(maxcards ===0){ document.getElementById('maxclickdone').style.display='none'; MeUpdateX()
+document.getElementById('optnotselected').innerHTML=''}
 }
 
 }
@@ -502,6 +505,7 @@ document.getElementById('maxclickdone').style.display='none'
 //remove(x.selectedIndex)
 makeTableHTML(allsus, 'allsuspectstable')
 addtolocalstorate()
+document.getElementById('optnotselected').innerHTML=''
 }
 }
 
@@ -514,7 +518,13 @@ localStorage.setItem('shbytoarray',JSON.stringify(shbytoarray))
 localStorage.setItem('suspicionArray',JSON.stringify(suspicionArray))
 localStorage.setItem('confirmedArray',JSON.stringify(confirmedArray))
 localStorage.setItem('maxcards',JSON.stringify(maxcards))
+}
 
+function cardsheld(a){
+heldbyyou = 18%a !=0 ? `You may be holding ${Math.ceil(18/a)} cards! Update all` : `You are holding ${18/a} cards! Update all`
+//return 
+document.getElementById('optnotselected').innerHTML=heldbyyou
+    
 }
 </script>
 </body>
