@@ -415,6 +415,7 @@ addtolocalstorate()
 diablebuttons()
 generatesuspectstable()
 suspectsConfirmed()
+//what()
 }
 
 function diablebuttons(){
@@ -445,6 +446,7 @@ s5.selectedIndex=0
 s6.selectedIndex=0
 s7.selectedIndex=0
 s8.selectedIndex=0}
+what()
 }
 
 function yesnoresponsee(p, s, r ){
@@ -497,6 +499,36 @@ localStorage.setItem('maxcards',JSON.stringify(maxcards))
 function cardsheld(a){
 heldbyyou = 18%a !=0 ? `You may be holding ${Math.floor(18/a)} or ${Math.ceil(18/a)} cards! Update all` : `You are holding ${18/a} cards! Update all`
 document.getElementById('optnotselected').innerHTML=heldbyyou }
+
+
+function what(){
+c0= allsus[0].findIndex(a=> a===resparray[1][0])
+ //callerIndex:
+c1= allsus.findIndex(a=> a[0]===resparray[1][1])
+ //suspects:
+c2= allsus.findIndex(a=> a[0]===resparray[1][2])
+ //suspects:
+c3= allsus.findIndex(a=> a[0]===resparray[1][3])
+ //suspects:
+c4= allsus[0].findIndex(a=> a===resparray[1][4])
+ //resp index
+c1value = allsus[c1][c4] //what is the value for each suspect:
+c2value = allsus[c2][c4] //what is the value for each suspect:
+c3value = allsus[c3][c4] //what is the value for each suspect:
+allcs = c1value+c2value+c3value //join
+howmanyMs = allcs.match(/M/gi).length
+ //howmany m's are there
+msg='DO NOT KNOW'
+if (howmanyMs === 1){
+cposition = allcs.indexOf('M')
++1;
+whatisshown = resparray[1][cposition];
+msg= `${allsus[0][c4]} has shown ${whatisshown} to ${allsus[0][c0]} Update it!`
+console.log (msg)}
+document.getElementById('updateshow').innerHTML = msg
+document.getElementById('suspectsheldby').style.display='block'
+document.getElementById('suspectsselection').style.display='none'
+}
 </script>
 </body>
 </html>
