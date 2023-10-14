@@ -285,7 +285,7 @@ document.getElementById('bottomdiv').style.display='block'
 document.getElementById('suspectsheldby').style.display='block'
 addtolocalstorate()
 maxcards=Math.ceil(18/plist.length)
-console.log(maxcards)
+
 }
 	
 function inital(){
@@ -321,7 +321,7 @@ cstatus = allsus[suspIndex][playIndex]
 if(cstatus !='X'){allsus[suspIndex][playIndex]="Y"}
 
 if(cstatus ==='u'){
-if(p1.selectedIndex === 1){maxcards--; console.log(maxcards);
+if(p1.selectedIndex === 1){maxcards--; ;
 extracards  = 18%plist.length
 if(extracards >0 && maxcards ===1){ document.getElementById('maxclickdone').style.display='block'}
 if(maxcards ===0){ document.getElementById('maxclickdone').style.display='none'; MeUpdateX()}
