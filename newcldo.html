@@ -78,13 +78,11 @@ button {border:none; }
 <td id='plistdropdown'>Held By
 <tr style=' color:white; height:30px; '><td colspan=2>
 <div onclick='updarray()' style=' height:30px; background:red; font-size:large; '>Update</div>
-
 <div id='maxclickdone' onclick='hidesuspectsheldby(); MeUpdateX()' style=' height:30px; background:green; font-size:large; display:none '>Done</div>
 </table>
 <li>Update all cards held by you and then ONLY click Done
 <li>Update cards as you suspect
 <h4 id='optnotselected' ></h4>
-
 <div id='shown'>
 <h4>Cards Shown To / By</h4>
 <table>
@@ -137,14 +135,12 @@ button {border:none; }
 <div id='yessuspects'></div>
 <br>Confirmed:
 <div id='confirmedsuspectstable'></div>
-
  </div>       
 <h4 id='playercalledlist'></h4>
 <div id='suspectstable'></div> 
 <div id='playerresponses'></div>
 <div id='bottomdiv' ><table style='border:none; font-size:large;'><tr ><td id='btom3'>Suspects<td onclick='hidesuspectsdiv()' id='btom2'>Holdings<td id='btom1' >Data<td  id='btom4' >Logs</table></div>
 </div>
-
 <div id='logs'>
 <table><tr><td>Shown<td>Suspects<td>Responses</table>
 <h4>Cards Shown To / By Log</h4>
@@ -183,8 +179,7 @@ localStorage.removeItem('shbytoarray')
 localStorage.removeItem('suspicionArray')
 localStorage.removeItem('confirmedArray')
 document.getElementById('playerlistcreate').style.display='block'
-document.getElementById('chklocalstorage').style.display='none'
-}
+document.getElementById('chklocalstorage').style.display='none'}
 
 suspicionArray=[]
 
@@ -219,24 +214,18 @@ suspicionArray=[]
 suspicionArray.push(allsus[0])    
 for (i=1; i<allsus.length; i++){
 if(allsus[i].join('').slice(plist.length*-1).includes("M")){
-suspicionArray.push(allsus[i])
-}
+suspicionArray.push(allsus[i])}
 makeTableHTML(suspicionArray, 'suspicionaTableData')
-makeTableHTML(suspicionArray, 'yessuspects')
-}
-}
+makeTableHTML(suspicionArray, 'yessuspects')}}
 
 function suspectsConfirmed(){
 confirmedArray=[]
 confirmedArray.push(allsus[0])    
 for (i=1; i<allsus.length; i++){
 if(allsus[i].join('').slice(plist.length*-1) === 'X'.padEnd(plist.length,'X')){
-confirmedArray.push(allsus[i])
-}
+confirmedArray.push(allsus[i])}
 makeTableHTML(confirmedArray, 'confirmedTableData')
-makeTableHTML(confirmedArray, 'confirmedsuspectstable')
-}
-}
+makeTableHTML(confirmedArray, 'confirmedsuspectstable')}}
 
 function btm4(){document.getElementById('logs').style.display='block'}
 
@@ -283,8 +272,7 @@ document.getElementById('bottomdiv').style.display='block'
 document.getElementById('suspectsheldby').style.display='block'
 addtolocalstorate()
 maxcards=Math.ceil(18/plist.length)
-cardsheld(plist.length)
-}
+cardsheld(plist.length)}
 	
 function inital(){
 plist= plist.toUpperCase().split(",")
@@ -317,7 +305,6 @@ suspIndex = allsus.findIndex(a=> a[0]===s)
 playIndex = allsus[0].findIndex(a=> a===p)
 cstatus = allsus[suspIndex][playIndex]
 if(cstatus !='X'){allsus[suspIndex][playIndex]="Y"}
-
 if(cstatus ==='u'){
 if(p1.selectedIndex === 1){maxcards--; ;
 extracards  = 18%plist.length
@@ -326,19 +313,16 @@ if(extracards >0 && maxcards ===1){ document.getElementById('maxclickdone').styl
 if(maxcards ===0){ document.getElementById('maxclickdone').style.display='none'; MeUpdateX()
 document.getElementById('optnotselected').innerHTML=''}
 }
-
 }
 updateX()
 makeTableHTML(allsus, 'allsuspectstable')
 generatesuspectstable()
 s1.selectedIndex=0
-p1.selectedIndex=0
-}
+p1.selectedIndex=0}
 
 function makeTableHTML(arr, element) {
  newtable= `<table border=1>${arr.reduce((c, o) => c += `<tr>${o.reduce((c, d) => (c += `<td class='${d}'>${d}</td>`), '')}</tr>`, '')}</table> <br>`
- document.getElementById(element).innerHTML=newtable 
-}
+ document.getElementById(element).innerHTML=newtable }
 
 function playersuspected(room,person,wepon){
 s5 =allselects[5]
@@ -475,15 +459,12 @@ makeTableHTML(oncallarray, 'suspectstable')
 resparray=[['Call','Person','Room','Wepon','RespBy','Response']]
 $(document).ready(function(){
   $("#btom1").click(function(){hidealldivs(),$("#allsuspectstable").toggle(1000, function(){});});
- // $("#btom4").click(function(){$("#responseslog, #logs").toggle(1000, function(){});});
   $("#btom4").click(function(){hidealldivs(), $("#logs").toggle(1000, function(){});});
   $("#btom3").click(function(){hidealldivs(), $("#suspectsselection").toggle(1000, function(){});});
   $("#btom2").click(function(){hidealldivs(), $("#suspectsheldby").toggle(1000, function(){});});
 });
 
-function hidesuspectsdiv(){
-document.getElementById('suspectsselection').style.display='none'
-}
+function hidesuspectsdiv(){document.getElementById('suspectsselection').style.display='none'}
 
 function hidealldivs(){
 document.getElementById('allsuspectstable').style.display='none'
@@ -493,13 +474,9 @@ document.getElementById('suspectsheldby').style.display='none'
 }
 
 function MeUpdateX(){
-
 for(i=0; i<allsus.length; i++){
 if(allsus[i][1]==='u'){allsus[i][1]='X'}
-
 document.getElementById('maxclickdone').style.display='none'
-//allselects[1].remove(0)
-//remove(x.selectedIndex)
 makeTableHTML(allsus, 'allsuspectstable')
 addtolocalstorate()
 document.getElementById('optnotselected').innerHTML=''
@@ -518,11 +495,8 @@ localStorage.setItem('maxcards',JSON.stringify(maxcards))
 }
 
 function cardsheld(a){
-heldbyyou = 18%a !=0 ? `You may be holding ${Math.ceil(18/a)} cards! Update all` : `You are holding ${18/a} cards! Update all`
-//return 
-document.getElementById('optnotselected').innerHTML=heldbyyou
-    
-}
+heldbyyou = 18%a !=0 ? `You may be holding ${Math.floor(18/a)} or ${Math.ceil(18/a)} cards! Update all` : `You are holding ${18/a} cards! Update all`
+document.getElementById('optnotselected').innerHTML=heldbyyou }
 </script>
 </body>
 </html>
