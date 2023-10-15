@@ -518,7 +518,8 @@ c1value = allsus[c1][c4] //what is the value for each suspect:
 c2value = allsus[c2][c4] //what is the value for each suspect:
 c3value = allsus[c3][c4] //what is the value for each suspect:
 allcs = c1value+c2value+c3value //join
-howmanyMs = allcs.match(/M/gi).length
+//howmanyMs = allcs.match(/M/gi).length
+howmanyMs = allcs.indexOf('M') >=0 ? allcs.match(/M/gi).length : 0
 //howmanyXs = allcs.match(/X/gi).length
 howmanyXs = allcs.indexOf('X') >=0 ? allcs.match(/X/gi).length : 0
  //howmany m's are there
