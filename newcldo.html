@@ -519,12 +519,12 @@ c2value = allsus[c2][c4] //what is the value for each suspect:
 c3value = allsus[c3][c4] //what is the value for each suspect:
 allcs = c1value+c2value+c3value //join
 howmanyMs = allcs.match(/M/gi).length
-howmanyXs = allcs.match(/X/gi).length
+//howmanyXs = allcs.match(/X/gi).length
+howmanyXs = allcs.indexOf('X') >0 ? allcs.match(/X/gi).length : 0
  //howmany m's are there
 msg='DO NOT KNOW'
 if (howmanyMs === 1 && howmanyXs ===2){
-cposition = allcs.indexOf('M')
-+1;
+cposition = allcs.indexOf('M')+1;
 whatisshown = resparray[1][cposition];
 msg= `${allsus[0][c4]} has shown ${whatisshown} to ${allsus[0][c0]} Update it!`
 console.log (msg)}
