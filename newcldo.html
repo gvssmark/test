@@ -1,5 +1,6 @@
 
 
+
 <!DOCTYPE html>
 <html>
 <head>
@@ -19,7 +20,8 @@ td { text-align:center;font-size:small; border-collapse: collapse; border:1px so
 .m {opacity: 0.5;}
 .s {width:50px; height:30px}
 select {width:100%; border:none; height:30px; }
-#bottomdiv { top:0; position:fixed;  background:green; color:white; width:100%; margin: auto; display:none; margin:auto; }
+#bottomdiv { top:0; position:fixed;  ; color:white; width:100%; margin: auto; display:none; margin:auto; }
+#bottomdiv > table  { border:1px solid white; background:green; font-size:x-large;  }
 #allsuspectstable {display:none; margin-top:50px;}
 @media only screen and (min-width: 400px) {body {background: lightblue; width:50%; margin: auto}
 #bottomdiv {width:50%; margin: auto}}
@@ -119,7 +121,7 @@ button {border:none; }
 <h4 id='playercalledlist'></h4>
 <div id='suspectstable'></div> 
 <div id='playerresponses'></div>
-<div id='bottomdiv' ><table style='border:none; font-size:large;'><tr ><td id='btom3'>Suspects<td onclick='hidesuspectsdiv(); cardsHeldByFiltered(); onchangecardshown()' id='btom2'>Holdings<td id='btom1' >Data<td  id='btom4' >Logs</table></div>
+<div id='bottomdiv' ><table style=' font-size:large; '><tr style='height:30px;' ><td id='btom3'>Suspects<td onclick='hidesuspectsdiv(); cardsHeldByFiltered(); onchangecardshown()' id='btom2'>Holdings<td id='btom1' >Data<td  id='btom4' >Logs</table></div>
 </div>
 <div id='logs'>
 <table><tr><td>Shown<td>Suspects<td>Responses</table>
