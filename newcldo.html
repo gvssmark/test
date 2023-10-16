@@ -1,4 +1,5 @@
 
+
 <!DOCTYPE html>
 <html>
 <head>
@@ -53,32 +54,10 @@ button {border:none; }
 <h4>Cards Held By</h4>
 <table id='suspectsheldbytable' border=1><tr class='trclass' ><td>Suspect<td>Held By<tr><td>
 <select id="suspectselect" name="suspectlist" >
-<option value="0">Select</option>
-	  	  <option value="Col. Mustard">Col. Mustard</option>
-		  <option value="Rev. Green">Rev. Green</option>
-		  <option value="Prof. Plum">Prof. Plum</option>
-		  <option value="Miss. Scarlet">Miss. Scarlet</option>
- 		 <option value="Mrs. White">Mrs. White</option>
- 		 <option value="Mrs. Peacock">Mrs. Peacock</option>
- 		 <option value="Dining Room">Dining Room</option>
- 		 <option value="Kitchen">Kitchen</option>
-  		<option value="Hall">Hall</option>
-  		<option value="Lounge">Lounge</option>
-		  <option value="Ballroom">Ballroom</option>
-          <option value="Billiard Room">Billiard Room</option>
- 		 <option value="Study">Study</option>
-		  <option value="Library">Library</option>
-		  <option value="Conservatory">Conservatory</option>
-		  <option value="Dagger">Dagger</option>
-  		<option value="Spanner">Spanner</option>
-		  <option value="Candle stick">Candle stick</option>
-		  <option value="Revolver">Revolver</option>
-		  <option value="Rope">Rope</option>
-		  <option value="Lead Piping">Lead Piping</option>
-          </select>
+        
 <td id='plistdropdown'>Held By
 <tr style=' color:white; height:30px; '><td colspan=2>
-<div onclick='updarray()' style=' height:30px; background:red; font-size:large; '>Update</div>
+<div onclick='updarray(); cardsHeldByFiltered(); onchangecardshown()' style=' height:30px; background:red; font-size:large; '>Update</div>
 <div id='maxclickdone' onclick='hidesuspectsheldby(); MeUpdateX()' style=' height:30px; background:green; font-size:large; display:none '>Done</div>
 </table>
 <li>Update all cards held by you and then ONLY click Done
@@ -88,7 +67,7 @@ button {border:none; }
 <h4>Cards Shown To / By</h4>
 <table>
 <tr><td>Shown By<td>Suspect<td>Shown to
-<tr><td id='shby'>shby<td id='shsus'><td id='shto'>shto
+<tr><td width=33% id='shby'>shby<td  width=33% id='shsus' ><td  width=33% id='shto'>shto
 <tr  class='trclass' onclick='shtoby()' ><td colspan=3>Update Shown List
 </table><br>
 <p id='updateshow'></p>
@@ -140,7 +119,7 @@ button {border:none; }
 <h4 id='playercalledlist'></h4>
 <div id='suspectstable'></div> 
 <div id='playerresponses'></div>
-<div id='bottomdiv' ><table style='border:none; font-size:large;'><tr ><td id='btom3'>Suspects<td onclick='hidesuspectsdiv()' id='btom2'>Holdings<td id='btom1' >Data<td  id='btom4' >Logs</table></div>
+<div id='bottomdiv' ><table style='border:none; font-size:large;'><tr ><td id='btom3'>Suspects<td onclick='hidesuspectsdiv(); cardsHeldByFiltered(); onchangecardshown()' id='btom2'>Holdings<td id='btom1' >Data<td  id='btom4' >Logs</table></div>
 </div>
 <div id='logs'>
 <table><tr><td>Shown<td>Suspects<td>Responses</table>
@@ -352,12 +331,22 @@ document.getElementById('playercalledlist').style.display = 'block'
 function crplist(){
 plistoptions=''
 playersarray.forEach(a=> plistoptions += `<option value=${a.substring(0,3)}>${a}</option>`)
-pl=`<select id="player" name="playerlist" ><option value="0">Select</option>${plistoptions}</select>`
+pl=`<select id="player" name="playerlist"  ><option value="0">Select</option>${plistoptions}</select>`
 document.getElementById('plistdropdown').innerHTML=pl
 document.getElementById('plistincall').innerHTML=pl
-document.getElementById('shby').innerHTML=pl
 document.getElementById('shto').innerHTML=pl
+crplistforcardsshown()
 }
+
+
+function crplistforcardsshown(){
+let plistoptions=''
+playersarray.forEach(a=> plistoptions += `<option value=${a.substring(0,3)}>${a}</option>`)
+let pl=`<select id="player" name="playerlist" onchange=" onchangecardshown(this.selectedIndex)" ><option value="0">Select</option>${plistoptions}</select>`
+document.getElementById('shby').innerHTML=pl
+}
+
+crplistforcardsshown()
 
 function crsusplist(){
 crsuslist=''
@@ -465,7 +454,7 @@ $(document).ready(function(){
   $("#btom1").click(function(){hidealldivs(),$("#allsuspectstable").toggle(1000, function(){});});
   $("#btom4").click(function(){hidealldivs(), $("#logs").toggle(1000, function(){});});
   $("#btom3").click(function(){hidealldivs(), $("#suspectsselection").toggle(1000, function(){});});
-  $("#btom2").click(function(){hidealldivs(), $("#suspectsheldby").toggle(1000, function(){});});
+  $("#btom2").click(function(){hidealldivs(); $("#suspectsheldby").toggle(1000, function(){});});
 });
 
 function hidesuspectsdiv(){document.getElementById('suspectsselection').style.display='none'}
@@ -533,14 +522,33 @@ console.log (msg)}
 
 if (howmanyYs >= 1 ){
 msg= "Shown some suspect"
-
 }
-
-
 document.getElementById('updateshow').innerHTML = msg
 document.getElementById('suspectsheldby').style.display='block'
 document.getElementById('suspectsselection').style.display='none'
 }
+
+function cardsHeldByFiltered(){
+let slist = '<select><option value="0">Select</option>'
+for(i=1; i<allsus.length; i++){
+if(!allsus[i].join("").slice(plist.length*-1).includes("Y")){
+slist  +=`<option value='${allsus[i][0]}'>${allsus[i][0]}</option>`
+}
+allselects[0].innerHTML = slist + '</select>'
+}}
+
+cardsHeldByFiltered()
+
+function onchangecardshown(a){
+let list = `<select ><option value="0">Select</option>`
+for(i=0; i<allsus.length; i++){
+if(allsus[i][a] ==="Y"){list  +=`<option value='${allsus[i][0]}'>${allsus[i][0]}</option>`
+}
+allselects[3].innerHTML = list + '</select>'
+}}
+
+ onchangecardshown(1)
+
 </script>
 </body>
 </html>
