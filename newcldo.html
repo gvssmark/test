@@ -457,7 +457,7 @@ $(document).ready(function(){
   $("#btom2").click(function(){hidealldivs(); $("#suspectsheldby").toggle(1000, function(){});});
 });
 
-function hidesuspectsdiv(){document.getElementById('suspectsselection').style.display='none'}
+function hidesuspectsdiv(){document.getElementById('suspectsselection').style.display='none'; allselects[2].selectedIndex=0}
 
 function hidealldivs(){
 document.getElementById('allsuspectstable').style.display='none'
