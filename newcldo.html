@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html>
 <head>
@@ -122,16 +123,31 @@ button {border:none; }
 <div id='bottomdiv' ><table style=' font-size:large; '><tr style='height:30px;' ><td id='btom3'>Suspects<td onclick='hidesuspectsdiv(); cardsHeldByFiltered(); onchangecardshown()' id='btom2'>Holdings<td id='btom1' >Data<td  id='btom4' >Logs</table></div>
 </div>
 <div id='logs'>
-<table><tr><td>Shown<td>Suspects<td>Responses</table>
+<table><tr>
+<td onclick="ShowHide('t1')">Shown
+<td onclick="ShowHide('t2')">Confirmed
+<td onclick="ShowHide('t3')">Suspects
+<td onclick="ShowHide('t4')">Responses</table>
+
+<div id='t1'>
 <h4>Cards Shown To / By Log</h4>
 <div id='shtobytable'>shtobytable</div>
+</div>
+
+<div id='t2'>
 <h4>Suspect Table</h4>
 Confirmed:
+</div>
+
+<div id='t3'>
 <div id='confirmedTableData'>confirmed</div>
 Suspcion:	
 <div id='suspicionaTableData'>shtobytable</div>
+</div>
+<div id='t4'>
 <h4>Response by Players</h4>
 <div id='resplog'>resplog</div>
+</div>
 </div>
 
 <div id='chklocalstorage' style='display:none; border:1px solid black;
@@ -547,8 +563,13 @@ if(allsus[i][a] ==="Y"){list  +=`<option value='${allsus[i][0]}'>${allsus[i][0]}
 }
 allselects[3].innerHTML = list + '</select>'
 }}
+onchangecardshown(1)
 
- onchangecardshown(1)
+
+ShowHide=(element)=>{var x = document.getElementById(element);
+x.style.display === "none" ? x.style.display = "block" : x.style.display = "none"
+}
+
 
 </script>
 </body>
