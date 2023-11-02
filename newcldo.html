@@ -534,7 +534,12 @@ msg='DO NOT KNOW'
 if (howmanyMs === 1 && howmanyXs ===2){
 cposition = allcs.indexOf('M')+1;
 whatisshown = resparray[1][cposition];
-msg= `${allsus[0][c4]} has shown ${whatisshown} to ${allsus[0][c0]} Update it!`
+msg= `${allsus[0][c4]} has shown ${whatisshown} to ${allsus[0][c0]} and Updated it!`
+for (i=1; i< allsus[allsus.findIndex(a=> a[0]===whatisshown)].length; i++){allsus[allsus.findIndex(a=> a[0]===whatisshown)][i]='X'}
+allsus[allsus.findIndex(a=> a[0]===whatisshown)][c4]='Y'
+makeTableHTML(allsus, 'allsuspectstable')
+shbytoarray.push([allsus[0][c4],whatisshown,allsus[0][c0]])
+makeTableHTML(shbytoarray, 'shtobytable')	
 console.log (msg)}
 
 if (howmanyYs >= 1 ){
