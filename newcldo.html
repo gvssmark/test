@@ -44,6 +44,7 @@ button {border:none; }
 #marksuspectsMine {width:360px;}
 #marksuspectsMineTable {width:360px;}
 #marksuspectsMineTable , td {text-algin:left;}
+table {width:360px}
 </style></head>
 <body >
 <div id='playerlistcreate' >
@@ -379,7 +380,7 @@ s1.selectedIndex=0
 p1.selectedIndex=0}
 
 function makeTableHTML(arr, element) {
- newtable= `<table border=1>${arr.reduce((c, o) => c += `<tr>${o.reduce((c, d) => (c += `<td class='${d}'>${d}</td>`), '')}</tr>`, '')}</table> <br>`
+ newtable= `<table border=1>${arr.reduce((c, o) => c += `<tr>${o.reduce((c, d) => (c += `<td style='width:auto;'  class='${d}'>${d}</td>`), '')}</tr>`, '')}</table> <br>`
  document.getElementById(element).innerHTML=newtable }
 
 function playersuspected(room,person,wepon){
