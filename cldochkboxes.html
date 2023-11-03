@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+<style>
+table, th, tr {width:100%;  border:1px solid black; border-collapse: collapse;  font-size:small;}
+td { height:30px;;font-size:small; border-collapse: collapse; border:1px solid black; }
+
+</style>
+  </head>
+<body>
+
+<table border=1>
+<tr>
+<td><input type="checkbox" class='cbox' value="Col. Mustard">Col. Mustard
+<td><input type="checkbox" class='cbox'   value="Dining Room">Dining Room
+<td><input type="checkbox" class='cbox'   value="Dagger">Dagger
+<tr>
+<td><input type="checkbox" class='cbox'   value="Rev. Green">Rev. Green
+<td><input type="checkbox" class='cbox'   value="Kitchen">Kitchen
+<td><input type="checkbox" class='cbox'   value="Spanner">Spanner
+<tr>
+<td><input type="checkbox" class='cbox'   value="Prof. Plum">Prof. Plum
+<td><input type="checkbox" class='cbox'   value="Hall">Hall
+<td><input type="checkbox" class='cbox'   value="Candle stick">Candle stick
+<tr>
+<td><input type="checkbox" class='cbox'   value="Miss. Scarlet">Miss. Scarlet
+<td><input type="checkbox" class='cbox'   value="Lounge">Lounge
+<td><input type="checkbox" class='cbox'   value="Revolver">Revolver
+<tr>
+<td><input type="checkbox" class='cbox'   value="Mrs. White">Mrs. White
+<td><input type="checkbox" class='cbox'   value="Ballroom">Ballroom
+<td><input type="checkbox" class='cbox'   value="Rope">Rope
+<tr>
+<td><input type="checkbox" class='cbox'   value="Mrs. Peacock">Mrs. Peacock
+<td><input type="checkbox" class='cbox'   value="Ballroom">Billiard Room
+<td><input type="checkbox" class='cbox'   value="Lead Piping">Lead Piping
+<tr>
+<td>
+<td><input type="checkbox" class='cbox'   value="Study">Study
+<td>
+<tr>
+<td>
+<td><input type="checkbox" class='cbox'   value="Library">Library
+<td>
+<tr>
+<td>
+<td><input type="checkbox" class='cbox'   value="Conservatory">Conservatory
+<td>
+<tr><td colspan=3 item-align=centre><button id='btn1' style='border:none; width:30vw; background:red; color:white; height:35px; margin-left:35vw; display:block'>Update</button>
+
+</table>
+<h3 id='msgcards'>Carefully Select Your  Cards</h3>
+<script>
+
+
+btn =document.getElementById('btn1')
+cboxes = document.getElementsByClassName('cbox'); 
+//btn.addEventListener('click',cbcheck)
+
+maxcards=3
+msgtotable = document.getElementById('msgcards')
+
+var checkboxes = document.querySelectorAll("input[type=checkbox][class=cbox]");
+let mysuspects = []
+checkboxes.forEach(function(checkbox) {
+  checkbox.addEventListener('change', function() {
+    mysuspects = 
+      Array.from(checkboxes) // Convert checkboxes to an array to use filter and map.
+      .filter(i => i.checked) // Use Array.filter to remove unchecked checkboxes.
+      .map(i => i.value) // Use Array.map to extract only the checkbox values from the array of objects.
+ //   console.log(enabledSettings)
+   maxcards  -- 
+    msgtotable.innerHTML = `Select ${maxcards} cards<br> ${mysuspects}` //enabledSettings 
+    
+  })
+});
+
+</script>
+</body>
+</html>
+
