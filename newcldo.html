@@ -1,5 +1,6 @@
 
 
+
 <!DOCTYPE html>
 <html>
 <head>
@@ -7,8 +8,13 @@
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
 <style>
-div {  box-shadow: 5px 10px 8px #888888; background:lightgray; }
+div {  box-shadow: 5px 10px 8px #888888; background:lightgray; width:360px;}
 input {padding:2px; width:80%; border:1px solid black; background:black; color:white; outline:none; margin-left:10%; margin-right:10%; ; ;}
+
+.cbox {width:100px; background:red; }
+ * {box-sizing: border-box;}
+ 
+
 ::placeholder {color:yellow}
 table, th, tr {width:100%;  border:1px solid black; border-collapse: collapse; border: 1px solid; font-size:small;}
 td { text-align:center;font-size:small; border-collapse: collapse; border:1px solid black; }
@@ -19,14 +25,10 @@ td { text-align:center;font-size:small; border-collapse: collapse; border:1px so
 .m {opacity: 0.5;}
 .s {width:50px; height:30px}
 select {width:100%; border:none; height:30px; }
-#bottomdiv { top:0; position:fixed;  ; color:white; width:100%; margin: auto; display:none; margin:auto; }
+#bottomdiv { top:0; position:fixed;  ; color:white; width:360px; margin: auto; display:none; margin:auto; }
 #bottomdiv > table  { border:1px solid white; background:green; font-size:x-large;  }
-#bottomdiv > table > tr, td {border:1px solid white; }
+#bottomdiv > table > tr, td {border:1px solid white; width:25%}
 #allsuspectstable {display:none; margin-top:50px;}
-@media only screen and (min-width: 400px) {body {background: lightblue; width:50%; margin: auto}
-#bottomdiv {width:50%; margin: auto}
-#marksuspectsMine {width:50%; margin: auto}
-}
 #playerlistcreate{margin:auto; border:1px solid black; align-items: center;}
 #formbtn{margin-left:20%; margin-right:20%; width:60%; background:blue; color:white; border:none; height:30px}
 #suspectsheldby{display:none}
@@ -35,10 +37,13 @@ select {width:100%; border:none; height:30px; }
 #responseslog{display:block}
 h4 {color:red; font-size:large}
 .trclass {background:black; color:white; height:30px; }
-body {overscroll-behavior: contain; background: lightblue;}
+body {overscroll-behavior: contain; background: lightblue; width:360px; margin:auto;}
 button {border:none; }
 #logs {display:none}
 #shtobytable{display:block}
+#marksuspectsMine {width:360px;}
+#marksuspectsMineTable {width:360px;}
+#marksuspectsMineTable , td {text-algin:left;}
 </style></head>
 <body >
 <div id='playerlistcreate' >
@@ -160,9 +165,9 @@ Suspcion:
 <button onclick='norecreate()' style='width:50%;  height:50px; margin-left:25%'>Create New Game</button><br><br><br><br>
 </div>
 <div id='marksuspectsMine' style='display:none; '>
-<table border=1>
+<table id='marksuspectsMineTable' border=1>
 <tr>
-<td><input type="checkbox" class='cbox' value="Col. Mustard">Col. Mustard
+<td><input type="checkbox" class='cbox'   value="Col. Mustard">Col. Mustard
 <td><input type="checkbox" class='cbox'   value="Dining Room">Dining Room
 <td><input type="checkbox" class='cbox'   value="Dagger">Dagger
 <tr>
@@ -197,7 +202,7 @@ Suspcion:
 <td>
 <td><input type="checkbox" class='cbox'   value="Conservatory">Conservatory
 <td>
-<tr><td colspan=3 item-align=centre><button id='btn1' onclick='updarraymycards()' style='border:none; width:30vw; background:red; color:white; height:35px; margin-left:35vw; display:block'>Update</button>
+<tr><td colspan=3 item-align=centre><button id='btn1' onclick='updarraymycards()' style='border:none; width:100px; background:red; color:white; height:35px; margin-left:130px; display:block'>Update</button>
 
 </table>
 <h3 id='msgcards'>Carefully Select Your  Cards</h3>
