@@ -1,4 +1,5 @@
 
+
 <!DOCTYPE html>
 <html>
 <head>
@@ -23,7 +24,9 @@ select {width:100%; border:none; height:30px; }
 #bottomdiv > table > tr, td {border:1px solid white; }
 #allsuspectstable {display:none; margin-top:50px;}
 @media only screen and (min-width: 400px) {body {background: lightblue; width:50%; margin: auto}
-#bottomdiv {width:50%; margin: auto}}
+#bottomdiv {width:50%; margin: auto}
+#marksuspectsMine {width:50%; margin: auto}
+}
 #playerlistcreate{margin:auto; border:1px solid black; align-items: center;}
 #formbtn{margin-left:20%; margin-right:20%; width:60%; background:blue; color:white; border:none; height:30px}
 #suspectsheldby{display:none}
@@ -41,7 +44,7 @@ button {border:none; }
 <div id='playerlistcreate' >
 <form  action="javascript:captureplist();">
 <h4 align='center'>Player Names - Starting with you in clockwise</h4>
-<input type='text' name='pl1' pattern="[a-zA-Z]+"  placeholder='Player 1' required value='gvss'><br><br>
+<input type='text' name='pl1' pattern="[a-zA-Z]+" placeholder='Player 1' required value='gvss'><br><br>
 <input type='text' name='pl2' pattern="[a-zA-Z]+" placeholder='Player 2' required value='sundari'><br><br>
 <input type='text' name='pl3' pattern="[a-zA-Z]+" placeholder='Player 3' required value='harini'><br><br>
 <input type='text' name='pl4' pattern="[a-zA-Z]+" placeholder='Player 4' value='komali' ><br><br>
@@ -61,7 +64,6 @@ button {border:none; }
 <div onclick='updarray(); cardsHeldByFiltered(); onchangecardshown()' style=' height:30px; background:red; font-size:large; '>Update</div>
 <div id='maxclickdone' onclick='hidesuspectsheldby(); MeUpdateX()' style=' height:30px; background:green; font-size:large; display:none '>Done</div>
 </table>
-<li>Update all cards held by you and then ONLY click Done
 <li>Update cards as you suspect
 <h4 id='optnotselected' ></h4>
 <div id='shown'>
@@ -157,6 +159,52 @@ Suspcion:
 <button onclick='recreate()' style='width:50%; height:50px; margin-left:25%'>Resotre Old Data</button><br><br><br><br>
 <button onclick='norecreate()' style='width:50%;  height:50px; margin-left:25%'>Create New Game</button><br><br><br><br>
 </div>
+<div id='marksuspectsMine' style='display:none; '>
+<table border=1>
+<tr>
+<td><input type="checkbox" class='cbox' value="Col. Mustard">Col. Mustard
+<td><input type="checkbox" class='cbox'   value="Dining Room">Dining Room
+<td><input type="checkbox" class='cbox'   value="Dagger">Dagger
+<tr>
+<td><input type="checkbox" class='cbox'   value="Rev. Green">Rev. Green
+<td><input type="checkbox" class='cbox'   value="Kitchen">Kitchen
+<td><input type="checkbox" class='cbox'   value="Spanner">Spanner
+<tr>
+<td><input type="checkbox" class='cbox'   value="Prof. Plum">Prof. Plum
+<td><input type="checkbox" class='cbox'   value="Hall">Hall
+<td><input type="checkbox" class='cbox'   value="Candle stick">Candle stick
+<tr>
+<td><input type="checkbox" class='cbox'   value="Miss. Scarlet">Miss. Scarlet
+<td><input type="checkbox" class='cbox'   value="Lounge">Lounge
+<td><input type="checkbox" class='cbox'   value="Revolver">Revolver
+<tr>
+<td><input type="checkbox" class='cbox'   value="Mrs. White">Mrs. White
+<td><input type="checkbox" class='cbox'   value="Ballroom">Ballroom
+<td><input type="checkbox" class='cbox'   value="Rope">Rope
+<tr>
+<td><input type="checkbox" class='cbox'   value="Mrs. Peacock">Mrs. Peacock
+<td><input type="checkbox" class='cbox'   value="Ballroom">Billiard Room
+<td><input type="checkbox" class='cbox'   value="Lead Piping">Lead Piping
+<tr>
+<td>
+<td><input type="checkbox" class='cbox'   value="Study">Study
+<td>
+<tr>
+<td>
+<td><input type="checkbox" class='cbox'   value="Library">Library
+<td>
+<tr>
+<td>
+<td><input type="checkbox" class='cbox'   value="Conservatory">Conservatory
+<td>
+<tr><td colspan=3 item-align=centre><button id='btn1' onclick='updarraymycards()' style='border:none; width:30vw; background:red; color:white; height:35px; margin-left:35vw; display:block'>Update</button>
+
+</table>
+<h3 id='msgcards'>Carefully Select Your  Cards</h3>
+
+</div>
+
+
 <script>
 
 localStorage.getItem('allsus') != null ? shrestore() : ""
@@ -255,7 +303,9 @@ allsus = [   [ 'suspect'],    ['Col. Mustard'],   ['Rev. Green'],   ['Prof. Plum
 	
 function captureplist(){
 plist=''
-allinputs = document.getElementsByTagName('input')
+
+//checkboxes = document.querySelectorAll("input[type=text]");
+allinputs = document.querySelectorAll("input[type=text]");
 for (i=0; i<allinputs.length; i++){if(allinputs[i].value.length>0){plist += `${allinputs[i].value},`}}
 plist = plist.slice(0, -1).toUpperCase().split(",") 
 playersarray =plist
@@ -267,10 +317,15 @@ crplist()
 document.getElementById('suspectsheldby').style.display='none'
 document.getElementById('playerlistcreate').style.display='none'
 document.getElementById('bottomdiv').style.display='block'
-document.getElementById('suspectsheldby').style.display='block'
+//document.getElementById('suspectsheldby').style.display='block'
 addtolocalstorate()
 maxcards=Math.ceil(18/plist.length)
-cardsheld(plist.length)}
+//cardsheld(plist.length)
+document.getElementById('marksuspectsMine').style.display='block'
+
+
+
+}
 	
 function inital(){
 plist= plist.toUpperCase().split(",")
@@ -574,6 +629,46 @@ onchangecardshown(1)
 ShowHide=(element)=>{var x = document.getElementById(element);
 x.style.display === "none" ? x.style.display = "block" : x.style.display = "none"
 }
+
+btn =document.getElementById('btn1')
+cboxes = document.getElementsByClassName('cbox'); 
+//btn.addEventListener('click',cbcheck)
+
+//maxcards=3
+msgtotable = document.getElementById('msgcards')
+
+var checkboxes = document.querySelectorAll("input[type=checkbox][class=cbox]");
+let mysuspects = []
+checkboxes.forEach(function(checkbox) {
+  checkbox.addEventListener('change', function() {
+    mysuspects = 
+      Array.from(checkboxes) // Convert checkboxes to an array to use filter and map.
+      .filter(i => i.checked) // Use Array.filter to remove unchecked checkboxes.
+      .map(i => i.value) // Use Array.map to extract only the checkbox values from the array of objects.
+ //   console.log(enabledSettings)
+   maxcards  -- 
+    msgtotable.innerHTML = `Select ${maxcards} cards<br> ${mysuspects}` //enabledSettings 
+    
+  })
+});
+
+
+function updarraymycards(){
+for(i=0; i<mysuspects.length;i++){
+playIndex = allsus[0][1]
+suspIndex = allsus.findIndex(a=> a[0]===mysuspects[i])
+allsus[suspIndex][1]="Y"
+}
+
+updateX()
+MeUpdateX()
+document.getElementById('marksuspectsMine').style.display='none'
+document.getElementById('allsuspectstable').style.display='block'
+
+}
+
+// update mycards first
+
 
 
 </script>
