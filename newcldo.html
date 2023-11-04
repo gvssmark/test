@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html>
 <head>
@@ -6,9 +7,9 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
 <style>
 div {  box-shadow: 5px 10px 8px #888888; background:lightgray; }
-input {padding:2px; width:80%; border:1px solid black; background:black; color:white; outline:none; margin-left:10%; margin-right:10%; ; ;}
+input[type=text] {padding:2px; width:80%; border:1px solid black; background:black; color:white; outline:none; margin-left:10%; margin-right:10%; ; ;}
 
-.cbox {width:100px; background:red; }
+
  * {box-sizing: border-box;}
  
 
@@ -40,13 +41,13 @@ button {border:none; }
 #shtobytable{display:block}
 #marksuspectsMine {width:100%;}
 #marksuspectsMineTable {}
-#marksuspectsMineTable , td {}
+#marksuspectsMineTable , td {text-align:left; }
 table {width:100%}
 
 @media only screen and (min-width: 300px) {
 body,#bottomdiv {background: lightblue; width:95%; margin: auto}
 }
-input[type=checkbox]{width:80%}
+input[type=checkbox]{width:auto}
 @media only screen and (min-width: 1000px) {
 body,#bottomdiv {background: lightblue; width:35%; margin: auto}
 }
@@ -210,7 +211,7 @@ Suspcion:
 <td>
 <td><input type="checkbox" class='cbox'   value="Conservatory">Conservatory
 <td>
-<tr><td colspan=3 item-align=centre><button disabled id='btn1' onclick='updarraymycards()' style='border:none; width:50%; background:black; color:white; height:35px; margin-left:25%; display:block'>Update</button>
+<tr><td colspan=3 item-align=centre><button disabled id='btn1' onclick='updarraymycards()' style='border:none; width:50%; background:red; opacity:.5; color:white; height:35px; margin-left:25%; display:block'>Update</button>
 
 </table>
 <p id='msgcards'>Carefully Select Your  Cards</p>
@@ -670,7 +671,7 @@ checkboxes.forEach(function(checkbox) {
     msgtotable.innerHTML = `Selected  ${mysuspects}` 
 
 
-mysuspects.length  ===    Math.floor(18/plist.length) || mysuspects.length === Math.ceil(18/plist.length) ? (btn1.disabled = false, btn1.style.backgroundColor ='red' ) : (btn1.disabled = true,btn1.style.backgroundColor ='black') ;
+mysuspects.length  ===    Math.floor(18/plist.length) || mysuspects.length === Math.ceil(18/plist.length) ? (btn1.disabled = false, btn1.style.opacity ='1' ) : (btn1.disabled = true,btn1.style.opacity ='.4') ;
     
   })
   
