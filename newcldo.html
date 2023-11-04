@@ -176,6 +176,7 @@ Suspcion:
 <button onclick='norecreate()' style='width:50%;  height:50px; margin-left:25%'>Create New Game</button><br><br><br><br>
 </div>
 <div id='marksuspectsMine' style='display:none; '>
+	<p id='cardholding'></p>
 <table id='marksuspectsMineTable' border=1>
 <tr>
 <td><input type="checkbox" class='cbox'   value="Col. Mustard">Col. Mustard
@@ -339,7 +340,7 @@ addtolocalstorate()
 maxcards=Math.ceil(18/plist.length)
 //cardsheld(plist.length)
 document.getElementById('marksuspectsMine').style.display='block'
-
+document.getElementById('cardholding').innerHTML= Math.floor(18/plist.length) === Math.ceil(18/plist.length) ? `You are holding ${Math.floor(18/plist.length)} cards ` : `You are holding ${Math.floor(18/plist.length)} or ${Math.ceil(18/plist.length)} cards `
 
 
 }
