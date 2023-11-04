@@ -322,7 +322,7 @@ makeTableHTML(allsus, 'allsuspectstable')
 crplist()
 document.getElementById('suspectsheldby').style.display='none'
 document.getElementById('playerlistcreate').style.display='none'
-document.getElementById('bottomdiv').style.display='block'
+document.getElementById('bottomdiv').style.display='none'
 //document.getElementById('suspectsheldby').style.display='block'
 addtolocalstorate()
 maxcards=Math.ceil(18/plist.length)
@@ -670,7 +670,7 @@ updateX()
 MeUpdateX()
 document.getElementById('marksuspectsMine').style.display='none'
 document.getElementById('allsuspectstable').style.display='block'
-
+document.getElementById('bottomdiv').style.display='block'
 }
 
 // update mycards first
