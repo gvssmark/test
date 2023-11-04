@@ -1,7 +1,3 @@
-
-
-
-
 <!DOCTYPE html>
 <html>
 <head>
@@ -214,10 +210,10 @@ Suspcion:
 <td>
 <td><input type="checkbox" class='cbox'   value="Conservatory">Conservatory
 <td>
-<tr><td colspan=3 item-align=centre><button id='btn1' onclick='updarraymycards()' style='border:none; width:50%; background:red; color:white; height:35px; margin-left:25%; display:block'>Update</button>
+<tr><td colspan=3 item-align=centre><button disabled id='btn1' onclick='updarraymycards()' style='border:none; width:50%; background:black; color:white; height:35px; margin-left:25%; display:block'>Update</button>
 
 </table>
-<h3 id='msgcards'>Carefully Select Your  Cards</h3>
+<p id='msgcards'>Carefully Select Your  Cards</p>
 
 </div>
 
@@ -657,17 +653,27 @@ msgtotable = document.getElementById('msgcards')
 
 var checkboxes = document.querySelectorAll("input[type=checkbox][class=cbox]");
 let mysuspects = []
+
+
+
 checkboxes.forEach(function(checkbox) {
+//mincardsheld = Math.floor(18/plist.length)
+//maxcardsheld = Math.ceil(18/plist.length)
   checkbox.addEventListener('change', function() {
     mysuspects = 
       Array.from(checkboxes) // Convert checkboxes to an array to use filter and map.
       .filter(i => i.checked) // Use Array.filter to remove unchecked checkboxes.
       .map(i => i.value) // Use Array.map to extract only the checkbox values from the array of objects.
  //   console.log(enabledSettings)
-   maxcards  -- 
-    msgtotable.innerHTML = `Select ${maxcards} cards<br> ${mysuspects}` //enabledSettings 
+ 
+ 
+    msgtotable.innerHTML = `Selected  ${mysuspects}` 
+
+
+mysuspects.length  ===    Math.floor(18/plist.length) || mysuspects.length === Math.ceil(18/plist.length) ? (btn1.disabled = false, btn1.style.backgroundColor ='red' ) : (btn1.disabled = true,btn1.style.backgroundColor ='black') ;
     
   })
+  
 });
 
 
