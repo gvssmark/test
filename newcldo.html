@@ -1,8 +1,5 @@
-
-
 <!DOCTYPE html>
 <html>
-
 <head>
     <title>The New Cluedo Game</title>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
@@ -141,6 +138,7 @@
             color: red;
             font-size: large;
             text-align: center;
+            margin-bottom:5px
         }
 
         .trclass {
@@ -181,9 +179,9 @@
             width: 100%;
             box-shadow: 0 0 10px rgba(0, 0, 10, 1.15);
         }
-tr:first-child > td {background:black; color:white; text-align:center}
+tr:first-child:not(#bottomdiv tr) {background:black; color:white; text-align:center}
 
-        #bottomdiv>table {
+        #bottomdiv  {
             border: 1px solid white;
             background: green;
             font-size: x-large;
@@ -196,6 +194,13 @@ tr:first-child > td {background:black; color:white; text-align:center}
                 width: 95%;
                 margin: auto
             }
+            #bottomdiv {
+                background: green;
+                width: 95%;
+                margin: auto;
+                
+            }
+            
         }
 
         input[type=checkbox] {
@@ -210,6 +215,12 @@ tr:first-child > td {background:black; color:white; text-align:center}
                 width: 35%;
                 margin: auto
             }
+           #bottomdiv {
+                background: green;
+                width: 35%;
+                margin: auto;
+                
+            } 
         }
     </style>
 </head>
@@ -350,21 +361,21 @@ tr:first-child > td {background:black; color:white; text-align:center}
 
         <div id='t1'>
             <h4>Cards Shown To / By Log</h4>
-            <div id='shtobytable'>shtobytable</div>
+            <div id='shtobytable'></div>
         </div>
 
         <div id='t2'>
             <h4>Confirmed</h4>
-            <div id='confirmedTableData'>confirmed</div>
+            <div id='confirmedTableData'></div>
        </div>
 
         <div id='t3'>
             <h4>Suspcion</h4>
-            <div id='suspicionaTableData'>shtobytable</div>
+            <div id='suspicionaTableData'></div>
         </div>
         <div id='t4'>
             <h4>Response by Players</h4>
-            <div id='resplog'>resplog</div>
+            <div id='resplog'></div>
         </div>
     </div>
 
