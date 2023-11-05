@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html>
 
@@ -101,11 +102,11 @@
             width: 25%
         }
 
-        #allsuspectstable {
+        #allsuspectstable, #allsuspectstablelegend {
             display: none;
             margin-top: 50px;
         }
-
+#allsuspectstablelegend {margin-top: auto}
         #playerlistcreate {
             margin: auto;
             align-items: center;
@@ -224,7 +225,14 @@
             <button id='formbtn'>Submit</button><br><br><br>
         </form>
     </div>
-    <div id='allsuspectstable'></div><br>
+    <div id='allsuspectstable'></div>
+    <div id='allsuspectstablelegend'>
+    <table>
+    <tr><td>Held<td>Not Held<td>Doubtful<td>Unknown
+    <tr><td class='Y'>y<td class='X'>y<td class='M'>y<td class='u'>y
+    </table>
+    </div>
+    <br>
     <div id='suspectsheldby'>
         <h4>Cards Held By</h4>
         <table id='suspectsheldbytable' border=1>
@@ -307,9 +315,9 @@
                     </select>
             <tr class='trclass'>
                 <td colspan=4 onclick='playersuspected()'>Proceed
-        </table><br>Suspicion:
+        </table>            <h4>Suspcion</h4>
         <div id='yessuspects'></div>
-        <br>Confirmed:
+                    <h4>Confirmed</h4>
         <div id='confirmedsuspectstable'></div>
     </div>
     <h4 id='playercalledlist'></h4>
@@ -326,6 +334,7 @@
     </div>
     </div>
     <div id='logs'>
+    
         <table>
             <tr>
                 <td onclick="ShowHide('t1')">Shown
@@ -340,13 +349,12 @@
         </div>
 
         <div id='t2'>
-            <h4>Suspect Table</h4>
-            Confirmed:
-        </div>
+            <h4>Confirmed</h4>
+            <div id='confirmedTableData'>confirmed</div>
+       </div>
 
         <div id='t3'>
-            <div id='confirmedTableData'>confirmed</div>
-            Suspcion:
+            <h4>Suspcion</h4>
             <div id='suspicionaTableData'>shtobytable</div>
         </div>
         <div id='t4'>
@@ -740,8 +748,11 @@
 
         resparray = [['Call', 'Person', 'Room', 'Wepon', 'RespBy', 'Response']]
         $(document).ready(function () {
-            $("#btom1").click(function () { hidealldivs(), $("#allsuspectstable").toggle(1000, function () { }); });
-            $("#btom4").click(function () { hidealldivs(), $("#logs").toggle(1000, function () { }); });
+
+$("#btom1").click(function () { hidealldivs(), $("#allsuspectstable,#allsuspectstablelegend").toggle(1000, function () { }); });
+//$("#btom1").click(function () { hidealldivs(), $("#allsuspectstablelegend").toggle(1000, function () { }); });
+
+$("#btom4").click(function () { hidealldivs(), $("#logs").toggle(1000, function () { }); });
             $("#btom3").click(function () { hidealldivs(), $("#suspectsselection").toggle(1000, function () { }); });
             $("#btom2").click(function () { hidealldivs(); $("#suspectsheldby").toggle(1000, function () { }); });
         });
@@ -753,6 +764,8 @@
             document.getElementById('logs').style.display = 'none'
             document.getElementById('suspectsselection').style.display = 'none'
             document.getElementById('suspectsheldby').style.display = 'none'
+            document.getElementById('allsuspectstablelegend').style.display = 'none'
+            
         }
 
         function MeUpdateX() {
