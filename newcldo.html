@@ -319,6 +319,9 @@
         <div id='yessuspects'></div>
                     <h4>Confirmed</h4>
         <div id='confirmedsuspectstable'></div>
+                    <h4>Shown</h4>
+        <div id='showninSuspectsdiv'></div>
+        
     </div>
     <h4 id='playercalledlist'></h4>
     <div id='suspectstable'></div>
@@ -511,6 +514,7 @@
             }
             addtolocalstorate()
             makeTableHTML(shbytoarray, 'shtobytable')
+            makeTableHTML(shbytoarray, 'showninSuspectsdiv')
             generatesuspectstable()
         }
 
@@ -821,7 +825,9 @@ $("#btom4").click(function () { hidealldivs(), $("#logs").toggle(1000, function 
                 makeTableHTML(allsus, 'allsuspectstable')
                 shbytoarray.push([allsus[0][c4], whatisshown, allsus[0][c0]])
                 makeTableHTML(shbytoarray, 'shtobytable')
+                            makeTableHTML(shbytoarray, 'showninSuspectsdiv')
                 console.log(msg)
+               // generatesuspectstable()
             }
 
             if (howmanyYs >= 1) {
