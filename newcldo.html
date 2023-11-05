@@ -1,664 +1,890 @@
-
 <!DOCTYPE html>
 <html>
+
 <head>
-<title>The New Cluedo Game</title>
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
-<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
-<style>
-div {  box-shadow: 5px 10px 8px #888888; background:lightgray; }
-input[type=text] {padding:2px; width:80%; border:1px solid black; background:black; color:white; outline:none; margin-left:10%; margin-right:10%; ; ;}
- * {box-sizing: border-box;}
-::placeholder {color:yellow}
-table, th, tr {width:100%;  border:1px solid black; border-collapse: collapse; border: 1px solid; font-size:small;}
-td { text-align:center;font-size:small; border-collapse: collapse; border:1px solid black; }
-.Y {background:green; color:green}
-.X {background:red; color:red}
-.u {background:pink; color:pink}
-.M {background:yellow; color:yellow}
-.m {opacity: 0.5;}
-.s {width:50px; height:30px}
-select {width:100%; border:none; height:30px; }
-#bottomdiv { top:0; position:fixed;  ; color:white; width:100%; margin: auto; display:none; margin:auto; }
-#bottomdiv > table  { border:1px solid white; background:green; font-size:x-large;  }
-#bottomdiv > table > tr, td {border:1px solid white; width:25%}
-#allsuspectstable {display:none; margin-top:50px;}
-#playerlistcreate{margin:auto;  align-items: center;}
-#formbtn{margin-left:25%; width:50%; background:blue; color:white; border:none; height:30px}
-#suspectsheldby{display:none}
-#allplayers{display:none}
-#suspectsselection{display:none}
-#responseslog{display:block}
-h4 {color:red; font-size:large}
-.trclass {background:black; color:white; height:30px; }
-body {overscroll-behavior: contain; background: lightblue; width:100%; margin:auto;}
-button {border:none; }
-#logs {display:none}
-#shtobytable{display:block}
-#marksuspectsMine {width:100%;}
-#marksuspectsMineTable {}
-#marksuspectsMineTable  td {text-align:left; height:30px}
-table {width:100%;  box-shadow: 0 0 20px rgba(0, 0, 10, 1.15);}
-@media only screen and (min-width: 300px) {
-body,#bottomdiv {background: lightblue; width:95%; margin: auto}
-}
-input[type=checkbox]{width:auto}
-@media only screen and (min-width: 1000px) {
-body,#bottomdiv {background: lightblue; width:35%; margin: auto}
-}
-</style></head>
-<body >
-<div id='playerlistcreate' >
-<form  action="javascript:captureplist();">
-<h4 align='center'>Player Names - Starting with you in clockwise</h4>
-<input type='text' name='pl1' pattern="[a-zA-Z]+" placeholder='Player 1' required value='gvss'><br><br>
-<input type='text' name='pl2' pattern="[a-zA-Z]+" placeholder='Player 2' required value='sundari'><br><br>
-<input type='text' name='pl3' pattern="[a-zA-Z]+" placeholder='Player 3' required value='harini'><br><br>
-<input type='text' name='pl4' pattern="[a-zA-Z]+" placeholder='Player 4' value='komali' ><br><br>
-<input type='text' name='pl5' pattern="[a-zA-Z]+" placeholder='Player 5' value='mayu'><br><br>
-<input type='text' name='pl6' pattern="[a-zA-Z]+" placeholder='Player 6' value='hemanth'><br><br>
-<button id='formbtn'>Submit</button><br><br><br>
-</form>
-</div>
-<div id='allsuspectstable'></div><br>
-<div id='suspectsheldby' >
-<h4>Cards Held By</h4>
-<table id='suspectsheldbytable' border=1><tr class='trclass' ><td>Suspect<td>Held By<tr><td>
-<select id="suspectselect" name="suspectlist" >
-<td id='plistdropdown'>Held By
-<tr style=' color:white; height:30px; '><td colspan=2>
-<div onclick='updarray(); cardsHeldByFiltered(); onchangecardshown()' style=' height:30px; background:red; font-size:large; '>Update</div>
-<div id='maxclickdone' onclick='hidesuspectsheldby(); MeUpdateX()' style=' height:30px; background:green; font-size:large; display:none '>Done</div>
-</table>
-<li>Update cards as you suspect
-<h4 id='optnotselected' ></h4>
-<div id='shown'>
-<h4>Cards Shown To / By</h4>
-<table>
-<tr><td>Shown By<td>Suspect<td>Shown to
-<tr><td width=33% id='shby'>shby<td  width=33% id='shsus' ><td  width=33% id='shto'>shto
-<tr  class='trclass' onclick='shtoby()' ><td colspan=3>Update Shown List
-</table><br>
-<p id='updateshow'></p>
-</div>
-</div>
-<div id='allplayers' >allplayers</div>
-<div id='suspectsselection' ><h4>Suspects Guess by a Player.</h4>
-<table border=1><tr style='background:black; color:white; height:30px; '>
-<td >Player<td>Person<td>Room<td>Wepon
-<tr style='height:50px;'><td id='plistincall'><td>
-		  <select id="suspectperson" name="suspectlist" >
-	  	  <option value="0">Select</option>
-	  	  <option value="Col. Mustard">Col. Mustard</option>
-		  <option value="Rev. Green">Rev. Green</option>
-		  <option value="Prof. Plum">Prof. Plum</option>
-		  <option value="Miss. Scarlet">Miss. Scarlet</option>
- 		 <option value="Mrs. White">Mrs. White</option>
- 		 <option value="Mrs. Peacock">Mrs. Peacock</option>
-		</select>
-<td>
-<select id="suspectroom" name="suspectroomlist" >
-<option value="0">Select</option>
- 		 <option value="Dining Room">Dining Room</option>
- 		 <option value="Kitchen">Kitchen</option>
-  		<option value="Hall">Hall</option>
-  		<option value="Lounge">Lounge</option>
-		  <option value="Ballroom">Ballroom</option>
- 		 <option value="Study">Study</option>
- 		 <option value="Billiard Room">Billiard Room</option>
-		  <option value="Library">Library</option>
-		  <option value="Conservatory">Conservatory</option>
-		</select>
-<td>
-<select id="suspectweapon" name="suspectweaponlist" >
-<option value="0">Select</option>
-		  <option value="Dagger">Dagger</option>
-  		<option value="Spanner">Spanner</option>
-		  <option value="Candle stick">Candle stick</option>
-		  <option value="Revolver">Revolver</option>
-		  <option value="Rope">Rope</option>
-		  <option value="Lead Piping">Lead Piping</option>
-		</select>
-<tr class='trclass' ><td colspan=4 onclick='playersuspected()'>Proceed
-</table><br>Suspicion:
-<div id='yessuspects'></div>
-<br>Confirmed:
-<div id='confirmedsuspectstable'></div>
- </div>       
-<h4 id='playercalledlist'></h4>
-<div id='suspectstable'></div> 
-<div id='playerresponses'></div>
-<div id='bottomdiv' ><table style=' font-size:large; '><tr style='height:30px;' ><td id='btom3'>Suspects<td onclick='hidesuspectsdiv(); cardsHeldByFiltered(); onchangecardshown()' id='btom2'>Holdings<td id='btom1' >Data<td  id='btom4' >Logs</table></div>
-</div>
-<div id='logs'>
-<table><tr>
-<td onclick="ShowHide('t1')">Shown
-<td onclick="ShowHide('t2')">Confirmed
-<td onclick="ShowHide('t3')">Suspects
-<td onclick="ShowHide('t4')">Responses</table>
+    <title>The New Cluedo Game</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+    <style>
+        input[type=text] {
+            padding: 2px;
+            width: 80%;
+            border: 1px solid black;
+            background: black;
+            color: white;
+            outline: none;
+            margin-left: 10%;
+            margin-right: 10%;
 
-<div id='t1'>
-<h4>Cards Shown To / By Log</h4>
-<div id='shtobytable'>shtobytable</div>
-</div>
+        }
 
-<div id='t2'>
-<h4>Suspect Table</h4>
-Confirmed:
-</div>
+        * {
+            box-sizing: border-box;
+        }
 
-<div id='t3'>
-<div id='confirmedTableData'>confirmed</div>
-Suspcion:	
-<div id='suspicionaTableData'>shtobytable</div>
-</div>
-<div id='t4'>
-<h4>Response by Players</h4>
-<div id='resplog'>resplog</div>
-</div>
-</div>
+        ::placeholder {
+            color: yellow
+        }
 
-<div id='chklocalstorage' style='display:none; border:1px solid black;
+        table,
+        th,
+        tr {
+            width: 100%;
+            border: 1px solid black;
+            border-collapse: collapse;
+            border: 1px solid;
+            font-size: small;
+        }
+
+        td {
+            text-align: center;
+            font-size: small;
+            border-collapse: collapse;
+            border: 1px solid black;
+        }
+
+        .Y {
+            background: green;
+            color: green
+        }
+
+        .X {
+            background: red;
+            color: red
+        }
+
+        .u {
+            background: pink;
+            color: pink
+        }
+
+        .M {
+            background: yellow;
+            color: yellow
+        }
+
+        .m {
+            opacity: 0.5;
+        }
+
+        .s {
+            width: 50px;
+            height: 30px
+        }
+
+        select {
+            width: 100%;
+            border: none;
+            height: 30px;
+        }
+
+        #bottomdiv {
+            top: 0;
+            position: fixed;
+            ;
+            color: white;
+            width: 100%;
+            margin: auto;
+            display: none;
+            margin: auto;
+        }
+
+        #bottomdiv>table {
+            border: 1px solid white;
+            background: green;
+            font-size: x-large;
+        }
+
+        #bottomdiv>table>tr,
+        td {
+            border: 1px solid white;
+            width: 25%
+        }
+
+        #allsuspectstable {
+            display: none;
+            margin-top: 50px;
+        }
+
+        #playerlistcreate {
+            margin: auto;
+            align-items: center;
+        }
+
+        #formbtn {
+            margin-left: 25%;
+            width: 50%;
+            background: blue;
+            color: white;
+            border: none;
+            height: 30px
+        }
+
+        #suspectsheldby {
+            display: none
+        }
+
+        #allplayers {
+            display: none
+        }
+
+        #suspectsselection {
+            display: none
+        }
+
+        #responseslog {
+            display: block
+        }
+
+        h1 {
+            text-align: center;
+        }
+
+        h4 {
+            color: red;
+            font-size: large;
+            text-align: center;
+        }
+
+        .trclass {
+            background: black;
+            color: white;
+            height: 30px;
+        }
+
+        body {
+            overscroll-behavior: contain;
+            background: rgb(216, 219, 223);
+            width: 100%;
+            margin: auto;
+        }
+
+        button {
+            border: none;
+        }
+
+        #logs {
+            display: none
+        }
+
+        #shtobytable {
+            display: block
+        }
+
+        #marksuspectsMine {
+            width: 100%;
+        }
+
+        #marksuspectsMineTable td {
+            text-align: left;
+            height: 30px
+        }
+
+        table {
+            width: 100%;
+            box-shadow: 0 0 10px rgba(0, 0, 10, 1.15);
+        }
+
+        @media only screen and (min-width: 300px) {
+
+            body,
+            #bottomdiv {
+                background: rgb(231 216 216);
+                width: 95%;
+                margin: auto
+            }
+        }
+
+        input[type=checkbox] {
+            width: auto
+        }
+
+        @media only screen and (min-width: 1000px) {
+
+            body,
+            #bottomdiv {
+                background: rgb(231 216 216);
+                width: 35%;
+                margin: auto
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div id='playerlistcreate'>
+        <form action="javascript:captureplist();">
+            <h4>Player Names - Starting with you in clockwise</h4>
+            <input type='text' name='pl1' pattern="[a-zA-Z]+" placeholder='Player 1' required value='gvss'><br><br>
+            <input type='text' name='pl2' pattern="[a-zA-Z]+" placeholder='Player 2' required value='sundari'><br><br>
+            <input type='text' name='pl3' pattern="[a-zA-Z]+" placeholder='Player 3' required value='harini'><br><br>
+            <input type='text' name='pl4' pattern="[a-zA-Z]+" placeholder='Player 4' value='komali'><br><br>
+            <input type='text' name='pl5' pattern="[a-zA-Z]+" placeholder='Player 5' value='mayu'><br><br>
+            <input type='text' name='pl6' pattern="[a-zA-Z]+" placeholder='Player 6' value='hemanth'><br><br>
+            <button id='formbtn'>Submit</button><br><br><br>
+        </form>
+    </div>
+    <div id='allsuspectstable'></div><br>
+    <div id='suspectsheldby'>
+        <h4>Cards Held By</h4>
+        <table id='suspectsheldbytable' border=1>
+            <tr class='trclass'>
+                <td>Suspect
+                <td>Held By
+            <tr>
+                <td>
+                    <select id="suspectselect" name="suspectlist">
+                <td id='plistdropdown'>Held By
+            <tr style=' color:white; height:30px; '>
+                <td colspan=2>
+                    <div onclick='updarray(); cardsHeldByFiltered(); onchangecardshown()'
+                        style=' height:30px; background:red; font-size:large; '>Update</div>
+                    <div id='maxclickdone' onclick='hidesuspectsheldby(); MeUpdateX()'
+                        style=' height:30px; background:green; font-size:large; display:none '>Done</div>
+        </table>
+        <li>Update cards as you suspect
+            <h4 id='optnotselected'></h4>
+            <div id='shown'>
+                <h4>Cards Shown To / By</h4>
+                <table>
+                    <tr>
+                        <td>Shown By
+                        <td>Suspect
+                        <td>Shown to
+                    <tr>
+                        <td width=33% id='shby'>shby
+                        <td width=33% id='shsus'>
+                        <td width=33% id='shto'>shto
+                    <tr class='trclass' onclick='shtoby()'>
+                        <td colspan=3>Update Shown List
+                </table><br>
+                <p id='updateshow'></p>
+            </div>
+    </div>
+    <div id='allplayers'>allplayers</div>
+    <div id='suspectsselection'>
+        <h4>Suspects Guess by a Player.</h4>
+        <table border=1>
+            <tr style='background:black; color:white; height:30px; '>
+                <td>Player
+                <td>Person
+                <td>Room
+                <td>Wepon
+            <tr style='height:50px;'>
+                <td id='plistincall'>
+                <td>
+                    <select id="suspectperson" name="suspectlist">
+                        <option value="0">Select</option>
+                        <option value="Col. Mustard">Col. Mustard</option>
+                        <option value="Rev. Green">Rev. Green</option>
+                        <option value="Prof. Plum">Prof. Plum</option>
+                        <option value="Miss. Scarlet">Miss. Scarlet</option>
+                        <option value="Mrs. White">Mrs. White</option>
+                        <option value="Mrs. Peacock">Mrs. Peacock</option>
+                    </select>
+                <td>
+                    <select id="suspectroom" name="suspectroomlist">
+                        <option value="0">Select</option>
+                        <option value="Dining Room">Dining Room</option>
+                        <option value="Kitchen">Kitchen</option>
+                        <option value="Hall">Hall</option>
+                        <option value="Lounge">Lounge</option>
+                        <option value="Ballroom">Ballroom</option>
+                        <option value="Study">Study</option>
+                        <option value="Billiard Room">Billiard Room</option>
+                        <option value="Library">Library</option>
+                        <option value="Conservatory">Conservatory</option>
+                    </select>
+                <td>
+                    <select id="suspectweapon" name="suspectweaponlist">
+                        <option value="0">Select</option>
+                        <option value="Dagger">Dagger</option>
+                        <option value="Spanner">Spanner</option>
+                        <option value="Candle stick">Candle stick</option>
+                        <option value="Revolver">Revolver</option>
+                        <option value="Rope">Rope</option>
+                        <option value="Lead Piping">Lead Piping</option>
+                    </select>
+            <tr class='trclass'>
+                <td colspan=4 onclick='playersuspected()'>Proceed
+        </table><br>Suspicion:
+        <div id='yessuspects'></div>
+        <br>Confirmed:
+        <div id='confirmedsuspectstable'></div>
+    </div>
+    <h4 id='playercalledlist'></h4>
+    <div id='suspectstable'></div>
+    <div id='playerresponses'></div>
+    <div id='bottomdiv'>
+        <table style=' font-size:large; '>
+            <tr style='height:30px;'>
+                <td id='btom3'>Suspects
+                <td onclick='hidesuspectsdiv(); cardsHeldByFiltered(); onchangecardshown()' id='btom2'>Holdings
+                <td id='btom1'>Data
+                <td id='btom4'>Logs
+        </table>
+    </div>
+    </div>
+    <div id='logs'>
+        <table>
+            <tr>
+                <td onclick="ShowHide('t1')">Shown
+                <td onclick="ShowHide('t2')">Confirmed
+                <td onclick="ShowHide('t3')">Suspects
+                <td onclick="ShowHide('t4')">Responses
+        </table>
+
+        <div id='t1'>
+            <h4>Cards Shown To / By Log</h4>
+            <div id='shtobytable'>shtobytable</div>
+        </div>
+
+        <div id='t2'>
+            <h4>Suspect Table</h4>
+            Confirmed:
+        </div>
+
+        <div id='t3'>
+            <div id='confirmedTableData'>confirmed</div>
+            Suspcion:
+            <div id='suspicionaTableData'>shtobytable</div>
+        </div>
+        <div id='t4'>
+            <h4>Response by Players</h4>
+            <div id='resplog'>resplog</div>
+        </div>
+    </div>
+
+    <div id='chklocalstorage' style='display:none; border:1px solid black;
   align-items: center; background:blue; font-size:large; color:white;'>
-  <h1 align=center>Culedo Game</h1>
-<br><br> 
-<button onclick='recreate()' style='width:50%; height:50px; margin-left:25%'>Resotre Old Data</button><br><br><br><br>
-<button onclick='norecreate()' style='width:50%;  height:50px; margin-left:25%'>Create New Game</button><br><br><br><br>
-</div>
-<div id='marksuspectsMine' style='display:none; '>
-	<p id='cardholding'></p>
-<table id='marksuspectsMineTable' border=1>
-<tr>
-<td><input type="checkbox" class='cbox'   value="Col. Mustard">Col. Mustard
-<td><input type="checkbox" class='cbox'   value="Dining Room">Dining Room
-<td><input type="checkbox" class='cbox'   value="Dagger">Dagger
-<tr>
-<td><input type="checkbox" class='cbox'   value="Rev. Green">Rev. Green
-<td><input type="checkbox" class='cbox'   value="Kitchen">Kitchen
-<td><input type="checkbox" class='cbox'   value="Spanner">Spanner
-<tr>
-<td><input type="checkbox" class='cbox'   value="Prof. Plum">Prof. Plum
-<td><input type="checkbox" class='cbox'   value="Hall">Hall
-<td><input type="checkbox" class='cbox'   value="Candle stick">Candle stick
-<tr>
-<td><input type="checkbox" class='cbox'   value="Miss. Scarlet">Miss. Scarlet
-<td><input type="checkbox" class='cbox'   value="Lounge">Lounge
-<td><input type="checkbox" class='cbox'   value="Revolver">Revolver
-<tr>
-<td><input type="checkbox" class='cbox'   value="Mrs. White">Mrs. White
-<td><input type="checkbox" class='cbox'   value="Ballroom">Ballroom
-<td><input type="checkbox" class='cbox'   value="Rope">Rope
-<tr>
-<td><input type="checkbox" class='cbox'   value="Mrs. Peacock">Mrs. Peacock
-<td><input type="checkbox" class='cbox'   value="Ballroom">Billiard Room
-<td><input type="checkbox" class='cbox'   value="Lead Piping">Lead Piping
-<tr>
-<td>
-<td><input type="checkbox" class='cbox'   value="Study">Study
-<td>
-<tr>
-<td>
-<td><input type="checkbox" class='cbox'   value="Library">Library
-<td>
-<tr>
-<td>
-<td><input type="checkbox" class='cbox'   value="Conservatory">Conservatory
-<td>
-<tr><td colspan=3 item-align=centre><button disabled id='btn1' onclick='updarraymycards()' style='border:none; width:50%; background:red; opacity:.5; color:white; height:35px; margin-left:25%; display:block'>Update</button>
-</table>
-<p id='msgcards'>Carefully Select Your  Cards</p>
-</div>
-<script>
-localStorage.getItem('allsus') != null ? shrestore() : ""
-maxcards=''
-function shrestore(){
-document.getElementById('chklocalstorage').style.display='block'
-document.getElementById('playerlistcreate').style.display='none'
-}
+        <h1>Culedo Game</h1>
+        <br><br>
+        <button onclick='recreate()' style='width:50%; height:50px; margin-left:25%'>Resotre Old
+            Data</button><br><br><br><br>
+        <button onclick='norecreate()' style='width:50%;  height:50px; margin-left:25%'>Create New
+            Game</button><br><br><br><br>
+    </div>
+    <div id='marksuspectsMine' style='display:none; '>
+        <p id='cardholding'></p>
+        <table id='marksuspectsMineTable' border=1>
+            <tr>
+                <td><input type="checkbox" class='cbox' value="Col. Mustard">Col. Mustard
+                <td><input type="checkbox" class='cbox' value="Dining Room">Dining Room
+                <td><input type="checkbox" class='cbox' value="Dagger">Dagger
+            <tr>
+                <td><input type="checkbox" class='cbox' value="Rev. Green">Rev. Green
+                <td><input type="checkbox" class='cbox' value="Kitchen">Kitchen
+                <td><input type="checkbox" class='cbox' value="Spanner">Spanner
+            <tr>
+                <td><input type="checkbox" class='cbox' value="Prof. Plum">Prof. Plum
+                <td><input type="checkbox" class='cbox' value="Hall">Hall
+                <td><input type="checkbox" class='cbox' value="Candle stick">Candle stick
+            <tr>
+                <td><input type="checkbox" class='cbox' value="Miss. Scarlet">Miss. Scarlet
+                <td><input type="checkbox" class='cbox' value="Lounge">Lounge
+                <td><input type="checkbox" class='cbox' value="Revolver">Revolver
+            <tr>
+                <td><input type="checkbox" class='cbox' value="Mrs. White">Mrs. White
+                <td><input type="checkbox" class='cbox' value="Ballroom">Ballroom
+                <td><input type="checkbox" class='cbox' value="Rope">Rope
+            <tr>
+                <td><input type="checkbox" class='cbox' value="Mrs. Peacock">Mrs. Peacock
+                <td><input type="checkbox" class='cbox' value="Ballroom">Billiard Room
+                <td><input type="checkbox" class='cbox' value="Lead Piping">Lead Piping
+            <tr>
+                <td>
+                <td><input type="checkbox" class='cbox' value="Study">Study
+                <td>
+            <tr>
+                <td>
+                <td><input type="checkbox" class='cbox' value="Library">Library
+                <td>
+            <tr>
+                <td>
+                <td><input type="checkbox" class='cbox' value="Conservatory">Conservatory
+                <td>
+            <tr>
+                <td colspan=3 item-align=centre><button disabled id='btn1' onclick='updarraymycards()'
+                        style='border:none; width:50%; background:red; opacity:.5; color:white; height:35px; margin-left:25%; display:block'>Update</button>
+        </table>
+        <p id='msgcards'>Carefully Select Your Cards</p>
+    </div>
+    <script>
+        localStorage.getItem('allsus') != null ? shrestore() : ""
+        maxcards = ''
+        function shrestore() {
+            document.getElementById('chklocalstorage').style.display = 'block'
+            document.getElementById('playerlistcreate').style.display = 'none'
+        }
 
-function norecreate(){
-localStorage.removeItem('allsus')
-localStorage.removeItem('plist')
-localStorage.removeItem('resparray')
-localStorage.removeItem('playersarray')
-localStorage.removeItem('shbytoarray')
-localStorage.removeItem('suspicionArray')
-localStorage.removeItem('confirmedArray')
-document.getElementById('playerlistcreate').style.display='block'
-document.getElementById('chklocalstorage').style.display='none'}
+        function norecreate() {
+            localStorage.removeItem('allsus')
+            localStorage.removeItem('plist')
+            localStorage.removeItem('resparray')
+            localStorage.removeItem('playersarray')
+            localStorage.removeItem('shbytoarray')
+            localStorage.removeItem('suspicionArray')
+            localStorage.removeItem('confirmedArray')
+            document.getElementById('playerlistcreate').style.display = 'block'
+            document.getElementById('chklocalstorage').style.display = 'none'
+        }
 
-suspicionArray=[]
+        suspicionArray = []
 
-function recreate(){
-allsus=JSON.parse(localStorage.getItem('allsus'))
-plist= JSON.parse(localStorage.getItem('plist'))
-playersarray= JSON.parse(localStorage.getItem('playersarray'))
-resparray = JSON.parse(localStorage.getItem('resparray'))
-shbytoarray=JSON.parse(localStorage.getItem('shbytoarray'))
-suspicionArray=JSON.parse(localStorage.getItem('suspicionArray'))
-confirmedArray=JSON.parse(localStorage.getItem('confirmedArray'))
-playersarray =plist
-maxcards=JSON.parse(localStorage.getItem('maxcards'))
+        function recreate() {
+            allsus = JSON.parse(localStorage.getItem('allsus'))
+            plist = JSON.parse(localStorage.getItem('plist'))
+            playersarray = JSON.parse(localStorage.getItem('playersarray'))
+            resparray = JSON.parse(localStorage.getItem('resparray'))
+            shbytoarray = JSON.parse(localStorage.getItem('shbytoarray'))
+            suspicionArray = JSON.parse(localStorage.getItem('suspicionArray'))
+            confirmedArray = JSON.parse(localStorage.getItem('confirmedArray'))
+            playersarray = plist
+            maxcards = JSON.parse(localStorage.getItem('maxcards'))
 
-makeTableHTML(allsus, 'allsuspectstable')
-crplist()
-suspectsConfirmed()
-generatesuspectstable()
-document.getElementById('suspectsheldby').style.display='none'
-document.getElementById('playerlistcreate').style.display='none'
-document.getElementById('bottomdiv').style.display='block'
-document.getElementById('suspectsselection').style.display='block'
-makeTableHTML(resparray, 'resplog')
-makeTableHTML(shbytoarray, 'shtobytable')
-document.getElementById('chklocalstorage').style.display='none'
-makeTableHTML(suspicionArray, 'suspicionaTableData')
-makeTableHTML(suspicionArray, 'yessuspects')
-makeTableHTML(confirmedArray, 'confirmedTableData')
-makeTableHTML(confirmedArray, 'confirmedsuspectstable')
-}
+            makeTableHTML(allsus, 'allsuspectstable')
+            crplist()
+            suspectsConfirmed()
+            generatesuspectstable()
+            document.getElementById('suspectsheldby').style.display = 'none'
+            document.getElementById('playerlistcreate').style.display = 'none'
+            document.getElementById('bottomdiv').style.display = 'block'
+            document.getElementById('suspectsselection').style.display = 'block'
+            makeTableHTML(resparray, 'resplog')
+            makeTableHTML(shbytoarray, 'shtobytable')
+            document.getElementById('chklocalstorage').style.display = 'none'
+            makeTableHTML(suspicionArray, 'suspicionaTableData')
+            makeTableHTML(suspicionArray, 'yessuspects')
+            makeTableHTML(confirmedArray, 'confirmedTableData')
+            makeTableHTML(confirmedArray, 'confirmedsuspectstable')
+        }
 
-function generatesuspectstable(){
-suspicionArray=[]
-suspicionArray.push(allsus[0])    
-for (i=1; i<allsus.length; i++){
-if(allsus[i].join('').slice(plist.length*-1).includes("M")){
-suspicionArray.push(allsus[i])}
-makeTableHTML(suspicionArray, 'suspicionaTableData')
-makeTableHTML(suspicionArray, 'yessuspects')}}
+        function generatesuspectstable() {
+            suspicionArray = []
+            suspicionArray.push(allsus[0])
+            for (i = 1; i < allsus.length; i++) {
+                if (allsus[i].join('').slice(plist.length * -1).includes("M")) {
+                    suspicionArray.push(allsus[i])
+                }
+                makeTableHTML(suspicionArray, 'suspicionaTableData')
+                makeTableHTML(suspicionArray, 'yessuspects')
+            }
+        }
 
-function suspectsConfirmed(){
-confirmedArray=[]
-confirmedArray.push(allsus[0])    
-for (i=1; i<allsus.length; i++){
-if(allsus[i].join('').slice(plist.length*-1) === 'X'.padEnd(plist.length,'X')){
-confirmedArray.push(allsus[i])}
-makeTableHTML(confirmedArray, 'confirmedTableData')
-makeTableHTML(confirmedArray, 'confirmedsuspectstable')}}
+        function suspectsConfirmed() {
+            confirmedArray = []
+            confirmedArray.push(allsus[0])
+            for (i = 1; i < allsus.length; i++) {
+                if (allsus[i].join('').slice(plist.length * -1) === 'X'.padEnd(plist.length, 'X')) {
+                    confirmedArray.push(allsus[i])
+                }
+                makeTableHTML(confirmedArray, 'confirmedTableData')
+                makeTableHTML(confirmedArray, 'confirmedsuspectstable')
+            }
+        }
 
-function btm4(){document.getElementById('logs').style.display='block'}
+        function btm4() { document.getElementById('logs').style.display = 'block' }
 
-allselects = document.getElementsByTagName('select')
-shbytoarray=[['By','Susp','To']]
+        allselects = document.getElementsByTagName('select')
+        shbytoarray = [['By', 'Susp', 'To']]
 
-function shtoby(){
-sh1e =allselects[2]
-sh2e =allselects[3]
-sh3e =allselects[4]
-sh1 = sh1e.value
-sh2 = sh2e.value
-sh3 = sh3e.value
-if((sh1*1 !=0) && (sh2*1 !=0) && (sh3*1 !=0)  ){
-if(sh1 != sh3){shbytoarray.push([sh1,sh2,sh3])}
-sh1e.selectedIndex=0
-sh2e.selectedIndex=0
-sh3e.selectedIndex=0
-}
-addtolocalstorate()
-makeTableHTML(shbytoarray, 'shtobytable')
-generatesuspectstable()
-}
+        function shtoby() {
+            sh1e = allselects[2]
+            sh2e = allselects[3]
+            sh3e = allselects[4]
+            sh1 = sh1e.value
+            sh2 = sh2e.value
+            sh3 = sh3e.value
+            if ((sh1 * 1 != 0) && (sh2 * 1 != 0) && (sh3 * 1 != 0)) {
+                if (sh1 != sh3) { shbytoarray.push([sh1, sh2, sh3]) }
+                sh1e.selectedIndex = 0
+                sh2e.selectedIndex = 0
+                sh3e.selectedIndex = 0
+            }
+            addtolocalstorate()
+            makeTableHTML(shbytoarray, 'shtobytable')
+            generatesuspectstable()
+        }
 
-function hidesuspectsheldby(){document.getElementById('suspectsheldby').style.display='none'; document.getElementById('suspectsselection').style.display='block'}
-var playersarray=[]
-var plist=''
-allsus = [   [ 'suspect'],    ['Col. Mustard'],   ['Rev. Green'],   ['Prof. Plum'],   ['Miss. Scarlet'],   ['Mrs. White'],   ['Mrs. Peacock'],     ['Dining Room'],   ['Kitchen'],   ['Hall'],   ['Lounge'],   ['Ballroom'],    ['Billiard Room'],   ['Study'],   ['Library'],   ['Conservatory'], ['Dagger'],   ['Spanner'],   ['Candle stick'],   ['Revolver'],   ['Rope'],   ['Lead Piping']]
-	
-function captureplist(){
-plist=''
+        function hidesuspectsheldby() { document.getElementById('suspectsheldby').style.display = 'none'; document.getElementById('suspectsselection').style.display = 'block' }
+        var playersarray = []
+        var plist = ''
+        allsus = [['suspect'], ['Col. Mustard'], ['Rev. Green'], ['Prof. Plum'], ['Miss. Scarlet'], ['Mrs. White'], ['Mrs. Peacock'], ['Dining Room'], ['Kitchen'], ['Hall'], ['Lounge'], ['Ballroom'], ['Billiard Room'], ['Study'], ['Library'], ['Conservatory'], ['Dagger'], ['Spanner'], ['Candle stick'], ['Revolver'], ['Rope'], ['Lead Piping']]
 
-//checkboxes = document.querySelectorAll("input[type=text]");
-allinputs = document.querySelectorAll("input[type=text]");
-for (i=0; i<allinputs.length; i++){if(allinputs[i].value.length>0){plist += `${allinputs[i].value},`}}
-plist = plist.slice(0, -1).toUpperCase().split(",") 
-playersarray =plist
-for(i=0; i<plist.length; i++){allsus[0].push(plist[i].substring(0,3))}
-for(i=1; i<allsus.length; i++){for(j=0;j<plist.length;j++){allsus[i].push('u')}}
-confirmedArray =[]	
-makeTableHTML(allsus, 'allsuspectstable')
-crplist()
-document.getElementById('suspectsheldby').style.display='none'
-document.getElementById('playerlistcreate').style.display='none'
-document.getElementById('bottomdiv').style.display='none'
-addtolocalstorate()
-maxcards=Math.ceil(18/plist.length)
-document.getElementById('marksuspectsMine').style.display='block'
-document.getElementById('cardholding').innerHTML= Math.floor(18/plist.length) === Math.ceil(18/plist.length) ? `You are holding ${Math.floor(18/plist.length)} cards ` : `You are holding ${Math.floor(18/plist.length)} or ${Math.ceil(18/plist.length)} cards `
-}
-	
-function inital(){
-plist= plist.toUpperCase().split(",")
-playersarray =plist
-for(i=0; i<plist.length; i++){allsus[0].push(plist[i].substring(0,3))}
-for(i=1; i<allsus.length; i++){for(j=0;j<plist.length;j++){allsus[i].push('u')}}
-makeTableHTML(allsus, 'allsuspectstable')
-crplist()
-}
-	
-function updateX(){
-for(i=0; i< allsus.length; i++){
-foundY= allsus[i].findIndex(a=> a==='Y')
-allsusilength = allsus[i].length
-if(foundY >0 ){
-for(j=1; j<allsusilength; j++){
-allsus[i][j]='X'}
-allsus[i][foundY]='Y'
-addtolocalstorate()
-}}}
+        function captureplist() {
+            plist = ''
 
-function updarray(){
-s1=allselects[0]
-p1=allselects[1]
-s= s1.value
-p= p1.value
-if(s*1 === 0 || p*1===0) {document.getElementById('optnotselected').innerHTML='Options Not Selected!'; return false}
-document.getElementById('optnotselected').innerHTML=''
-suspIndex = allsus.findIndex(a=> a[0]===s)
-playIndex = allsus[0].findIndex(a=> a===p)
-cstatus = allsus[suspIndex][playIndex]
-if(cstatus !='X'){allsus[suspIndex][playIndex]="Y"}
-if(cstatus ==='u'){
-if(p1.selectedIndex === 1){maxcards--; ;
-extracards  = 18%plist.length
-document.getElementById('optnotselected').innerHTML=`You are to update ${maxcards} cards`
-if(extracards >0 && maxcards ===1){ document.getElementById('maxclickdone').style.display='block'}
-if(maxcards ===0){ document.getElementById('maxclickdone').style.display='none'; MeUpdateX()
-document.getElementById('optnotselected').innerHTML=''}
-}
-}
-updateX()
-makeTableHTML(allsus, 'allsuspectstable')
-generatesuspectstable()
-s1.selectedIndex=0
-p1.selectedIndex=0}
+            //checkboxes = document.querySelectorAll("input[type=text]");
+            allinputs = document.querySelectorAll("input[type=text]");
+            for (i = 0; i < allinputs.length; i++) { if (allinputs[i].value.length > 0) { plist += `${allinputs[i].value},` } }
+            plist = plist.slice(0, -1).toUpperCase().split(",")
+            playersarray = plist
+            for (i = 0; i < plist.length; i++) { allsus[0].push(plist[i].substring(0, 3)) }
+            for (i = 1; i < allsus.length; i++) { for (j = 0; j < plist.length; j++) { allsus[i].push('u') } }
+            confirmedArray = []
+            makeTableHTML(allsus, 'allsuspectstable')
+            crplist()
+            document.getElementById('suspectsheldby').style.display = 'none'
+            document.getElementById('playerlistcreate').style.display = 'none'
+            document.getElementById('bottomdiv').style.display = 'none'
+            addtolocalstorate()
+            maxcards = Math.ceil(18 / plist.length)
+            document.getElementById('marksuspectsMine').style.display = 'block'
+            document.getElementById('cardholding').innerHTML = Math.floor(18 / plist.length) === Math.ceil(18 / plist.length) ? `You are holding ${Math.floor(18 / plist.length)} cards ` : `You are holding ${Math.floor(18 / plist.length)} or ${Math.ceil(18 / plist.length)} cards `
+        }
 
-function makeTableHTML(arr, element) {
- newtable= `<table border=1>${arr.reduce((c, o) => c += `<tr>${o.reduce((c, d) => (c += `<td style='width:auto;'  class='${d}'>${d}</td>`), '')}</tr>`, '')}</table> <br>`
- document.getElementById(element).innerHTML=newtable }
+        function inital() {
+            plist = plist.toUpperCase().split(",")
+            playersarray = plist
+            for (i = 0; i < plist.length; i++) { allsus[0].push(plist[i].substring(0, 3)) }
+            for (i = 1; i < allsus.length; i++) { for (j = 0; j < plist.length; j++) { allsus[i].push('u') } }
+            makeTableHTML(allsus, 'allsuspectstable')
+            crplist()
+        }
 
-function playersuspected(room,person,wepon){
-s5 =allselects[5]
-s6 =allselects[6]
-s7 =allselects[7]
-s8 =allselects[8]
-caller = s5.value
-person = s6.value
-room   = s7.value
-wepon  = s8.value
-if(room*1===0 || person*1 ===0 || wepon*1 ===0 || caller*1 ===0 ){ suspectedh4='Options Not Selected!'; 
-document.getElementById('playercalledlist').innerHTML= suspectedh4
-return false}
-suspectedh4 = `Call by ${caller} : <br> ${person} - ${wepon} - ${room}  `
-document.getElementById('playercalledlist').innerHTML= suspectedh4
-oncallarray = allsus.filter(a=> a[0] === room || a[0] === person || a[0] === wepon || a[0] === 'suspect' )
-makeTableHTML(oncallarray, 'suspectstable')
-resptab()
-document.getElementById('suspectsselection').style.display='none'
-document.getElementById('suspectstable').style.display = 'block'
-document.getElementById('playerresponses').style.display = 'block'
-document.getElementById('playercalledlist').style.display = 'block'
-}
+        function updateX() {
+            for (i = 0; i < allsus.length; i++) {
+                foundY = allsus[i].findIndex(a => a === 'Y')
+                allsusilength = allsus[i].length
+                if (foundY > 0) {
+                    for (j = 1; j < allsusilength; j++) {
+                        allsus[i][j] = 'X'
+                    }
+                    allsus[i][foundY] = 'Y'
+                    addtolocalstorate()
+                }
+            }
+        }
 
-function crplist(){
-plistoptions=''
-playersarray.forEach(a=> plistoptions += `<option value=${a.substring(0,3)}>${a}</option>`)
-pl=`<select id="player" name="playerlist"  ><option value="0">Select</option>${plistoptions}</select>`
-document.getElementById('plistdropdown').innerHTML=pl
-document.getElementById('plistincall').innerHTML=pl
-document.getElementById('shto').innerHTML=pl
-crplistforcardsshown()
-}
+        function updarray() {
+            s1 = allselects[0]
+            p1 = allselects[1]
+            s = s1.value
+            p = p1.value
+            if (s * 1 === 0 || p * 1 === 0) { document.getElementById('optnotselected').innerHTML = 'Options Not Selected!'; return false }
+            document.getElementById('optnotselected').innerHTML = ''
+            suspIndex = allsus.findIndex(a => a[0] === s)
+            playIndex = allsus[0].findIndex(a => a === p)
+            cstatus = allsus[suspIndex][playIndex]
+            if (cstatus != 'X') { allsus[suspIndex][playIndex] = "Y" }
+            if (cstatus === 'u') {
+                if (p1.selectedIndex === 1) {
+                    maxcards--;;
+                    extracards = 18 % plist.length
+                    document.getElementById('optnotselected').innerHTML = `You are to update ${maxcards} cards`
+                    if (extracards > 0 && maxcards === 1) { document.getElementById('maxclickdone').style.display = 'block' }
+                    if (maxcards === 0) {
+                        document.getElementById('maxclickdone').style.display = 'none'; MeUpdateX()
+                        document.getElementById('optnotselected').innerHTML = ''
+                    }
+                }
+            }
+            updateX()
+            makeTableHTML(allsus, 'allsuspectstable')
+            generatesuspectstable()
+            s1.selectedIndex = 0
+            p1.selectedIndex = 0
+        }
 
+        function makeTableHTML(arr, element) {
+            newtable = `<table border=1>${arr.reduce((c, o) => c += `<tr>${o.reduce((c, d) => (c += `<td style='width:auto;'  class='${d}'>${d}</td>`), '')}</tr>`, '')}</table> <br>`
+            document.getElementById(element).innerHTML = newtable
+        }
 
-function crplistforcardsshown(){
-let plistoptions=''
-playersarray.forEach(a=> plistoptions += `<option value=${a.substring(0,3)}>${a}</option>`)
-let pl=`<select id="player" name="playerlist" onchange=" onchangecardshown(this.selectedIndex)" ><option value="0">Select</option>${plistoptions}</select>`
-document.getElementById('shby').innerHTML=pl
-}
+        function playersuspected(room, person, wepon) {
+            s5 = allselects[5]
+            s6 = allselects[6]
+            s7 = allselects[7]
+            s8 = allselects[8]
+            caller = s5.value
+            person = s6.value
+            room = s7.value
+            wepon = s8.value
+            if (room * 1 === 0 || person * 1 === 0 || wepon * 1 === 0 || caller * 1 === 0) {
+                suspectedh4 = 'Options Not Selected!';
+                document.getElementById('playercalledlist').innerHTML = suspectedh4
+                return false
+            }
+            suspectedh4 = `Call by ${caller} : <br> ${person} - ${wepon} - ${room}  `
+            document.getElementById('playercalledlist').innerHTML = suspectedh4
+            oncallarray = allsus.filter(a => a[0] === room || a[0] === person || a[0] === wepon || a[0] === 'suspect')
+            makeTableHTML(oncallarray, 'suspectstable')
+            resptab()
+            document.getElementById('suspectsselection').style.display = 'none'
+            document.getElementById('suspectstable').style.display = 'block'
+            document.getElementById('playerresponses').style.display = 'block'
+            document.getElementById('playercalledlist').style.display = 'block'
+        }
 
-crplistforcardsshown()
-
-function crsusplist(){
-crsuslist=''
-for(i=1; i<allsus.length; i++){crsuslist+= `<option value="${allsus[i][0]}">${allsus[i][0]}</option>`} 
-sl=`<select  name="playerlist" ><option value='0'>Select</option> ${crsuslist}</select>`
-document.getElementById('shsus').innerHTML=sl
-}
-crsusplist()
-
-crplist()
-
-function resptab(){
-caller = allselects[5].value
-filteredcallers = allsus[0].filter(a=>  a != 'suspect')
-callerIndex = filteredcallers.findIndex(a=> a===caller)
-for (i=0; i<callerIndex ; i++){a= filteredcallers.shift(); filteredcallers.push(a)}
-filteredcallers.shift()
-resptabdata='<tr class="trclass"><td>Response By<td>Response No<td>Response Yes '
-filteredcallers .forEach(a=> resptabdata+= `<tr style='height:40px;' ><td>${a}<td><button class='X s'  onclick='responseNo(this.id)' id='N${a}'>No</button><td><button class='M s' onclick='responseYes(this.id)'id='Y${a}'>Yes</button>`)
-document.getElementById('playerresponses').innerHTML =`<table border=1>${resptabdata}<tr class='trclass'><td onclick='confirmyesno()' colspan=3>Confirm</table><br>`
-}
-
-function responseNo(a){
-rplayer = a.substring(1)
-caller = s5.value
-person = s6.value
-room   = s7.value
-wepon  = s8.value
-yesnoresponsee(rplayer, room, 'X' )
-yesnoresponsee(rplayer, wepon, 'X' )
-yesnoresponsee(rplayer, person, 'X' )
-resparray.splice(1, 0,[caller,person,room,wepon,rplayer,'X'])
-makeTableHTML(resparray, 'resplog')
-yid=`Y${rplayer}`
-nid=`N${rplayer}`
-document.getElementById(yid).disabled=true
-document.getElementById(nid).disabled=true
-document.getElementById(yid).style.opacity = "0.5";
-document.getElementById(nid).style.opacity = "0.5";
-addtolocalstorate()
-suspectsConfirmed()
-}
-
-function responseYes(a){
-rplayer = a.substring(1)
-caller = s5.value
-person = s6.value
-room   = s7.value
-wepon  = s8.value
-yesnoresponsee(rplayer, room, 'M' )
-yesnoresponsee(rplayer, wepon, 'M' )
-yesnoresponsee(rplayer, person, 'M' )
-resparray.splice(1, 0,[caller,person,room,wepon,rplayer,'M'])
-makeTableHTML(resparray, 'resplog')
-//document.getElementById('playercalledlist').innerHTML=''
-addtolocalstorate()
-diablebuttons()
-generatesuspectstable()
-suspectsConfirmed()
-//what()
-}
-
-function diablebuttons(){
-disabledresptabdata='<tr class="trclass"><td>Response By<td>Response No<td>Response Yes '
-filteredcallers .forEach(a=> disabledresptabdata+= `<tr style='height:40px;' ><td>${a}<td><button class='X s m'  >No</button><td><button class='M s m' >Yes</button>`)
-document.getElementById('playerresponses').innerHTML =`<table border=1>${disabledresptabdata}<tr class='trclass'><td onclick='confirmyesno()' colspan=3>Confirm</table><br>`
-}
-
-function confirmyesno(){
-if(caller === allsus[0][1]) {
-document.getElementById('suspectsheldby').style.display='block';
-document.getElementById('suspectstable').style.display = 'none'
-document.getElementById('playerresponses').style.display = 'none'
-document.getElementById('playercalledlist').innerHTML=''
-document.getElementById('updateshow').innerHTML=`${rplayer} has shown to you ${person} / ${wepon} / ${room} update data`
-s5.selectedIndex=0
-s6.selectedIndex=0
-s7.selectedIndex=0
-s8.selectedIndex=0
-}
-else{
-document.getElementById('suspectsselection').style.display='block'
-document.getElementById('suspectstable').style.display = 'none'
-document.getElementById('playerresponses').style.display = 'none'
-document.getElementById('playercalledlist').innerHTML=''
-document.getElementById('updateshow').innerHTML=''
-s5.selectedIndex=0
-s6.selectedIndex=0
-s7.selectedIndex=0
-s8.selectedIndex=0}
-what()
-}
-
-function yesnoresponsee(p, s, r ){
-suspIndex = allsus.findIndex(a=> a[0]===s)
-playIndex = allsus[0].findIndex(a=> a===p)
-cstatus = allsus[suspIndex][playIndex]
-if(cstatus ==='u' || cstatus ==='M'){allsus[suspIndex][playIndex]=r}
-makeTableHTML(allsus, 'allsuspectstable')
-makeTableHTML(oncallarray, 'suspectstable')
-}
-	
-resparray=[['Call','Person','Room','Wepon','RespBy','Response']]
-$(document).ready(function(){
-  $("#btom1").click(function(){hidealldivs(),$("#allsuspectstable").toggle(1000, function(){});});
-  $("#btom4").click(function(){hidealldivs(), $("#logs").toggle(1000, function(){});});
-  $("#btom3").click(function(){hidealldivs(), $("#suspectsselection").toggle(1000, function(){});});
-  $("#btom2").click(function(){hidealldivs(); $("#suspectsheldby").toggle(1000, function(){});});
-});
-
-function hidesuspectsdiv(){document.getElementById('suspectsselection').style.display='none'; allselects[2].selectedIndex=0}
-
-function hidealldivs(){
-document.getElementById('allsuspectstable').style.display='none'
-document.getElementById('logs').style.display='none'
-document.getElementById('suspectsselection').style.display='none'
-document.getElementById('suspectsheldby').style.display='none'
-}
-
-function MeUpdateX(){
-for(i=0; i<allsus.length; i++){
-if(allsus[i][1]==='u'){allsus[i][1]='X'}
-document.getElementById('maxclickdone').style.display='none'
-makeTableHTML(allsus, 'allsuspectstable')
-addtolocalstorate()
-document.getElementById('optnotselected').innerHTML=''
-}
-}
-
-function addtolocalstorate(){
-localStorage.setItem('allsus',JSON.stringify(allsus))
-localStorage.setItem('plist',JSON.stringify(plist))
-localStorage.setItem('resparray',JSON.stringify(resparray))
-localStorage.setItem('playersarray',JSON.stringify(playersarray))
-localStorage.setItem('shbytoarray',JSON.stringify(shbytoarray))
-localStorage.setItem('suspicionArray',JSON.stringify(suspicionArray))
-localStorage.setItem('confirmedArray',JSON.stringify(confirmedArray))
-localStorage.setItem('maxcards',JSON.stringify(maxcards))
-}
-
-function cardsheld(a){
-heldbyyou = 18%a !=0 ? `You may be holding ${Math.floor(18/a)} or ${Math.ceil(18/a)} cards! Update all` : `You are holding ${18/a} cards! Update all`
-document.getElementById('optnotselected').innerHTML=heldbyyou }
+        function crplist() {
+            plistoptions = ''
+            playersarray.forEach(a => plistoptions += `<option value=${a.substring(0, 3)}>${a}</option>`)
+            pl = `<select id="player" name="playerlist"  ><option value="0">Select</option>${plistoptions}</select>`
+            document.getElementById('plistdropdown').innerHTML = pl
+            document.getElementById('plistincall').innerHTML = pl
+            document.getElementById('shto').innerHTML = pl
+            crplistforcardsshown()
+        }
 
 
-function what(){
-c0= allsus[0].findIndex(a=> a===resparray[1][0]) //callerIndex:
-c1= allsus.findIndex(a=> a[0]===resparray[1][1]) //suspects:
-c2= allsus.findIndex(a=> a[0]===resparray[1][2]) //suspects:
-c3= allsus.findIndex(a=> a[0]===resparray[1][3]) //suspects:
-c4= allsus[0].findIndex(a=> a===resparray[1][4]) //resp index
-c1value = allsus[c1][c4] //what is the value for each suspect:
-c2value = allsus[c2][c4] //what is the value for each suspect:
-c3value = allsus[c3][c4] //what is the value for each suspect:
-allcs = c1value+c2value+c3value //join
-howmanyMs = allcs.indexOf('M') >=0 ? allcs.match(/M/gi).length : 0
-//howmanyXs = allcs.match(/X/gi).length
-howmanyXs = allcs.indexOf('X') >=0 ? allcs.match(/X/gi).length : 0
-howmanyYs = allcs.indexOf('Y') >=0 ? allcs.match(/Y/gi).length : 0
+        function crplistforcardsshown() {
+            let plistoptions = ''
+            playersarray.forEach(a => plistoptions += `<option value=${a.substring(0, 3)}>${a}</option>`)
+            let pl = `<select id="player" name="playerlist" onchange=" onchangecardshown(this.selectedIndex)" ><option value="0">Select</option>${plistoptions}</select>`
+            document.getElementById('shby').innerHTML = pl
+        }
 
- //howmany m's are there
-msg='DO NOT KNOW'
-if (howmanyMs === 1 && howmanyXs ===2){
-cposition = allcs.indexOf('M')+1;
-whatisshown = resparray[1][cposition];
-msg= `${allsus[0][c4]} has shown ${whatisshown} to ${allsus[0][c0]} and Updated it!`
-for (i=1; i< allsus[allsus.findIndex(a=> a[0]===whatisshown)].length; i++){allsus[allsus.findIndex(a=> a[0]===whatisshown)][i]='X'}
-allsus[allsus.findIndex(a=> a[0]===whatisshown)][c4]='Y'
-makeTableHTML(allsus, 'allsuspectstable')
-shbytoarray.push([allsus[0][c4],whatisshown,allsus[0][c0]])
-makeTableHTML(shbytoarray, 'shtobytable')	
-console.log (msg)}
+        crplistforcardsshown()
 
-if (howmanyYs >= 1 ){
-msg= "Shown some suspect"
-}
-document.getElementById('updateshow').innerHTML = msg
-document.getElementById('suspectsheldby').style.display='block'
-document.getElementById('suspectsselection').style.display='none'
-}
+        function crsusplist() {
+            crsuslist = ''
+            for (i = 1; i < allsus.length; i++) { crsuslist += `<option value="${allsus[i][0]}">${allsus[i][0]}</option>` }
+            sl = `<select  name="playerlist" ><option value='0'>Select</option> ${crsuslist}</select>`
+            document.getElementById('shsus').innerHTML = sl
+        }
+        crsusplist()
 
-function cardsHeldByFiltered(){
-let slist = '<select><option value="0">Select</option>'
-for(i=1; i<allsus.length; i++){
-if(!allsus[i].join("").slice(plist.length*-1).includes("Y")){
-slist  +=`<option value='${allsus[i][0]}'>${allsus[i][0]}</option>`
-}
-allselects[0].innerHTML = slist + '</select>'
-}}
+        crplist()
 
-cardsHeldByFiltered()
+        function resptab() {
+            caller = allselects[5].value
+            filteredcallers = allsus[0].filter(a => a != 'suspect')
+            callerIndex = filteredcallers.findIndex(a => a === caller)
+            for (i = 0; i < callerIndex; i++) { a = filteredcallers.shift(); filteredcallers.push(a) }
+            filteredcallers.shift()
+            resptabdata = '<tr class="trclass"><td>Response By<td>Response No<td>Response Yes '
+            filteredcallers.forEach(a => resptabdata += `<tr style='height:40px;' ><td>${a}<td><button class='X s'  onclick='responseNo(this.id)' id='N${a}'>No</button><td><button class='M s' onclick='responseYes(this.id)'id='Y${a}'>Yes</button>`)
+            document.getElementById('playerresponses').innerHTML = `<table border=1>${resptabdata}<tr class='trclass'><td onclick='confirmyesno()' colspan=3>Confirm</table><br>`
+        }
 
-function onchangecardshown(a){
-let list = `<select ><option value="0">Select</option>`
-for(i=0; i<allsus.length; i++){
-if(allsus[i][a] ==="Y"){list  +=`<option value='${allsus[i][0]}'>${allsus[i][0]}</option>`
-}
-allselects[3].innerHTML = list + '</select>'
-}}
-onchangecardshown(1)
+        function responseNo(a) {
+            rplayer = a.substring(1)
+            caller = s5.value
+            person = s6.value
+            room = s7.value
+            wepon = s8.value
+            yesnoresponsee(rplayer, room, 'X')
+            yesnoresponsee(rplayer, wepon, 'X')
+            yesnoresponsee(rplayer, person, 'X')
+            resparray.splice(1, 0, [caller, person, room, wepon, rplayer, 'X'])
+            makeTableHTML(resparray, 'resplog')
+            yid = `Y${rplayer}`
+            nid = `N${rplayer}`
+            document.getElementById(yid).disabled = true
+            document.getElementById(nid).disabled = true
+            document.getElementById(yid).style.opacity = "0.5";
+            document.getElementById(nid).style.opacity = "0.5";
+            addtolocalstorate()
+            suspectsConfirmed()
+        }
+
+        function responseYes(a) {
+            rplayer = a.substring(1)
+            caller = s5.value
+            person = s6.value
+            room = s7.value
+            wepon = s8.value
+            yesnoresponsee(rplayer, room, 'M')
+            yesnoresponsee(rplayer, wepon, 'M')
+            yesnoresponsee(rplayer, person, 'M')
+            resparray.splice(1, 0, [caller, person, room, wepon, rplayer, 'M'])
+            makeTableHTML(resparray, 'resplog')
+            //document.getElementById('playercalledlist').innerHTML=''
+            addtolocalstorate()
+            diablebuttons()
+            generatesuspectstable()
+            suspectsConfirmed()
+            //what()
+        }
+
+        function diablebuttons() {
+            disabledresptabdata = '<tr class="trclass"><td>Response By<td>Response No<td>Response Yes '
+            filteredcallers.forEach(a => disabledresptabdata += `<tr style='height:40px;' ><td>${a}<td><button class='X s m'  >No</button><td><button class='M s m' >Yes</button>`)
+            document.getElementById('playerresponses').innerHTML = `<table border=1>${disabledresptabdata}<tr class='trclass'><td onclick='confirmyesno()' colspan=3>Confirm</table><br>`
+        }
+
+        function confirmyesno() {
+            if (caller === allsus[0][1]) {
+                document.getElementById('suspectsheldby').style.display = 'block';
+                document.getElementById('suspectstable').style.display = 'none'
+                document.getElementById('playerresponses').style.display = 'none'
+                document.getElementById('playercalledlist').innerHTML = ''
+                document.getElementById('updateshow').innerHTML = `${rplayer} has shown to you ${person} / ${wepon} / ${room} update data`
+                s5.selectedIndex = 0
+                s6.selectedIndex = 0
+                s7.selectedIndex = 0
+                s8.selectedIndex = 0
+            }
+            else {
+                document.getElementById('suspectsselection').style.display = 'block'
+                document.getElementById('suspectstable').style.display = 'none'
+                document.getElementById('playerresponses').style.display = 'none'
+                document.getElementById('playercalledlist').innerHTML = ''
+                document.getElementById('updateshow').innerHTML = ''
+                s5.selectedIndex = 0
+                s6.selectedIndex = 0
+                s7.selectedIndex = 0
+                s8.selectedIndex = 0
+            }
+            what()
+        }
+
+        function yesnoresponsee(p, s, r) {
+            suspIndex = allsus.findIndex(a => a[0] === s)
+            playIndex = allsus[0].findIndex(a => a === p)
+            cstatus = allsus[suspIndex][playIndex]
+            if (cstatus === 'u' || cstatus === 'M') { allsus[suspIndex][playIndex] = r }
+            makeTableHTML(allsus, 'allsuspectstable')
+            makeTableHTML(oncallarray, 'suspectstable')
+        }
+
+        resparray = [['Call', 'Person', 'Room', 'Wepon', 'RespBy', 'Response']]
+        $(document).ready(function () {
+            $("#btom1").click(function () { hidealldivs(), $("#allsuspectstable").toggle(1000, function () { }); });
+            $("#btom4").click(function () { hidealldivs(), $("#logs").toggle(1000, function () { }); });
+            $("#btom3").click(function () { hidealldivs(), $("#suspectsselection").toggle(1000, function () { }); });
+            $("#btom2").click(function () { hidealldivs(); $("#suspectsheldby").toggle(1000, function () { }); });
+        });
+
+        function hidesuspectsdiv() { document.getElementById('suspectsselection').style.display = 'none'; allselects[2].selectedIndex = 0 }
+
+        function hidealldivs() {
+            document.getElementById('allsuspectstable').style.display = 'none'
+            document.getElementById('logs').style.display = 'none'
+            document.getElementById('suspectsselection').style.display = 'none'
+            document.getElementById('suspectsheldby').style.display = 'none'
+        }
+
+        function MeUpdateX() {
+            for (i = 0; i < allsus.length; i++) {
+                if (allsus[i][1] === 'u') { allsus[i][1] = 'X' }
+                document.getElementById('maxclickdone').style.display = 'none'
+                makeTableHTML(allsus, 'allsuspectstable')
+                addtolocalstorate()
+                document.getElementById('optnotselected').innerHTML = ''
+            }
+        }
+
+        function addtolocalstorate() {
+            localStorage.setItem('allsus', JSON.stringify(allsus))
+            localStorage.setItem('plist', JSON.stringify(plist))
+            localStorage.setItem('resparray', JSON.stringify(resparray))
+            localStorage.setItem('playersarray', JSON.stringify(playersarray))
+            localStorage.setItem('shbytoarray', JSON.stringify(shbytoarray))
+            localStorage.setItem('suspicionArray', JSON.stringify(suspicionArray))
+            localStorage.setItem('confirmedArray', JSON.stringify(confirmedArray))
+            localStorage.setItem('maxcards', JSON.stringify(maxcards))
+        }
+
+        function cardsheld(a) {
+            heldbyyou = 18 % a != 0 ? `You may be holding ${Math.floor(18 / a)} or ${Math.ceil(18 / a)} cards! Update all` : `You are holding ${18 / a} cards! Update all`
+            document.getElementById('optnotselected').innerHTML = heldbyyou
+        }
 
 
-ShowHide=(element)=>{var x = document.getElementById(element);
-x.style.display === "none" ? x.style.display = "block" : x.style.display = "none"
-}
+        function what() {
+            c0 = allsus[0].findIndex(a => a === resparray[1][0]) //callerIndex:
+            c1 = allsus.findIndex(a => a[0] === resparray[1][1]) //suspects:
+            c2 = allsus.findIndex(a => a[0] === resparray[1][2]) //suspects:
+            c3 = allsus.findIndex(a => a[0] === resparray[1][3]) //suspects:
+            c4 = allsus[0].findIndex(a => a === resparray[1][4]) //resp index
+            c1value = allsus[c1][c4] //what is the value for each suspect:
+            c2value = allsus[c2][c4] //what is the value for each suspect:
+            c3value = allsus[c3][c4] //what is the value for each suspect:
+            allcs = c1value + c2value + c3value //join
+            howmanyMs = allcs.indexOf('M') >= 0 ? allcs.match(/M/gi).length : 0
+            //howmanyXs = allcs.match(/X/gi).length
+            howmanyXs = allcs.indexOf('X') >= 0 ? allcs.match(/X/gi).length : 0
+            howmanyYs = allcs.indexOf('Y') >= 0 ? allcs.match(/Y/gi).length : 0
 
-btn =document.getElementById('btn1')
-cboxes = document.getElementsByClassName('cbox'); 
-//btn.addEventListener('click',cbcheck)
+            //howmany m's are there
+            msg = 'DO NOT KNOW'
+            if (howmanyMs === 1 && howmanyXs === 2) {
+                cposition = allcs.indexOf('M') + 1;
+                whatisshown = resparray[1][cposition];
+                msg = `${allsus[0][c4]} has shown ${whatisshown} to ${allsus[0][c0]} and Updated it!`
+                for (i = 1; i < allsus[allsus.findIndex(a => a[0] === whatisshown)].length; i++) { allsus[allsus.findIndex(a => a[0] === whatisshown)][i] = 'X' }
+                allsus[allsus.findIndex(a => a[0] === whatisshown)][c4] = 'Y'
+                makeTableHTML(allsus, 'allsuspectstable')
+                shbytoarray.push([allsus[0][c4], whatisshown, allsus[0][c0]])
+                makeTableHTML(shbytoarray, 'shtobytable')
+                console.log(msg)
+            }
 
-//maxcards=3
-msgtotable = document.getElementById('msgcards')
+            if (howmanyYs >= 1) {
+                msg = "Shown some suspect"
+            }
+            document.getElementById('updateshow').innerHTML = msg
+            document.getElementById('suspectsheldby').style.display = 'block'
+            document.getElementById('suspectsselection').style.display = 'none'
+        }
 
-var checkboxes = document.querySelectorAll("input[type=checkbox][class=cbox]");
-let mysuspects = []
+        function cardsHeldByFiltered() {
+            let slist = '<select><option value="0">Select</option>'
+            for (i = 1; i < allsus.length; i++) {
+                if (!allsus[i].join("").slice(plist.length * -1).includes("Y")) {
+                    slist += `<option value='${allsus[i][0]}'>${allsus[i][0]}</option>`
+                }
+                allselects[0].innerHTML = slist + '</select>'
+            }
+        }
+
+        cardsHeldByFiltered()
+
+        function onchangecardshown(a) {
+            let list = `<select ><option value="0">Select</option>`
+            for (i = 0; i < allsus.length; i++) {
+                if (allsus[i][a] === "Y") {
+                    list += `<option value='${allsus[i][0]}'>${allsus[i][0]}</option>`
+                }
+                allselects[3].innerHTML = list + '</select>'
+            }
+        }
+        onchangecardshown(1)
+
+
+        ShowHide = (element) => {
+            var x = document.getElementById(element);
+            x.style.display === "none" ? x.style.display = "block" : x.style.display = "none"
+        }
+
+        btn = document.getElementById('btn1')
+        cboxes = document.getElementsByClassName('cbox');
+        //btn.addEventListener('click',cbcheck)
+
+        //maxcards=3
+        msgtotable = document.getElementById('msgcards')
+
+        var checkboxes = document.querySelectorAll("input[type=checkbox][class=cbox]");
+        let mysuspects = []
 
 
 
-checkboxes.forEach(function(checkbox) {
-  checkbox.addEventListener('change', function() {
-    mysuspects = 
-      Array.from(checkboxes) // Convert checkboxes to an array to use filter and map.
-      .filter(i => i.checked) // Use Array.filter to remove unchecked checkboxes.
-      .map(i => i.value) // Use Array.map to extract only the checkbox values from the array of objects.
-     msgtotable.innerHTML = `Selected  ${mysuspects}` 
-mysuspects.length  ===    Math.floor(18/plist.length) || mysuspects.length === Math.ceil(18/plist.length) ? (btn1.disabled = false, btn1.style.opacity ='1' ) : (btn1.disabled = true,btn1.style.opacity ='.4') ;
-  })
-});
+        checkboxes.forEach(function (checkbox) {
+            checkbox.addEventListener('change', function () {
+                mysuspects =
+                    Array.from(checkboxes) // Convert checkboxes to an array to use filter and map.
+                        .filter(i => i.checked) // Use Array.filter to remove unchecked checkboxes.
+                        .map(i => i.value) // Use Array.map to extract only the checkbox values from the array of objects.
+                msgtotable.innerHTML = `Selected  ${mysuspects}`
+                mysuspects.length === Math.floor(18 / plist.length) || mysuspects.length === Math.ceil(18 / plist.length) ? (btn1.disabled = false, btn1.style.opacity = '1') : (btn1.disabled = true, btn1.style.opacity = '.4');
+            })
+        });
 
-function updarraymycards(){
-for(i=0; i<mysuspects.length;i++){
-playIndex = allsus[0][1]
-suspIndex = allsus.findIndex(a=> a[0]===mysuspects[i])
-allsus[suspIndex][1]="Y"
-}
+        function updarraymycards() {
+            for (i = 0; i < mysuspects.length; i++) {
+                playIndex = allsus[0][1]
+                suspIndex = allsus.findIndex(a => a[0] === mysuspects[i])
+                allsus[suspIndex][1] = "Y"
+            }
 
-updateX()
-MeUpdateX()
-document.getElementById('marksuspectsMine').style.display='none'
-document.getElementById('allsuspectstable').style.display='block'
-document.getElementById('bottomdiv').style.display='block'
-}
-</script>
+            updateX()
+            MeUpdateX()
+            document.getElementById('marksuspectsMine').style.display = 'none'
+            document.getElementById('allsuspectstable').style.display = 'block'
+            document.getElementById('bottomdiv').style.display = 'block'
+        }
+    </script>
 </body>
+
 </html>
