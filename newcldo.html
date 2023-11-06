@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html>
 <head>
@@ -266,7 +267,7 @@ tr:first-child:not(#bottomdiv tr) {background:black; color:white; text-align:cen
         <li>Update cards as you suspect
             <h4 id='optnotselected'></h4>
             <div id='shown'>
-                <h4>Cards Shown To / By</h4>
+                <h4>Cards Shown</h4>
                 <table>
                     <tr>
                         <td>Shown By
@@ -360,7 +361,7 @@ tr:first-child:not(#bottomdiv tr) {background:black; color:white; text-align:cen
         </table>
 
         <div id='t1'>
-            <h4>Cards Shown To / By Log</h4>
+            <h4>Cards Shown </h4>
             <div id='shtobytable'></div>
         </div>
 
@@ -374,7 +375,7 @@ tr:first-child:not(#bottomdiv tr) {background:black; color:white; text-align:cen
             <div id='suspicionaTableData'></div>
         </div>
         <div id='t4'>
-            <h4>Response by Players</h4>
+            <h4>Responses</h4>
             <div id='resplog'></div>
         </div>
     </div>
@@ -672,7 +673,28 @@ tr:first-child:not(#bottomdiv tr) {background:black; color:white; text-align:cen
 
         crplist()
 
-        function resptab() {
+function suspectsValues(pl){
+playerIndex = allsus[0].findIndex(a=> a ===pl)
+playerIndexSuspectsStatus = oncallarray[1][playerIndex]+oncallarray[2][playerIndex] + oncallarray[3][playerIndex]
+return playerIndexSuspectsStatus === 'XXX' ? 'disabled' : 'enabled'
+}
+
+function resptab() {
+            caller = allselects[5].value
+            filteredcallers = allsus[0].filter(a => a != 'suspect')
+            callerIndex = filteredcallers.findIndex(a => a === caller)
+            for (i = 0; i < callerIndex; i++) { a = filteredcallers.shift(); filteredcallers.push(a) }
+            filteredcallers.shift()
+            resptabdata = '<tr class="trclass"><td>Response By<td>Response No<td>Response Yes '
+            
+filteredcallers.forEach(a => {disen = suspectsValues(a);
+resptabdata += `<tr style='height:40px;' ><td>${a}<td><button class='X s'  onclick='responseNo(this.id)' id='N${a}'>No</button><td><button ${disen} class='M s' onclick='responseYes(this.id)'id='Y${a}'>Yes</button>`})
+
+
+            document.getElementById('playerresponses').innerHTML = `<table border=1>${resptabdata}<tr class='trclass'><td onclick='confirmyesno()' colspan=3>Confirm</table><br>`
+        }
+
+ /*       function resptab() {
             caller = allselects[5].value
             filteredcallers = allsus[0].filter(a => a != 'suspect')
             callerIndex = filteredcallers.findIndex(a => a === caller)
@@ -681,7 +703,7 @@ tr:first-child:not(#bottomdiv tr) {background:black; color:white; text-align:cen
             resptabdata = '<tr class="trclass"><td>Response By<td>Response No<td>Response Yes '
             filteredcallers.forEach(a => resptabdata += `<tr style='height:40px;' ><td>${a}<td><button class='X s'  onclick='responseNo(this.id)' id='N${a}'>No</button><td><button class='M s' onclick='responseYes(this.id)'id='Y${a}'>Yes</button>`)
             document.getElementById('playerresponses').innerHTML = `<table border=1>${resptabdata}<tr class='trclass'><td onclick='confirmyesno()' colspan=3>Confirm</table><br>`
-        }
+        }*/
 
         function responseNo(a) {
             rplayer = a.substring(1)
@@ -917,6 +939,10 @@ $("#btom4").click(function () { hidealldivs(), $("#logs").toggle(1000, function 
             document.getElementById('allsuspectstable').style.display = 'block'
             document.getElementById('bottomdiv').style.display = 'block'
         }
+        
+        
+        
+        
     </script>
 </body>
 
