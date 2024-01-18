@@ -106,7 +106,7 @@ cardtemptable = `<table border=1 width=100% align=center> ${cardtemptext}</table
 nophoto = "1UhquVc6Yv7268a9hxgDe5h3m20JZQTU4"
 photoarray = photodata.filter(a=> +a.packid === x)
 photo= photoarray.length>0 ? photoarray[0].photoid : nophoto
-photo = `<img  src='https://drive.google.com/uc?export=view&id=${photo}' width='300' height='400'>`
+photo = `<img  src='https://drive.google.com/thumbnail?id=${photo}' width='300' height='400'>`
 document.getElementById("modalData").innerHTML = photo; document.getElementById("nameHeader").innerHTML =   cname + '-(' + x +')'
 modal.style.display = "block";
 document.getElementById("myInput").value=''
