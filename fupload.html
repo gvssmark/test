@@ -1,44 +1,17 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>Upload File to Google Drive</title>
-  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.js"></script>
+    <title>File Upload</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+<style>
+iframe { width:90%; height:50%; border:none; }
+</style>
+    
 </head>
-<body>
-  <form action="https://script.google.com/macros/s/AKfycbzfzt9UFc_GjQdpOmPV5Q-irxpuyzOKCqc1h0J4B2jkHdJ-BcNu7szDPuhNBoGTRyz3/exec" id="form" method="post">
-                
-    Upload a file
-    <div id="data"></div>
-    <input name="file" id="uploadfile" type="file">
-    <input id="submit" type="submit">
-  </form>
-  <script>
-    $('#uploadfile').on("change", function() {
-      var file = this.files[0];
-      var fr = new FileReader();
-      fr.fileName = file.name;
-      fr.onload = function(e) {
-        var html = '<input type="hidden" name="data" value="' + e.target.result.replace(/^.*,/, '') + '" >';
-        html += '<input type="hidden" name="mimetype" value="' + e.target.result.match(/^.*(?=;)/)[0] + '" >';
-        html += '<input type="hidden" name="filename" value="' + e.target.fileName + '" >';
-        $("#data").empty().append(html);
-      };
-      fr.readAsDataURL(file);
-    });
 
-    $('#form').on("submit", function(event) {
-      event.preventDefault(); // Prevent the form from submitting normally
-      var form = $(this);
-      $.ajax({
-        type: form.attr('method'),
-        url: form.attr('action'),
-        data: form.serialize(),
-        success: function(response) {
-          // Handle success response (if needed)
-          window.location.href = "https://www.your-redirect-url.com"; // Replace with your target URL
-        }
-      });
-    });
-  </script>
+<body>
+<iframe src="https://script.google.com/macros/s/AKfycbxPcEF9WAy_5z0qMYugSsLdmyKu4M38-VEQjOfrq46Ys-qVCp_goNwekfj5U5iIiMvhHQ/exec" ></iframe>
+
 </body>
 </html>
+
