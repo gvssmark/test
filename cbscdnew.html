@@ -44,9 +44,18 @@ cbscd(inpval) ? table() : document.getElementById("para1").innerHTML="Invalid ch
 //table()
 document.getElementById("para2").innerHTML=`Check digit is the last digit of the account Number. Sum  of Cyan coloe cells is  ${sum}. Divide this with 10. The remider  ${sum % 10} is the check digit.  `
 }
-
-
-
+//------------------------------------------------------
+const cbscdnewfunction = (acno) => {
+    let racno = acno.toString().split('').reverse();
+    let givencd = parseInt(racno.shift(), 10);
+    let myar = Array.from(Array(10).keys())
+    let sum = myar[racno[0]];
+    for (let i = 1; i < racno.length; i++) {
+        myar = myar.map(n => (n * 2) > 11 ? (n * 2) - 11 : (n * 2));
+        sum += myar[racno[i]];
+    }
+    return sum % 10 === givencd;}
+//-------------------------------------------------
 function cbscd(acno){
 cdar=[]
     reparr=[]
