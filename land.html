@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 
 <html>
@@ -6,14 +7,27 @@
 
 <style>
 .container { display:flex; flex-direction:column}
-.row {width:100vw; height:50vh; background:red; border:1px solid white}
+.row {width:100vw; height:50vh; background:white; border:1px solid white}
 .scr {overflow-y:scroll}
 .row photo {position:fixed; top:0}
+
 @media only screen and (orientation: landscape) {
   body {
     background-color: lightblue;
   }
   .container{flex-direction:row}
+  #fixedImage {width:50vh; }
+  .row {width:50vw}
+}
+
+@media only screen and (orientation: portrait) {
+  body {
+    background-color: lightblue;
+  }
+  .container{flex-direction:column}
+  #fixedImage {width:100%; 
+  .row {width:50vw}
+  
 }
 
 
@@ -23,7 +37,7 @@
 
 <div class='container'>
 
-<div class='row photo'>Image</div>
+<div class='row photo'><img id='fixedImage' src='' ></div>
 <div class='row scr'>
 Notes<br>
 Notes<br>
@@ -54,6 +68,18 @@ Notes<br>
 
 
 </div>
+
+<script>
+
+imgsrc = 'https://gvssmark.github.io/test/image/Mathruvandanam_0002.png'
+var img = document.getElementById('fixedImage');
+img.src = imgsrc
+//img.style.width='100vw'
+//img.style.height='50vh'
+
+
+</script>
+
 </body>
 </html>
 
