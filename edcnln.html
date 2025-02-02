@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>Madhu Educational Loan</title>
+ <style>
+ body {font-size:small;}
+table  {border-collapse: collapse; width:96%; margin:10px; text-align:right; border: 1px solid black}
+tr, td {border: 1px solid black}
+.rowcolor {background:black; color:white}
+h3 {color:red; text-align:center}
+  </style>
+  </head>
+<body>
+<h3>Madhu Edcational Loan</h3>
+<p id='myrep'></p>
+
+<script>
+
+ShId='1X1wETYLhQMUwtSzjC3ZU3qGBTllE9DFreakkytt3-q0'
+ShName='Sheet1'
+const dataUrl = `https://script.google.com/macros/s/AKfycbwo-TtPn3DAjHSPCXDwPFerT36QyfPPvUTi7uQEvcmjJso_aWpaKefUsgx_vpJOowHUgg/exec?sheetid=${ShId}&sheetname=${ShName}`;
+  async function fetchData() {
+  console.clear()
+    const response = await fetch(dataUrl);
+    data = await response.json();
+    data.push([new Date(),0,0,0,0,0])
+mdata = data.map(([a,b,c,d,e])=>({trdate: dt(a),Debit: b,Credit: c,Balance: d, dummydate: dateToNumber(a)})).filter(a=> a.trdate !="Invalid Date")
+for (i=0; i<mdata.length-1; i++){
+mdata[i].diffdays =  mdata[i+1].dummydate - mdata[i].dummydate}
+
+function bal(){
+b=0
+for (i=0; i<mdata.length; i++){
+b = b + mdata[i].Debit-mdata[i].Credit
+mdata[i].Balance = b
+    mdata[i].Interest = Math.round((b*mdata[i].diffdays*10.5)/36500)*1
+}
+}
+bal()
+l= mdata.length-1
+mdata[l].Interest=0
+sumInt = mdata.reduce((accumulator, curValue) => accumulator + curValue.Interest, 0)
+summary=`<table ><tr><td>Balance<td>Rs.${mdata[l].Balance}<tr><td>Interest<td>Rs.${sumInt}<tr  class='rowcolor'><td>Total Due<td>Rs${mdata[l].Balance + sumInt}</table><br>* Interest updates on daily basis<br>* Position as at ${new Date()}`
+rep =`<table ><tr  class='rowcolor'><td>Date<td>Debit<td>Credit<td>Balance<td>Days<td>Interest`
+    mdata.forEach(a=> rep +=  `<tr><td>${a.trdate}<td>${a.Debit}<td>${a.Credit}<td>${a.Balance}<td>${a.diffdays === undefined ? 0: a.diffdays }<td>${a.Interest}`)
+document.getElementById('myrep').innerHTML = rep + `</table><br>` + summary
+  }
+  fetchData()
+  function dt(a){return new Date(a).toLocaleDateString()}
+  function dateToNumber(dateStr) {
+    const referenceDate = new Date('2023-03-29');
+    const targetDate = new Date(dateStr);
+    const timeDifference = targetDate - referenceDate;
+    const numberOfDays = Math.floor(timeDifference / (1000 * 60 * 60 * 24));
+    return numberOfDays + 2;
+}
+</script>
+</body>
+</html>
