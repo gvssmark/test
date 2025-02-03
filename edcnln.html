@@ -1,26 +1,23 @@
-
 <!DOCTYPE html>
 <html>
 <head>
   <meta charset="UTF-8">
-  
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-
   <title>Madhu Educational Loan</title>
  <style>
- body {font-size:small; max-width: 600px;  margin:auto;}
+ body { max-width: 600px;  margin:auto;}
 table  {border-collapse: collapse; width:96%; margin:10px; text-align:right; border: 1px solid black}
 tr, td {border: 1px solid black}
 .rowcolor {background:black; color:white}
 h3 {color:red; text-align:center}
+table td:nth-child(1) {text-align:left}
+table tr:nth-child(even) {background:lightgrey}
   </style>
   </head>
 <body>
 <h3>Madhu Edcational Loan</h3>
 <p id='myrep'></p>
-<a href='https://docs.google.com/spreadsheets/d/1X1wETYLhQMUwtSzjC3ZU3qGBTllE9DFreakkytt3-q0/edit?usp=sharing'>Google Sheet</a>
 <script>
-
 ShId='1X1wETYLhQMUwtSzjC3ZU3qGBTllE9DFreakkytt3-q0'
 ShName='Sheet1'
 const dataUrl = `https://script.google.com/macros/s/AKfycbwo-TtPn3DAjHSPCXDwPFerT36QyfPPvUTi7uQEvcmjJso_aWpaKefUsgx_vpJOowHUgg/exec?sheetid=${ShId}&sheetname=${ShName}`;
@@ -46,8 +43,8 @@ bal()
 l= mdata.length-1
 mdata[l].Interest=0
 sumInt = mdata.reduce((accumulator, curValue) => accumulator + curValue.Interest, 0)
-summary=`<table ><tr><td>Balance<td>Rs.${mdata[l].Balance}<tr><td>Interest<td>Rs.${sumInt}<tr  class='rowcolor'><td>Total Due<td>Rs${mdata[l].Balance + sumInt}</table><br>* Interest updates on daily basis<br>* Position as at ${new Date()}
-<br>* Days 653 is days between 09/01/2025	and 28/03/2023	and so on `
+summary=`<table ><tr><td>Balance<td>Rs.${mdata[l].Balance}<tr><td>Interest<td>Rs.${sumInt}<tr  class='rowcolor'><td>Total Due<td>Rs${mdata[l].Balance + sumInt}</table><br>&nbsp&nbsp  * Interest updates on daily basis<br>&nbsp&nbsp * Position as on ${new Date().toDateString()}
+<br>&nbsp&nbsp * Days 653 =( 09/01/2025	- 28/03/2023)..	and so on <br>&nbsp&nbsp * <a href='https://docs.google.com/spreadsheets/d/1X1wETYLhQMUwtSzjC3ZU3qGBTllE9DFreakkytt3-q0/edit?usp=sharing'>View Only Google Sheet</a>`
 rep =`<table ><tr  class='rowcolor'><td>Date<td>Amount<td>Balance<td>Days<td>Interest`
     mdata.forEach(a=> rep +=  `<tr><td>${a.trdate}<td>${a.Debit}<td>${a.Balance}<td>${a.diffdays === undefined ? 0: a.diffdays }<td>${a.Interest}`)
 document.getElementById('myrep').innerHTML = rep + `</table><br>` + summary
