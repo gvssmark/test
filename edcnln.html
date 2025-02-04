@@ -48,7 +48,7 @@ bal()
 l= mdata.length-1
 mdata[l].Interest=0
 sumInt = mdata.reduce((accumulator, curValue) => accumulator + curValue.Interest, 0)
-summary=`<table ><tr><td>Balance<td>Rs.${mdata[l].Balance}<tr><td>Interest<td>Rs.${sumInt}<tr  class='rowcolor'><td>Total Due<td>Rs${mdata[l].Balance + sumInt}</table><br>&nbsp&nbsp  * Interest updates on daily basis<br>&nbsp&nbsp * Position as on ${new Date().toDateString()}
+summary=`<table ><tr><td>Balance<td>Rs. ${mdata[l].Balance}<tr><td>Interest<td>Rs. ${sumInt}<tr  class='rowcolor'><td>Total Due<td>Rs. ${mdata[l].Balance + sumInt}</table><br>&nbsp&nbsp  * Interest updates on daily basis<br>&nbsp&nbsp * Position as on ${new Date().toDateString()}
 <br>&nbsp&nbsp * Days 653 =( 09/01/2025	- 28/03/2023)..	and so on <br>&nbsp&nbsp * <a href='https://docs.google.com/spreadsheets/d/1X1wETYLhQMUwtSzjC3ZU3qGBTllE9DFreakkytt3-q0/edit?usp=sharing'>View Only Google Sheet</a>`
 rep =`<table ><tr  class='rowcolor'><td>Date<td>Amount<td>Balance<td>Days<td>Interest`
     mdata.forEach(a=> rep +=  `<tr><td>${a.trdate.toString()}<td>${a.Debit}<td>${a.Balance}<td>${a.diffdays === undefined ? 0: a.diffdays }<td>${a.Interest}`)
