@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html>
 <head>
@@ -18,7 +19,10 @@ table tr:nth-child(even) {background:lightgrey}
 <h3>Madhu Edcational Loan</h3>
 <p id='myrep'></p>
 <script>
-  today =  `${new Date().getFullYear()}-${new Date().getMonth()+1}-${new Date().getDate()}`
+
+function datediff(first, second){return Math.round((second - first) / (1000 * 60 * 60 * 24));}
+
+today =  `${new Date().getFullYear()}-${new Date().getMonth()+1}-${new Date().getDate()}`
 ShId='1X1wETYLhQMUwtSzjC3ZU3qGBTllE9DFreakkytt3-q0'
 ShName='Sheet1'
 const dataUrl = `https://script.google.com/macros/s/AKfycbwo-TtPn3DAjHSPCXDwPFerT36QyfPPvUTi7uQEvcmjJso_aWpaKefUsgx_vpJOowHUgg/exec?sheetid=${ShId}&sheetname=${ShName}`;
@@ -27,9 +31,9 @@ const dataUrl = `https://script.google.com/macros/s/AKfycbwo-TtPn3DAjHSPCXDwPFer
     const response = await fetch(dataUrl);
     data = await response.json();
     data.push([new Date(today).toISOString(),0])
-mdata = data.map(([a,b])=>({trdate: dt(a),Debit: b,Balance: 0, dummydate: dateToNumber(a)})).filter(a=> a.trdate !="Invalid Date")
-for (i=0; i<mdata.length-1; i++){
-mdata[i].diffdays =  mdata[i+1].dummydate - mdata[i].dummydate}
+mdata = data.map(([a,b])=>({trdate: dt(a),Debit: b}))
+for (i=1; i<data.length-1; i++){mdata[i].diffdays =(Math.round((new Date(data[i+1][0]) - new Date(data[i][0])) / (1000 * 60 * 60 * 24))) }
+mdata = mdata.filter(a=> a.trdate !="Invalid Date")
 
 function bal(){
 b=0
@@ -51,14 +55,8 @@ rep =`<table ><tr  class='rowcolor'><td>Date<td>Amount<td>Balance<td>Days<td>Int
 document.getElementById('myrep').innerHTML = rep + `</table><br>` + summary
   }
   fetchData()
-  function dt(a){return new Date(a).toLocaleDateString()}
-  function dateToNumber(dateStr) {
-    const referenceDate = new Date('2023-03-29');
-    const targetDate = new Date(dateStr);
-    const timeDifference = targetDate - referenceDate;
-    const numberOfDays = Math.floor(timeDifference / (1000 * 60 * 60 * 24));
-    return numberOfDays + 2;
-}
+  function dt(a){return new Date(a).toLocaleDateString('en-GB')}
+  
 </script>
 </body>
 </html>
