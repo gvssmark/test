@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=2.0 ">
+  <title>IBRA Likely Attendance</title>
+  <style>
+  </style>
+  </head>
+<body>
+
+
+<h3>List of Hyderabad Retirees <br>Not Marked Attendance</h3>
+<p id='report'>My first paragraph.</p>
+<script>
+ShId = '1vRJTXHj3iEO9PpdpqFvHdm8PfQchTdCqd5D95Unnk9k'
+ShName = 'hyd'
+const hydattendance = `https://script.google.com/macros/s/AKfycbwo-TtPn3DAjHSPCXDwPFerT36QyfPPvUTi7uQEvcmjJso_aWpaKefUsgx_vpJOowHUgg/exec?sheetid=${ShId}&sheetname=${ShName}`;
+
+async function fetchData() {
+    const response = await fetch(hydattendance);
+    attendanceData = await response.json();
+    attendanceData = attendanceData.slice(1);
+    leftover = attendanceData.map(([a,b,c,d,e,f])=>({a,b,c,d,e,f})).filter(a => a.f==="")
+    leftover = leftover.map(({a,b,c,d,e,f})=>([a,b,c,d,e,f]))
+    console.table(leftover)
+    generateReport()
+  }
+  fetchData()
+  
+  
+  function generateReport() {
+ 
+  let tdata = `<table style='font-size:small' <table id ='reptable' border=1><tr><td>Sl No</td><td>SR No</td><td>Name</td><td>Mobile No</tr>`;
+
+  for (let i = 0; i < leftover.length; i++) {
+  tdata += `<tr><td>${i + 1}</td><td>${leftover[i][1]}</td><td>${leftover[i][2]}</td><td>${leftover[i][3]}</td></tr>`;
+
+  }
+  document.getElementById('report').innerHTML = tdata + '</table>'
+  }
+  
+</script>
+</body>
+</html>
+
