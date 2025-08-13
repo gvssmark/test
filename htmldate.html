@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8" />
+	<meta name="viewport" content="width=device-width, maximum-scale=1, user-scalable=no, initial-scale=1.0">
+<meta name="theme-color" content="blue">
+
+
+  <title>HTML Date</title>
+  <style>
+  
+  </style>
+  </head>
+  
+<body>
+<input type="tel" id="date-input" maxlength="10" placeholder="DDMMYYYY">
+<script>
+const dateInput = document.getElementById('date-input');
+
+dateInput.addEventListener('input', () => {
+  const value = dateInput.value;
+  if (value.length === 2  ) {
+    dateInput.value += '/';
+  }
+  if (value.length === 5 ) {
+    dateInput.value += '/';
+  }
+});
+
+dateInput.addEventListener('blur', () => {
+  const value = dateInput.value;
+  if (value.length !== 10 || isNaN(value.replace(/\//g, ''))) {
+    dateInput.value = '';
+  }
+});
+</script
+</body>
+</html>
+
