@@ -537,8 +537,11 @@ msg = `🕉️ SEVA 24 Details 🕉️%0A
 👨‍👩‍👧‍👦 Relationship: ${data.relationship}`;
 
         // OPEN WHATSAPP
-        const waUrl = `https://wa.me/919989036183?text=${msg}`;
-        window.open(waUrl, "_blank");
+        //const waUrl = `https://wa.me/919989036183?text=${msg}`;
+        //window.open(waUrl, "_blank");
+
+   const waUrl = `whatsapp://send?phone=919989036183&text=${encodeURIComponent(msg)}`;
+window.open(waUrl, "_blank");
 }
 
 </script>
