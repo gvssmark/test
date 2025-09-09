@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html>
+<body>
+
+<h1>My First Heading</h1>
+
+<p>My first paragraph.</p>
+
+<p id='mymessage'>test</p>
+
+
+<script>
+
+data={date:'30/10/1960', sponsor:'rao', sponsorGotra:'bahar', coSponsor:'sund',
+coSponsorGotra:'bhar',mobile:99890, pitruNames:'gkm', pitruGotras:'bha', 
+relationship:'fa'}
+
+//function sub(){
+
+msg = `🕉️ SEVA 24 Details 🕉️%0A
+📅 Date: ${data.date}%0A
+👤 Sponsor: ${data.sponsor} (${data.sponsorGotra})%0A
+🤝 Co-Sponsor: ${data.coSponsor} (${data.coSponsorGotra})%0A
+📱 Mobile: ${data.mobile}%0A
+🙏 Pitru Devatas: ${data.pitruNames}%0A
+🔸 Gotras: ${data.pitruGotras}%0A
+👨‍👩‍👧‍👦 Relationship: ${data.relationship}`;
+
+msg = encodeURIComponent(msg);
+
+ document.getElementById('mymessage').innerHTML=`<a href='http://wa.me/919989036183?text=${msg}' target="_blank">WhatsApp Message</a>`
+ // OPEN WHATSAPP
+        //const waUrl = `https://wa.me/919989036183?text=${msg}`;
+       // window.open(waUrl, "_blank");
+//}
+
+</script>
+
+</body>
+</html>
+
