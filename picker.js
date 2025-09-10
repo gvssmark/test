@@ -1,97 +1,106 @@
-function createDatePicker(container, config = {}) {
-  const containerId = config.id || container.dataset.id;
-  const labelText = config.label || container.dataset.label || 'Select Date';
-  const minDate = new Date(config.min || container.dataset.min || '1900-01-01');
-  const maxDate = new Date(config.max || container.dataset.max || '2100-12-31');
+function createDatePicker(container) {
+  const id = container.dataset.id;
+  const labelText = container.dataset.label || "Select Date";
+  const minDate = new Date(container.dataset.min || "1900-01-01");
+  const maxDate = new Date(container.dataset.max || "2100-12-31");
 
-  const label = document.createElement('label');
-  label.textContent = labelText;
-  container.appendChild(label);
+  // Create label & selects
+  container.innerHTML = `<label>${labelText}</label>`;
+  const day = document.createElement("select");
+  const month = document.createElement("select");
+  const year = document.createElement("select");
+  [day, month, year].forEach(sel => sel.className = "picker");
 
-  const daySelect = document.createElement('select');
-  const monthSelect = document.createElement('select');
-  const yearSelect = document.createElement('select');
+  container.append(day, month, year);
 
-  daySelect.className = monthSelect.className = yearSelect.className = 'picker';
-  daySelect.name = `${containerId}_day`;
-  monthSelect.name = `${containerId}_month`;
-  yearSelect.name = `${containerId}_year`;
+  // Month names
+  const months = ["January","February","March","April","May","June","July","August","September","October","November","December"];
+  months.forEach((m, i) => month.append(new Option(m, i + 1)));
 
-  container.append(daySelect, monthSelect, yearSelect);
+  function updateYears() {
+    year.innerHTML = "";
+    for (let y = minDate.getFullYear(); y <= maxDate.getFullYear(); y++) {
+      year.append(new Option(y, y));
+    }
+  }
 
-  const months = [
-    'January', 'February', 'March', 'April', 'May', 'June',
-    'July', 'August', 'September', 'October', 'November', 'December'
-  ];
-  months.forEach((month, i) => {
-    const opt = document.createElement('option');
-    opt.value = i + 1;
-    opt.textContent = month;
-    monthSelect.appendChild(opt);
-  });
+  function updateMonths() {
+    month.innerHTML = "";
+    let start = 1, end = 12;
+    const selectedYear = +year.value;
 
-  for (let y = minDate.getFullYear(); y <= maxDate.getFullYear(); y++) {
-    const opt = document.createElement('option');
-    opt.value = y;
-    opt.textContent = y;
-    yearSelect.appendChild(opt);
+    if (selectedYear === minDate.getFullYear()) start = minDate.getMonth() + 1;
+    if (selectedYear === maxDate.getFullYear()) end = maxDate.getMonth() + 1;
+
+    for (let m = start; m <= end; m++) {
+      month.append(new Option(months[m - 1], m));
+    }
   }
 
   function updateDays() {
-    const month = parseInt(monthSelect.value);
-    const year = parseInt(yearSelect.value);
-    const daysInMonth = new Date(year, month, 0).getDate();
+    day.innerHTML = "";
+    const y = +year.value;
+    const m = +month.value;
 
-    daySelect.innerHTML = '';
-    for (let d = 1; d <= daysInMonth; d++) {
-      const date = new Date(year, month - 1, d);
-      const opt = document.createElement('option');
-      opt.value = d;
-      opt.textContent = d;
-      if (date < minDate || date > maxDate) {
-        opt.disabled = true;
-      }
-      daySelect.appendChild(opt);
+    let start = 1, end = new Date(y, m, 0).getDate();
+    const selectedYear = y;
+    const selectedMonth = m;
+
+    if (selectedYear === minDate.getFullYear() && selectedMonth === minDate.getMonth() + 1) {
+      start = minDate.getDate();
+    }
+    if (selectedYear === maxDate.getFullYear() && selectedMonth === maxDate.getMonth() + 1) {
+      end = maxDate.getDate();
+    }
+
+    for (let d = start; d <= end; d++) {
+      day.append(new Option(d, d));
     }
   }
 
-  monthSelect.addEventListener('change', updateDays);
-  yearSelect.addEventListener('change', updateDays);
+  // Handle cascading updates
+  year.onchange = () => {
+    updateMonths();
+    updateDays();
+  };
+  month.onchange = updateDays;
 
-  // Initialize with today's date
+  // Initialize with today's date OR minDate if today < min OR maxDate if today > max
   const today = new Date();
-  monthSelect.value = today.getMonth() + 1;
-  yearSelect.value = today.getFullYear();
+  const initDate = today < minDate ? minDate : today > maxDate ? maxDate : today;
+
+  updateYears();
+  year.value = initDate.getFullYear();
+  updateMonths();
+  month.value = initDate.getMonth() + 1;
   updateDays();
-  daySelect.value = today.getDate();
+  day.value = initDate.getDate();
 }
 
-// Initialize all pickers on page
-document.querySelectorAll('.scroll-date-picker').forEach(container => {
-  createDatePicker(container);
-});
+// Initialize all pickers
+document.querySelectorAll(".scroll-date-picker").forEach(createDatePicker);
 
-// Example form validation
-document.getElementById('demoForm').addEventListener('submit', function(e) {
-  e.preventDefault();
-  let isValid = true;
+// ✅ Utility: Get selected date
+function getSelectedDate(containerId) {
+  const container = document.querySelector(`[data-id="${containerId}"]`);
+  if (!container) return null;
 
-  document.querySelectorAll('.scroll-date-picker').forEach(container => {
-    const id = container.dataset.id;
-    const day = parseInt(container.querySelector(`select[name="${id}_day"]`).value);
-    const month = parseInt(container.querySelector(`select[name="${id}_month"]`).value);
-    const year = parseInt(container.querySelector(`select[name="${id}_year"]`).value);
-    const selectedDate = new Date(year, month - 1, day);
-    const min = new Date(container.dataset.min);
-    const max = new Date(container.dataset.max);
+  const selects = container.querySelectorAll("select");
+  const day = +selects[0].value;
+  const month = +selects[1].value;
+  const year = +selects[2].value;
 
-    if (selectedDate < min || selectedDate > max) {
-      alert(`Date in ${id} is outside allowed range.`);
-      isValid = false;
-    }
-  });
+  return new Date(year, month - 1, day);
+}
 
-  if (isValid) {
-    alert('Form submitted successfully!');
-  }
-});
+// ✅ Utility: Validate selected date
+function isDateValid(containerId) {
+  const container = document.querySelector(`[data-id="${containerId}"]`);
+  if (!container) return false;
+
+  const selected = getSelectedDate(containerId);
+  const min = new Date(container.dataset.min);
+  const max = new Date(container.dataset.max);
+
+  return selected >= min && selected <= max;
+}
