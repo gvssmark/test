@@ -104,3 +104,36 @@ function isDateValid(containerId) {
 
   return selected >= min && selected <= max;
 }
+
+// ✅ Function to get selected date from any scroll-date-picker
+function getSelectedDate(pickerId) {
+  const picker = document.querySelector(`.scroll-date-picker[data-id="${pickerId}"]`);
+  if (!picker) {
+    console.error(`Picker with ID "${pickerId}" not found.`);
+    return null;
+  }
+
+  // Get all 3 <select> elements inside the picker
+  const selects = picker.querySelectorAll('select');
+  if (selects.length !== 3) {
+    console.error(`Picker "${pickerId}" doesn't have all selects.`);
+    return null;
+  }
+
+  const [daySelect, monthSelect, yearSelect] = selects;
+
+  // Fetch values
+  const day = daySelect.value;
+  const month = monthSelect.value;
+  const year = yearSelect.value;
+
+  // Validate values
+  if (!day || !month || !year) {
+    console.warn(`Date not fully selected in "${pickerId}"`);
+    return null;
+  }
+
+  // Return formatted value YYYY-MM-DD
+  return `${year}-${month.padStart(2, '0')}-${day.padStart(2, '0')}`;
+}
+
