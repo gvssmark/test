@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Scroll Date Picker Demo</title>
+  <link rel="stylesheet" href="picker.css">
+</head>
+<body>
+
+<p> add date picker div, set data-id, add createDatePicker(document.getElementById('data-id'));</p>
+
+  <form id="demoForm">
+<input type='text' required>
+    <div class="scroll-date-picker" data-id="dobPicker" data-label="Date of Birth" data-min="1950-01-01" data-max="2050-12-31"></div>
+    <div class="scroll-date-picker" data-id="eventPicker" data-label="Event Date" data-min="2020-01-01" data-max="2030-12-31"></div>
+    <div class="scroll-date-picker" data-id="dojPicker" data-label="Joining Date" data-min="2024-11-15" data-max="2025-12-31"></div>
+    <button type="submit">Submit</button>
+  </form>
+
+  <script src="picker.js"></script>
+
+<script>
+
+createDatePicker(document.getElementById('dojPicker'));
+
+
+</script>
+</body>
+</html>

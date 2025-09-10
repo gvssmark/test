@@ -1,0 +1,33 @@
+.scroll-date-picker {
+  margin-bottom: 30px;
+}
+
+.scroll-date-picker label {
+  display: block;
+  margin-bottom: 5px;
+  font-weight: bold;
+}
+
+.scroll-date-picker .picker {
+  appearance: none;
+  -webkit-appearance: none;
+  font-size: 1em;
+  padding: 10px;
+  border: none;
+  border-radius: 8px;
+  background: #eaeaea;
+  height: 40px;
+  overflow-y: scroll;
+  scroll-snap-type: y mandatory;
+  width: 100px;
+  margin-right: 10px;
+}
+
+.scroll-date-picker .picker option {
+  scroll-snap-align: start;
+  padding: 10px;
+}
+
+.scroll-date-picker .picker option:disabled {
+  color: #aaa;
+}
