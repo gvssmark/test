@@ -54,7 +54,8 @@
     <input type="text" id="gotra" name="gotra" required>
 
     <label for="mobileNumber">Mobile Number:</label>
-    <input type="number" id="mobileNumber" name="mobileNumber" required>
+    <input type="text" id="mobileNumber" name="mobileNumber" pattern="[6-9][0-9]{9}" title="Please enter a valid 10-digit mobile number starting with 6, 7, 8, or 9" required>
+
 
     <button type="submit">Submit</button>
   </form>
