@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Family Data Collection</title>
+   <meta name="viewport" content="width=device-width, maximum-scale=1, user-scalable=no, initial-scale=1.0">
+  <style>
+  
+    body {
+      font-family: Arial, sans-serif;
+    }
+    form {
+      width: 90%;
+      margin: 40px auto;
+      padding: 20px;
+      border: 1px solid #ccc;
+      border-radius: 10px;
+      box-shadow: 0 0 10px rgba(0,0,0,0.1);
+    }
+    label {
+      display: block;
+      margin-bottom: 10px;
+    }
+    input[type="text"], input[type="number"] {
+      width: 96%;
+      height: 40px;
+      margin-bottom: 20px;
+      padding: 10px;
+      border: 1px solid #ccc;
+    }
+    button[type="submit"] {
+      width: 100%;
+      height: 40px;
+      background-color: #4CAF50;
+      color: #fff;
+      padding: 10px;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+    button[type="submit"]:hover {
+      background-color: #3e8e41;
+    }
+  </style>
+</head>
+<body>
+  <form id="familyForm">
+    <label for="name">Name of Person:</label>
+    <input type="text" id="name" name="name" required>
+
+    <label for="spouseName">Spouse Name:</label>
+    <input type="text" id="spouseName" name="spouseName" required>
+
+    <label for="gotra">Gotra:</label>
+    <input type="text" id="gotra" name="gotra" required>
+
+    <label for="mobileNumber">Mobile Number:</label>
+    <input type="number" id="mobileNumber" name="mobileNumber" required>
+
+    <button type="submit">Submit</button>
+  </form>
+
+  <script>
+  //const dopostscriptURL = "https://script.google.com/macros/s/AKfycbytzFhmFLKbTpwiMhtvPUGyi26GTFg2i9cIPkbLQKrEfRd4Mb-ezKptfrf7nm-fSzUM/exec";
+    const form = document.getElementById('familyForm');
+    form.addEventListener('submit', (e) => {
+      e.preventDefault();
+      const name = document.getElementById('name').value;
+      const spouseName = document.getElementById('spouseName').value;
+      const gotra = document.getElementById('gotra').value;
+      const mobileNumber = document.getElementById('mobileNumber').value;
+
+      // Google Apps Script URL
+      const sheetId = '1IHispImG6wRM-KMu_yCy-zDEnIFtTlLhKbwzEqu4P7o';
+      const sheetName = 'Sheet1';
+     // await fetch(`${dopostscriptURL}?sheetid=${shId}&sheetname=${shName}`);
+      const url = `https://script.google.com/macros/s/AKfycbwTAclQx2xxBoa7VAGaiuDqn0HpuEndahd3rregn7v-wv4N78cnfDuyEAScrfiQo71t/exec?sheetName=Sheet1&name=${name}&spouseName=${spouseName}&gotra=${gotra}&mobileNumber=${mobileNumber}`;
+
+      // Send data to Google Sheet
+      fetch(url)
+        .then((response) => response.text())
+        .then((data) => console.log(data))
+        .catch((error) => console.error(error));
+
+      // Send WhatsApp message
+      const whatsappUrl = `https://api.whatsapp.com/send?phone=919885236463&text=Name: ${name}%0ASpouse Name: ${spouseName}%0AGotra: ${gotra}%0AMobile Number: ${mobileNumber}`;
+      window.open(whatsappUrl, '_blank');
+    });
+  </script>
+</body>
+</html>
