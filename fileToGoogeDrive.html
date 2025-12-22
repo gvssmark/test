@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>Upload Image to Google Drive</title>
+  <style>
+    #preview {
+      margin-top: 15px;
+      max-width: 300px;
+      max-height: 300px;
+      border: 1px solid #ccc;
+      display: none;
+    }
+    #progressContainer {
+      margin-top: 15px;
+      width: 300px;
+      background: #eee;
+      border: 1px solid #ccc;
+      display: none;
+    }
+    #progressBar {
+      width: 0%;
+      height: 20px;
+      background: #4caf50;
+      text-align: center;
+      color: white;
+      font-size: 12px;
+    }
+  </style>
+</head>
+<body>
+  <h2>Upload Image to Google Drive</h2>
+  <input type="file" id="fileInput" accept="image/*" />
+  <button onclick="uploadFile()">Upload</button>
+
+  <p id="status"></p>
+  <img id="preview" alt="Image preview" />
+  <div id="progressContainer">
+    <div id="progressBar">0%</div>
+  </div>
+
+  <script>
+    const fileInput = document.getElementById("fileInput");
+    const preview = document.getElementById("preview");
+    const progressContainer = document.getElementById("progressContainer");
+    const progressBar = document.getElementById("progressBar");
+
+    // Show thumbnail preview when user selects a file
+    fileInput.addEventListener("change", () => {
+      const file = fileInput.files[0];
+      if (file) {
+        // Restrict type
+        if (!file.type.startsWith("image/")) {
+          alert("Only image files are allowed!");
+          fileInput.value = ""; // reset
+          preview.style.display = "none";
+          return;
+        }
+
+        // Restrict size
+        const maxSize = 5 * 1024 * 1024; // 5MB
+        if (file.size > maxSize) {
+          alert("File size must be less than 5 MB!");
+          fileInput.value = ""; // reset
+          preview.style.display = "none";
+          return;
+        }
+
+        // Show preview
+        const reader = new FileReader();
+        reader.onload = e => {
+          preview.src = e.target.result;
+          preview.style.display = "block";
+        };
+        reader.readAsDataURL(file);
+      } else {
+        preview.style.display = "none";
+      }
+    });
+
+    function uploadFile() {
+      if (!fileInput.files.length) {
+        alert("Please select an image file first!");
+        return;
+      }
+
+      const file = fileInput.files[0];
+      const formData = new FormData();
+      formData.append("file", file);
+      formData.append("filename", file.name);
+
+      const xhr = new XMLHttpRequest();
+      xhr.open("POST", "YOUR_WEB_APP_URL", true);
+
+      // Progress event
+      xhr.upload.onprogress = function (e) {
+        if (e.lengthComputable) {
+          const percentComplete = Math.round((e.loaded / e.total) * 100);
+          progressContainer.style.display = "block";
+          progressBar.style.width = percentComplete + "%";
+          progressBar.textContent = percentComplete + "%";
+        }
+      };
+
+      // Response handler
+      xhr.onload = function () {
+        if (xhr.status === 200) {
+          const result = JSON.parse(xhr.responseText);
+          document.getElementById("status").innerText =
+            result.status === "success"
+              ? "Uploaded! File URL: " + result.fileUrl
+              : "Error: " + result.message;
+        } else {
+          document.getElementById("status").innerText =
+            "Upload failed with status " + xhr.status;
+        }
+        progressBar.style.width = "0%";
+        progressBar.textContent = "0%";
+        progressContainer.style.display = "none";
+      };
+
+      xhr.onerror = function () {
+        document.getElementById("status").innerText = "Upload failed.";
+        progressBar.style.width = "0%";
+        progressBar.textContent = "0%";
+        progressContainer.style.display = "none";
+      };
+
+      xhr.send(formData);
+    }
+  </script>
+</body>
+</html>
