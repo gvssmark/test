@@ -1,0 +1,37 @@
+//google app script for file upload
+
+function doPost(e) {
+  try {
+    // Replace with your target folder ID
+    var folderId = "YOUR_FOLDER_ID_HERE";
+    var folder = DriveApp.getFolderById(folderId);
+
+    // Access the uploaded file blob
+    var fileBlob = e.parameter.file; // works for text fields
+    if (e.postData && e.postData.type.indexOf("multipart/form-data") > -1) {
+      var uploadedFile = e.postData.contents;
+      // Apps Script parses multipart uploads into blobs automatically
+      var blob = e.postData.getDataAsBlob();
+      blob.setName(e.parameter.filename || "uploaded_file");
+
+      var createdFile = folder.createFile(blob);
+
+      return ContentService.createTextOutput(
+        JSON.stringify({
+          status: "success",
+          fileId: createdFile.getId(),
+          fileUrl: createdFile.getUrl()
+        })
+      ).setMimeType(ContentService.MimeType.JSON);
+    }
+
+    return ContentService.createTextOutput(
+      JSON.stringify({status: "error", message: "No file uploaded"})
+    ).setMimeType(ContentService.MimeType.JSON);
+
+  } catch (err) {
+    return ContentService.createTextOutput(
+      JSON.stringify({status: "error", message: err.message})
+    ).setMimeType(ContentService.MimeType.JSON);
+  }
+}
