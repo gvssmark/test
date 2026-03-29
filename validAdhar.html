@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Logic-Generated Verhoeff Validator</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
+    <style>
+        body { background-color: #f0f2f5; padding: 40px 0; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; }
+        .logic-card { border: none; border-radius: 15px; box-shadow: 0 10px 30px rgba(0,0,0,0.1); }
+        .code-font { font-family: 'Courier New', Courier, monospace; font-weight: bold; }
+        .valid { color: #28a745; }
+        .invalid { color: #dc3545; }
+        .step-table { font-size: 0.9rem; }
+        .header-bg { background: #6c5ce7; color: white; border-radius: 15px 15px 0 0; padding: 20px; }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <div class="row justify-content-center">
+        <div class="col-md-8">
+            <div class="logic-card card">
+                <div class="header-bg">
+                    <h2 class="mb-0">Verhoeff Logic Engine</h2>
+                    <p class="mb-0 opacity-75">Tables generated via Dihedral Group $D_5$ theory</p>
+                </div>
+                <div class="card-body">
+                    <div class="form-group">
+                        <label for="aadharInput">Enter Aadhar Number:</label>
+                        <input type="text" id="aadharInput" class="form-control form-control-lg" 
+                               placeholder="12 digit number" value="208702110152" oninput="runValidation()">
+                    </div>
+
+                    <div id="resultArea" class="text-center my-4">
+                        </div>
+
+                    <h5>Calculation Trace (using <code>reduce</code>)</h5>
+                    <div class="table-responsive">
+                        <table class="table table-sm step-table">
+                            <thead>
+                                <tr>
+                                    <th>Step</th>
+                                    <th>Digit (reversed)</th>
+                                    <th>P-Table Lookup</th>
+                                    <th>D-Table Lookup</th>
+                                    <th>New State (c)</th>
+                                </tr>
+                            </thead>
+                            <tbody id="traceBody"></tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    /**
+     * LOGICAL TABLE GENERATION
+     */
+    
+    // Generate D Table (Dihedral Group D5)
+    const d = Array.from({ length: 10 }, (_, i) => 
+        Array.from({ length: 10 }, (_, j) => {
+            if (i < 5) {
+                if (j < 5) return (i + j) % 5;
+                return 5 + ((i + (j - 5)) % 5);
+            } else {
+                if (j < 5) return 5 + ((i - 5 - j + 5) % 5);
+                return (i - 5 - (j - 5) + 5) % 5;
+            }
+        })
+    );
+
+    // Generate P Table (Recursive Permutation)
+    const p = [];
+    const baseShuffle = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9];
+    const pRow1 = [1, 5, 7, 6, 2, 8, 3, 0, 9, 4]; // The specific Verhoeff shuffle
+
+    for (let i = 0; i < 8; i++) {
+        p[i] = [];
+        for (let j = 0; j < 10; j++) {
+            let val = j;
+            for (let k = 0; k < i; k++) {
+                val = pRow1[val];
+            }
+            p[i][j] = val;
+        }
+    }
+
+    /**
+     * VALIDATION LOGIC
+     */
+
+    function runValidation() {
+        const input = document.getElementById('aadharInput').value.replace(/\s/g, '');
+        const traceBody = document.getElementById('traceBody');
+        const resultArea = document.getElementById('resultArea');
+        
+        if (!/^\d+$/.test(input)) {
+            resultArea.innerHTML = '<span class="badge badge-secondary">Enter digits only</span>';
+            traceBody.innerHTML = '';
+            return;
+        }
+
+        traceBody.innerHTML = '';
+        const digits = input.split('').map(Number).reverse();
+
+        // The Reduce Logic
+        const finalC = digits.reduce((c, val, i) => {
+            const pVal = p[i % 8][val];
+            const nextC = d[c][pVal];
+
+            // Add row to visual trace
+            const row = `<tr>
+                <td>${i + 1}</td>
+                <td>${val}</td>
+                <td>p[${i % 8}][${val}] = ${pVal}</td>
+                <td>d[${c}][${pVal}]</td>
+                <td class="code-font">${nextC}</td>
+            </tr>`;
+            traceBody.innerHTML += row;
+
+            return nextC;
+        }, 0);
+
+        // Display result
+        if (finalC === 0) {
+            resultArea.innerHTML = `<h2 class="valid">✔ VALID</h2><p>Checksum resolved to 0</p>`;
+        } else {
+            resultArea.innerHTML = `<h2 class="invalid">✘ INVALID</h2><p>Checksum resolved to ${finalC}</p>`;
+        }
+    }
+
+    // Initialize on load
+    window.onload = runValidation;
+    
+ // multiplication table
+//	const d = [[0, 1, 2, 3, 4, 5, 6, 7, 8, 9],[1, 2, 3, 4, 0, 6, 7, 8, 9, 5],[2, 3, 4, 0, 1, 7, 8, 9, 5, 6],[3, 4, 0, 1, 2, 8, 9, 5, 6, 7],[4, 0, 1, 2, 3, 9, 5, 6, 7, 8],[5, 9, 8, 7, 6, 0, 4, 3, 2, 1],[6, 5, 9, 8, 7, 1, 0, 4, 3, 2],[7, 6, 5, 9, 8, 2, 1, 0, 4, 3],[8, 7, 6, 5, 9, 3, 2, 1, 0, 4],[9, 8, 7, 6, 5, 4, 3, 2, 1, 0]	]
+// permutation table
+//	const p = [[0, 1, 2, 3, 4, 5, 6, 7, 8, 9],[1, 5, 7, 6, 2, 8, 3, 0, 9, 4],[5, 8, 0, 3, 7, 9, 6, 1, 4, 2],[8, 9, 1, 6, 0, 4, 3, 5, 2, 7],[9, 4, 5, 3, 1, 2, 6, 8, 7, 0],[4, 2, 8, 6, 5, 7, 3, 9, 0, 1],[2, 7, 9, 3, 8, 0, 6, 4, 1, 5],[7, 0, 4, 6, 9, 1, 3, 2, 5, 8]	]
+//function validate(aadharNumber) {
+//    const digits = aadharNumber.split('').map(Number).reverse();
+//    const finalChecksum = digits.reduce((c, val, i) => {
+//        const computedP = p[i % 8][val];
+//        return d[c][computedP]; // This becomes 'c' for the next iteration
+//    }, 0); // 0 is the initial value for 'c'
+//    return finalChecksum === 0;
+//}
+
+   
+</script>
+
+</body>
+</html>
