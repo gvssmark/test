@@ -1,0 +1,146 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bharatanatyam Mudras Layout</title>
+    <style>
+        :root {
+            --border-color: #ddd;
+            --text-color: #212529;
+            --link-color: #0056b3;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: var(--text-color);
+            margin: 20px;
+            background-color: #f8f9fa;
+        }
+
+        /* 3-Column Grid Container */
+        .mudra-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr); /* Exactly 3 columns */
+            gap: 20px;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        /* Individual Card Style */
+        .mudra-card {
+            background: white;
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            overflow: hidden;
+            text-align: center;
+            transition: transform 0.2s;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+        }
+
+        .mudra-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+
+        .mudra-card img {
+            width: 100%;
+            height: auto;
+            display: block;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .mudra-card a {
+            display: block;
+            padding: 15px;
+            text-decoration: none;
+            color: var(--link-color);
+            font-weight: bold;
+            font-size: 1.1rem;
+        }
+
+        .mudra-card a:hover {
+            text-decoration: underline;
+        }
+
+        /* Responsive adjustment for tablets/phones */
+        @media (max-width: 992px) {
+            .mudra-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+
+        @media (max-width: 600px) {
+            .mudra-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <header style="text-align: center; margin-bottom: 40px;">
+        <h1>Bharatanatyam Asamyuta Hastas</h1>
+        <p>A 3-column modern responsive layout</p>
+    </header>
+
+    <main class="mudra-grid">
+        <!-- Mudra 1 -->
+        <div class="mudra-card">
+            <img src="https://raw.githubusercontent.com/gvssmark/test/main/Mudras_files/Mudras_files/image001.jpg" alt="Pataka Hasta">
+            <a href="https://www.natyasutraonline.com/picture-gallery/asamyuta-hasta-bharatanatyam/Pataka-Hasta">Pataka</a>
+        </div>
+
+        <!-- Mudra 2 -->
+        <div class="mudra-card">
+            <img src="https://raw.githubusercontent.com/gvssmark/test/main/Mudras_files/Mudras_files/image002.jpg" alt="Ardhapataka Hasta">
+            <a href="https://www.natyasutraonline.com/picture-gallery/asamyuta-hasta-bharatanatyam/Ardhapataka-Hasta">Ardhapataka</a>
+        </div>
+
+        <!-- Mudra 3 -->
+        <div class="mudra-card">
+            <img src="https://raw.githubusercontent.com/gvssmark/test/main/Mudras_files/Mudras_files/image003.jpg" alt="Kartarimukha Hasta">
+            <a href="https://www.natyasutraonline.com/picture-gallery/asamyuta-hasta-bharatanatyam/Kartarimukha-Hasta">Kartarimukha</a>
+        </div>
+
+        <!-- Mudra 4 -->
+        <div class="mudra-card">
+            <img src="https://raw.githubusercontent.com/gvssmark/test/main/Mudras_files/Mudras_files/image004.jpg" alt="Mayura Hasta">
+            <a href="https://www.natyasutraonline.com/picture-gallery/asamyuta-hasta-bharatanatyam/Mayura-Hasta">Mayura</a>
+        </div>
+
+        <!-- Mudra 5 -->
+        <div class="mudra-card">
+            <img src="https://raw.githubusercontent.com/gvssmark/test/main/Mudras_files/Mudras_files/image005.jpg" alt="Ardhachandra Hasta">
+            <a href="https://www.natyasutraonline.com/picture-gallery/asamyuta-hasta-bharatanatyam/Ardhacandra-Hasta">Ardhachandra</a>
+        </div>
+
+        <!-- Mudra 6 -->
+        <div class="mudra-card">
+            <img src="https://raw.githubusercontent.com/gvssmark/test/main/Mudras_files/Mudras_files/image006.jpg" alt="Arala Hasta">
+            <a href="https://www.natyasutraonline.com/picture-gallery/asamyuta-hasta-bharatanatyam/Arala-Hasta">Arala</a>
+        </div>
+
+        <!-- Mudra 7 -->
+        <div class="mudra-card">
+            <img src="https://raw.githubusercontent.com/gvssmark/test/main/Mudras_files/Mudras_files/image007.jpg" alt="Sukatunda Hasta">
+            <a href="https://www.natyasutraonline.com/picture-gallery/asamyuta-hasta-bharatanatyam/Sukatunda-Hasta">Sukatunda</a>
+        </div>
+
+        <!-- Mudra 8 -->
+        <div class="mudra-card">
+            <img src="https://raw.githubusercontent.com/gvssmark/test/main/Mudras_files/Mudras_files/image008.jpg" alt="Musti Hasta">
+            <a href="https://www.natyasutraonline.com/picture-gallery/asamyuta-hasta-bharatanatyam/Musti-Hasta">Musti</a>
+        </div>
+
+        <!-- Mudra 9 -->
+        <div class="mudra-card">
+            <img src="https://raw.githubusercontent.com/gvssmark/test/main/Mudras_files/Mudras_files/image009.jpg" alt="Sikhara Hasta">
+            <a href="https://www.natyasutraonline.com/picture-gallery/asamyuta-hasta-bharatanatyam/Sikhara-Hasta">Sikhara</a>
+        </div>
+    </main>
+
+</body>
+</html>
