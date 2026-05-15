@@ -1,8 +1,54 @@
 <!DOCTYPE html>
 <html>
+
 <head>
+    <title>Array Table Display</title>
+
     <script type="module" src="File3.js"></script>
+
+    <style>
+        table {
+            border-collapse: collapse;
+            width: 400px;
+            margin-top: 20px;
+        }
+
+        td {
+            border: 1px solid black;
+            padding: 8px;
+        }
+    </style>
 </head>
+
 <body>
+
+    <h2>Merged Array Data</h2>
+
+    <table id="dataTable">
+        <tbody></tbody>
+    </table>
+
+    <script>
+        window.addEventListener("load", () => {
+
+            const tbody = document.querySelector("#dataTable tbody");
+
+            window.finalArray.forEach(row => {
+
+                const tr = document.createElement("tr");
+
+                row.forEach(col => {
+                    const td = document.createElement("td");
+                    td.textContent = col;
+                    tr.appendChild(td);
+                });
+
+                tbody.appendChild(tr);
+            });
+
+        });
+    </script>
+
 </body>
+
 </html>
