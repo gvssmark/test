@@ -2,53 +2,39 @@
 <html>
 
 <head>
-    <title>Array Table Display</title>
-
     <script type="module" src="File3.js"></script>
-
-    <style>
-        table {
-            border-collapse: collapse;
-            width: 400px;
-            margin-top: 20px;
-        }
-
-        td {
-            border: 1px solid black;
-            padding: 8px;
-        }
-    </style>
 </head>
 
 <body>
 
-    <h2>Merged Array Data</h2>
+<table border="1">
+    <tbody id="tbody"></tbody>
+</table>
 
-    <table id="dataTable">
-        <tbody></tbody>
-    </table>
+<script>
 
-    <script>
-        window.addEventListener("load", () => {
+window.addEventListener("load", () => {
 
-            const tbody = document.querySelector("#dataTable tbody");
+    const tbody = document.getElementById("tbody");
 
-            window.finalArray.forEach(row => {
+    window.finalArray.forEach(row => {
 
-                const tr = document.createElement("tr");
+        let tr = document.createElement("tr");
 
-                row.forEach(col => {
-                    const td = document.createElement("td");
-                    td.textContent = col;
-                    tr.appendChild(td);
-                });
+        row.forEach(col => {
 
-                tbody.appendChild(tr);
-            });
+            let td = document.createElement("td");
+            td.textContent = col;
 
+            tr.appendChild(td);
         });
-    </script>
+
+        tbody.appendChild(tr);
+    });
+
+});
+
+</script>
 
 </body>
-
 </html>
