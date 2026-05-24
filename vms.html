@@ -1,0 +1,280 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Pitru Data Entry Form</title>
+
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: #f4f6f9;
+      margin: 0;
+      padding: 20px;
+    }
+
+    .container {
+      max-width: 1000px;
+      margin: auto;
+    }
+
+    h1 {
+      text-align: center;
+      margin-bottom: 20px;
+    }
+
+    .record {
+      background: #fff;
+      padding: 20px;
+      border-radius: 10px;
+      margin-bottom: 20px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+      border-left: 5px solid #007bff;
+    }
+
+    .section-title {
+      margin-top: 20px;
+      margin-bottom: 10px;
+      font-weight: bold;
+      color: #333;
+      border-bottom: 1px solid #ddd;
+      padding-bottom: 5px;
+    }
+
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 15px;
+    }
+
+    label {
+      display: block;
+      margin-bottom: 5px;
+      font-size: 14px;
+      color: #555;
+    }
+
+    input {
+      width: 100%;
+      padding: 10px;
+      border-radius: 6px;
+      border: 1px solid #ccc;
+      box-sizing: border-box;
+    }
+
+    .actions {
+      display: flex;
+      gap: 10px;
+      margin-top: 20px;
+    }
+
+    button {
+      padding: 12px 18px;
+      border: none;
+      border-radius: 6px;
+      cursor: pointer;
+      font-size: 15px;
+    }
+
+    .add-btn {
+      background: #28a745;
+      color: white;
+    }
+
+    .submit-btn {
+      background: #007bff;
+      color: white;
+    }
+
+    .remove-btn {
+      background: #dc3545;
+      color: white;
+    }
+
+    pre {
+      background: #1e1e1e;
+      color: #00ff90;
+      padding: 15px;
+      border-radius: 8px;
+      overflow-x: auto;
+      margin-top: 20px;
+    }
+  </style>
+</head>
+<body>
+
+<div class="container">
+
+  <h1>Pitru Data Collection</h1>
+
+  <div id="recordsContainer"></div>
+
+  <div class="actions">
+    <button class="add-btn" onclick="addRecord()">
+      + Add New Record
+    </button>
+
+    <button class="submit-btn" onclick="submitData()">
+      Submit Data
+    </button>
+  </div>
+
+  <pre id="output"></pre>
+
+</div>
+
+<script>
+
+  let recordCount = 0;
+
+  function createRecord() {
+
+    const record = document.createElement('div');
+    record.className = 'record';
+
+    record.innerHTML = `
+
+      <div class="section-title">
+        Sponsor Details
+      </div>
+
+      <div class="grid">
+
+        <div>
+          <label>Mobile Number</label>
+          <input type="text" name="mobile" placeholder="Enter mobile number">
+        </div>
+
+        <div>
+          <label>Sponsor Name</label>
+          <input type="text" name="sponsor" placeholder="Enter sponsor name">
+        </div>
+
+        <div>
+          <label>Sponsor Gotra</label>
+          <input type="text" name="sponsorGotra" placeholder="Enter sponsor gotra">
+        </div>
+
+        <div>
+          <label>Co-Sponsor Name</label>
+          <input type="text" name="cosponsor" placeholder="Enter co-sponsor name">
+        </div>
+
+        <div>
+          <label>Co-Sponsor Gotra</label>
+          <input type="text" name="cosponsorGotra" placeholder="Enter co-sponsor gotra">
+        </div>
+
+      </div>
+
+      <div class="section-title">
+        Pitru 1 Details
+      </div>
+
+      <div class="grid">
+
+        <div>
+          <label>Date</label>
+          <input type="date" name="pitru1Date">
+        </div>
+
+        <div>
+          <label>Name</label>
+          <input type="text" name="pitru1Name" placeholder="Enter name">
+        </div>
+
+        <div>
+          <label>Gotra</label>
+          <input type="text" name="pitru1Gotra" placeholder="Enter gotra">
+        </div>
+
+        <div>
+          <label>Relation</label>
+          <input type="text" name="pitru1Relation" placeholder="Father / Mother / etc">
+        </div>
+
+      </div>
+
+      <div class="section-title">
+        Pitru 2 Details
+      </div>
+
+      <div class="grid">
+
+        <div>
+          <label>Date</label>
+          <input type="date" name="pitru2Date">
+        </div>
+
+        <div>
+          <label>Name</label>
+          <input type="text" name="pitru2Name" placeholder="Enter name">
+        </div>
+
+        <div>
+          <label>Gotra</label>
+          <input type="text" name="pitru2Gotra" placeholder="Enter gotra">
+        </div>
+
+        <div>
+          <label>Relation</label>
+          <input type="text" name="pitru2Relation" placeholder="Grandfather / etc">
+        </div>
+
+      </div>
+
+      <div class="actions">
+        <button class="remove-btn" onclick="removeRecord(this)">
+          Remove Record
+        </button>
+      </div>
+
+    `;
+
+    return record;
+  }
+
+  function addRecord() {
+    const container = document.getElementById('recordsContainer');
+    container.appendChild(createRecord());
+    recordCount++;
+  }
+
+  function removeRecord(button) {
+    const record = button.closest('.record');
+    record.remove();
+  }
+
+  function submitData() {
+
+    const records = document.querySelectorAll('.record');
+
+    const data = [];
+
+    records.forEach(record => {
+
+      const inputs = record.querySelectorAll('input');
+
+      const obj = {};
+
+      inputs.forEach(input => {
+        obj[input.name] = input.value;
+      });
+
+      data.push(obj);
+
+    });
+
+    console.log(data);
+
+    document.getElementById('output').textContent =
+      JSON.stringify(data, null, 2);
+  }
+
+  // Add one empty form initially
+  addRecord();
+
+</script>
+
+</body>
+</html>
