@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Book Dispatch List</title>
+<style>
+  :root {
+    --bg: #f3efe8;
+    --row-a: #ffffff;
+    --row-b: #e6eef5;
+    --ink: #1f2933;
+    --muted: #64707d;
+    --line: #cfd8e0;
+    --red: #c62828;
+    --red-ink: #ffffff;
+    --focus: #1b5fa8;
+  }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0;
+    background: var(--bg);
+    color: var(--ink);
+    font: 16px/1.5 "Segoe UI", system-ui, -apple-system, Roboto, sans-serif;
+  }
+  .wrap { max-width: 720px; margin: 0 auto; padding: 20px 14px 48px; }
+  h1 { font-size: 1.5rem; margin: 0 0 14px; }
+  .bar { position: sticky; top: 0; z-index: 2; background: var(--bg); padding: 8px 0 12px; }
+  input[type=search] {
+    width: 100%; padding: 12px 14px; font: inherit;
+    border: 1px solid var(--line); border-radius: 8px; background: #fff;
+  }
+  input[type=search]:focus, .head:focus-visible { outline: 3px solid var(--focus); outline-offset: 1px; }
+  .count { color: var(--muted); font-size: .875rem; margin-top: 6px; }
+
+  .card { border: 1px solid var(--line); border-radius: 10px; margin-bottom: 8px; overflow: hidden; }
+  .card:nth-child(odd)  { background: var(--row-a); }
+  .card:nth-child(even) { background: var(--row-b); }
+
+  .head {
+    width: 100%; display: flex; align-items: center; justify-content: space-between; gap: 12px;
+    padding: 12px 14px; border: 0; background: transparent; color: inherit;
+    font: inherit; font-weight: 600; text-align: left; cursor: pointer;
+  }
+  .head .name { overflow-wrap: anywhere; }
+  .badge {
+    flex: none; min-width: 2.4rem; height: 2.4rem; padding: 0 .5rem;
+    display: grid; place-items: center; border-radius: 999px;
+    background: var(--red); color: var(--red-ink); font-weight: 700;
+  }
+
+  .body { display: grid; grid-template-rows: 0fr; transition: grid-template-rows .25s ease; }
+  .card.open .body { grid-template-rows: 1fr; }
+  .inner { overflow: hidden; }
+  dl { margin: 0; padding: 4px 14px 14px; border-top: 1px dashed var(--line); }
+  dt { margin-top: 10px; color: var(--muted); font-size: .8125rem; }
+  dd { margin: 2px 0 0; white-space: pre-line; overflow-wrap: anywhere; }
+
+  .msg { text-align: center; color: var(--muted); padding: 32px 8px; }
+  .msg.err { color: var(--red); }
+  @media (prefers-reduced-motion: reduce) { .body { transition: none; } }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <h1>Book Dispatch List</h1>
+  <div class="bar">
+    <input id="q" type="search" placeholder="Search by name" aria-label="Search by name" autocomplete="off">
+    <div class="count" id="count" aria-live="polite"></div>
+  </div>
+  <div id="list"><div class="msg">Loading data…</div></div>
+</div>
+
+<script>
+const url = 'https://script.google.com/macros/s/AKfycbwo-TtPn3DAjHSPCXDwPFerT36QyfPPvUTi7uQEvcmjJso_aWpaKefUsgx_vpJOowHUgg/exec?sheetid=1x7G7YHViKUODjR-yGd-v-T-C-Kt38RpDT6J8jn0zXG4&sheetname=Inventory';
+
+const HIDDEN = ['sl no', 'name', 'number of books'];   // not shown in the expanded area
+let records = [];
+
+const $list = document.getElementById('list');
+const $q = document.getElementById('q');
+const $count = document.getElementById('count');
+
+// Accepts [[header...], [row...]] or [{...}] (optionally wrapped in {data: ...})
+function normalize(json) {
+  let rows = Array.isArray(json) ? json : (json.data || json.values || []);
+  if (!rows.length) return [];
+  if (Array.isArray(rows[0])) {
+    const head = rows[0].map(h => String(h).trim());
+    return rows.slice(1).map(r => Object.fromEntries(head.map((h, i) => [h, r[i]])));
+  }
+  return rows;
+}
+
+function get(rec, key) {
+  const k = Object.keys(rec).find(x => x.trim().toLowerCase() === key);
+  return k === undefined ? '' : rec[k];
+}
+
+function fmt(key, val) {
+  if (val === '' || val === null || val === undefined) return '—';
+  const k = key.toLowerCase();
+  if (k.includes('date') && !isNaN(Date.parse(val))) {
+    return new Date(val).toLocaleDateString('en-GB', { day: '2-digit', month: 'short', year: 'numeric' });
+  }
+  if (k.includes('charges')) return '₹' + val;
+  return String(val).split('\n').map(s => s.trim()).filter(Boolean).join('\n');
+}
+
+function esc(s) {
+  return String(s).replace(/[&<>"]/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]));
+}
+
+function render() {
+  const term = $q.value.trim().toLowerCase();
+  const shown = records.filter(r => String(get(r, 'name')).toLowerCase().includes(term));
+  $count.textContent = `${shown.length} of ${records.length} people`;
+  if (!shown.length) {
+    $list.innerHTML = '<div class="msg">No names match your search.</div>';
+    return;
+  }
+  $list.innerHTML = shown.map((r, i) => {
+    const details = Object.keys(r)
+      .filter(k => !HIDDEN.includes(k.trim().toLowerCase()))
+      .map(k => `<dt>${esc(k)}</dt><dd>${esc(fmt(k, r[k]))}</dd>`).join('');
+    return `<div class="card">
+      <button class="head" aria-expanded="false" aria-controls="d${i}">
+        <span class="name">${esc(String(get(r, 'name')).trim())}</span>
+        <span class="badge" title="Number of books">${esc(get(r, 'number of books'))}</span>
+      </button>
+      <div class="body" id="d${i}"><div class="inner"><dl>${details}</dl></div></div>
+    </div>`;
+  }).join('');
+}
+
+$list.addEventListener('click', e => {
+  const btn = e.target.closest('.head');
+  if (!btn) return;
+  const card = btn.parentElement;
+  btn.setAttribute('aria-expanded', card.classList.toggle('open'));
+});
+$q.addEventListener('input', render);
+
+fetch(url)
+  .then(res => { if (!res.ok) throw new Error('HTTP ' + res.status); return res.json(); })
+  .then(json => {
+    records = normalize(json).filter(r => String(get(r, 'name')).trim());
+    records.sort((a, b) => String(get(a, 'name')).trim().localeCompare(String(get(b, 'name')).trim(), undefined, { sensitivity: 'base' }));
+    render();
+  })
+  .catch(err => {
+    $list.innerHTML = `<div class="msg err">Could not load data (${esc(err.message)}). Check your connection and reload the page.</div>`;
+  });
+</script>
+</body>
+</html>
